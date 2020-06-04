@@ -1,11 +1,11 @@
 <div id="main-content1">
-
+  <div class="blue-top-bar"></div>
   <div class="row-wrapper center-content">
-      <button class="btn -cta" (click)="get_studentForm('studentdetails')">Student
+      <button class="btn -cta" [ngClass]="[studentdetails ? 'active-tab': 'inactive-tab']" (click)="get_studentForm('studentdetails')">Student
         Details</button>
-      <button class="btn -cta" (click)="get_studentForm('parentdetails')">Parent/Guardian
+      <button class="btn -cta" [ngClass]="[parentdetails ? 'active-tab': 'inactive-tab']" (click)="get_studentForm('parentdetails')">Parent/Guardian
         Details</button>
-      <button class="btn -cta" (click)="get_studentForm('address')">Address</button>
+      <button class="btn -cta" [ngClass]="[address ? 'active-tab': 'inactive-tab']" (click)="get_studentForm('address')">Address</button>
       <!-- <button class="button button2 hvr-pop transition">Bulk Student Admission</button> -->
   </div>
 
@@ -57,7 +57,7 @@
     </form>
   </div> -->
 
-  <form [formGroup]="sudentadmissionForm" (ngSubmit)="submitStudent()">
+  <form [formGroup]="sudentadmissionForm" >
 
     <div *ngIf="studentdetails">
       <div class="row-wrapper">
@@ -93,20 +93,42 @@
         <div class="col-full-3">
           <div class="form-group">
             <label class="heading">Class*</label>
-            <select class="inpbox" formControlName="class_id" (change)="sectionChange()">
+            <div class="dropdown">
+              <button class="dropbtn" (click)="showClassList = true"
+              (clickOutside)="showClassList = false">
+                  {{!selectedClass ? '--Select--' : selectedClass.name}}
+              </button>
+              <div class="dropdown-content" [hidden]="!showClassList">
+                <a (click)="selectedClass = '';sectionChange();">--Select--</a>
+                <a *ngFor="let school_classes of classes"
+                  (click)="selectedClass = school_classes;sectionChange();">{{school_classes.name}}</a>
+              </div>
+            </div>
+            <!-- <select class="inpbox" formControlName="class_id" (change)="sectionChange()">
               <option value="">--Select--</option>
               <option [value]="school_classes.class_id" *ngFor="let school_classes of classes">{{school_classes.name}}
               </option>
-            </select>
+            </select> -->
           </div>
         </div>
         <div class="col-full-3">
           <div class="form-group">
             <label class="heading">Section*</label>
-            <select class="inpbox" formControlName="section_id" [value]="student.section_id">
+            <div class="dropdown">
+              <button class="dropbtn" (click)="showSectionList = true"
+              (clickOutside)="showSectionList = false">
+                  {{!selectedSection ? '--Select--' : selectedSection.name}}
+              </button>
+              <div class="dropdown-content" [hidden]="!showSectionList">
+                <a (click)="selectedSection = '';">--Select--</a>
+                <a *ngFor="let section of sections" 
+                (click)="selectedSection = section">{{section.name}}</a>
+              </div>
+            </div>
+            <!-- <select class="inpbox" formControlName="section_id" [value]="student.section_id">
               <option value="">--Select--</option>
               <option [value]="section.section_id" *ngFor="let section of sections">{{section.name}}</option>
-            </select>
+            </select> -->
           </div>
         </div>
       </div>
@@ -143,11 +165,22 @@
         <div class="col-full-3">
           <div class="form-group">
             <label class="heading">Gender*</label>
-            <select class="inpbox" formControlName="gender">
+            <div class="dropdown">
+              <button class="dropbtn" (click)="showGenderList = true"
+              (clickOutside)="showGenderList = false">
+                  {{!selectedGender ? '--Select--' : selectedGender}}
+              </button>
+              <div class="dropdown-content" [hidden]="!showGenderList">
+                <a (click)="selectedGender = '';">--Select--</a>
+                <a (click)="selectedGender = 'Male';">Male</a>
+                <a (click)="selectedGender = 'Female';">Female</a>
+              </div>
+            </div>
+            <!-- <select class="inpbox" formControlName="gender">
               <option value="">--Select--</option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
-            </select>
+            </select> -->
           </div>
         </div>
         <div class="col-full-3">
@@ -176,7 +209,23 @@
         <div class="col-full-3">
           <div class="form-group">
             <label class="heading">Category*</label>
-            <select class="inpbox" formControlName="category">
+            <div class="dropdown">
+              <button class="dropbtn" (click)="showCategoryList = true"
+              (clickOutside)="showCategoryList = false">
+                  {{!selectedCategory ? '--Select--' : selectedCategory}}
+              </button>
+              <div class="dropdown-content" [hidden]="!showCategoryList">
+                <a (click)="selectedCategory = '';">--Select--</a>
+                <a (click)="selectedCategory = 'OC'">OC</a>
+                <a (click)="selectedCategory = 'OBC'">OBC</a>
+                <a (click)="selectedCategory = 'BC-A'">BC-A</a>
+                <a (click)="selectedCategory = 'BC-B'">BC-B</a>
+                <a (click)="selectedCategory = 'BC-C'">BC-C</a>
+                <a (click)="selectedCategory = 'BC-D'">BC-D</a>
+                <a (click)="selectedCategory = 'Minority'">Minority</a>
+              </div>
+            </div>
+            <!-- <select class="inpbox" formControlName="category">
               <option value="">--Select--</option>
               <option value="OC">OC</option>
               <option value="OBC">OBC</option>
@@ -185,7 +234,7 @@
               <option value="BC-C">BC-C</option>
               <option value="BC-D">BC-D</option>
               <option value="Minority">Minority</option>
-            </select>
+            </select> -->
           </div>
         </div>
         <div class="col-full-3">
@@ -238,7 +287,25 @@
         <div class="col-full-3">
           <div class="form-group">
             <label class="heading">Blood Group*</label>
-            <select class="inpbox" formControlName="blood_group" [value]="student.blood_group">
+            <div class="dropdown">
+              <button class="dropbtn" (click)="showBloodGroupList = true"
+              (clickOutside)="showBloodGroupList = false">
+                  {{!selectedBloodGroup ? '--Select--' : selectedBloodGroup}}
+              </button>
+              <div class="dropdown-content" [hidden]="!showBloodGroupList">
+                <a (click)="selectedBloodGroup = '';">--Select--</a>
+                <a (click)="selectedBloodGroup = 'O+'">O+</a>
+                <a (click)="selectedBloodGroup = 'O-'">O-</a>
+                <a (click)="selectedBloodGroup = 'A+'">A+</a>
+                <a (click)="selectedBloodGroup = 'A-'">A-</a>
+                <a (click)="selectedBloodGroup = 'B+'">B+</a>
+                <a (click)="selectedBloodGroup = 'B-'">B-</a>
+                <a (click)="selectedBloodGroup = 'AB+'">AB+</a>
+                <a (click)="selectedBloodGroup = 'AB-'">AB-</a>
+                <a (click)="selectedBloodGroup = 'NA'">NA</a>
+              </div>
+            </div>
+            <!-- <select class="inpbox" formControlName="blood_group" [value]="student.blood_group">
               <option value="">--Select--</option>
               <option value="O+">O+</option>
               <option value="O-">O-</option>
@@ -249,7 +316,7 @@
               <option value="AB+">AB+</option>
               <option value="AB-">AB-</option>
               <option value="NA">NA</option>
-            </select>
+            </select> -->
           </div>
         </div>
         <div class="col-full-3">
@@ -275,11 +342,22 @@
         <div class="col-full-3">
           <div class="form-group">
             <label class="heading">School Bus Route</label>
-            <select class="inpbox" formControlName="bus_route_id">
+            <div class="dropdown">
+              <button class="dropbtn" (click)="showBusRouteList = true"
+              (clickOutside)="showBusRouteList = false">
+                  {{!selectedBusRoute ? '--Select--' : selectedBusRoute}}
+              </button>
+              <div class="dropdown-content" [hidden]="!showBusRouteList">
+                <a (click)="selectedBusRoute = '';">--Select--</a>
+                <a (click)="selectedBusRoute = 'Route1'">Route1</a>
+                <a (click)="selectedBusRoute = 'Route2'">Route2</a>
+              </div>
+            </div>
+           <!--  <select class="inpbox" formControlName="bus_route_id">
               <option value="">--Select--</option>
               <option value="Route1">Route1</option>
               <option value="Route2">Route2</option>
-            </select>
+            </select> -->
           </div>
         </div>
         <div class="col-full-3">
@@ -300,10 +378,11 @@
             </div>
           </div> -->
         <div class="col-md-3 pull-left">
-          <button class="button button1 hvr-pop transition" (click)="close()">Close</button>
+          <button class="btn -cta active-tab">Save</button>
+          <button class="btn -cta inactive-tab" (click)="close()">Cancel</button>
         </div>
         <div class="col-md-3 pull-right">
-          <button class="button button1 hvr-pop transition" (click)="get_studentForm('parentdetails')">Next</button>
+          <button class="btn -cta active-tab" (click)="get_studentForm('parentdetails')">Next</button>
         </div>
       </div>
     </div>

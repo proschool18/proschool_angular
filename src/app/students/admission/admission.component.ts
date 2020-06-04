@@ -23,7 +23,10 @@ export class AdmissionComponent implements OnInit {
   date_of_birth = new FormControl(new Date);
   date_of_admission = new FormControl(new Date);
 
-  class: string;
+  selectedGender:any;
+  showGenderList: boolean = false;
+        
+   class: string;
   section: string;
   student = {
     student_id: '',
@@ -236,13 +239,28 @@ export class AdmissionComponent implements OnInit {
         res => { this.classes = res.school_classes, console.log(res) }
       )
   }
+  selectedClass: any;
+  showClassList: boolean = false;
 
+  selectedSection: any;
+  showSectionList: boolean = false;
+
+  selectedCategory: any
+  showCategoryList: boolean = false;
+
+  selectedBloodGroup: any;
+  showBloodGroupList: boolean = false;
+
+    
+  classListbtnClicked() {
+    this.showClassList = true;
+  }
   sectionChange() {
-    if (this.sudentadmissionForm.value.class_id == undefined || this.sudentadmissionForm.value.class_id == '') {
+    if (this.selectedClass.class_id == undefined || this.selectedClass.class_id == '') {
       this.alert_message = "Please Select Class";
       this.openAlert(this.alert_message)
     } else {
-      this.service.getSections(this.sudentadmissionForm.value.class_id)
+    this.service.getSections(this.selectedClass.class_id)
         .subscribe(
           res => { this.sections = res.class_sections, console.log(this.sections) }
         )
