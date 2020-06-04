@@ -1,0 +1,33 @@
+<div class="popup">
+  <div class="pop_header">
+      <h3 *ngIf="dialog_type == 'add'">Add Chapter</h3>
+      <h3 *ngIf="dialog_type == 'edit'">Edit Chapter</h3>
+  </div>
+  <form role="form" [formGroup]="chapterForm" (ngSubmit)="submitChapter()">
+      <div class="pop_content">
+          <div class="row_content">
+              <div class="column_content">
+                  <h4>Chapter Name: </h4>
+                  <input class="form-control" value="{{chapter.title}}" formControlName="title"  placeholder="Enter the Chapter..." type="text">
+              </div>
+              <div class="column_content">
+                  <h4>Chapter Code: </h4>
+                  <input class="form-control" value="{{chapter.chapter_code}}" formControlName="chapter_code" placeholder="Enter the Code..." type="text">
+              </div>
+          </div>
+          <div class="row_content">
+              <div class="column_content">
+                  <h4>Description: </h4>
+                  <textarea value="{{chapter.description}}" formControlName="description" placeholder="Enter the Description of the Chapter..." cols="50" rows="10"></textarea>
+              </div>
+          </div>
+          <div class="row_content">
+            <div class="button_left">
+              <button type="submit" class="btn -cta">Submit</button>
+            </div>              
+            <div (click)="close()" class="btn -cancel">Cancel</div>
+          </div>
+      </div>
+  </form>
+</div>
+

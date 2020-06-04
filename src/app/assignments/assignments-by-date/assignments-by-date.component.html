@@ -1,0 +1,59 @@
+<main class="card mt-20 within-viewport">
+  <section class="page-actions">
+    <div class="_select-or-search">
+      <div class="_select-group">
+        <app-class *ngIf="user.role === 'admin'" (classEvent)="receiveClass($event)" (sectionEvent)="receiveSection($event)"></app-class>
+        <app-teacher-class *ngIf="user.role === 'teacher'" (classEvent)="receiveClass($event)" (sectionEvent)="receiveSection($event)"></app-teacher-class>
+        <input type="date" [(ngModel)]="selected_date" (change)="getAssignments_byDate()">
+      </div>
+      <input type="search" name="" placeholder="Search">
+    </div>
+    <button class="btn -cta" (click)="addAssignment()" *ngIf="user.role === 'admin'">Add Assignments</button>
+  </section>
+  <section class="table-and-pagination -classes-schedule">
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th align="left">Assignment Title</th>
+            <th align="left">Chapter Name</th>
+            <th align="left">Due Date</th>
+            <th align="left">Description</th>
+            <th align="left" *ngIf="user.role === 'admin' || user.role === 'teacher'">Action</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let sub of assignments; let i = index">
+          <tr>
+            <td class="subjectpaper">{{sub.name}}</td>
+          </tr>
+          <tr *ngFor="let ass of sub.assignments; let j = index">
+            <td class="_s-no"><span>{{ j + 1 }}</span></td>
+            <td>{{ass.assignment_title}}</td>
+            <td>{{ass.chapter_name}}</td>
+            <td>{{ass.due_date}}</td>
+            <td>{{ass.description}}</td>
+            <td class="_actions" *ngIf="user.role === 'admin' || user.role === 'teacher' && ass.assignment_title !== 'No Recent Assignments'">
+              <button class="btn" (click)="editAssignment(i, j)"><img src="../../../assets/images/edit-white.svg" alt="Edit" /></button>
+              <button class="btn" (click)="deleteAssignment(ass.assignment_id, i)"><img src="../../../assets/images/trash-white.svg" alt="Delete" /></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="_pagination">
+      <a href="" class="btn -previous">Previous</a>
+      <a href="" class="btn -current">1</a>
+      <a href="" class="btn">2</a>
+      <a href="" class="btn">3</a>
+      <a href="" class="btn">4</a>
+      <a href="" class="btn">5</a>
+      <a href="" class="btn">6</a>
+      <a href="" class="btn">7</a>
+      <a href="" class="btn">8</a>
+      <a href="" class="btn">9</a>
+      <a href="" class="btn">10</a>
+      <a href="" class="btn -next">Next</a>
+    </div>
+  </section>
+</main>

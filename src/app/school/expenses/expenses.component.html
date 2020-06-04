@@ -1,0 +1,66 @@
+<div id="main-content">
+
+  <div class="row">
+    <div class="container-fluid" id="buttonId1">
+      <!-- <button (click)="allexpenses('all')" class="button button2 hvr-pop transition">All Expenses</button>
+      <button (click)="allexpenses('miscellaneous')" class="button button2 hvr-pop transition">Miscellaneous</button> -->
+      <button routerLink="/main/admin/expenses" class="button button2 hvr-pop transition">Expenses</button>
+      <button routerLink="/main/admin/claims" class="button button2 hvr-pop transition">Claims</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="container-fluid dashboard-content">
+      <div class="card listcard">
+        <div class="pull-left">
+          <h4>Expenses</h4>
+        </div>
+        <div class="searchForm">
+          <div class="table-responsive">
+            <table style="width:100%;">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Expense</th>
+                  <th>Amount</th>
+                  <th>Category</th>
+                  <th>Approved Date</th>
+                  <th>Payment Date</th>
+                  <th>Payment Status</th>
+                  <th *ngIf="user.role === 'admin'"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let exp of collection.expenses | paginate: config; let i=index">
+                  <td>{{ (config.currentPage - 1) * config.itemsPerPage + i + 1 }}</td>
+                  <td>{{exp.first_name}}</td>
+                  <td>Rs. {{exp.amount}}</td>
+                  <td>{{exp.category}}</td>
+                  <td>{{exp.approved_date}}</td>
+                  <td *ngIf="exp.payment_date !== ''">{{exp.payment_date}}</td>
+                  <td *ngIf="exp.payment_date === ''" [ngStyle]="{'background-color': '#d9534f', 'color': 'white' }">No Payment</td>
+                  <td>{{exp.payment_status}}</td>
+                  <td *ngIf="user.role === 'admin' && exp.payment_status == 'pending'">                    
+                    <button class="button button2 hvr-pop transition" [ngStyle]="{'background-color': '#5cb85c', 'color': 'white' }" (click)="update_expense(exp.payment_status, (config.currentPage - 1) * config.itemsPerPage + i)">Paid</button>
+                  </td>
+                  <td *ngIf="user.role === 'admin' && exp.payment_status == 'completed'">                    
+                    <button class="button button2 hvr-pop transition" [ngStyle]="{'background-color': '#d9534f', 'color': 'white' }" (click)="update_expense(exp.payment_status, (config.currentPage - 1) * config.itemsPerPage + i)">Unpay</button>
+                  </td>
+                  <!-- <td class="pull-right">
+                    <div class="pattrenED">
+                      <div><i class="fa fa-pencil-square" aria-hidden="true" (click)="editExpense((config.currentPage - 1) * config.itemsPerPage + i)"></i></div>
+                      <div><i class="fa fa-trash" aria-hidden="true"  (click)="deleteExpense(exp.expense_id)"></i></div>
+                    </div>
+                  </td> -->
+                </tr>
+              </tbody>
+            </table>
+            <div class="paginationdiv">
+              <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

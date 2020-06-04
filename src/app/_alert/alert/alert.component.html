@@ -1,0 +1,14 @@
+<div class="container" *ngIf = "!confirm_status">
+    <p class="alert-center">{{message}}</p>
+    <div class="form-group">
+        <button (click)="close()" class="button button1 hvr-pop transition">Ok</button>
+    </div>
+</div>
+
+<div class="container" *ngIf = "confirm_status">
+    <p class="alert-center">{{message}}</p>
+    <div class="form-group">
+        <button (click)="confirmation()" class="button button1 hvr-pop transition">Ok</button>
+        <button (click)="close()" class="button button1 hvr-pop transition">Cancel</button>
+    </div>
+</div>

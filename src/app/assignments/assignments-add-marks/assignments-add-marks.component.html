@@ -1,0 +1,110 @@
+<div id="main-content">
+
+  <div class="row">
+    <div class="container-fluid" id="buttonId1">
+      <button routerLink="/main/assignments/assignmentsByDate" class="button button2 hvr-pop transition">Assignemnts By Date</button>
+      <!-- <button routerLink="/main/assignments/assignmentsListMarks" class="button button2 hvr-pop transition">Assignment List
+        Marks</button> -->
+      <button routerLink="/main/assignments/assignmentsAddMarks" class="button button2 hvr-pop transition">Assignment Marks</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="container-fluid dashboard-content">
+      <div class="card selectcard">
+        <form class="searchForm" role="form" [formGroup]="assMarksForm" (ngSubmit)="assMarks(assMarksForm)">
+          <div class="form-group" *ngIf="user.role === 'admin'">
+            <label class="pull-left">Class</label>
+            <select class="form-control" formControlName="selected_class" (change)="getSections()">
+              <option>select...</option>
+              <option *ngFor="let cls of classes" value="{{cls.class_id}}">{{cls.name}}</option>
+            </select>
+          </div>
+          <div class="form-group" *ngIf="user.role === 'teacher'">
+            <label class="pull-left">Class</label>
+            <select class="form-control" formControlName="selected_class" (change)="getTeacherSections()">
+              <option>select...</option>
+              <option *ngFor="let cls of classes" value="{{cls.class_id}}">{{cls.name}}</option>
+            </select>
+          </div>
+          <div class="form-group" *ngIf="user.role === 'admin'">
+            <label class="pull-left">Section</label>
+            <select class="form-control" formControlName="selected_section" (change)="getSubjects()">
+              <option>select...</option>
+              <option *ngFor="let sec of class_sections; let i = index" value="{{sec.section_id}}">{{sec.name}}</option>
+            </select>
+          </div>
+          <div class="form-group" *ngIf="user.role === 'teacher'">
+            <label class="pull-left">Section</label>
+            <select class="form-control" formControlName="selected_section" (change)="getTeacherSubjects()">
+              <option>select...</option>
+              <option *ngFor="let sec of class_sections; let i = index" value="{{sec.section_id}}">{{sec.name}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="pull-left">Subject</label>
+            <select class="form-control" formControlName="selected_subject" (change)="getChapters()">
+              <option>select...</option>
+              <option *ngFor="let sub of subjects; let i = index" value="{{sub.subject_id}}">{{sub.name}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="pull-left">Chapter</label>
+            <select class="form-control" formControlName="selected_chapter" (change)="getAssignments()">
+              <option>select...</option>
+              <option *ngFor="let ch of chapters; let i = index" value="{{ch.lession_id}}">{{ch.title}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="pull-left">Assignment</label>
+            <select class="form-control" formControlName="selected_assignment">
+              <option>select...</option>
+              <option *ngFor="let ass of assignments; let i = index" value="{{ass.assignment_id}}">{{ass.assignment_title}}</option>
+            </select>
+          </div>
+          <div class="form-group pull-right">
+            <button type="submit" class="button button1 hvr-pop transition">Select</button>
+          </div>
+        </form>
+      </div>
+      <div class="card listcard">
+        <div class="pull-left">
+          <h4>Assignment Marks</h4>
+        </div>
+        <div class="searchForm">
+          <div class="table-responsive">
+            <table style="width:100%;">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Student</th>
+                  <th>Marks Obtained</th>
+                  <th *ngIf="!marks_add">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let stu of students | paginate: config; let i=index">
+                  <td>{{ (config.currentPage - 1) * config.itemsPerPage + i +1 }}</td>
+                  <td>{{stu.first_name}}</td>
+                  <td><input class="form-control" placeholder="Enter..." [(ngModel)]="stu.marks" type="number"></td>
+                  <td *ngIf="!marks_add">
+                    <div class="pattrenED">
+                      <!-- <div><i class="fa fa-pencil-square" aria-hidden="true"></i></div> -->
+                      <button (click)="editMarks(stu.assignment_result_id, stu.marks )" class="button button1 hvr-pop transition">Edit Marks</button>
+                    </div>
+                  </td>
+                </tr>               
+              </tbody>
+            </table>
+            <div class="paginationdiv">
+              <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+            </div>
+            <div class="form-group pull-right" *ngIf="marks_add">
+              <button type="submit" class="button button1 hvr-pop transition" (click)="addAssignment_marks()">Add Marks</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

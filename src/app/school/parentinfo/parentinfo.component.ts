@@ -1,0 +1,63 @@
+import { Component, OnInit } from '@angular/core';
+import { ServicesService } from '../../services.service';
+import { MatDialog, MatDialogConfig } from '@angular/material';
+import { AlertComponent } from '../../_alert/alert/alert.component';
+
+@Component({
+  selector: 'app-parentinfo',
+  templateUrl: './parentinfo.component.html',
+  styleUrls: ['./parentinfo.component.css']
+})
+export class ParentinfoComponent implements OnInit {
+
+
+  constructor(private service: ServicesService, public dialog: MatDialog) {}
+
+  ngOnInit() {
+  }
+
+  parents = [];
+  selected_class:string;
+  selected_section:string;
+  alert_message: string;
+
+  receiveClass($event) {
+    this.selected_class = $event
+    console.log(this.selected_class)
+  }
+
+  receiveSection($event) {
+    this.selected_section = $event
+    console.log(this.selected_section)
+    this.getParentsInfo();
+  }
+
+  getParentsInfo() {
+    if(this.selected_section == undefined || this.selected_section == '') {
+      this.alert_message = "Please Select Class, Section and Subject";
+      this.openAlert(this.alert_message)
+    } else {
+      this.service.getParentsInfo(this.selected_section)
+      .subscribe(
+        res => { this.parents = res.parents, console.log(res)
+        }
+      )
+    }
+  }
+
+  openAlert(alert_message) {
+    const alertConfig = new MatDialogConfig();
+
+    alertConfig.autoFocus = true;
+    alertConfig.width = '40%';
+
+    alertConfig.data = {
+      message: alert_message,
+    };
+
+    const alertRef = this.dialog.open(AlertComponent, alertConfig);
+
+    alertRef.afterClosed().subscribe()
+  }
+
+}

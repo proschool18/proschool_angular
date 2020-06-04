@@ -1,0 +1,74 @@
+<form role="form" [formGroup]="claimForm" (ngSubmit)="editClaim()">
+    <div class="row">
+        <div class="col-md-12">
+            <h4 id="heading">Edit Claim</h4>
+        </div>
+    </div>
+    <div class="row" *ngIf="user.role === 'admin'">
+        <div class="col-md-10">
+            <div class="form-group">
+                <label class="pull-left">Employee Type</label>
+                <select class="form-control" formControlName="employee_type" [value]="claims.employee_type" (change)="get_selectedemployees()">
+                    <option>select...</option>
+                    <option value="teaching">Teaching</option>
+                    <option value="non-teaching">Non-Teaching</option>
+                    <option value="administrative">Administrative</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="user.role === 'admin'">
+        <div class="col-md-10">
+            <div class="form-group">
+                <label class="pull-left">Claim By</label>
+                <select class="form-control" formControlName="employee_id" [value]="claims.employee_id">
+                    <option>select...</option>
+                    <option *ngFor="let emp of employees" value="{{emp.employee_id}}">{{emp.first_name}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="form-group">
+                <label class="pull-left">Category</label>
+                <select class="form-control" formControlName="category" [value]="claims.category">
+                    <option>select...</option>
+                    <option value="food">Food</option>
+                    <option value="travel">Travel</option>
+                    <option value="stationary">Stationary</option>
+                    <option value="marketing">Marketing</option>
+                    <option value="miscellaneous">Miscellaneous</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="form-group">
+                <label class="pull-left">Amount</label>
+                <input class="form-control" value="{{claims.amount}}" formControlName="amount" type="number">
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="user.role === 'admin'">
+        <div class="col-md-10">
+            <div class="form-group">
+                <label class="pull-left">Claim Date</label>
+                <input class="form-control" value="{{claims.date}}" formControlName="date" type="date">
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="user.role === 'admin' && claims.approved_date">
+        <div class="col-md-10">
+            <div class="form-group">
+                <label class="pull-left">Approved Date</label>
+                <input class="form-control" value="{{claims.approved_date}}" formControlName="approved_date" type="date">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="button button1 hvr-pop transition pull-right">Submit</button>
+        <div (click)="close()" class="button button1 hvr-pop transition pull-left">Close</div>
+    </div>
+</form>

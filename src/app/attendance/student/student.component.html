@@ -1,0 +1,40 @@
+<div id="main-content">
+
+    <div class="row">
+        <div class="container-fluid dashboard-content">
+            <div class="card selectcard">
+                <div class="searchForm">
+                    <div class="form-group">
+                        <label class="pull-left">Month</label>
+                        <select class="form-control" [(ngModel)]="select_month" (change)="getstudentMonthAttendance()">
+                            <option>select...</option>
+                            <option *ngFor="let month of months" value="{{month.value}}">{{month.month}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card listcard">
+                <div class="row">
+                    <div class="form-group pull-left">
+                        <p>Present: {{attendance.present}}</p>
+                        <p>Absent: {{attendance.absent}}</p>
+                        <p>On Leave: {{attendance.onleave}}</p>
+                    </div>
+                </div>
+                <div class="searchForm">
+                    <div class="card attendancecard hvr-bounce-in transition" *ngFor="let att of attendance.donutchart; let i = index;">
+                        <div>
+                            <div class="dayroll">{{att.day}}</div>
+                        </div>
+                        <div class="attreport">
+                            <div class="attreportbtn present" *ngIf="att.status === 'Present'">Present</div>
+                            <div class="attreportbtn absent" *ngIf="att.status === 'Absent'">Absent</div>
+                            <div class="attreportbtn leave" *ngIf="att.status === 'On Leave'">On Leave</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,63 @@
+<form role="form" [formGroup]="classForm" (ngSubmit)="editClass()" *ngIf="dialog_type == 'class'">
+    <div class="row">
+        <div class="col-md-12">
+            <h4 id="heading">Edit Class</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="form-group">
+                <label class="pull-left">Class Name</label>
+                <input class="form-control" value="{{classes.name}}" formControlName="name" placeholder="Enter..."
+                    type="text">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="button button1 hvr-pop transition pull-right">Submit</button>
+        <div (click)="close_class()" class="button button1 hvr-pop transition pull-left">Close</div>
+    </div>
+</form>
+
+<form role="form" [formGroup]="sectionForm" (ngSubmit)="editSection()" *ngIf="dialog_type == 'section'">
+    <div class="row">
+        <div class="col-md-12">
+            <h4 id="heading">Edit Section</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="form-group">
+                <label class="pull-left">Section Name</label>
+                <input class="form-control" value="{{sections.name}}" formControlName="name" placeholder="Enter..."
+                    type="text">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="form-group">
+                <label class="pull-left">Class Teacher</label>
+                <select class="form-control" formControlName="teacher_name" [value]="sections.employee_id">
+                    <option>select...</option>
+                    <option *ngFor="let tch of teachers" value="{{tch.employee_id}}">{{tch.first_name}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="row">
+        <div class="col-md-10">
+            <div class="form-group">
+                <label class="pull-left">Pattern</label>
+                <select class="form-control" formControlName="pattern">
+                  <option>select...</option>
+                  <option *ngFor="let pt of patterns" value="{{pt.class_id}}">{{pt.name}}</option>
+                </select>
+              </div>
+        </div>
+    </div> -->
+    <div class="form-group">
+        <button type="submit" class="button button1 hvr-pop transition pull-right">Submit</button>
+        <div (click)="close_section()" class="button button1 hvr-pop transition pull-left">Close</div>
+    </div>
+</form>

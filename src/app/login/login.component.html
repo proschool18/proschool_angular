@@ -1,0 +1,61 @@
+<div class="login">
+    <div class="container-login100">
+        <div class="wrap-login100">
+            <form class="login100-form validate-form" [formGroup]="loginForm" (ngSubmit)="login()">
+
+                <!-- <span class="login100-form-title p-b-34 p-t-27">
+                    Log in
+                </span> -->
+                <!-- <img src="../../assets/images/high-school.png" width="80px" height="80px"
+                style="text-align: center;"> -->
+                <img src="../../assets/images/proSchool.png" width="250px" height="120px">
+
+                <div class="wrap-input100" [ngClass]="{'has-error' : loginForm.get('email').errors 
+                && (loginForm.get('email').touched || loginForm.get('email').dirty)}">
+                    <input class="input100" type="email" formControlName="email" placeholder="Username">
+                    <span class="focus-input100" data-placeholder="&#xf207;"></span>
+                    <span class="help-block" *ngIf="loginForm.get('email').errors 
+          && (loginForm.get('email').touched || loginForm.get('email').dirty)">
+                        <span *ngIf="loginForm.get('email').errors.required">
+                            Username is required
+                        </span>
+                    </span>
+                </div>
+
+                <div class="wrap-input100" [ngClass]="{'has-error' : loginForm.get('password').errors 
+                && (loginForm.get('password').touched || loginForm.get('password').dirty)}">
+                    <input class="input100" type="password" formControlName="password" placeholder="Password">
+                    <span class="focus-input100" data-placeholder="&#xf191;"></span>
+                    <span class="help-block" *ngIf="loginForm.get('password').errors 
+          && (loginForm.get('password').touched || loginForm.get('password').dirty)">
+                        <span *ngIf="loginForm.get('password').errors.required">
+                            Password is required
+                        </span>
+                    </span>
+                </div>
+
+                <div class="contact100-form-checkbox">
+                    <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+                    <label class="label-checkbox100" for="ckb1">
+                        Remember me
+                    </label>
+                </div>
+
+                <div class="container-login100-form-btn">
+                    <button type="submit" class="login100-form-btn">
+                        Login
+                    </button>
+                </div>
+
+                <div class="text-center p-t-90" style="margin-left: -60px;">
+                    <a class="txt1" href="#">
+                        Forgot Password
+                    </a>
+                    <a class="txt1" (click)="RegistrationPage()">
+                        Registration
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,27 @@
+.cardsryt{
+    margin-right: 2%;
+}
+.formalign {
+    margin: 5% 0 0 5%;
+}
+.leftcard {
+    height: 390px !important;
+    width: 50%;
+    background-color: white;
+    }
+.rightcard {
+    width: 50%;
+    background-color: white;
+    height: 390px !important;
+    }
+canvas{
+    margin: 15px 0px 0px 0px;
+    height: 370px !important;
+}    
+.form-group{
+    margin-top: 25px;
+}
+.form-control{
+    margin-left: 38px;
+    width: 60%;
+}

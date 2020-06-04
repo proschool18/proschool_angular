@@ -1,0 +1,9 @@
+<select name="standard" [(ngModel)]="selected_class" (change)="getTeacherSections()">
+    <option *ngFor="let cls of classes" value="{{cls.class_id}}">{{cls.name}}</option>
+</select>
+<select name="section" [(ngModel)]="selected_section" (change)="getTeacherSubjects()">
+    <option *ngFor="let sec of class_sections; let i = index" value="{{sec.section_id}}">{{sec.name}}</option>
+</select>
+<select name="section" [(ngModel)]="selected_subject" (change)="get_sub()">
+    <option *ngFor="let sub of subjects; let i = index" value="{{sub.subject_id}}">{{sub.name}}</option>
+</select>

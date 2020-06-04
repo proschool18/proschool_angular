@@ -1,0 +1,49 @@
+<div>
+    <div class="row">
+      <div class="col-md-12">
+        <h4 id="heading" *ngIf="dialog_type == 'add'">Add ExamPaper</h4>
+        <h4 id="heading" *ngIf="dialog_type == 'edit'">Edit ExamPaper</h4>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label class="pull-left">Subject</label>
+          <select class="form-control" [(ngModel)]="selected_subject">
+            <option>select...</option>
+            <option *ngFor="let sub of subjects" value="{{sub.subject_id}}">{{sub.name}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngFor="let exam of exampapers; let i = index;">
+      <div class="col-md-3">
+        <div class="form-group">
+          <label class="pull-left">Assessment</label>
+          <input class="form-control" [(ngModel)]="exam.Assessment" type="text" disabled>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <label class="pull-left">Exam Date</label>
+          <input class="form-control" [(ngModel)]="exam.Exam_date" type="date">
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <label class="pull-left">Start Time</label>
+          <input class="form-control" [(ngModel)]="exam.Start_time" type="time">
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <label class="pull-left">End Time</label>
+          <input class="form-control" [(ngModel)]="exam.End_time" type="time">
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <button (click)="submit()" class="button button1 hvr-pop transition pull-right">Submit</button>
+      <div (click)="close()" class="button button1 hvr-pop transition pull-left">Close</div>
+    </div>
+</div>

@@ -1,0 +1,88 @@
+<div id="main-content">
+    <div class="row">
+        <div class="container-fluid" id="buttonId1">
+            <button routerLink="/main/employeeprofile/profile/{{employee_id}}" class="button button2 hvr-pop transition">Profile</button>
+            <button routerLink="/main/employeeprofile/attendance/{{employee_id}}" class="button button2 hvr-pop transition">Attendance</button>
+            <button routerLink="/main/employeeprofile/academics/{{employee_id}}" class="button button2 hvr-pop transition">Academics</button>
+            <button routerLink="/main/employeeprofile/assessment/{{employee_id}}" class="button button2 hvr-pop transition">Assessment</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="container-fluid dashboard-content">
+            <div class="card leftcard cardsryt scrollonhover">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group formalign">
+                            <label>Select Month</label>
+                            <select class="form-control" [(ngModel)]="month" (change)="getEmployeeMonthlyAttendance()">
+                                <option>select...</option>
+                                <option *ngFor="let mon of months; let i = index" value="{{mon.value}}">{{mon.month}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60"
+                                aria-valuemin="0" aria-valuemax="100"
+                                [ngStyle]="{'width': (attendance[0].attendance.presentPercent) + '%'}">
+                                Present: {{attendance[0].attendance.present}}
+                            </div>
+                            <b>{{attendance[0].attendance.present}}</b>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="60"
+                                aria-valuemin="0" aria-valuemax="100"
+                                [ngStyle]="{'width': (attendance[0].attendance.absentPercent) + '%'}">
+                                Absent: {{attendance[0].attendance.absent}}
+                            </div>
+                            <b>{{attendance[0].attendance.absent}}</b>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60"
+                                aria-valuemin="0" aria-valuemax="100"
+                                [ngStyle]="{'width': (attendance[0].attendance.onLeavePercent) + '%'}">
+                                OnLeave: {{attendance[0].attendance.onleave}}
+                            </div>
+                            <b>{{attendance[0].attendance.onleave}}</b>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="searchForm">
+                    <div class="table-responsive">
+                        <table style="width:100%;">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Date</th>
+                                    <th>Attendance Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let att of attendance[0].attendance_data; let i = index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{att.date}}</td>
+                                    <td [ngStyle]="{'background-color': (att.status == 'Present') ? '#5cb85c' : (att.status == 'Absent') ? '#d9534f' : '#f0ad4e', 'color': 'white' }">{{att.status}}</td>
+                                    <!-- <td [ngStyle]="{'background-color': (att.status == 'Present') ? '#1caf9a' : (att.status == 'Present') ? '#1caf9a' : '#e04b4a', 'color': 'white', 'margin-botton': '2px' }">{{att.status}}</td> -->
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card rightcard">
+                <canvas baseChart [data]="chartData" [labels]="chartLabels" [options]="chartOptions"
+                    [legend]="chartLegend" [chartType]="chartType"></canvas>
+            </div>
+        </div>
+    </div>
+
+</div>

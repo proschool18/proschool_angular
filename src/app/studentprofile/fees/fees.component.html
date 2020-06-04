@@ -1,0 +1,98 @@
+<div id="main-content">
+    <div class="row">
+        <div class="container-fluid" id="buttonId1">
+            <button routerLink="/main/studentprofile/profile/{{student_id}}/{{section_id}}"
+                class="button button2 hvr-pop transition">Profile</button>
+            <button routerLink="/main/studentprofile/attendance/{{student_id}}/{{section_id}}"
+                class="button button2 hvr-pop transition">Attendance</button>
+            <button routerLink="/main/studentprofile/academics/{{student_id}}/{{section_id}}"
+                class="button button2 hvr-pop transition">Academics</button>
+            <button routerLink="/main/studentprofile/assessment/{{student_id}}/{{section_id}}"
+                class="button button2 hvr-pop transition">Assessment</button>
+            <button routerLink="/main/studentprofile/fees/{{student_id}}/{{section_id}}"
+                class="button button2 hvr-pop transition">Fee Collection</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="container-fluid dashboard-content">
+            <div class="card leftcard cardsryt scrollonhover">
+                <div class="row">
+                    <div class="col-md-4 formalign">
+                        <div class="form-group">
+                            <h4>Fee Reports:</h4>
+                        </div>
+
+                    </div>
+                    <div class="col-md-4 formalignryt">
+                        <div class="form-group">
+                            <label>Fee Terms</label>
+                            <select class="form-control" [(ngModel)]="selected_term" (change)="getStudentFees()">
+                                <option value="All Terms Fee">All Fee Terms</option>
+                                <option *ngFor="let terms of fees[0].TermwiseFee; let i = index" value="{{terms.fee_term_id}}">
+                                    {{terms.FeeTerm}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="searchForm">
+                    <div class="table-responsive" *ngIf="allFees else allTerms">
+                        <table style="width:100%;">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Fee Term</th>
+                                    <th>Total Fee</th>
+                                    <th>Paid Fee</th>
+                                    <th>Balance Fee</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let fee of fees[0].TermwiseFee; let i = index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{fee.FeeTerm}}</td>
+                                    <td>Rs. {{fee.TotalTermFees}}</td>
+                                    <td>Rs. {{fee.PaidTermFees}}</td>
+                                    <td>Rs. {{fee.BalanceTermFee}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <ng-template #allTerms>
+                        <div class="table-responsive">
+                            <table style="width:100%;">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Fee Type</th>
+                                        <th>Total Fee</th>
+                                        <th>Paid Fee</th>
+                                        <th>Balance Fee</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let fee of termwiseFee[0].studentFeeDetails; let i = index">
+                                        <td>{{i+1}}</td>
+                                        <td>{{fee.FeeType}}</td>
+                                        <td>Rs. {{fee.TotalTypeFees}}</td>
+                                        <td>Rs. {{fee.PaidTermFees}}</td>
+                                        <td>Rs. {{fee.BalanceFee}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+
+            <div class="card rightcard">
+                <canvas baseChart [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions"
+                    [legend]="chartLegend" [chartType]="chartType"></canvas>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,53 @@
+<main class="card mt-20 within-viewport">
+  <section class="page-actions">
+    <div class="_select-or-search">
+      <div class="_select-group">
+        <app-schedule *ngIf="user.role === 'admin'" (classEvent)="receiveClass($event)" (sectionEvent)="receiveSection($event)" (scheduleEvent)="receiveSchedule($event)"></app-schedule>
+        <app-teacher-schedule *ngIf="user.role === 'teacher'" (classEvent)="receiveClass($event)" (sectionEvent)="receiveSection($event)" (scheduleEvent)="receiveSchedule($event)"></app-teacher-schedule>
+        <select name="section" [(ngModel)]="selected_subject" (change)="getEvaluations()">
+          <option *ngFor="let sub of subjects; let i = index" value="{{sub.subject_id}}">{{sub.name}}</option>
+        </select>
+      </div>
+      <input type="search" name="" placeholder="Search">
+    </div>
+    <button class="btn -cta" routerLink="/main/evaluations/marksList">Marks List</button>
+    <button class="btn -cta" routerLink="/main/evaluations/cumulativeMarks">Cumulative Marks</button>
+    <button class="btn -cta" routerLink="/main/evaluations/addMarks" *ngIf="user.role === 'admin' || user.role === 'teacher'">Add Marks</button>
+  </section>
+  <section class="table-and-pagination -classes-schedule">
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th align="left">Student</th>
+            <th align="left" *ngFor="let ass of inner_assessments;">{{ass.Assessment}}</th>
+            <th align="left">Total Marks</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let stu of students; let i=index">
+            <td class="_s-no"><span>{{ i + 1 }}</span></td>
+            <td>{{stu.first_name}}</td>
+            <td *ngFor="let ass of stu.assessments[0].assMarks; let j = index"><input class="form-control" type="number" [(ngModel)]="ass.marks" (change)="add_toStudent(i, j, $event)"></td>
+            <td>{{totalmarks[i]}}</td>
+          </tr>               
+        </tbody>
+      </table>
+    </div>
+    <div class="_pagination">
+      <a href="" class="btn -previous">Previous</a>
+      <a href="" class="btn -current">1</a>
+      <a href="" class="btn">2</a>
+      <a href="" class="btn">3</a>
+      <a href="" class="btn">4</a>
+      <a href="" class="btn">5</a>
+      <a href="" class="btn">6</a>
+      <a href="" class="btn">7</a>
+      <a href="" class="btn">8</a>
+      <a href="" class="btn">9</a>
+      <a href="" class="btn">10</a>
+      <a href="" class="btn -next">Next</a>
+    </div>
+  </section>
+</main>

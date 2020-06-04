@@ -1,0 +1,70 @@
+<div id="main-content">
+
+  <!-- <div class="row">
+    <div class="container-fluid" id="buttonId1">
+      <button routerLink="/attendance/reports" class="button button2 hvr-pop transition">Student Day Reports</button>
+      <button routerLink="/attendance/stureportsmonth" class="button button2 hvr-pop transition">Student Month Reports</button>
+    </div>
+  </div> -->
+
+  <div class="row">
+    <div class="container-fluid dashboard-content">
+      <div class="card selectcard">
+        <app-class (classEvent)="receiveClass($event)" (sectionEvent)="receiveSection($event)"></app-class>
+        <div class="searchForm">
+          <div class="form-group">
+            <label class="pull-left">Report From Date</label>
+            <input class="form-control" [(ngModel)]="date" placeholder="Enter..." type="date">
+          </div>
+          <div class="form-group">
+            <label class="pull-left">Report To Date</label>
+            <input class="form-control" [(ngModel)]="month" placeholder="Enter..." type="date">
+          </div>
+          <div class="form-group pull-right">
+            <button type="submit" class="button button2 hvr-pop transition" (click)="getAttendance()">Search</button>
+          </div>
+        </div>
+      </div>
+      <div class="card listcard">
+        <div class="pull-left">
+          <h4>Student Attendance Reports</h4>
+        </div>
+        <div class="pull-right">
+          <button class="button button1 btnalign" (click)="View('list')">List</button>
+          <button class="button button1 btnalign" (click)="View('visualize')">Visualize</button>
+        </div>
+        <div class="searchForm" *ngIf="list else visualize">
+          <div class="table-responsive">
+            <table style="width:100%;">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Roll No</th>
+                  <th>Gender</th>
+                  <th>Attendance</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let att of attendance.donutchart; let i = index">
+                  <td>{{i+1}}</td>
+                  <td>{{att.first_name}} {{att.last_name}}</td>
+                  <td>{{att.roll_no}}</td>
+                  <td>{{att.gender}}</td>
+                  <td [ngStyle]="{'background-color': (att.status == 'Present') ? '#5cb85c' : (att.status == 'Absent') ? '#d9534f' : '#f0ad4e', 'color': 'white' }">{{att.status}}</td>
+                  <!-- <td [ngStyle]="{'background-color': (att.status == 'Present') ? '#1caf9a' : (att.status == 'Present') ? '#1caf9a' : '#e04b4a', 'color': 'white', 'margin-botton': '2px' }">{{att.status}}</td> -->
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <ng-template #visualize>
+          <div class="searchForm">
+            <canvas baseChart [data]="chartData" [labels]="chartLabels" [options]="chartOptions" [legend]="chartLegend"
+              [chartType]="chartType"></canvas>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

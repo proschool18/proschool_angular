@@ -1,0 +1,232 @@
+<form role="form" [formGroup]="materialForm" (ngSubmit)="editMaterial()" *ngIf="dialog_type == 'material'">
+    <div class="row">
+        <div class="col-md-12">
+            <h4 id="heading">Edit Material</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="form-group">
+                <label class="pull-left">Material Name</label>
+                <input class="form-control" value="{{materials.material}}" formControlName="material"
+                    placeholder="Enter..." type="text">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="form-group">
+                <label class="pull-left">Category</label>
+                <input class="form-control" value="{{materials.category}}" formControlName="category"
+                    placeholder="Enter..." type="text">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="button button1 hvr-pop transition pull-right">Submit</button>
+        <div (click)="close()" class="button button1 hvr-pop transition pull-left">Close</div>
+    </div>
+</form>
+
+<form role="form" [formGroup]="vendorForm" (ngSubmit)="editVendor()" *ngIf="dialog_type == 'vendor'">
+    <div class="row">
+        <div class="col-md-12">
+            <h4 id="heading">Edit Vendor</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="form-group">
+                <label class="pull-left">Vendor Name</label>
+                <input class="form-control" value="{{vendors.vendor_name}}" formControlName="vendor_name"
+                    placeholder="Enter..." type="text">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="form-group">
+                <label class="pull-left">Material</label>
+                <select class="form-control" formControlName="material" [value]="vendors.material">
+                    <option>select...</option>
+                    <option *ngFor="let mat of materialslist" value="{{mat.material_id}}">{{mat.material}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="form-group">
+                <label class="pull-left">Email</label>
+                <input class="form-control" value="{{vendors.email}}" formControlName="email" placeholder="Enter..."
+                    type="email">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="form-group">
+                <label class="pull-left">Contact Number</label>
+                <input class="form-control" value="{{vendors.contact_no}}" formControlName="contact_no"
+                    placeholder="Enter..." type="number">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="form-group">
+                <label class="pull-left">Location</label>
+                <input class="form-control" value="{{vendors.location}}" formControlName="location"
+                    placeholder="Enter..." type="text">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="form-group">
+                <label class="pull-left">Address</label>
+                <textarea class="form-control" value="{{vendors.address}}" formControlName="address"
+                    placeholder="Enter..." cols="10" rows="3"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="button button1 hvr-pop transition pull-right">Submit</button>
+        <div (click)="close()" class="button button1 hvr-pop transition pull-left">Close</div>
+    </div>
+</form>
+
+<form role="form" [formGroup]="materialInForm" (ngSubmit)="editMaterialIn()" *ngIf="dialog_type == 'material-in'">
+    <div class="row">
+        <div class="col-md-12">
+            <h4 id="heading">Edit Material-In</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="form-group">
+                <label class="pull-left">Material :   {{materialsIn.material}}</label>
+                <!-- <select class="form-control" formControlName="material" [value]="materialsIn.material_id">
+                    <option>select...</option>
+                    <option *ngFor="let mat of materialslist" value="{{mat.material_id}}">{{mat.material}}</option>
+                </select> -->
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="form-group">
+                <label class="pull-left">Vendor</label>
+                <select class="form-control" formControlName="vendor" [value]="materialsIn.vendor_id">
+                    <option>select...</option>
+                    <option *ngFor="let ven of vendorslist" value="{{ven.vendor_id}}">{{ven.vendor_name}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="form-group">
+                <label class="pull-left">No of Units</label>
+                <input class="form-control" value="{{materialsIn.no_of_units}}" formControlName="no_of_units"
+                    placeholder="Enter..." type="number">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="form-group">
+                <label class="pull-left">Price</label>
+                <input class="form-control" value="{{materialsIn.price}}" formControlName="price" placeholder="Enter..."
+                    type="number">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="form-group">
+                <label class="pull-left">Purchased Date</label>
+                <input class="form-control" value="{{materialsIn.purchased_date}}" formControlName="purchased_date"
+                    placeholder="Enter..." type="date">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="form-group">
+                <label class="pull-left">Payment DueDate</label>
+                <input class="form-control" value="{{materialsIn.payment_dueDate}}" formControlName="payment_duedate"
+                    placeholder="Enter..." type="date">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="button button1 hvr-pop transition pull-right">Submit</button>
+        <div (click)="close()" class="button button1 hvr-pop transition pull-left">Close</div>
+    </div>
+</form>
+
+<form role="form" [formGroup]="materialOutForm" (ngSubmit)="editMaterialOut()" *ngIf="dialog_type == 'material-out'">
+    <div class="row">
+        <div class="col-md-12">
+            <h4 id="heading">Edit Material-Out</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="form-group">
+                <label class="pull-left">Material :   {{materialsOut.material}}</label>
+                <!-- <select class="form-control" formControlName="material" [value]="materialsOut.material_id">
+                    <option>select...</option>
+                    <option *ngFor="let mat of materialslist" value="{{mat.material_id}}">{{mat.material}}</option>
+                </select> -->
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="form-group">
+                <label class="pull-left">Employee Type</label>
+                <select class="form-control" formControlName="employee_type" [value]="materialsOut.employee_type" (change)="get_selectedemployees()">
+                    <option>select...</option>
+                    <option value="teaching">Teaching</option>
+                    <option value="non-teaching">Non-Teaching</option>
+                    <option value="administrative">Administrative</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="form-group">
+                <label class="pull-left">Receiver</label>
+                <select class="form-control" formControlName="receiver" [value]="materialsOut.employee_id">
+                    <option>select...</option>
+                    <option *ngFor="let emp of employees" value="{{emp.employee_id}}">{{emp.first_name}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="form-group">
+                <label class="pull-left">No of Units</label>
+                <input class="form-control" value="{{materialsOut.no_of_units}}" formControlName="no_of_units"
+                    placeholder="Enter..." type="number">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="form-group">
+                <label class="pull-left">Received Date</label>
+                <input class="form-control" value="{{materialsOut.received_date}}" formControlName="received_date"
+                    placeholder="Enter..." type="date">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="button button1 hvr-pop transition pull-right">Submit</button>
+        <div (click)="close()" class="button button1 hvr-pop transition pull-left">Close</div>
+    </div>
+</form>

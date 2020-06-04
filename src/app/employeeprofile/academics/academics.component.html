@@ -1,0 +1,76 @@
+<div id="main-content">
+    <div class="row">
+        <div class="container-fluid" id="buttonId1">
+            <button routerLink="/main/employeeprofile/profile/{{employee_id}}" class="button button2 hvr-pop transition">Profile</button>
+            <button routerLink="/main/employeeprofile/attendance/{{employee_id}}" class="button button2 hvr-pop transition">Attendance</button>
+            <button routerLink="/main/employeeprofile/academics/{{employee_id}}" class="button button2 hvr-pop transition">Academics</button>
+            <button routerLink="/main/employeeprofile/assessment/{{employee_id}}" class="button button2 hvr-pop transition">Assessment</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="container-fluid dashboard-content">
+            <div class="card leftcard cardsryt scrollonhover">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Class</label>
+                            <select class="form-control" [(ngModel)]="selected_class" (change)="getTeacherSections()">
+                                <option *ngFor="let class of classes; let i = index" value="{{class.class_id}}">
+                                    {{class.name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Sections</label>
+                            <select class="form-control" [(ngModel)]="selected_section" (change)="getTeacherSubjects()">
+                                <option *ngFor="let sec of sections; let i = index" value="{{sec.section_id}}">
+                                    {{sec.name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Subjects</label>
+                            <select class="form-control" [(ngModel)]="selected_subject" (change)="getAcademicEvaluation()">
+                                <option *ngFor="let sub of subjects; let i = index" value="{{sub.subject_id}}">
+                                    {{sub.name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="searchForm">
+                    <div class="table-responsive">
+                        <table style="width:100%;">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Examination</th>
+                                    <th *ngFor="let grade of academics[0].data">{{grade.grade}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let exam of academics; let i = index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{exam.exam_title}}</td>
+                                    <td *ngFor="let grade of academics[i].data">{{grade.count}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card rightcard">
+                <canvas baseChart [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions"
+                    [legend]="chartLegend" [chartType]="chartType"></canvas>
+            </div>
+        </div>
+    </div>
+
+</div>

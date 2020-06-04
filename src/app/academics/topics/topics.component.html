@@ -1,0 +1,55 @@
+<main class="card mt-20 within-viewport">
+  <section class="page-actions">
+    <div class="_select-or-search">
+      <div class="_select-group">
+        <app-chapter *ngIf="user.role === 'admin'" (classEvent)="receiveClass($event)" (sectionEvent)="receiveSection($event)" (subjectEvent)="receiveSubject($event)" (chapterEvent)="receiveChapter($event)"></app-chapter>
+        <app-teacher-chapter *ngIf="user.role === 'teacher'" (classEvent)="receiveClass($event)" (sectionEvent)="receiveSection($event)" (subjectEvent)="receiveSubject($event)" (chapterEvent)="receiveChapter($event)"></app-teacher-chapter>
+      </div>
+    </div>
+    <div class="add_div">
+      <input placeholder="Topic Name" [(ngModel)]="topic_name" type="text" *ngIf="user.role === 'admin'">
+      <button class="btn -cta" (click)="addTopics()" *ngIf="user.role === 'admin'">Add Topic</button>
+    </div>
+  </section>
+
+  <section class="table-and-pagination -classes-schedule">
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th align="left">Topic Name</th>
+            <th align="left">Status</th>
+            <th align="left" *ngIf="user.role === 'admin' || user.role === 'teacher'">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let ts of collection.topics | paginate: config; let i=index">
+            <td class="_s-no"><span>{{ i + 1 }}</span></td>
+            <td>{{ts.topic_name}}</td>
+            <td *ngIf="user.role === 'admin' || user.role === 'teacher'"><span class="_chip -class-running" (click)="update_status(ts.topic_status, i)">{{ts.topic_status}}</span></td>
+            <td *ngIf="user.role === 'parent'"><span class="_chip -class-running">{{ts.topic_status}}</span></td>
+            <td class="_actions" *ngIf="user.role === 'admin' || user.role === 'teacher'">
+              <button class="btn" (click)="editTopic(i)"><img src="../../../assets/images/edit-white.svg" alt="Edit" /></button>
+              <button class="btn" (click)="deleteTopic(ts.topic_id)"><img src="../../../assets/images/trash-white.svg" alt="Delete" /></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="_pagination">
+      <a href="" class="btn -previous">Previous</a>
+      <a href="" class="btn -current">1</a>
+      <a href="" class="btn">2</a>
+      <a href="" class="btn">3</a>
+      <a href="" class="btn">4</a>
+      <a href="" class="btn">5</a>
+      <a href="" class="btn">6</a>
+      <a href="" class="btn">7</a>
+      <a href="" class="btn">8</a>
+      <a href="" class="btn">9</a>
+      <a href="" class="btn">10</a>
+      <a href="" class="btn -next">Next</a>
+    </div>
+  </section>
+</main>

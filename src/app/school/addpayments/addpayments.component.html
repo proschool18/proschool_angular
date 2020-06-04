@@ -1,0 +1,89 @@
+<div id="main-content">
+
+  <div class="row">
+    <div class="container-fluid" id="buttonId1">
+      <button routerLink="/main/admin/payments" class="button button2 hvr-pop transition">Payments</button>
+      <button routerLink="/main/admin/addpayments" class="button button2 hvr-pop transition">Add Payments</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="container-fluid dashboard-content">
+      <div class="card selectcard">
+        <form class="searchForm" role="form" [formGroup]="paymentForm" (ngSubmit)="addPayments()">
+          <div class="form-group">
+            <label class="pull-left">Vendor Name</label>
+            <select class="form-control" formControlName="vendor" (change)="getVendorPayments()">
+              <option>select...</option>
+              <option *ngFor="let ven of vendors" value="{{ven.vendor_id}}">{{ven.vendor_name}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="pull-left">Material</label>
+            <select class="form-control" formControlName="material">
+              <option>select...</option>
+              <option *ngFor="let mat of materials" value="{{mat.material_id}}">{{mat.material}}</option>
+            </select>
+          </div>
+          <div class="form-group pull-right">
+            <div (click)="get_payments()" class="button button2 hvr-pop transition">Search</div>
+          </div><br><br>
+          <div class="form-group">
+            <label class="pull-left">Total Payment</label>
+            <input class="form-control" formControlName="payment_toPay" [value]="total_payment" type="number">
+          </div>
+          <div class="form-group">
+            <label class="pull-left">Balance Payment</label>
+            <input class="form-control" formControlName="balance_payment" [value]="balance_payment" type="number" disabled>
+          </div>
+          <div class="form-group">
+            <label class="pull-left">Payment</label>
+            <input class="form-control" formControlName="payment" placeholder="Enter..." type="number">
+          </div>
+          <div class="form-group">
+            <label class="pull-left">Payment Date</label>
+            <input class="form-control" formControlName="payment_date" placeholder="Enter..." type="date">
+          </div>
+          <div class="form-group pull-right">
+            <button type="submit" class="button button1 hvr-pop transition">Add Payment</button>
+          </div>
+        </form>
+      </div>
+      <div class="card listcard">
+        <div class="pull-left">
+          <h4>Payment</h4>
+        </div>
+
+        <div class="searchForm">
+          <div class="table-responsive">
+            <table style="width:100%;">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Payment Paid</th>
+                  <th>Payment Date</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let pay of collection.payments | paginate: config; let i=index">
+                  <td>{{ (config.currentPage - 1) * config.itemsPerPage + i +1 }}</td>
+                  <td>{{pay.payment}}</td>
+                  <td>{{pay.payment_date}}</td>
+                  <td>
+                        <div class="pattrenED">
+                          <div><i class="fa fa-trash" aria-hidden="true" (click)="deletePayment((config.currentPage - 1) * config.itemsPerPage + i)"></i></div>
+                        </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="paginationdiv">
+              <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

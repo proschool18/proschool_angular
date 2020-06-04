@@ -1,0 +1,68 @@
+<div id="main-content">
+
+    <div class="row">
+        <div class="container-fluid dashboard-content">
+            <div class="card selectcard">
+                <form class="searchForm" role="form" [formGroup]="eventForm" (ngSubmit)="addEvents()"
+                    *ngIf="user.role === 'admin'">
+                    <div class="form-group">
+                        <label class="pull-left">Event Title</label>
+                        <input class="form-control" formControlName="event_title" placeholder="Enter..." type="text">
+                    </div>
+                    <div class="form-group">
+                        <label class="pull-left">Event Date</label>
+                        <input class="form-control" formControlName="date" placeholder="Enter..." type="date">
+                    </div>
+                    <div class="form-group">
+                        <label class="pull-left">Event Time</label>
+                        <input class="form-control" formControlName="time" placeholder="Enter..." type="time">
+                    </div>
+                    <div class="form-group">
+                        <label class="pull-left">Description</label>
+                        <textarea class="form-control" formControlName="description" cols="5" rows="5"
+                            placeholder="Enter..."></textarea>
+                    </div>
+                    <div class="form-group pull-right">
+                        <button type="submit" class="button button1 hvr-pop transition">Add Event</button>
+                    </div>
+                </form>
+                <div class="searchForm" *ngIf="user.role === 'teacher' || user.role === 'parent'">
+                    <div class="form-group">
+                        <label class="pull-left">Events</label>
+                        <select class="form-control" [(ngModel)]="event" (change)="getSubject_teachers()">
+                            <option>select...</option>
+                            <option *ngFor="let event of events" value="{{event.event_id}}">{{event.title}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="events">
+                <div class="month">
+                    <ul>
+                        <li class="prev" (click)="getPrevious()">&#10094;</li>
+                        <li class="next" (click)="getNext()">&#10095;</li>
+                        <li>
+                            {{month}}<br>
+                            <!-- <span style="text-align:center">2017</span> -->
+                        </li>
+                        <li>{{year}}</li>
+                    </ul>
+                </div>
+                <ul class="weekdays">
+                    <li>Su</li>
+                    <li>Mo</li>
+                    <li>Tu</li>
+                    <li>We</li>
+                    <li>Th</li>
+                    <li>Fr</li>
+                    <li>Sa</li>
+                </ul>
+                <ul class="days">
+                    <li *ngFor="let day of dummy_daylist; let i = index">{{day}}</li>
+                    <li *ngFor="let day of daylist; let i = index" (click)="getEvents(day)" [ngClass]="{'date-highlight': date === day}">{{day}}</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</div>

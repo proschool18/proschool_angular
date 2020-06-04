@@ -1,0 +1,113 @@
+<div id="main-content">
+
+  <div class="row">
+    <div class="container-fluid" id="buttonId1">
+      <button routerLink="/main/admin/expenses" class="button button2 hvr-pop transition">Expenses</button>
+      <button routerLink="/main/admin/claims" class="button button2 hvr-pop transition">Claims</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="container-fluid dashboard-content">
+      <div class="card selectcard">
+        <form class="searchForm" role="form" [formGroup]="claimForm" (ngSubmit)="addClaims()">
+          <div class="form-group">
+            <label class="pull-left">Department</label>
+            <select class="form-control" formControlName="employee_type" (change)="get_employees()">
+              <option>Select...</option>
+              <option value="teaching">Teaching</option>
+              <option value="non-teaching">Non-Teaching</option>
+              <option value="administrative">Adminstrative</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="pull-left">Claim By</label>
+            <select class="form-control" formControlName="employee_id">
+              <option>Select...</option>
+              <option *ngFor="let emp of employees" value="{{emp.employee_id}}">{{emp.first_name}}
+                {{emp.last_name}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="pull-left">Category</label>
+            <select class="form-control" formControlName="category">
+              <option>select...</option>
+              <option value="food">Food</option>
+              <option value="travel">Travel</option>
+              <option value="stationary">Stationary</option>
+              <option value="marketing">Marketing</option>
+              <option value="miscellaneous">Miscellaneous</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="pull-left">Amount</label>
+            <input class="form-control" formControlName="amount" placeholder="Enter..." type="number">
+          </div>
+          <div class="form-group">
+            <label class="pull-left">Claim Date</label>
+            <input class="form-control" formControlName="date" placeholder="Enter..." type="date">
+          </div>
+          <div class="form-group">
+            <label class="pull-left">Attachment</label>
+            <input class="form-control" formControlName="attachment" type="file">
+          </div>
+          <div class="form-group pull-right">
+            <button type="submit" class="button button1 hvr-pop transition">Claim</button>
+          </div>
+        </form>
+      </div>
+      <div class="card listcard">
+        <div class="pull-left">
+          <h4>Claims</h4>
+        </div>
+        <div class="searchForm">
+          <div class="table-responsive">
+            <table style="width:100%;">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Employee</th>
+                  <th>Amount</th>
+                  <th>Category</th>
+                  <th>Claim Date</th>
+                  <th>Status</th>
+                  <th *ngIf="user.role === 'admin'"></th>
+                  <th class="pull-right">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let cl of collection.claims | paginate: config; let i=index">
+                  <td>{{ (config.currentPage - 1) * config.itemsPerPage + i +1 }}</td>
+                  <td>{{cl.first_name}}</td>
+                  <td>Rs. {{cl.amount}}</td>
+                  <td>{{cl.category}}</td>
+                  <td>{{cl.date}}</td>
+                  <td>{{cl.claim_status}}</td>
+                  <td *ngIf="user.role === 'admin' && cl.claim_status == 'pending'">
+                    <button class="button button2 hvr-pop transition"
+                      [ngStyle]="{'background-color': '#5cb85c', 'color': 'white' }"
+                      (click)="update_claim(cl.claim_status, i)">Approve</button>
+                  </td>
+                  <td *ngIf="user.role === 'admin' && cl.claim_status == 'Approved'">
+                    <button class="button button2 hvr-pop transition"
+                      [ngStyle]="{'background-color': '#d9534f', 'color': 'white' }"
+                      (click)="update_claim(cl.claim_status, i)">Unapprove</button>
+                  </td>
+                  <td class="pull-right">
+                    <div class="pattrenED">
+                      <div><i class="fa fa-pencil-square" aria-hidden="true" (click)="editClaim((config.currentPage - 1) * config.itemsPerPage + i)"></i></div>
+                      <div><i class="fa fa-trash" aria-hidden="true" (click)="deleteClaim(cl.claim_id)"></i></div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="paginationdiv">
+              <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

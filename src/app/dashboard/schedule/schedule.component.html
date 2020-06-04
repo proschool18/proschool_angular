@@ -1,0 +1,31 @@
+<div class="row">
+    <div class="container-fluid dashboard-content">
+        <div class="card dashboard-attendance1">
+            <div class="form-group">
+                <button class="button button2 hvr-pop transition" id="buttonId2"
+                    *ngFor="let cls of classes; let i = index" (click)="getday_schedule(cls.class_id); selected_class(cls.class_id); getday_timetable()">{{cls.name}}</button>
+            </div>
+            <div class="table-responsive">
+                <table style="width:100%;">
+                    <thead>
+                        <tr>
+                            <th>Timings</th>
+                            <th *ngFor="let sec of sections; let j = index">{{sec.name}}</th>
+                            <!-- <th>Teacher</th> -->
+                        </tr>
+                    </thead>
+                    <tbody  *ngFor="let tim of timetable; let i = index">
+                        <tr *ngFor="let t of tim">
+                            <th>{{t.start_time}}</th>
+                            <td>{{t.subject_name}} [ <span [ngStyle]="{'background-color': (t.employee_attendance == 'Present') ? '#5cb85c' : (t.employee_attendance == 'Absent') ? '#d9534f' : (t.employee_attendance == 'On Leave') ? '#f0ad4e' : '#fff', 'color': (t.employee_attendance == 'Present' || t.employee_attendance == 'Absent' || t.employee_attendance == 'On Leave') ? 'white' : 'black'}">{{t.teacher_name}}</span> ]</td>
+                            <!-- <td>{{t.teacher_name}} [ {{t.employee_attendance}} ]</td> -->
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="form-group">
+
+            </div>
+        </div>
+    </div>
+</div>

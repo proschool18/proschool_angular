@@ -1,0 +1,463 @@
+
+#pro {
+    padding: 5px 5px 5px 10px;
+    background-color: #efeff5;
+    border-radius: 5px;
+    color: #506ee4;
+    font-weight: bold;
+    margin-top: 25px;    
+}
+#build {
+    padding: 5px 42px 5px 5px;
+    color: #efeff5;
+    background-color: #506ee4;
+    font-weight: bold;
+}
+.contentpanel{
+    /* width: 86%; */
+    font-family: sans-serif;
+    /* border-radius: 60px 0px 0px 60px; */
+    margin: 0px 20px 0px 20px;
+    background: #efeff5;
+    border-radius: 20px;
+}
+.profpic{
+    margin: 115px 0 0 18px;
+}
+.hmemenus{
+    padding: 0px 0px 0px 10px;
+}
+.hmemenus ul{
+    padding: 0;
+    margin: 0;
+}
+.hmemenus ul li{
+    list-style: none;
+    margin-top: 10px;
+    padding: 15px;
+}
+.hmemenus ul li:hover {
+    background-color: #efeff5;
+    padding: 15px;
+}
+.hmemenus ul li a{
+    text-decoration: none;
+    color: whitesmoke;
+}
+.hmemenus ul li a:hover{
+    color: #506ee4;
+}
+.hmemenus ul li a i{
+    margin-right: 10px;
+}
+.profpic {
+    margin: 115px 0 0 18px;
+}
+.profiletitle{
+    font-size: 15px;
+    font-weight: 900;
+    padding: 20px 20px 15px 20px;
+    margin-left: 35px;
+}
+.histimg img {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+}
+.navbar {
+    width: 99%;
+    height: 75px;
+    background-color: #506ee4;
+    margin: 20px 0px 0px 5px;
+    box-shadow: 0px 0px 10px 5px lightgray;
+    border-radius: 10px;
+}
+/* Emp table */
+table{
+    width: 99%;
+    margin: 10px 7px 7px 7px;
+    box-shadow: 0px 0px 10px 5px lightgray;
+    border-radius: 20px;
+}
+table, tr {
+    border: 1px solid #EDECFE;
+    border-collapse: collapse;
+    background-color: white;
+    height: 60px;
+    border-radius: 20px;
+  }
+  table, th, tr:hover {
+    background-color: #EDECFE;
+    cursor: pointer;
+  }
+  th, td, tr {
+    padding: 15px;
+    text-align: left;
+  }
+  table th {
+    background-color: white;
+    color: #506ee4;
+    border-bottom: solid 2px #ded9d9;
+  }
+  table th input, td input, .clbtn input{
+    margin-right: 10px;
+  }
+  table th span {
+    margin-left: 10px;
+  }
+  table td{
+      font-size: 14px;
+      color: gray;
+      font-weight: normal !important;
+  }
+  .filterspan{
+      width: 100%;
+      display: flex;
+  }
+  .classesbtn{
+    width: 20%;
+    height: 50px;
+    margin: 40px 7px 7px 7px;
+    box-shadow: 0px 0px 10px 5px lightgray;
+    background: white;
+  }
+  .clbtn{
+      padding: 15px 0 0 20px;
+  }
+  .filter1{
+    width: 5%;
+    height: 50px;
+    margin: 40px 7px 7px 7px;
+    box-shadow: 0px 0px 10px 5px lightgray;
+    background: white;
+  }
+  .filter1 i{
+    padding: 18px 0 0 21px;
+  }
+  .filter2{
+    width: 5%;
+    height: 50px;
+    margin: 40px 7px 7px 630px;
+    box-shadow: 0px 0px 10px 5px lightgray;
+    background: white;
+  }
+  .filter2 i {
+    padding: 18px 0 0 21px;
+  }
+  .filter3{
+    width: 5%;
+    height: 50px;
+    margin: 40px 7px 7px 7px;
+    box-shadow: 0px 0px 10px 5px lightgray;
+    background: white;
+  }
+  .filter3 i{
+    padding: 18px 0 0 21px;
+  }
+  .clbtn i{
+      position: relative;
+      top: -3px;
+  }
+  .clbtn .g{
+    position: relative;
+    left: 100px;
+    top: 1px;
+}
+th .asc, .desc{
+    position: relative;
+    top: 1px;
+    left: -9px;
+}
+
+/* profile pannel */
+.profpannel{
+    width: 96%;
+    height: 700px;
+    margin: 20px 0px 15px 26px;
+    display: flex;
+}
+.profpan{
+    display: flex;
+}
+.profinf{
+    width: 25%;
+}
+.profinfotop{
+    /* height: 450px; */
+    background-color: white;
+    border-radius: 5px;
+    /* box-shadow: 0px 0px 10px 5px lightgray; */
+}
+.profinfobot{
+    height: 235px;
+    background-color: white;
+    border-radius: 5px;
+    margin-top: 15px;
+    /* box-shadow: 0px 0px 10px 5px lightgray; */
+}
+.profdesc{
+    width: 74%;
+    background-color: white;
+    /* box-shadow: 0px 0px 10px 5px lightgray; */
+    border-radius: 5px;
+    margin-left: 15px;
+}
+.profpicname{
+    border-bottom: solid 1px #d2d2d2;
+}
+.proftitle{
+    font-size: 15px;
+    font-weight: 600;
+    color: #3f3c3c;
+    padding: 10px 0 0 15px;
+}
+.proftitle1{
+    font-size: 16px;
+    font-weight: 600;
+    color: #3f3c3c;
+    padding: 10px 0 0 0px;
+}
+.profdesg{
+    font-size: 12px;
+    font-weight: 400;
+    color: gray;
+    padding: 5px 0 0 15px;
+}
+.profimg{
+    display: flex;
+    padding: 10px 0 20px 20px;
+}
+.profimg1{
+    display: flex;
+}
+.profimg img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+}
+.prfbtn i{
+    padding: 20px 0 0px 60px;
+    color: gray;
+    cursor: pointer;
+}
+.personalmenuslist ul{
+    list-style: none;
+}
+.personalmenuslist ul li{
+    padding: 20px 5px 5px 5px;
+}
+.personalmenuslist ul li a{
+    text-decoration: none;
+    color: black;
+    font-size: 14px;
+    font-weight: 600;
+    color: gray;
+}
+.personalmenuslist ul li a i{
+    margin-right: 10px;
+}
+.personalmenuslist ul li a:hover{
+    color: blue;
+    cursor: pointer;
+}
+.impupd{
+    display: flex;
+    padding: 30px 0 0 30px;
+}
+.impupd1{
+    padding: 20px 5px 0 20px;
+    color: gray;
+}
+.impupdateheading{
+    font-size: 14px;
+    font-weight: 600;
+    color: crimson;
+}
+.nowbutton{
+    padding: 2px 8px;
+    background-color: crimson;
+    color: white;
+    border-radius: 3px;
+    margin: 0 0 0 60px;
+}
+.nowbutton:hover,.takeactionbtn:hover,.dismissbtn:hover{
+    background-color: #506ee4;
+    cursor: pointer;
+}
+.takeact{
+    display: flex;
+    padding: 30px 0 0 30px;
+}
+.takeactionbtn{
+    padding: 4px 8px;
+    background-color: crimson;
+    color: white;
+    border-radius: 3px;
+    margin-right: 5px;
+}
+.dismissbtn{
+    padding: 4px 10px;
+    background-color: white;
+    color: gray;
+    border-radius: 3px;
+}
+.profdesg1{
+    font-size: 12px;
+    font-weight: 400;
+    color: gray;
+    padding: 12px 0 0 15px;
+}
+.prfbtn1 i{
+    padding: 12px 0 0px 12px;
+    color: gray;
+    cursor: pointer;
+}
+/* .mainprofdetails{
+    padding: 20px 20px 0 60px;
+    display: flex;
+} */
+.avtar{
+    color: gray;
+    font-size: 13px;
+    font-weight: 600;
+    margin: 20px 0px 10px 10px;
+}
+/* .avatarimg{
+    margin: -10px 0px 0px 30px;
+} */
+.avatarimg{
+    display: flex;
+}
+.avtar1{
+    margin: 0px 25px 0px -30px;
+    color: gray;
+    font-size: 13px;
+    font-weight: 600;
+}
+.inputfn{
+    margin: -2px 0px 0px -4px;
+}
+.inputfn input[type=text],input[type=email]{
+    width: 200px;
+    height: 28px;
+    border: solid 2px #f4f4f4;
+    margin: 5px 0px 0px 10px;
+    margin: 0px 0px 0px 30px;
+}
+input{
+    text-indent: 10px;
+  }
+
+  .card {
+    text-align: left !important;
+}
+.card1{
+    height: 390px !important;
+    margin-right: 2%;
+}
+
+.card2 {
+    height: 390px !important;
+}
+
+.editimg{
+    text-align: right;
+    margin-left: 10px;
+}
+.editimg img{
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #F0F0F0;
+}
+.editimg img:hover{
+    cursor: pointer;
+    background-color: #36879F;
+}
+.sdhead{
+    background-color: #5F9EA0;
+    padding: 12px 0px 10px 15px;
+    border-radius: 5px;
+    font-size: 16px;
+}
+.row{
+    margin-right: 0px !important;
+}
+
+.row1{
+    margin-right: 0px !important;
+}
+.sdtable{
+    border: solid 1px #F4F4F4;
+    padding: 10px 0px 10px 20px;
+    font-size: 12px;
+}
+.pattrenI i{
+    padding: 3px;
+    font-size: 20px;
+    color: #5e81f4;
+}
+.pattrenI i:hover{
+    cursor: pointer;
+    color: white;
+    background-color: #5e81f4;
+}
+.image-upload>input {
+    display: none;
+  }
+  .iconF{
+    margin-top: -4px;
+}
+
+@media (min-width: 279px) and (max-width: 575px){
+
+}
+
+@media (min-width: 576px) and (max-width: 767px){
+
+}
+
+@media (min-width: 768px) and (max-width: 991px){
+
+}
+
+@media (min-width: 992px) and (max-width: 1199px){
+    .personalmenuslist ul{
+        list-style: none;
+        margin-left: -15px;
+    }
+    .personalmenuslist ul li{
+        padding: 20px 5px 5px 5px;
+    }
+    .personalmenuslist ul li a{
+        text-decoration: none;
+        color: black;
+        font-size: 12px;
+        font-weight: 600;
+        color: gray;
+    }
+    .personalmenuslist ul li a i{
+        margin-right: 0px;
+    }
+    .personalmenuslist ul li a:hover{
+        color: blue;
+        cursor: pointer;
+    }
+    .profiletitle {
+        font-size: 15px;
+        font-weight: 900;
+        padding: 20px 20px 15px 20px;
+        margin-left: 12px;
+    }
+    .proftitle1 {
+        font-size: 14px;
+        font-weight: 600;
+        color: #3f3c3c;
+        padding: 10px 0 0 0px;
+    }
+}
+
+@media (min-width: 1200px){
+
+}

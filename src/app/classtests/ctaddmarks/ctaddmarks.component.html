@@ -1,0 +1,71 @@
+<div id="main-content">
+
+  <div class="row">
+    <div class="container-fluid" id="buttonId1">
+      <button routerLink="/main/classtests/CTByDate" class="button button2 hvr-pop transition">ClassTests By
+        Date</button>
+      <!-- <button routerLink="/main/classtests/CTListMarks" class="button button2 hvr-pop transition">ClassTests List
+        Marks</button> -->
+      <button routerLink="/main/classtests/CTAddMarks" class="button button2 hvr-pop transition">ClassTests Marks</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="container-fluid dashboard-content">
+      <div class="card selectcard">
+        <app-subject *ngIf="user.role === 'admin'" (classEvent)="receiveClass($event)"
+          (sectionEvent)="receiveSection($event)" (subjectEvent)="receiveSubject($event)"></app-subject>
+        <app-teacher-subject *ngIf="user.role === 'teacher'" (classEvent)="receiveClass($event)"
+          (sectionEvent)="receiveSection($event)" (subjectEvent)="receiveSubject($event)"></app-teacher-subject>
+        <div class="searchForm">
+          <div class="form-group">
+            <label class="pull-left">Class Test</label>
+            <select class="form-control" [(ngModel)]="selected_ct" (change)="ctMarks()">
+              <option>select...</option>
+              <option *ngFor="let ct of classTests" value="{{ct.classTest_id}}">{{ct.title}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="card listcard">
+        <div class="pull-left">
+          <h4>Assignment Marks</h4>
+        </div>
+        <div class="searchForm">
+          <div class="table-responsive">
+            <table style="width:100%;">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Student</th>
+                  <th>Marks Obtained</th>
+                  <th *ngIf="!marks_add">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let stu of collection.students | paginate: config; let i=index">
+                  <td>{{ (config.currentPage - 1) * config.itemsPerPage + i +1 }}</td>
+                  <td>{{stu.first_name}}</td>
+                  <td><input class="form-control" placeholder="Enter..." [(ngModel)]="stu.marks" type="number"></td>
+                  <td *ngIf="!marks_add">
+                    <div class="pattrenED">
+                      <!-- <div><i class="fa fa-pencil-square" aria-hidden="true"></i></div> -->
+                      <button (click)="editMarks(stu.classTest_result_id, stu.marks )" class="button button1 hvr-pop transition">Edit Marks</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="paginationdiv">
+              <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+            </div>
+            <div class="form-group pull-right" *ngIf="marks_add">
+              <button type="submit" class="button button1 hvr-pop transition" (click)="addClassTest_marks()">Add
+                Marks</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,81 @@
+<div id="main-content">
+
+  <!-- <div class="row">
+    <div class="container-fluid" id="buttonId1">
+      <button (click)="att_date(0)" class="button button2 hvr-pop transition">Attendance</button>
+      <button (click)="att_date(1)" class="button button2 hvr-pop transition">Attendance with Date</button>
+      <button routerLink="/academics/chapters" class="button button2 hvr-pop transition">Attendance Edit</button>
+    </div>
+  </div> -->
+
+  <div class="row">
+    <div class="container-fluid dashboard-content">
+      <div class="card selectcard">
+        <form class="searchForm" role="form" [formGroup]="employeeForm" (ngSubmit)="get_selectedemployees()">
+          <div class="form-group">
+            <label class="pull-left">Employee Type</label>
+            <select class="form-control" formControlName="employee_type">
+              <option value="all">All</option>
+              <option value="teaching">Teaching</option>
+              <option value="non-teaching">Non-Teaching</option>
+              <option value="administrative">Administrative</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="pull-left">Date</label>
+            <input class="form-control" formControlName="date" placeholder="Enter..." type="date">
+          </div>
+          <div class="form-group pull-right">
+            <button type="submit" class="button button2 hvr-pop transition">Select</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="card listcard">
+        <div class="row">
+          <div class="pull-left">
+            <h4>Employee Attendance</h4>
+          </div>
+        </div>
+        <div class="row" style="margin: 0px 78px 0px 38px">
+          <div class="form-group pull-left">
+            <button type="submit" class="button button1 hvr-pop transition"
+              style="margin-right: 10px; background-color: #5cb85c" (click)="allAttendance('Present')">All
+              Present</button>
+            <button type="submit" class="button button1 hvr-pop transition"
+              style="margin-right: 10px; background-color: #d9534f" (click)="allAttendance('Absent')">All
+              Absent</button>
+            <button type="submit" class="button button1 hvr-pop transition"
+              style="margin-right: 10px; background-color: #f0ad4e" (click)="allAttendance('On Leave')">All On
+              Leave</button>
+          </div>
+          <div class="form-group pull-right">
+            <button type="submit" class="button button1 hvr-pop transition" (click)="addEmployeeAttendance()">Submit
+              Attendance</button>
+          </div>
+        </div>
+
+        <div class="searchForm">
+          <div class="card attendancecard hvr-bounce-in transition" *ngFor="let emp of employees; let i = index;">
+            <div class="attprofpic">
+              <img src="../../../assets/images/student.jpg" alt="">
+            </div>
+            <div>
+              <div class="nameroll">{{emp.first_name}}</div>
+              <div class="nameroll">Code: {{emp.employee_code}}</div>
+            </div>
+            <div class="attreport">
+              <div class="attreportbtn present" (click)="submit(i, 'Present')"
+                [ngClass]="{'present-select': emp.status === 'Present'}">P</div>
+              <div class="attreportbtn absent" (click)="submit(i, 'Absent')"
+                [ngClass]="{'absent-select': emp.status === 'Absent'}">A</div>
+              <div class="attreportbtn leave" (click)="submit(i, 'On Leave')"
+                [ngClass]="{'leave-select': emp.status === 'On Leave'}">L</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

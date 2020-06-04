@@ -1,0 +1,19 @@
+<form role="form" [formGroup]="topicForm" (ngSubmit)="submitTopic()">
+    <div class="row">
+        <div class="col-md-12">
+            <h4 id="heading">Edit Topic</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="form-group">
+                <label class="pull-left">Topic Name</label>
+                <input class="form-control" value="{{topic.topic_name}}" formControlName="topic_name" type="text">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="button button1 hvr-pop transition pull-right">Submit</button>
+        <div (click)="close()" class="button button1 hvr-pop transition pull-left">Close</div>
+    </div>
+</form>

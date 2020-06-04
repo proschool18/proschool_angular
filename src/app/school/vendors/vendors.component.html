@@ -1,0 +1,91 @@
+<div id="main-content">
+
+  <div class="row">
+    <div class="container-fluid" id="buttonId1">
+      <button routerLink="/main/admin/materials" class="button button2 hvr-pop transition">Material</button>
+      <button routerLink="/main/admin/vendors" class="button button2 hvr-pop transition">Vendors</button>
+      <button routerLink="/main/admin/materialIn" class="button button2 hvr-pop transition">Material-In</button>
+      <button routerLink="/main/admin/materialOut" class="button button2 hvr-pop transition">Material-Out</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="container-fluid dashboard-content">
+      <div class="card selectcard">
+        <form class="searchForm" role="form" [formGroup]="vendorForm" (ngSubmit)="addVendor()">
+          <div class="form-group">
+            <label class="pull-left">Vendor Name</label>
+            <input class="form-control" formControlName="vendor_name" placeholder="Enter..." type="text">
+          </div>
+          <div class="form-group">
+            <label class="pull-left">Material</label>
+            <select class="form-control" formControlName="material">
+              <option>select...</option>
+              <option *ngFor="let mat of materials" value="{{mat.material_id}}">{{mat.material}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="pull-left">Email</label>
+            <input class="form-control" formControlName="email" placeholder="Enter..." type="email">
+          </div>
+          <div class="form-group">
+            <label class="pull-left">Contact Number</label>
+            <input class="form-control" formControlName="contact_no" placeholder="Enter..." type="number">
+          </div>
+          <div class="form-group">
+            <label class="pull-left">Location</label>
+            <input class="form-control" formControlName="location" placeholder="Enter..." type="text">
+          </div>
+          <div class="form-group">
+            <label class="pull-left">Address</label>
+            <input class="form-control" formControlName="address" placeholder="Enter..." type="text">
+          </div>
+          <div class="form-group pull-right">
+            <button type="submit" class="button button1 hvr-pop transition">Add Vendor</button>
+          </div>
+        </form>
+      </div>
+      <div class="card listcard">
+        <div class="pull-left">
+          <h4>Vendors</h4>
+        </div>
+        <div class="searchForm">
+          <div class="table-responsive">
+            <table style="width:100%;">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Vendor Name</th>
+                  <th>Material</th>
+                  <th>Contact Number</th>
+                  <th>Email</th>
+                  <th>Location</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let ven of collection.vendors | paginate: config; let i=index">
+                  <td>{{ (config.currentPage - 1) * config.itemsPerPage + i +1 }}</td>
+                  <td>{{ven.vendor_name}}</td>
+                  <td>{{ven.material}}</td>
+                  <td>{{ven.contact_no}}</td>
+                  <td>{{ven.email}}</td>
+                  <td>{{ven.location}}</td>
+                  <td>
+                        <div class="pattrenED">
+                          <div><i class="fa fa-pencil-square" aria-hidden="true" (click)="editVendor(i)"></i></div>
+                          <div><i class="fa fa-trash" aria-hidden="true" (click)="deleteVendor(ven.vendor_id)"></i></div>
+                        </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="paginationdiv">
+              <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,46 @@
+<div class="popup">
+    <div class="pop_header">
+        <h3 *ngIf="dialog_type == 'add'">Add ProjectWork</h3>
+        <h3 *ngIf="dialog_type == 'edit'">Edit ProjectWork</h3>
+    </div>
+    <form role="form" [formGroup]="projectworkForm" (ngSubmit)="assignProjectwork()">
+        <div class="pop_content">
+            <div class="row_content">
+                <div class="column_content">
+                    <h4>Project Work: </h4>
+                    <input value="{{projectwork.project_work}}" formControlName="project_work" type="text">
+                </div>
+                <div class="column_content">
+                    <h4>Max Marks: </h4>
+                    <input value="{{projectwork.maxMarks}}" formControlName="maxMarks"
+                    placeholder="Enter..." type="number">
+                </div>
+            </div>
+            <div class="row_content">
+                <div class="column_content">
+                    <h4>Assigned Date: </h4>
+                    <input value="{{projectwork.assign_date}}" formControlName="assign_date"
+                    placeholder="Enter..." type="date">
+                </div>
+                <div class="column_content">
+                    <h4>Due Date: </h4>
+                    <input value="{{projectwork.due_date}}" formControlName="due_date"
+                    placeholder="Enter..." type="date">
+                </div>
+            </div>
+            <div class="row_content">
+                <div class="column_content">
+                    <h4>Description: </h4>
+                    <textarea value="{{projectwork.description}}" formControlName="description"
+                    placeholder="Enter the Description of the ProjectWork..." cols="50" rows="10"></textarea>
+                </div>
+            </div>
+            <div class="row_content">
+                <div class="button_left">
+                    <button type="submit" class="btn -cta">Submit</button>
+                </div>
+                <div (click)="close()" class="btn -cancel">Cancel</div>
+            </div>
+        </div>
+    </form>
+</div>

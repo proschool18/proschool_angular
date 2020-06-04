@@ -1,0 +1,75 @@
+<main class="card mt-20 within-viewport">
+  <section class="page-actions">
+    <div class="_select-or-search">
+      <div class="_select-group">
+        <app-class *ngIf="user.role === 'admin'" (classEvent)="receiveClass($event)" (sectionEvent)="receiveSection($event)"></app-class>
+        <!-- <select name="subject" [(ngModel)]="status" (change)="getStudentsByStatus()">
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+        </select> -->
+        <div class="dropdown" >
+          <button class="dropbtn" (click)="showStatusList = true" (clickOutside)="showStatusList = false">
+              {{status}}
+          </button>
+          <div class="dropdown-content" [hidden]="!showStatusList">
+            <a (click)="getStudentsByStatus(); status = 'active';">Active</a>
+            <a (click)="getStudentsByStatus(); status = 'inactive';">Inactive</a>
+          </div>
+        </div>
+      </div>
+      <input type="search" name="" placeholder="Search">
+    </div>
+    <button class="btn -cta" (click)="addStudent()">Add Student</button>
+  </section>
+  <section class="table-and-pagination -classes-schedule">
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Roll</th>
+            <th align="left">Student Name</th>
+            <th align="left">Father/Guardian Name</th>
+            <th align="left">Class</th>
+            <th align="left">Section</th>
+            <th align="left">Gender</th>
+            <th align="left">Contact Number</th>
+            <th align="left" *ngIf="user.role === 'admin'">Action</th>
+          </tr>
+        </thead>
+        <tbody>          
+          <tr *ngFor="let std of students; let i=index">
+            <td class="_s-no"><span>{{ i + 1 }}</span></td>
+            <td><a
+                routerLink="/main/studentprofile/profile/{{std.student_id}}/{{std.section_id}}">{{std.first_name}}
+                {{std.last_name}}</a></td>
+            <td>{{std.father_name}}</td>
+            <td>{{std.school_classes[0].name}}</td>
+            <td>{{std.sections[0].name}}</td>
+            <td>{{std.gender}}</td>
+            <td>{{std.phone}}</td>
+            <td class="_actions" *ngIf="user.role === 'admin'">
+              <button class="btn" *ngIf="status === 'active'" (click)="editStudent(std.student_id)"><img src="../../../assets/images/edit-white.svg" alt="Edit" /></button>
+              <button class="btn" *ngIf="status === 'active'" (click)="deleteStudent(std.student_id)"><img src="../../../assets/images/trash-white.svg" alt="Delete" /></button>
+              <button class="btn" *ngIf="status === 'inactive'" (click)="restoreStudent(std.student_id)"><img src="../../../assets/images/trash-white.svg" alt="Restore" /></button>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+    <div class="_pagination">
+      <a href="" class="btn -previous">Previous</a>
+      <a href="" class="btn -current">1</a>
+      <a href="" class="btn">2</a>
+      <a href="" class="btn">3</a>
+      <a href="" class="btn">4</a>
+      <a href="" class="btn">5</a>
+      <a href="" class="btn">6</a>
+      <a href="" class="btn">7</a>
+      <a href="" class="btn">8</a>
+      <a href="" class="btn">9</a>
+      <a href="" class="btn">10</a>
+      <a href="" class="btn -next">Next</a>
+    </div>
+  </section>
+</main>

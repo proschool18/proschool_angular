@@ -1,0 +1,127 @@
+@media (min-width: 279px) and (max-width: 575px){
+    .formalign {
+        margin: 10% 0 0 0%;
+    }
+    .formalignryt{
+        margin: 5% 5% 0 0;
+    }
+    .leftcard {
+        width: 100%;
+        background-color: white;
+        }
+    .rightcard {
+        width: 100%;
+        background-color: white;
+        height: 390px !important;
+        margin-bottom: 2%;
+        }
+    canvas{
+        margin: 15px 0px 0px 0px;
+        height: 370px !important;
+    }
+    .form-control{
+        width: 92%;
+        margin-left: 30px;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767px){
+    .formalign {
+        margin: 3% 0 0 0%;
+    }
+    .formalignryt{
+        margin: 3% 0% 0 5%;
+        width: 85%;
+    }
+    .leftcard {
+        width: 100%;
+        background-color: white;
+        }
+    .rightcard {
+        width: 100%;
+        background-color: white;
+        height: 390px !important;
+        margin-bottom: 2%;
+        }
+    canvas{
+        margin: 15px 0px 0px 0px;
+        height: 370px !important;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px){
+    .formalign {
+        margin: 3% 0 0 0%;
+    }
+    .formalignryt{
+        margin: 3% 0% 0 5%;
+        width: 85%;
+    }
+    .leftcard {
+        width: 100%;
+        background-color: white;
+        }
+    .rightcard {
+        width: 100%;
+        background-color: white;
+        height: 390px !important;
+        margin-bottom: 2%;
+        }
+    canvas{
+        margin: 15px 0px 0px 0px;
+        height: 370px !important;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199px){
+    .cardsryt{
+        margin-right: 2%;
+    }
+    .formalign {
+        margin: 10% 0 0 5%;
+    }
+    .formalignryt{
+        margin: 5% 5% 0 0;
+    }
+    .leftcard {
+        height: 390px !important;
+        width: 50%;
+        background-color: white;
+        }
+    .rightcard {
+        width: 50%;
+        background-color: white;
+        height: 390px !important;
+        }
+    canvas{
+        margin: 15px 0px 0px 0px;
+        height: 370px !important;
+    }
+}
+
+@media (min-width: 1200px){
+    .cardsryt{
+        margin-right: 2%;
+    }
+    .formalign {
+        margin: 10% 0 0 5%;
+    }
+    .formalignryt{
+        margin: 5% 5% 0 0;
+    }
+    .leftcard {
+        height: 390px !important;
+        width: 50%;
+        background-color: white;
+        }
+    .rightcard {
+        width: 50%;
+        background-color: white;
+        height: 390px !important;
+        }
+    canvas{
+        margin: 15px 0px 0px 0px;
+        height: 370px !important;
+    }
+}
+    

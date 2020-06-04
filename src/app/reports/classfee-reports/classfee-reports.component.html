@@ -1,0 +1,91 @@
+<div id="main-content">
+
+    <div class="row">
+        <div class="container-fluid" id="buttonId1">
+            <button routerLink="/main/reports/studentfee" class="button button2 hvr-pop transition">Student Reports</button>
+            <button routerLink="/main/reports/classfee" class="button button2 hvr-pop transition">Class Reports</button>
+            <button *ngIf="user.role === 'admin'" routerLink="/main/reports/reportsbyday" class="button button2 hvr-pop transition">Day Reports</button>
+            <button *ngIf="user.role === 'admin'" routerLink="/main/reports/reportsbymonth" class="button button2 hvr-pop transition">Month
+                Reports</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="container-fluid dashboard-content">
+            <div class="card selectcard">
+                <app-class *ngIf="user.role === 'admin'" (classEvent)="receiveClass($event)" (sectionEvent)="receiveSection($event)"></app-class>
+                <app-teacher-class *ngIf="user.role === 'teacher'" (classEvent)="receiveClass($event)" (sectionEvent)="receiveSection($event)"></app-teacher-class>
+                <div class="searchForm">
+                    <div class="form-group">
+                        <label class="pull-left">Fee Term</label>
+                        <select class="form-control" [(ngModel)]="fee_term">
+                            <option>select...</option>
+                            <option *ngFor="let fee of fee_terms; let i = index" value="{{fee.fee_term_id}}">
+                                {{fee.fee_term}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="pull-left">Fee Type</label>
+                        <select class="form-control" [(ngModel)]="fee_type">
+                            <option>select...</option>
+                            <option *ngFor="let fee of fee_types; let i = index" value="{{fee.fee_types_id}}">
+                                {{fee.fee_type}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group pull-right">
+                        <button type="submit" class="button button1 hvr-pop transition" (click)="getClass_fee()">Search</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card listcard">
+                <div class="pull-left">
+                    <h4>Class Reports</h4>
+                </div>
+                <div class="pull-right">
+                    <button class="button button1 btnalign" (click)="View('list')">List</button>
+                    <button class="button button1 btnalign" (click)="View('visualize')">Visualize</button>
+                </div>
+                <div class="searchForm" *ngIf="list else visualize">
+                    <div class="table-responsive">
+                        <table style="width:100%;">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Student Name</th>
+                                    <th>Total Fee</th>
+                                    <th>Paid Fee</th>
+                                    <th>Discount</th>
+                                    <th>Fine</th>
+                                    <th>Balance</th>
+                                    <th>Due Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let fee of collection.students_fee | paginate: config; let i=index">
+                                    <td>{{ (config.currentPage - 1) * config.itemsPerPage + i +1 }}</td>
+                                    <td>{{fee.studentName}}</td>
+                                    <td>{{fee.totalFee}}</td>
+                                    <td>{{fee.paidAmount}}</td>
+                                    <td>{{fee.Discount}}</td>
+                                    <td>{{fee.fine}}</td>
+                                    <td>{{fee.Balance}}</td>
+                                    <td></td>
+                                    <!-- <td [ngStyle]="{'background-color': (att.status == 'Present') ? '#1caf9a' : (att.status == 'Present') ? '#1caf9a' : '#e04b4a', 'color': 'white', 'margin-botton': '2px' }">{{att.status}}</td> -->
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="paginationdiv">
+                            <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+                          </div>
+                    </div>
+                </div>
+                <ng-template #visualize>
+                    <div class="searchForm">
+                        <canvas baseChart [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions"
+                            [legend]="chartLegend" [chartType]="chartType"></canvas>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,440 @@
+<div id="main-content">
+    <div class="row">
+        <div class="container-fluid" id="buttonId1">
+            <button routerLink="/main/employeeprofile/profile/{{employee_id}}" class="button button2 hvr-pop transition">Profile</button>
+            <button routerLink="/main/employeeprofile/attendance/{{employee_id}}" class="button button2 hvr-pop transition">Attendance</button>
+            <button routerLink="/main/employeeprofile/academics/{{employee_id}}" class="button button2 hvr-pop transition">Academics</button>
+            <button routerLink="/main/employeeprofile/assessment/{{employee_id}}" class="button button2 hvr-pop transition">Assessment</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="container-fluid dashboard-content">
+          <div class="card cardemp1">
+            <div class="profinfotop">
+                <div class="profpicname">
+                    <div class="profiletitle">Luke Davids</div>
+                    <!-- <div class="profimg">
+                        <div><img src="images/dho.jpg" alt=""></div>
+                        <div>
+                            <div class="proftitle">Luke Davids</div>
+                            <div class="profdesg">Web Developer</div>
+                        </div>
+                        <div class="prfbtn">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </div>
+                    </div> -->
+                </div>
+                <div class="personalmenuslist">
+                    <ul>
+                        <li><a (click)="profile_info('perInfo')"><i class="fas fa-user-alt"></i>Personal Info</a></li>
+                        <li><a (click)="profile_info('profInfo')"><i class="fas fa-user-cog"></i>Professional Info</a></li>
+                        <li><a (click)="profile_info('empaddress')"><i class="far fa-sun"></i>Address</a></li>
+                        <li><a (click)="profile_info('empContact')"><i class="far fa-sun"></i>Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+          </div>
+          <div class="card cardemp2">
+            <!-- <div class="">
+                <div class="profpicname">
+                    <div class="profimg">
+                        <div>
+                            <div class="proftitle">Personal Informatioon</div>
+                        </div>
+                        <div>
+                            <div class="profdesg1">Update your personal information</div>
+                        </div>
+                        <div class="prfbtn1">
+                            <i class="far fa-sun"></i>
+                        </div>
+                    </div>
+                </div>
+                <form action="" *ngIf="edit_content">
+                    <div class="profpan">
+                        <div>
+                            <div class="profimg">
+                                <div class="proftitle">Customer Info:</div>
+                            </div>
+                            <div class="mainprofdetails">
+                                <div class="avtar1">First Name</div>
+                                <div class="inputfn" *ngIf="edit_content"><input type="text" placeholder="Nick"></div>
+                                <div class="inputfn" *ngIf="!edit_content">Nick</div>
+                            </div>
+                            <div class="mainprofdetails">
+                                <div class="avtar1">Last Name</div>
+                                <div class="inputfn"><input type="text" placeholder="Bold"></div>
+                            </div>
+                            <div class="mainprofdetails">
+                                <div class="avtar1">Company Name</div>
+                                <div class="inputfn">
+                                    <input type="text" placeholder="Loop Inc.">
+                                    <div class="profdesg1">If you want your invoices addressed to a company,
+                                        leave blank to use your full name.</div>
+                                </div>
+                            </div>
+                            <div class="detailsform">
+                                <div></div>
+                            </div>
+
+                        </div>
+                        <div class="card card2">
+                            <div class="mainprofdetails">
+                                <div class="avtar">Avtar</div>
+                                <div class="avatarimg"><img src="../../../assets/img/images/student.png" alt=""
+                                        width="140px" height="140px"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="profimg">
+                            <div class="proftitle">Contact Info:</div>
+                        </div>
+                        <div class="mainprofdetails">
+                            <div class="avtar1">Contact Phone</div>
+                            <div class="inputfn"><input type="text" placeholder="+91 1234567890"></div>
+                        </div>
+                        <div class="mainprofdetails">
+                            <div class="avtar1">Email Address</div>
+                            <div class="inputfn"><input type="email" placeholder="nick.bold@gmail.com"></div>
+                            <div class="profdesg1">we will never share your email with anyone</div>
+                        </div>
+                        <div class="mainprofdetails">
+                            <div class="avtar1">Company Site</div>
+                            <div class="inputfn"><input type="text" placeholder="Loop"></div>
+                        </div>
+                        <div class="mainprofdetails">
+                            <div class="avtar1"><button type="button" class="btn btn-info">Submit</button></div>
+                            <div class="inputfn"><button type="button" class="btn btn-default">Cancel</button>
+                            </div>
+                        </div>
+                        <div class="detailsform">
+                            <div></div>
+                        </div>
+
+                    </div>
+                </form>
+
+                <div class="profpan">
+                    <div>
+                        <div class="profimg">
+                            <div class="proftitle">Customer Info:</div>
+                        </div>
+                        <div class="mainprofdetails">
+                            <div class="avtar1">First Name</div>
+                            <div class="inputfn">Nick</div>
+                        </div>
+                        <div class="mainprofdetails">
+                            <div class="avtar1">Last Name</div>
+                            <div class="inputfn">Bold</div>
+                        </div>
+                        <div class="mainprofdetails">
+                            <div class="avtar1">Company Name</div>
+                            <div class="inputfn"> Loop Inc.</div>
+                        </div>
+                        <div class="detailsform">
+                            <div></div>
+                        </div>
+
+                    </div>
+                    <div>
+                        <div class="mainprofdetails">
+                            <div class="avtar">Avtar</div>
+                            <div class="avatarimg"><img src="../../../assets/img/images/student.png" alt=""
+                                    width="140px" height="140px"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="profimg">
+                        <div class="proftitle">Contact Info:</div>
+                    </div>
+                    <div class="mainprofdetails">
+                        <div class="avtar1">Contact Phone</div>
+                        <div class="inputfn">+91 1234567890</div>
+                    </div>
+                    <div class="mainprofdetails">
+                        <div class="avtar1">Email Address</div>
+                        <div class="inputfn">nick.bold@gmail.com</div>
+                    </div>
+                    <div class="mainprofdetails">
+                        <div class="avtar1">Company Site</div>
+                        <div class="inputfn">Loop</div>
+                    </div>
+                    <div class="detailsform">
+                        <div></div>
+                    </div>
+
+                </div>
+            </div> -->
+
+            <div *ngIf="perInfoPannel" class="">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="mainprofdetails">
+                                <div class="avtar">Employee Profile</div>
+                                <div class="avatarimg">
+                                    <!-- <img src="../../../assets/img/images/student.png" alt=""
+                                        width="140px" height="140px"> -->
+                                        <div *ngIf="profileImage">
+                                            <img [src]="profileImage" width="140px" height="140px"/>                 
+                                        </div>
+                                        <div class="image-upload iconF">
+                                            <label for="file-input-studProfPic">
+                                                <div class="pattrenI">
+                                                    <i class="fa fa-pencil-square" aria-hidden="true"></i>
+                                                  </div>
+                                            </label>
+                                            <input id="file-input-studProfPic" type="file" name="image" (change)="employeProfPic($event.target.files)"/>
+                                        </div>
+                                        
+                                        <!-- <div class="pattrenI">
+                                            <i class="fa fa-pencil-square" aria-hidden="true"></i>
+                                          </div> -->
+
+                                          <!-- <div class="image-upload iconF">
+                                            <label for="file-input-img">
+                                              <div class="pattrenED">
+                                                <i class="fa fa-pencil-square" aria-hidden="true"></i>
+                                              </div>
+                                            </label>            
+                                              <input id="file-input-img" type="file" name="image" (change)="fileProgress($event)"/>
+                                          </div> -->
+
+                                    </div>
+                            </div>
+                      </div>
+                      <div class="col-sm-9">
+                        <div class="profpicname">
+                            <div class="row">
+                                <div class="profimg">
+                                    <div class="col-md-10 profimg1">
+                                        <div>
+                                            <div class="proftitle1">Employee Personal Info</div>
+                                        </div >
+                                        <div>
+                                            <div class="profdesg1">Update your Personal information</div>
+                                        </div>
+                                        <div class="prfbtn1">
+                                            <i class="far fa-sun"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="pattrenI">
+                                            <i class="fa fa-pencil-square" aria-hidden="true" (click)=editEmployee()></i>
+                                          </div>
+                                        <!-- <div class="editimg" (click)=editstudProf()><img src="../../../assets/img/images/edit.png" alt=""></div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                                                        
+                            <div class="row1">
+                              <div class="col-md-6 sdtable">
+                               <div><b>Forename : </b>Swathi Tulasi</div>
+                              </div>
+                              <div class="col-md-6 sdtable">
+                                <div><b>Surname : </b>Adari</div>
+                               </div>
+                            </div>
+                            <div class="row1">
+                              <div class="col-md-6 sdtable">
+                               <div><b>Title : </b>Mr</div>
+                              </div>
+                              <div class="col-md-6 sdtable">
+                                <div><b>Designation : </b>Empty</div>
+                               </div>
+                            </div>
+                            <div class="row1">
+                              <div class="col-md-6 sdtable">
+                               <div><b>Date of Birth : </b>02-10-90</div>
+                              </div>
+                              <div class="col-md-6 sdtable">
+                                <div><b>Gender : </b>Male</div>
+                               </div>
+                            </div>
+                            <div class="row1">
+                              <div class="col-md-6 sdtable">
+                               <div><b>Date of Joining : </b>07/29/2015</div>
+                              </div>
+                              <div class="col-md-6 sdtable">
+                                <div><b>Marital Status : </b>Empty</div>
+                               </div>
+                            </div>
+                            <div class="row1">
+                              <div class="col-md-6 sdtable">
+                               <div><b>Experiance : </b>Empty</div>
+                              </div>
+                              <div class="col-md-6 sdtable">
+                                <div><b>Blood Group : </b>empty</div>
+                               </div>
+                            </div>
+                            <div class="row1">
+                              <div class="col-md-6 sdtable">
+                               <div><b>Spoken Languages : </b>empty</div>
+                              </div>
+                            </div>
+                                    
+                      </div>
+                    </div>
+                  </div>
+            </div>
+
+            <div *ngIf="profInfoPannel" class="">
+                <div class="container-fluid">
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <div class="profpicname">
+                            <div class="row">
+                                <div class="profimg">
+                                    <div class="col-md-10 profimg1">
+                                        <div>
+                                            <div class="proftitle1">Professional Information</div>
+                                        </div >
+                                        <div>
+                                            <div class="profdesg1">Update your Professional information</div>
+                                        </div>
+                                        <div class="prfbtn1">
+                                            <i class="far fa-sun"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="editimg"><img src="../../../assets/img/images/edit.png" alt=""></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                    
+                            <div class="row1">
+                              <div class="col-md-6 sdtable">
+                               <div><b>Employee Type : </b>Teaching</div>
+                              </div>
+                              <div class="col-md-6 sdtable">
+                                <div><b>Employee Code : </b>Empty</div>
+                               </div>
+                            </div>
+                            <div class="row1">
+                              <div class="col-md-6 sdtable">
+                               <div><b>Qualification : </b>Empty</div>
+                              </div>
+                              <div class="col-md-6 sdtable">
+                                <div><b>Aadhar no : </b>Empty</div>
+                               </div>
+                            </div>
+                            <div class="row1">
+                              <div class="col-md-6 sdtable">
+                               <div><b>PAN : </b>Empty</div>
+                              </div>
+                              <div class="col-md-6 sdtable">
+                                <div><b>Passport No : </b>Empty</div>
+                               </div>
+                            </div>
+                            <div class="row1">
+                              <div class="col-md-6 sdtable">
+                               <div><b>Basic Pay : </b>Empty</div>
+                              </div>
+                              <div class="col-md-6 sdtable">
+                                <div><b>Salary Band : </b>Empty</div>
+                               </div>
+                            </div>
+                                                                
+                      </div>
+                    </div>
+                  </div>
+            </div>
+
+            <div *ngIf="addrPannel" class="">
+                <div class="container-fluid">
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <div class="profpicname">
+                            <div class="row">
+                                <div class="profimg">
+                                    <div class="col-md-10 profimg1">
+                                        <div>
+                                            <div class="proftitle1">Employee Address</div>
+                                        </div >
+                                        <div>
+                                            <div class="profdesg1">Update your Address information</div>
+                                        </div>
+                                        <div class="prfbtn1">
+                                            <i class="far fa-sun"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="editimg"><img src="../../../assets/img/images/edit.png" alt=""></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                   
+                            <div class="row1">
+                              <div class="col-md-12 sdtable">
+                                <div><b>Permanent Address : </b>Gokul Nagar, Kancharlapalem, Vishakapatnam, India</div>
+                               </div>
+                            </div>  
+                            <div class="row1">
+                                <div class="col-md-12 sdtable">
+                                  <div><b>Temporary Address : </b>Gokul Nagar, Kancharlapalem, Vishakapatnam, India</div>
+                                 </div>
+                              </div>  
+                            <div class="row1">
+                            <div class="col-md-12 sdtable">
+                                <div><b>Postal Address : </b>Gokul Nagar, Kancharlapalem, Vishakapatnam, India</div>
+                                </div>
+                            </div> 
+                      </div>
+                    </div>
+                  </div>
+            </div>
+
+            <div *ngIf="contPannel" class="">
+                <div class="container-fluid">
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <div class="profpicname">
+                            <div class="row">
+                                <div class="profimg">
+                                    <div class="col-md-10 profimg1">
+                                        <div>
+                                            <div class="proftitle1">Contact Information</div>
+                                        </div >
+                                        <div>
+                                            <div class="profdesg1">Update your Contact information</div>
+                                        </div>
+                                        <div class="prfbtn1">
+                                            <i class="far fa-sun"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="editimg"><img src="../../../assets/img/images/edit.png" alt=""></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                        
+                            <div class="row1">
+                                <div class="col-md-12 sdtable">
+                                  <div><b>Phone Number : </b>9123456789</div>
+                                 </div>
+                              </div>  
+                              <div class="row1">
+                                  <div class="col-md-12 sdtable">
+                                    <div><b>Email : </b>email@gemail.com</div>
+                                   </div>
+                                </div>  
+                              <div class="row1">
+                              <div class="col-md-12 sdtable">
+                                  <div><b>Alternate Email : </b>email@gemail.com</div>
+                                  </div>
+                              </div>  
+                      </div>
+                    </div>
+                  </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+</div>

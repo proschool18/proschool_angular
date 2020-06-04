@@ -1,0 +1,71 @@
+table tr:first-child th:first-child {
+    border-top-left-radius: 20px;
+}
+
+table tr:first-child th:last-child {
+    border-top-right-radius: 20px;
+}
+table{
+    width: 100%;
+}
+thead{
+    background-color: #F9FAFC;
+}
+.timetable{
+    padding: 15px 15px;
+}
+.timetable th{
+    padding: 10px 0px 10px 20px;
+}
+.tablehead{
+    padding: 10px;
+}
+.trdivider{
+    border-bottom: solid 2px #F9FAFC;
+}
+.trdivider td{
+    padding: 20px 20px;
+}
+.imgDiv{
+    display: flex;
+}
+.imgDiv img{
+    width: 40px;
+    height: 40px;
+    border-radius: 50px;
+}
+.text{
+    padding-left: 10px;
+}
+.headtext{
+    font-size: 12px;
+    font-weight: bold;
+}
+.subtext{
+    font-size: 10px;
+    color: grey;
+}
+.subtexth{
+    font-size: 12px;
+    color: grey;
+}
+.timebtn{
+    padding: 5px;
+    background-color: #FDEFEB;
+    border-radius: 4px;
+    text-align: center;
+}
+.bclr{
+    background-color: #F8F9FB;
+}
+.sbclr{
+    background-color: #E9F6FF;
+    margin-bottom: 2px;
+}
+.txt{
+    font-size: 12px;
+    font-weight: 600;
+}
+td{
+    width: 50px;
+}

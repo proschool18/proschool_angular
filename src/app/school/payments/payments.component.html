@@ -1,0 +1,81 @@
+<div id="main-content">
+
+  <div class="row">
+    <div class="container-fluid" id="buttonId1">
+      <button routerLink="/main/admin/payments" class="button button2 hvr-pop transition">Payments</button>
+      <!-- <button (click)="get_payments('materials')" class="button button2 hvr-pop transition">Material Payments</button> -->
+      <button routerLink="/main/admin/addpayments" class="button button2 hvr-pop transition">Add Payments</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="container-fluid dashboard-content">
+      <div class="card selectcard">
+        <div class="searchForm">
+          <div class="form-group">
+            <label class="pull-left">Vendor Name</label>
+            <select class="form-control" [(ngModel)]="vendor">
+              <option>select...</option>
+              <option *ngFor="let ven of vendors" value="{{ven.vendor_id}}">{{ven.vendor_name}}</option>
+            </select>
+          </div>
+          <div class="form-group pull-right">
+            <button type="submit" class="button button2 hvr-pop transition" (click)="getVendor_Payments()">Search</button>
+          </div>
+        </div>
+        <div class="searchForm">
+          <div class="form-group">
+            <label class="pull-left">Material</label>
+            <select class="form-control" [(ngModel)]="material">
+              <option>select...</option>
+              <option *ngFor="let mat of materials" value="{{mat.material_id}}">{{mat.material}}</option>
+            </select>
+          </div>
+          <div class="form-group pull-right">
+            <button type="submit" class="button button2 hvr-pop transition" (click)="getMaterial_payments()">Search</button>
+          </div>
+        </div>
+      </div>
+      <div class="card listcard">
+        <div class="pull-left">
+          <h4>Payments</h4>
+        </div>
+        <div class="searchForm">
+          <div class="table-responsive">
+            <table style="width:100%;">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Vendor</th>
+                  <th>Material</th>
+                  <th>Payment to Pay</th>
+                  <th>Paid</th>
+                  <th>Balance</th>
+                  <th>Payment Status</th>
+                  <th>Due Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let pay of collection.payments | paginate: config; let i=index">
+                  <td>{{ (config.currentPage - 1) * config.itemsPerPage + i +1 }}</td>
+                  <td>{{pay.vendor_name}}</td>
+                  <td>{{pay.material}}</td>
+                  <td>{{pay.payment_toPay}}</td>
+                  <td>{{pay.payment_paid}}</td>
+                  <td>{{pay.payment_balance}}</td>
+                  <td>{{pay.payment_status}}</td>
+                  <td>{{pay.payment_dueDate}}</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="paginationdiv">
+              <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

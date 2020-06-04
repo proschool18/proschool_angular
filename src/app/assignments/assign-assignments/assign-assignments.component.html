@@ -1,0 +1,63 @@
+<div class="popup">
+  <div class="pop_header">
+    <h3 *ngIf="dialog_type == 'add'">Add Assignment</h3>
+    <h3 *ngIf="dialog_type == 'edit'">Edit Assignment</h3>
+  </div>
+  <form role="form" [formGroup]="assignmentForm" (ngSubmit)="assignAssignment()">
+    <div class="pop_content">
+      <div class="row_content">
+        <div class="column_content">
+          <h4>Assignment Title: </h4>
+          <input value="{{assignment.assignment_title}}" formControlName="assignment_title"
+            placeholder="Enter the Code..." type="text">
+        </div>
+        <div class="column_content">
+          <h4>Max Marks: </h4>
+          <input class="form-control" value="{{assignment.maxMarks}}" formControlName="maxMarks" placeholder="Enter..."
+            type="number">
+        </div>
+      </div>
+      <div class="row_content">
+        <div class="column_content">
+          <h4>Subject: </h4>
+          <select formControlName="subject_id" [value]="assignment.subject_id" (change)="getChapters()">
+            <option>select...</option>
+            <option *ngFor="let sub of subjects" value="{{sub.subject_id}}">{{sub.name}}</option>
+          </select>
+        </div>
+        <div class="column_content">
+          <h4>Chapter: </h4>
+          <select class="form-control" formControlName="lession_id" [value]="assignment.lession_id">
+            <option>select...</option>
+            <option *ngFor="let ch of chapters" value="{{ch.lession_id}}">{{ch.title}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="row_content">
+        <div class="column_content">
+          <h4>Assignment Date:</h4>
+          <input class="form-control" value="{{assignment.assign_date}}" formControlName="assign_date"
+            placeholder="Enter..." type="date">
+        </div>
+        <div class="column_content">
+          <h4>Due Date:</h4>
+          <input class="form-control" value="{{assignment.due_date}}" formControlName="due_date" placeholder="Enter..."
+            type="date">
+        </div>
+      </div>
+      <div class="row_content">
+        <div class="column_content">
+          <h4>Description: </h4>
+          <textarea value="{{assignment.description}}" formControlName="description"
+            placeholder="Enter the Description of the Assignment..." cols="50" rows="10"></textarea>
+        </div>
+      </div>
+      <div class="row_content">
+        <div class="button_left">
+          <button type="submit" class="btn -cta">Submit</button>
+        </div>
+        <div (click)="close()" class="btn -cancel">Cancel</div>
+      </div>
+    </div>
+  </form>
+</div>

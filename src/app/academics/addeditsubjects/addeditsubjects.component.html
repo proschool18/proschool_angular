@@ -1,0 +1,36 @@
+<div class="popup">
+    <div class="pop_header">
+        <h3>Add Subject</h3>
+    </div>
+    <form class="form-inline" role="form" [formGroup]="subjectForm" (ngSubmit)="submitSubject()">
+        <div class="pop_content">
+            <div class="row_content">
+                <div class="column_content column_content_left">
+                    <h4>Subject Name: </h4>
+                    <input class="form-control" value="{{subject.name}}" formControlName="name" type="text">
+                </div>
+                <div class="column_content">
+                    <h4>TextBook: </h4>
+                    <input class="form-control" value="{{subject.textbook}}" formControlName="textbook" type="text">
+                </div>
+            </div>
+            <div class="row_content">
+                <div class="column_content column_content_left">
+                    <h4>Author Name: </h4>
+                    <input class="form-control" value="{{subject.author}}" formControlName="author" type="text">
+                </div>
+                <div class="column_content">
+                    <h4>Publisher: </h4>
+                    <input class="form-control" value="{{subject.publisher}}" formControlName="publisher" type="text">
+                </div>
+            </div>
+            <div class="row_content">
+              <div class="button_left">
+                <button type="submit" class="btn -cta">Submit</button>
+              </div>              
+              <div (click)="close()" class="btn -cancel">Cancel</div>
+            </div>
+        </div>
+    </form>
+</div>
+

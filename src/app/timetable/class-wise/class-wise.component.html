@@ -1,0 +1,202 @@
+<main class="card mt-20 within-viewport">
+  <section class="page-actions">
+    <div class="_select-or-search">
+      <div class="_select-group">
+        <app-class *ngIf="user.role === 'admin'" (classEvent)="receiveClass($event)" (sectionEvent)="receiveSection($event)"></app-class>
+      </div>
+    </div>
+  </section>
+  <section class="page-actions">
+    <div class="_select-or-search">
+      <div class="_select-group">
+        <form role="form" [formGroup]="timetableForm" (ngSubmit)="addTimetable()" *ngIf="user.role === 'admin'">
+          <select name="section" formControlName="subject_id" (change)="getSubject_teachers()">
+            <option *ngFor="let sub of subjects" value="{{sub.subject_id}}">{{sub.name}}</option>
+          </select>
+          <select name="section" formControlName="teacher_id">
+            <option *ngFor="let tch of teachers" value="{{tch.teacher_id}}">{{tch.teacher_name}}</option>
+          </select>
+          <select name="section" formControlName="day">
+            <option value="monday">Monday</option>
+            <option value="tuesday">Tuesday</option>
+            <option value="wednesday">Wednesday</option>
+            <option value="thursday">Thursday</option>
+            <option value="friday">Friday</option>
+            <option value="saturday">Saturday</option>
+            <option value="sunday">Sunday</option>
+          </select>
+          <select name="section" formControlName="session_id" (change)="getTime()">
+            <option *ngFor="let tim of timings; let j = index" value="{{tim.session_id}}">{{tim.session}}</option>
+          </select>
+          <div class="form-group pull-right">
+            <button type="submit" class="button button1 hvr-pop transition">Add Timetable</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+  <section class="table-and-pagination -classes-schedule">
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr class="tablehead"> 
+            <th class="headtext">Sessions</th>
+            <th class="subtexth">Monday</th>
+            <th class="subtexth">Tuesday</th>
+            <th class="subtexth">Wednesday</th>
+            <th class="subtexth">Thursday</th>
+            <th class="subtexth">Friday</th>
+            <th class="subtexth">Saturday</th>
+            <th class="subtexth">Sunday</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="trdivider" *ngFor="let tim of timings;let i = index;">
+            <td>
+              <div class="imgDiv">
+                <div class="timebtn bclr txt">{{tim.start_time}}-{{tim.end_time}}</div>
+              </div>
+            </td>
+            <td *ngFor="let tbl of filtered_timetable(days[0], tim.start_time);">
+              <div class="timebtn sbclr txt">{{tbl.name}}</div>
+              <div class="timebtn sbclr txt">{{tbl.teacher_name}}</div>
+            </td>
+            <td *ngFor="let tbl of filtered_timetable(days[1], tim.start_time);">
+              <div class="timebtn txt">{{tbl.name}}</div>
+              <div class="timebtn sbclr txt">{{tbl.teacher_name}}</div>
+            </td>
+            <td *ngFor="let tbl of filtered_timetable(days[2], tim.start_time);">
+              <div class="timebtn txt">{{tbl.name}}</div>
+              <div class="timebtn sbclr txt">{{tbl.teacher_name}}</div>
+            </td>
+            <td *ngFor="let tbl of filtered_timetable(days[3], tim.start_time);">
+              <div class="timebtn txt">{{tbl.name}}</div>
+              <div class="timebtn sbclr txt">{{tbl.teacher_name}}</div>
+            </td>
+            <td *ngFor="let tbl of filtered_timetable(days[4], tim.start_time);">
+              <div class="timebtn txt">{{tbl.name}}</div>
+              <div class="timebtn sbclr txt">{{tbl.teacher_name}}</div>
+            </td>
+            <td *ngFor="let tbl of filtered_timetable(days[5], tim.start_time);">
+              <div class="timebtn txt">{{tbl.name}}</div>
+              <div class="timebtn sbclr txt">{{tbl.teacher_name}}</div>
+            </td>
+            <td *ngFor="let tbl of filtered_timetable(days[6], tim.start_time);">
+              <div class="timebtn txt">{{tbl.name}}</div>
+              <div class="timebtn sbclr txt">{{tbl.teacher_name}}</div>
+            </td>
+          </tr>
+          <tr class="trdivider">
+            <td>
+              <div class="imgDiv">
+                <div>
+                  <div><img src="../../../assets/images/student.jpg" alt=""></div>
+                </div>
+                <div class="text">
+                  <div class="headtext">Kazi Mohammed Erfan</div>
+                  <div class="subtext">Availability 48h</div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="timebtn txt">Closed</div>
+            </td>
+            <td>
+              <div class="timebtn bclr txt">10.30-19.00</div>
+            </td>
+            <td>
+              <div class="timebtn sbclr txt">10.30-19.00</div>
+              <div class="timebtn sbclr txt">10.30-19.00</div>
+            </td>
+            <td>
+              <div class="timebtn bclr txt">10.30-19.00</div>
+            </td>
+            <td>
+              <div class="timebtn sbclr txt">10.30-19.00</div>
+            </td>
+            <td>
+              <div class="timebtn bclr txt">10.30-19.00</div>
+            </td>
+            <td>
+              <div class="timebtn sbclr txt">10.30-19.00</div>
+              <div class="timebtn txt">Closed</div>
+            </td>
+          </tr>
+          <tr class="trdivider">
+            <td>
+              <div class="imgDiv">
+                <div>
+                  <div><img src="../../../assets/images/student.jpg" alt=""></div>
+                </div>
+                <div class="text">
+                  <div class="headtext">Kazi Mohammed Erfan</div>
+                  <div class="subtext">Availability 48h</div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="timebtn txt">Closed</div>
+            </td>
+            <td>
+              <div class="timebtn bclr txt">10.30-19.00</div>
+            </td>
+            <td>
+              <div class="timebtn sbclr txt">10.30-19.00</div>
+              <div class="timebtn sbclr txt">10.30-19.00</div>
+            </td>
+            <td>
+              <div class="timebtn bclr txt">10.30-19.00</div>
+            </td>
+            <td>
+              <div class="timebtn sbclr txt">10.30-19.00</div>
+            </td>
+            <td>
+              <div class="timebtn bclr txt">10.30-19.00</div>
+            </td>
+            <td>
+              <div class="timebtn sbclr txt">10.30-19.00</div>
+              <div class="timebtn txt">Closed</div>
+            </td>
+          </tr>
+          <tr class="trdivider">
+            <td>
+              <div class="imgDiv">
+                <div>
+                  <div><img src="../../../assets/images/student.jpg" alt=""></div>
+                </div>
+                <div class="text">
+                  <div class="headtext">Kazi Mohammed Erfan</div>
+                  <div class="subtext">Availability 48h</div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="timebtn txt">Closed</div>
+            </td>
+            <td>
+              <div class="timebtn bclr txt">10.30-19.00</div>
+            </td>
+            <td>
+              <div class="timebtn sbclr txt">10.30-19.00</div>
+              <div class="timebtn sbclr txt">10.30-19.00</div>
+            </td>
+            <td>
+              <div class="timebtn bclr txt">10.30-19.00</div>
+            </td>
+            <td>
+              <div class="timebtn sbclr txt">10.30-19.00</div>
+            </td>
+            <td>
+              <div class="timebtn bclr txt">10.30-19.00</div>
+            </td>
+            <td>
+              <div class="timebtn sbclr txt">10.30-19.00</div>
+              <div class="timebtn txt">Closed</div>
+            </td>
+          </tr>    
+                                  
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>

@@ -1,0 +1,105 @@
+<div>
+    <div class="row">
+        <div class="col-md-12">
+            <h4 id="heading">Compose Message</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5">
+            <div class="form-group">
+                <label class="pull-left">Select Category</label>
+                <select class="form-control" [(ngModel)]="Selected_Category" (change)="getCategory()">
+                    <option value="" selected>Select</option>
+                    <option value="Employees">Employees</option>
+                    <option value="Parents">Parents</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="selection_parents">
+        <div class="col-md-5">
+            <div class="form-group">
+                <label class="pull-left">Class</label>
+                <select class="form-control" [(ngModel)]="Selected_class" (change)="getSections()">
+                    <option value="" selected>Select Class</option>
+                    <option value="all" selected>All Classes</option>
+                    <option *ngFor="let cls of classes" value="{{cls.class_id}}">{{cls.name}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-5" *ngIf="!all_classes">
+            <div class="form-group">
+                <label class="pull-left">Section</label>
+                <select class="form-control" [(ngModel)]="Selected_section" (change)="getStudents()">
+                    <option value="" selected>Select Section</option>
+                    <option value="all" selected>All Sections</option>
+                    <option *ngFor="let sec of sections; let i = index" value="{{sec.section_id}}">{{sec.name}}
+                    </option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="selection_parents">
+        <div class="col-md-5" *ngIf="!all_sections && !all_classes">
+            <div class="form-group">
+                <label class="pull-left">Students</label>
+                <select class="form-control" [(ngModel)]="Selected_student" (change)="getSent_to('parents')">
+                    <option value="" selected>Select</option>
+                    <option value="all" selected>All Students</option>
+                    <option *ngFor="let std of students; let i = index" value="{{std.student_id}}">{{std.first_name}}
+                        {{std.last_name}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="selection_employees">
+        <div class="col-md-5">
+            <div class="form-group">
+                <label class="pull-left">Employee Type</label>
+                <select class="form-control" [(ngModel)]="Selected_employeeType" (change)="get_selectedemployees()">
+                    <option value="" selected>Select</option>
+                    <option value="all" selected>All Employees</option>
+                    <option value="teacher">Teaching</option>
+                    <option value="non-teacher">Non-Teaching</option>
+                    <option value="administrative">Administrative</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="selection_employees">
+        <div class="col-md-5" *ngIf="!allEmployeeTypes">
+            <div class="form-group">
+                <label class="pull-left">Employees</label>
+                <select class="form-control" [(ngModel)]="Selected_employee" (change)="getSent_to('employees')">
+                    <option value="" selected>Select</option>
+                    <option value="all" selected>All Employees</option>
+                    <option *ngFor="let emp of employees; let i = index" value="{{emp.employee_id}}">{{emp.first_name}}
+                        {{emp.last_name}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form role="form" [formGroup]="messageForm" (ngSubmit)="compose()">
+    <div class="row">
+        <div class="col-md-10">
+            <div class="form-group">
+                <label class="pull-left">Subject</label>
+                <input class="form-control" formControlName="subject" type="text">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="form-group">
+                <label class="pull-left">Message</label>
+                <textarea class="form-control" formControlName="message" cols="30" rows="5"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="button button1 hvr-pop transition pull-right">Submit</button>
+        <div (click)="close()" class="button button1 hvr-pop transition pull-left">Close</div>
+    </div>
+</form>

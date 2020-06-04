@@ -1,0 +1,478 @@
+<div id="main-content1">
+
+  <div class="row-wrapper center-content">
+      <button class="btn -cta" (click)="get_studentForm('studentdetails')">Student
+        Details</button>
+      <button class="btn -cta" (click)="get_studentForm('parentdetails')">Parent/Guardian
+        Details</button>
+      <button class="btn -cta" (click)="get_studentForm('address')">Address</button>
+      <!-- <button class="button button2 hvr-pop transition">Bulk Student Admission</button> -->
+  </div>
+
+  <!-- <div>
+    <form>
+      <div class="row alignrow">
+        <div class="col-md-3">
+          <div class="form-group">
+            <label class="pull-left">Class</label>
+            <select  class="inpbox" class="form-control" >
+              <option>select...</option>
+              <option value="">1</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label class="pull-left">Section</label>
+            <select  class="inpbox" class="form-control" >
+              <option>select...</option>
+              <option value="">1</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label class="pull-left">Excel Files</label>
+            <div class="fileup">
+              <input type="file">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <div class="excelimg">
+              <img src="../../../assets/images/xlsx6.png" alt="" width="30px" height="30px">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-3"></div>
+        <div class="col-md-3"></div>
+        <div class="col-md-3">
+          <button class="button button1 hvr-pop transition" type="submit">Submit</button>
+        </div>
+      </div>
+    </form>
+  </div> -->
+
+  <form [formGroup]="sudentadmissionForm" (ngSubmit)="submitStudent()">
+
+    <div *ngIf="studentdetails">
+      <div class="row-wrapper">
+        <div class="col-full-3">
+          <div class="form-group" [ngClass]="{'has-error' : sudentadmissionForm.get('admission_no').errors 
+            && (sudentadmissionForm.get('admission_no').touched || sudentadmissionForm.get('admission_no').dirty)}">
+            <label class="heading">Admission No*</label>
+            <div>
+              <input class="inpbox" type="text" formControlName="admission_no" [value]="student.admission_no">
+              <span class="help-block" *ngIf="sudentadmissionForm.get('admission_no').errors 
+          && (sudentadmissionForm.get('admission_no').touched || sudentadmissionForm.get('admission_no').dirty)">
+                <span *ngIf="sudentadmissionForm.get('admission_no').errors.required">
+                  Admission Number is required
+                </span>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-full-3">
+          <div class="form-group" [ngClass]="{'has-error' : sudentadmissionForm.get('roll_no').errors 
+            && (sudentadmissionForm.get('roll_no').touched || sudentadmissionForm.get('roll_no').dirty)}">
+            <label class="heading">Roll No*</label>
+            <div><input type="text" class="inpbox" formControlName="roll_no" [value]="student.roll_no">
+              <span class="help-block" *ngIf="sudentadmissionForm.get('roll_no').errors 
+                && (sudentadmissionForm.get('roll_no').touched || sudentadmissionForm.get('roll_no').dirty)">
+                <span *ngIf="sudentadmissionForm.get('roll_no').errors.required">
+                  Roll Number is required
+                </span>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-full-3">
+          <div class="form-group">
+            <label class="heading">Class*</label>
+            <select class="inpbox" formControlName="class_id" (change)="sectionChange()">
+              <option value="">--Select--</option>
+              <option [value]="school_classes.class_id" *ngFor="let school_classes of classes">{{school_classes.name}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-full-3">
+          <div class="form-group">
+            <label class="heading">Section*</label>
+            <select class="inpbox" formControlName="section_id" [value]="student.section_id">
+              <option value="">--Select--</option>
+              <option [value]="section.section_id" *ngFor="let section of sections">{{section.name}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="row-wrapper">
+        <div class="col-full-3">
+          <div class="form-group" [ngClass]="{'has-error' : sudentadmissionForm.get('first_name').errors 
+            && (sudentadmissionForm.get('first_name').touched || sudentadmissionForm.get('first_name').dirty)}">
+            <label class="heading">First Name*</label>
+            <div><input class="inpbox" type="text" formControlName="first_name" [value]="student.first_name">
+              <span class="help-block" *ngIf="sudentadmissionForm.get('first_name').errors 
+                && (sudentadmissionForm.get('first_name').touched || sudentadmissionForm.get('first_name').dirty)">
+                <span *ngIf="sudentadmissionForm.get('first_name').errors.required">
+                  First Name is required
+                </span>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-full-3">
+          <div class="form-group" [ngClass]="{'has-error' : sudentadmissionForm.get('last_name').errors 
+            && (sudentadmissionForm.get('last_name').touched || sudentadmissionForm.get('last_name').dirty)}">
+            <label class="heading">Last Name*</label>
+            <div><input type="text" class="inpbox" formControlName="last_name" [value]="student.last_name">
+              <span class="help-block" *ngIf="sudentadmissionForm.get('last_name').errors 
+                && (sudentadmissionForm.get('last_name').touched || sudentadmissionForm.get('last_name').dirty)">
+                <span *ngIf="sudentadmissionForm.get('last_name').errors.required">
+                  Last Name is required
+                </span>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-full-3">
+          <div class="form-group">
+            <label class="heading">Gender*</label>
+            <select class="inpbox" formControlName="gender">
+              <option value="">--Select--</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-full-3">
+          <div class="form-group" [ngClass]="{'has-error' : sudentadmissionForm.get('dob').errors 
+            && (sudentadmissionForm.get('dob').touched || sudentadmissionForm.get('dob').dirty)}">
+            <label class="heading">Date of Birth*</label>
+            <div class="dropdown">
+              <!-- <input type="date" class="inpbox" formControlName="dob" [value]="student.dob"> -->
+              <mat-form-field>
+                 <input matInput [matDatepicker]="date_of_birth" [formControl]="date_of_birth">
+                 <mat-datepicker-toggle matSuffix [for]="date_of_birth"></mat-datepicker-toggle>
+                 <mat-datepicker #date_of_birth></mat-datepicker>
+              </mat-form-field>
+              <span class="help-block" *ngIf="sudentadmissionForm.get('dob').errors 
+            && (sudentadmissionForm.get('dob').touched || sudentadmissionForm.get('dob').dirty)">
+                <span *ngIf="sudentadmissionForm.get('dob').errors.required">
+                  DOB is required
+                </span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row-wrapper">
+        <div class="col-full-3">
+          <div class="form-group">
+            <label class="heading">Category*</label>
+            <select class="inpbox" formControlName="category">
+              <option value="">--Select--</option>
+              <option value="OC">OC</option>
+              <option value="OBC">OBC</option>
+              <option value="BC-A">BC-A</option>
+              <option value="BC-B">BC-B</option>
+              <option value="BC-C">BC-C</option>
+              <option value="BC-D">BC-D</option>
+              <option value="Minority">Minority</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-full-3">
+          <div class="form-group" [ngClass]="{'has-error' : sudentadmissionForm.get('nationality').errors 
+            && (sudentadmissionForm.get('nationality').touched || sudentadmissionForm.get('nationality').dirty)}">
+            <label class="heading">Nationality*</label>
+            <div><input type="text" class="inpbox" formControlName="nationality" [value]="student.nationality">
+              <span class="help-block" *ngIf="sudentadmissionForm.get('nationality').errors 
+            && (sudentadmissionForm.get('nationality').touched || sudentadmissionForm.get('nationality').dirty)">
+                <span *ngIf="sudentadmissionForm.get('nationality').errors.required">
+                  Nationality is required
+                </span>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-full-3">
+          <div class="form-group" [ngClass]="{'has-error' : sudentadmissionForm.get('phone').errors 
+            && (sudentadmissionForm.get('phone').touched || sudentadmissionForm.get('phone').dirty)}">
+            <label class="heading">Contact No*</label>
+            <div>
+              <input type="number" class="inpbox" formControlName="phone" [value]="student.phone">
+              <span class="help-block" *ngIf="sudentadmissionForm.get('phone').errors 
+            && (sudentadmissionForm.get('phone').touched || sudentadmissionForm.get('phone').dirty)">
+                <span *ngIf="sudentadmissionForm.get('phone').errors.required">
+                  Phone Number is required
+                </span>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-full-3">
+          <div class="form-group" [ngClass]="{'has-error' : sudentadmissionForm.get('aadhar_no').errors 
+            && (sudentadmissionForm.get('aadhar_no').touched || sudentadmissionForm.get('aadhar_no').dirty)}">
+            <label class="heading">Aadhaar No*</label>
+            <div>
+              <input type="text" class="inpbox" formControlName="aadhar_no" [value]="student.aadhar_no">
+              <span class="help-block" *ngIf="sudentadmissionForm.get('aadhar_no').errors 
+            && (sudentadmissionForm.get('aadhar_no').touched || sudentadmissionForm.get('aadhar_no').dirty)">
+                <span *ngIf="sudentadmissionForm.get('aadhar_no').errors.required">
+                  Aadhar Number is required
+                </span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row-wrapper">
+        <div class="col-full-3">
+          <div class="form-group">
+            <label class="heading">Blood Group*</label>
+            <select class="inpbox" formControlName="blood_group" [value]="student.blood_group">
+              <option value="">--Select--</option>
+              <option value="O+">O+</option>
+              <option value="O-">O-</option>
+              <option value="A+">A+</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="B-">B-</option>
+              <option value="AB+">AB+</option>
+              <option value="AB-">AB-</option>
+              <option value="NA">NA</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-full-3">
+          <div class="form-group" [ngClass]="{'has-error' : sudentadmissionForm.get('admission_date').errors 
+            && (sudentadmissionForm.get('admission_date').touched || sudentadmissionForm.get('admission_date').dirty)}">
+            <label class="heading">Admission Date*</label>
+            <div class="dropdown">
+              <mat-form-field>
+                 <input matInput [matDatepicker]="date_of_admission" [formControl]="date_of_admission">
+                 <mat-datepicker-toggle matSuffix [for]="date_of_admission"></mat-datepicker-toggle>
+                 <mat-datepicker #date_of_admission></mat-datepicker>
+              </mat-form-field>
+              <!-- <input type="date" class="inpbox" formControlName="admission_date" [value]="student.admission_date"> -->
+              <span class="help-block" *ngIf="sudentadmissionForm.get('admission_date').errors 
+            && (sudentadmissionForm.get('admission_date').touched || sudentadmissionForm.get('admission_date').dirty)">
+                <span *ngIf="sudentadmissionForm.get('admission_date').errors.required">
+                  Admission Date is required
+                </span>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-full-3">
+          <div class="form-group">
+            <label class="heading">School Bus Route</label>
+            <select class="inpbox" formControlName="bus_route_id">
+              <option value="">--Select--</option>
+              <option value="Route1">Route1</option>
+              <option value="Route2">Route2</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-full-3">
+          <div class="form-group">
+            <label class="heading">Email</label>
+            <div><input type="email" class="inpbox" formControlName="email" [value]="student.email"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <!-- <div class="col-md-3">
+            <div class="form-group">
+              <label>Student Photo</label>
+              <div>
+                <input type="file">
+              </div>
+            </div>
+          </div> -->
+        <div class="col-md-3 pull-left">
+          <button class="button button1 hvr-pop transition" (click)="close()">Close</button>
+        </div>
+        <div class="col-md-3 pull-right">
+          <button class="button button1 hvr-pop transition" (click)="get_studentForm('parentdetails')">Next</button>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="parentdetails">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="form-group" [ngClass]="{'has-error' : sudentadmissionForm.get('father_name').errors 
+            && (sudentadmissionForm.get('father_name').touched || sudentadmissionForm.get('father_name').dirty)}">
+            <label>Father Name*</label>
+            <div><input class="inpbox" type="text" formControlName="father_name" [value]="student.parents[1].parent_name">
+              <span class="help-block" *ngIf="sudentadmissionForm.get('father_name').errors 
+            && (sudentadmissionForm.get('father_name').touched || sudentadmissionForm.get('father_name').dirty)">
+                <span *ngIf="sudentadmissionForm.get('father_name').errors.required">
+                  Father Name is required
+                </span>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group" [ngClass]="{'has-error' : sudentadmissionForm.get('father_contact').errors 
+            && (sudentadmissionForm.get('father_contact').touched || sudentadmissionForm.get('father_contact').dirty)}">
+            <label>Father Phone*</label>
+            <div><input type="text" class="inpbox" formControlName="father_contact" [value]="student.parents[1].parent_contact">
+              <span class="help-block" *ngIf="sudentadmissionForm.get('father_contact').errors 
+            && (sudentadmissionForm.get('father_contact').touched || sudentadmissionForm.get('father_contact').dirty)">
+                <span *ngIf="sudentadmissionForm.get('father_contact').errors.required">
+                  Father Contact is required
+                </span>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label>Father Email</label>
+            <input class="inpbox" type="email" formControlName="father_email" [value]="student.parents[1].parent_email">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label>Father Occupation*</label>
+            <input class="inpbox" type="text" formControlName="father_occupation" [value]="student.parents[1].occupation">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3">
+          <div class="form-group">
+            <label>Mother Name</label>
+            <input class="inpbox" type="text" formControlName="mother_name" [value]="student.parents[0].parent_name">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label>Mother Phone</label>
+            <input class="inpbox" type="number" formControlName="mother_contact" [value]="student.parents[0].parent_contact"></div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label>Mother Email</label>
+            <input class="inpbox" type="email" formControlName="mother_email" [value]="student.parents[0].parent_email">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label>Mother Occupation</label>
+            <input class="inpbox" type="text" formControlName="mother_occupation" [value]="student.parents[0].occupation">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3">
+          <div class="form-group">
+            <label>Guardian Name</label>
+            <input class="inpbox" type="text" formControlName="gaurdian_name" [value]="student.parents[2].parent_name">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label>Guardian Phone</label>
+            <input class="inpbox" type="number" formControlName="gaurdian_contact" [value]="student.parents[2].parent_contact">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label>Guardian Email</label>
+            <input class="inpbox" type="email" formControlName="gaurdian_email" [value]="student.parents[2].parent_email">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label>Guardian Occupation</label>
+            <input class="inpbox" type="text" formControlName="gaurdian_occupation" [value]="student.parents[2].occupation">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3">
+          <div class="form-group">
+            <label>Guardian Relation</label>
+            <input class="inpbox" type="text" formControlName="gaurdian_relation" [value]="student.parents[2].parent_relation">
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="col-md-3 pull-left">
+          <button class="button button1 hvr-pop transition" (click)="close()">Close</button>
+          <button class="button button1 hvr-pop transition" (click)="get_studentForm('studentdetails')">Previous</button>
+        </div>
+        <div class="col-md-3 pull-right">
+          <button class="button button1 hvr-pop transition" (click)="get_studentForm('address')">Next</button>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="address">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Current Address</label>
+            <div><textarea formControlName="cur_address" cols="75" rows="5" [value]="student.current_address[0].cur_address"></textarea></div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Permanent Address</label>
+            <div><textarea formControlName="perm_address" cols="75" rows="5" [value]="student.permanent_address[0].perm_address"></textarea></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <!-- <div class="col-md-6">
+          <div class="form-group">
+            <label>Create Parent Account</label>
+            <div><input type="radio"> Yes <input type="radio"> No </div>
+          </div>
+        </div> -->
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Upload Photo</label>
+            <input type="file" name="image" (change)="fileProgress($event)" >
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Upload Documents</label>
+            <input type="file">
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="col-md-3 pull-left">
+          <button class="button button1 hvr-pop transition" (click)="close()">Close</button>
+          <button class="button button1 hvr-pop transition" (click)="get_studentForm('parentdetails')">Previous</button>
+        </div>
+        <div class="col-md-3 pull-right">
+          <button class="button button1 hvr-pop transition" type="submit">Submit</button>
+        </div>
+      </div>
+    </div>
+
+  </form>
+  
+</div>

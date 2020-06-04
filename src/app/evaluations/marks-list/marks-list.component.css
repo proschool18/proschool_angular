@@ -1,0 +1,8 @@
+.scroller {
+    overflow-y: scroll;
+    scrollbar-width: thin;
+  }
+
+#list-heading {
+  display: flex;
+}

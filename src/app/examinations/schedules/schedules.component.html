@@ -1,0 +1,63 @@
+<main class="card mt-20 within-viewport">
+  <section class="page-actions">
+    <div class="_select-or-search">
+      <div class="_select-group">
+
+      </div>
+    </div>
+    <div class="add_div">
+      <form role="form" class="searchForm" [formGroup]="scheduleForm" (ngSubmit)="addExam_schedules()" *ngIf="user.role === 'admin'">
+        <select name="section" formControlName="exam_title">
+          <option *ngFor="let assp of assessment_patterns[0].assessment" value="{{assp.code}}">{{assp.code}}</option>
+          <option *ngFor="let assp of assessment_patterns[1].assessment" value="{{assp.code}}">{{assp.code}}</option>
+        </select>
+        <input class="form-control" formControlName="from_date" placeholder="Enter..." type="date">
+        <input class="form-control" formControlName="end_date" placeholder="Enter..." type="date">
+        <button class="btn -cta" type="submit">Add Schedule</button>
+      </form>
+    </div>
+  </section>
+  <section class="table-and-pagination -classes-schedule">
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th align="left">Examination Title</th>
+            <th align="left">Start Date</th>
+            <th align="left">End Date</th>
+            <th align="left" *ngIf="user.role === 'admin'">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let exam of exam_schedules; let i=index">
+            <td class="_s-no"><span>{{ i + 1 }}</span></td>
+            <td>{{exam.exam_title}}</td>
+            <td>{{exam.from_date}}</td>
+            <td>{{exam.end_date}}</td>
+            <td class="_actions" *ngIf="user.role === 'admin'">
+              <button class="btn" (click)="editSchedules(i)"><img src="../../../assets/images/edit-white.svg"
+                  alt="Edit" /></button>
+              <button class="btn" (click)="deleteSchedules(exam.exam_sch_id)"><img
+                  src="../../../assets/images/trash-white.svg" alt="Delete" /></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="_pagination">
+      <a href="" class="btn -previous">Previous</a>
+      <a href="" class="btn -current">1</a>
+      <a href="" class="btn">2</a>
+      <a href="" class="btn">3</a>
+      <a href="" class="btn">4</a>
+      <a href="" class="btn">5</a>
+      <a href="" class="btn">6</a>
+      <a href="" class="btn">7</a>
+      <a href="" class="btn">8</a>
+      <a href="" class="btn">9</a>
+      <a href="" class="btn">10</a>
+      <a href="" class="btn -next">Next</a>
+    </div>
+  </section>
+</main>

@@ -1,0 +1,60 @@
+<div id="main-content">
+
+  <div class="row">
+    <div class="container-fluid" id="buttonId1">
+      <button routerLink="/main/admin/pendingTasks" class="button button2 hvr-pop transition">Pending Tasks</button>
+      <button routerLink="/main/admin/completedTasks" class="button button2 hvr-pop transition">Completed Tasks</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="container-fluid dashboard-content">
+      <div class="card listcard taskcard">
+        <div class="pull-left">
+          <h4>Completed Tasks</h4>
+        </div>
+        <div class="searchForm">
+          <div class="table-responsive">
+            <table style="width:100%;">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Task</th>
+                  <th *ngIf="user.role === 'admin'">Department</th>
+                  <th *ngIf="user.role === 'admin'">Assigned To</th>
+                  <th>Priority</th>
+                  <th>Due Date</th>
+                  <th>Completion Date</th>
+                  <th>Status</th>
+                  <!-- <th>Rating</th> -->
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let task of collection.tasks | paginate: config; let i=index">
+                  <td>{{ (config.currentPage - 1) * config.itemsPerPage + i +1 }}</td>
+                  <td>{{task.task}}</td>
+                  <td *ngIf="user.role === 'admin'">{{task.department}}</td>
+                  <td *ngIf="user.role === 'admin'">{{task.employee_name}}</td>
+                  <td>{{task.priority}}</td>
+                  <td>{{task.assigned_on}}</td>
+                  <td>{{task.completion_date}}</td>
+                  <td *ngIf="user.role === 'admin'"><button class="button button2 hvr-pop transition"
+                      [ngStyle]="{'background-color': (task.task_status == 'pending') ? '#d9534f' : '#5cb85c', 'color': 'white' }"
+                      (click)="update_status(task.task_status, i)">{{task.task_status}}</button></td>
+                  <td *ngIf="user.role === 'parent' || user.role === 'teacher'">{{task.task_status}}</td>
+                  <!-- <td>
+                    <span class="fa fa-star checked" *ngFor = "let i of arr" [ngStyle]="{'color': (i >= 'task.rating') ? 'black' : '#36879f'}"></span>
+                  </td> -->
+                </tr>
+              </tbody>
+            </table>
+            <div class="paginationdiv">
+              <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

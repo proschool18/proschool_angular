@@ -1,0 +1,68 @@
+<div id="main-content">
+
+  <div class="row">
+    <div class="container-fluid" id="buttonId1">
+      <button routerLink="/main/admin/material" class="button button2 hvr-pop transition">Material</button>
+      <button routerLink="/main/admin/vendors" class="button button2 hvr-pop transition">Vendors</button>
+      <button routerLink="/main/admin/materialIn" class="button button2 hvr-pop transition">Material-In</button>
+      <button routerLink="/main/admin/materialOut" class="button button2 hvr-pop transition">Material-Out</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="container-fluid dashboard-content">
+      <div class="card selectcard">
+        <form class="searchForm" role="form" [formGroup]="materialForm" (ngSubmit)="addMaterials()">
+          <div class="form-group">
+            <label class="pull-left">Material Name</label>
+            <input class="form-control" formControlName="material" placeholder="Enter..." type="text">
+          </div>
+          <div class="form-group">
+            <label class="pull-left">Category</label>
+            <input class="form-control" formControlName="category" placeholder="Enter..." type="text">
+          </div>
+          <div class="form-group pull-right">
+            <button type="submit" class="button button1 hvr-pop transition">Add Material</button>
+          </div>
+        </form>
+      </div>
+      <div class="card listcard">
+        <div class="pull-left">
+          <h4>Materials</h4>
+        </div>
+        <div class="searchForm">
+          <div class="table-responsive">
+            <table style="width:100%;">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Material Name</th>
+                  <th>Category</th>
+                  <th>Available</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let mat of collection.materials | paginate: config; let i=index">
+                  <td>{{ (config.currentPage - 1) * config.itemsPerPage + i +1 }}</td>
+                  <td>{{mat.material}}</td>
+                  <td>{{mat.category}}</td>
+                  <td>{{mat.quantity}}</td>
+                  <td>
+                    <div class="pattrenED">
+                      <div><i class="fa fa-pencil-square" aria-hidden="true" (click)="editMaterial((config.currentPage - 1) * config.itemsPerPage + i)"></i></div>
+                      <div><i class="fa fa-trash" aria-hidden="true"  (click)="deleteMaterial(mat.material_id)"></i></div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="paginationdiv">
+              <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

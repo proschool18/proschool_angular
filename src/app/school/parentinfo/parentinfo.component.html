@@ -1,0 +1,53 @@
+<main class="card mt-20 within-viewport">
+  <section class="page-actions">
+    <div class="_select-or-search">
+      <div class="_select-group">
+        <app-class (classEvent)="receiveClass($event)" (sectionEvent)="receiveSection($event)"></app-class>
+      </div>
+      <input type="search" name="" placeholder="Search">
+    </div>
+    <div class="add_div">
+      <button class="btn -cta" routerLink="/main/admin/parentinfo">Parent Info</button>
+      <button class="btn -cta" routerLink="/main/admin/employeeinfo">Employee Info</button>
+    </div>
+    <button class="btn -cta" (click)="addchapter()" *ngIf="user.role === 'admin'">Add Chapter</button>
+  </section>
+  <section class="table-and-pagination -classes-schedule">
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th align="left">Student Name</th>
+            <th align="left">Parent Name</th>
+            <th align="left">User Name</th>
+            <th align="left">Password</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let par of parents; let i=index">
+            <td>{{ i + 1 }}</td>
+            <td>{{par.student_doc[0].first_name}} {{par.student_doc[0].last_name}}</td>
+            <td>{{par.parent_name}}</td>
+            <td>{{par.parent_id}}</td>
+            <td>{{par.parent_id}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="_pagination">
+      <a href="" class="btn -previous">Previous</a>
+      <a href="" class="btn -current">1</a>
+      <a href="" class="btn">2</a>
+      <a href="" class="btn">3</a>
+      <a href="" class="btn">4</a>
+      <a href="" class="btn">5</a>
+      <a href="" class="btn">6</a>
+      <a href="" class="btn">7</a>
+      <a href="" class="btn">8</a>
+      <a href="" class="btn">9</a>
+      <a href="" class="btn">10</a>
+      <a href="" class="btn -next">Next</a>
+    </div>
+  </section>
+</main>

@@ -1,0 +1,58 @@
+.attprofpic{
+    margin-top: 10px;
+}
+.attprofpic img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+.nameroll{
+    font-size: 10px;
+    font-weight: 800;
+    color: whitesmoke;
+    text-align: center;
+}
+.attreport{
+    display: flex;
+}
+.attreport .attreportbtn{
+    margin-top: 4px;
+    font-weight: 800;
+    width: 30px;
+    height: 30px;
+    margin-left: 8px;
+    padding-top: 6px;
+    color: white;
+    text-align: center;
+}
+.attreport .attreportbtn:hover{
+    margin-top: 4px;
+    font-weight: 800;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-left: 8px;
+    padding-top: 6px;
+    cursor: pointer;
+}
+.attreport .present{
+    background-color: none;
+}
+.attreport .absent{
+    background-color: none;
+}
+.attreport .leave{
+    background-color: none;
+}
+.attreport .present:hover, .present-select{
+    background-color: #5cb85c;
+    border-radius: 20px;
+}
+.attreport .absent:hover, .absent-select{
+    background-color: #d9534f;
+    border-radius: 20px;
+}
+.attreport .leave:hover, .leave-select{
+    background-color: #f0ad4e;
+    border-radius: 20px;
+}

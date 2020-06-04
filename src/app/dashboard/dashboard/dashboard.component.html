@@ -1,0 +1,433 @@
+<main>
+  <div class="main-dashboard-section-1">
+    <div class="tasks-events-notices-expenses card tabbed">
+      <div class="_tab-group" role="tablist">
+        <button role="tab" id="tasks-tab" aria-selected="true">Tasks</button>
+        <button role="tab" id="events-tab" tabindex="-1">Events</button>
+        <button role="tab" id="notices-tab" tabindex="-1">Notice</button>
+        <button role="tab" id="expenses-tab" tabindex="-1">Expenses</button>
+      </div>
+      <div class="_tab-panel-group">
+        <section role="tabpanel" tabindex="-1" aria-labelledby="tasks-tab" class="table-container">
+          <table cellspacing="0" class="_task-list">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th align="left">Priority</th>
+                <th align="left">Task</th>
+                <th align="left">Assigned to</th>
+                <th align="left">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="_task -high-priority">
+                <td class="_s-no"><span>1</span></td>
+                <td class="_priority-text">High</td>
+                <td>Task 01</td>
+                <td>John Smith</td>
+                <td>
+                  <div class="_progress-text -pending">Pending</div>
+                </td>
+              </tr>
+              <tr class="_task -medium-priority">
+                <td class="_s-no"><span>2</span></td>
+                <td class="_priority-text">Medium</td>
+                <td>Task 02</td>
+                <td>Lawrence</td>
+                <td>
+                  <div class="_progress-text -rejected">Rejected</div>
+                </td>
+              </tr>
+              <tr class="_task -low-priority">
+                <td class="_s-no"><span>3</span></td>
+                <td class="_priority-text">Low</td>
+                <td>Task 03</td>
+                <td>Smith John</td>
+                <td>
+                  <div class="_progress-text -approved">Approved</div>
+                </td>
+              </tr>
+              <tr class="_task -medium-priority">
+                <td class="_s-no"><span>4</span></td>
+                <td class="_priority-text">Medium</td>
+                <td>Task 04</td>
+                <td>John Smith</td>
+                <td>
+                  <div class="_progress-text -pending">Pending</div>
+                </td>
+              </tr>
+              <tr class="_task -high-priority">
+                <td class="_s-no"><span>5</span></td>
+                <td class="_priority-text">High</td>
+                <td>Task 01</td>
+                <td>John Smith</td>
+                <td>
+                  <div class="_progress-text -pending">Pending</div>
+                </td>
+              </tr>
+              <tr class="_task -medium-priority">
+                <td class="_s-no"><span>6</span></td>
+                <td class="_priority-text">Medium</td>
+                <td>Task 02</td>
+                <td>Lawrence</td>
+                <td>
+                  <div class="_progress-text -rejected">Rejected</div>
+                </td>
+              </tr>
+              <tr class="_task -low-priority">
+                <td class="_s-no"><span>7</span></td>
+                <td class="_priority-text">Low</td>
+                <td>Task 03</td>
+                <td>Smith John</td>
+                <td>
+                  <div class="_progress-text -approved">Approved</div>
+                </td>
+              </tr>
+              <tr class="_task -medium-priority">
+                <td class="_s-no"><span>8</span></td>
+                <td class="_priority-text">Medium</td>
+                <td>Task 04</td>
+                <td>John Smith</td>
+                <td>
+                  <div class="_progress-text -pending">Pending</div>
+                </td>
+              </tr>
+              <tr class="_task -low-priority">
+                <td class="_s-no"><span>9</span></td>
+                <td class="_priority-text">Low</td>
+                <td>Task 03</td>
+                <td>Smith John</td>
+                <td>
+                  <div class="_progress-text -approved">Approved</div>
+                </td>
+              </tr>
+              <tr class="_task -medium-priority">
+                <td class="_s-no"><span>10</span></td>
+                <td class="_priority-text">Medium</td>
+                <td>Task 04</td>
+                <td>John Smith</td>
+                <td>
+                  <div class="_progress-text -pending">Pending</div>
+                </td>
+              </tr>
+              <tr class="_task -low-priority">
+                <td class="_s-no"><span>11</span></td>
+                <td class="_priority-text">Low</td>
+                <td>Task 03</td>
+                <td>Smith John</td>
+                <td>
+                  <div class="_progress-text -approved">Approved</div>
+                </td>
+              </tr>
+              <tr class="_task -medium-priority">
+                <td class="_s-no"><span>12</span></td>
+                <td class="_priority-text">Medium</td>
+                <td>Task 04</td>
+                <td>John Smith</td>
+                <td>
+                  <div class="_progress-text -pending">Pending</div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+        <section role="tabpanel" tabindex="-1" aria-labelledby="events-tab" hidden>
+          <h3>Events</h3>
+        </section>
+        <section role="tabpanel" tabindex="-1" aria-labelledby="notices-tab" hidden>
+          <h3>Notice</h3>
+        </section>
+        <section role="tabpanel" tabindex="-1" aria-labelledby="expenses-tab" hidden>
+          <h3>Expenses</h3>
+        </section>
+      </div>
+    </div>
+    <div class="_attendance-and-history">
+      <div class="_attendance-box card">
+        <h2>Attendance</h2>
+        <button type="button" class="_date-picker">Year<i class="fa fa-angle-down"></i></button>
+        <div class="tabbed">
+          <div role="tablist">
+            <button role="tab" id="students-attendance-tab" aria-selected="true" class="attntablink">Students</button>
+            <button role="tab" id="employees-attendance-tab" class="attntablink" tabindex="-1">Employees</button>
+          </div>
+          <section role="tabpanel" aria-labelledby="students-attendance-tab" tabindex="-1">
+            <div class="_metrics">
+              <div class="_metric -total">
+                <div class="_bar" style="--progress:90%"></div>
+                <div class="_name">
+                  <span class="_legend">Total</span> 22 days
+                </div>
+              </div>
+              <div class="_metric -attend">
+                <div class="_bar" style="--progress:20%"></div>
+                <div class="_name">
+                  <span class="_legend">Attend</span> 13 days
+                </div>
+              </div>
+              <div class="_metric -due">
+                <div class="_bar" style="--progress:10%"></div>
+                <div class="_name">
+                  <span class="_legend">Due</span> 9 days
+                </div>
+              </div>
+            </div>
+          </section>
+          <section role="tabpanel" aria-labelledby="employees-attendance-tab" tabindex="-1" hidden>
+            <div class="_metrics">
+              <div class="_metric -total">
+                <div class="_bar" style="--progress:50%"></div>
+                <div class="_name">
+                  <span class="_legend">Total</span> 22 days
+                </div>
+              </div>
+              <div class="_metric -attend">
+                <div class="_bar" style="--progress:90%"></div>
+                <div class="_name">
+                  <span class="_legend">Attend</span> 13 days
+                </div>
+              </div>
+              <div class="_metric -due">
+                <div class="_bar" style="--progress:30%"></div>
+                <div class="_name">
+                  <span class="_legend">Due</span> 9 days
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div class="_history-box card">
+        <h2>History</h2>
+        <button type="button" class="_date-picker">Month<i class="fa fa-angle-down"></i></button>
+        <div class="tabbed">
+          <div role="tablist">
+            <button role="tab" id="payment-history-tab" aria-selected="true" class="attntablink">Payments</button>
+            <button role="tab" id="expenses-history-tab" class="attntablink" tabindex="-1">Expenses</button>
+          </div>
+          <section role="tabpanel" aria-labelledby="payment-history-tab" tabindex="-1">
+            <div class="_metrics">
+              <div class="_metric -earned">
+                <div class="_bar" style="--progress:30%"></div>
+                <div class="_name">
+                  <span class="_legend">Earned</span> $458.00
+                </div>
+              </div>
+              <div class="_metric -cost">
+                <div class="_bar" style="--progress:80%"></div>
+                <div class="_name">
+                  <span class="_legend">Cost</span> $358.00
+                </div>
+              </div>
+              <div class="_metric -due">
+                <div class="_bar" style="--progress:45%"></div>
+                <div class="_name">
+                  <span class="_legend">Due</span> $100.00
+                </div>
+              </div>
+            </div>
+          </section>
+          <section role="tabpanel" aria-labelledby="expenses-history-tab" tabindex="-1" hidden>
+            <div class="_metrics">
+              <div class="_metric -earned">
+                <div class="_bar" style="--progress:70%"></div>
+                <div class="_name">
+                  <span class="_legend">Earned</span> $458.00
+                </div>
+              </div>
+              <div class="_metric -cost">
+                <div class="_bar" style="--progress:20%"></div>
+                <div class="_name">
+                  <span class="_legend">Cost</span> $358.00
+                </div>
+              </div>
+              <div class="_metric -due">
+                <div class="_bar" style="--progress:65%"></div>
+                <div class="_name">
+                  <span class="_legend">Due</span> $100.00
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="main-dashboard-section-2">
+    <div class="_fee-collection-box card">
+      <h2>Fee Collection</h2>
+      <button type="button" class="_date-picker"><i class="fa fa-calendar"></i>Year<i
+          class="fa fa-angle-down"></i></button>
+      <div class="_chart">
+        <div class="_x-axis">
+          <div class="">20K</div>
+          <div class="">40K</div>
+          <div class="">60K</div>
+          <div class="">80K</div>
+          <div class="">100K</div>
+        </div>
+        <div class="_metrics -horizontal">
+          <div class="_metric -earned">
+            <div class="_name">Total</div>
+            <div class="_bar" style="--progress:70%">
+              <span>70,000</span>
+            </div>
+          </div>
+          <div class="_metric -cost">
+            <div class="_name">Collected</div>
+            <div class="_bar" style="--progress:30%">
+              <span>30,000</span>
+            </div>
+          </div>
+          <div class="_metric -due">
+            <div class="_name">Balance</div>
+            <div class="_bar" style="--progress:40%">
+              <span>40,000</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="_time-table-box card">
+      <div class="_filters">
+        <select name="" id="">
+          <option value="Nursery">Nursery</option>
+          <option value="UKG">UKG</option>
+          <option value="LKG">LKG</option>
+          <option value="Class 1">Class 1</option>
+        </select>
+        <select name="" id="">
+          <option value="Nursery">Section A</option>
+          <option value="UKG">Section B</option>
+        </select>
+        <div class="_teacher-name">Class Teacher: <span>John Smith</span></div>
+      </div>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th align="left">Time</th>
+              <th align="left">Subject</th>
+              <th align="left">Teacher</th>
+              <th align="left">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>09:00 - 9:45</td>
+              <td>Telugu</td>
+              <td>John Smith</td>
+              <td>
+                <div class="_chip -class-closed">Closed</div>
+              </td>
+            </tr>
+            <tr>
+              <td>09:45 - 10:30</td>
+              <td>English</td>
+              <td>John Smith Doe</td>
+              <td>
+                <div class="_chip -class-running">Running</div>
+              </td>
+            </tr>
+            <tr>
+              <td>10:30 - 11:15</td>
+              <td>Hindi</td>
+              <td>Davin Corcoran</td>
+              <td>
+                <div class="_chip -class-pending">Pending</div>
+              </td>
+            </tr>
+            <tr>
+              <td>11:15 - 12:00</td>
+              <td>Physics</td>
+              <td>Benny Smith</td>
+              <td>
+                <div class="_chip -class-closed">Closed</div>
+              </td>
+            </tr>
+            <tr>
+              <td>09:00 - 9:45</td>
+              <td>Telugu</td>
+              <td>John Smith</td>
+              <td>
+                <div class="_chip -class-closed">Closed</div>
+              </td>
+            </tr>
+            <tr>
+              <td>09:45 - 10:30</td>
+              <td>English</td>
+              <td>John Smith Doe</td>
+              <td>
+                <div class="_chip -class-running">Running</div>
+              </td>
+            </tr>
+            <tr>
+              <td>10:30 - 11:15</td>
+              <td>Hindi</td>
+              <td>Davin Corcoran</td>
+              <td>
+                <div class="_chip -class-pending">Pending</div>
+              </td>
+            </tr>
+            <tr>
+              <td>11:15 - 12:00</td>
+              <td>Physics</td>
+              <td>Benny Smith</td>
+              <td>
+                <div class="_chip -class-closed">Closed</div>
+              </td>
+            </tr>
+            <tr>
+              <td>09:45 - 10:30</td>
+              <td>English</td>
+              <td>John Smith Doe</td>
+              <td>
+                <div class="_chip -class-running">Running</div>
+              </td>
+            </tr>
+            <tr>
+              <td>10:30 - 11:15</td>
+              <td>Hindi</td>
+              <td>Davin Corcoran</td>
+              <td>
+                <div class="_chip -class-pending">Pending</div>
+              </td>
+            </tr>
+            <tr>
+              <td>11:15 - 12:00</td>
+              <td>Physics</td>
+              <td>Benny Smith</td>
+              <td>
+                <div class="_chip -class-closed">Closed</div>
+              </td>
+            </tr>
+            <tr>
+              <td>09:45 - 10:30</td>
+              <td>English</td>
+              <td>John Smith Doe</td>
+              <td>
+                <div class="_chip -class-running">Running</div>
+              </td>
+            </tr>
+            <tr>
+              <td>10:30 - 11:15</td>
+              <td>Hindi</td>
+              <td>Davin Corcoran</td>
+              <td>
+                <div class="_chip -class-pending">Pending</div>
+              </td>
+            </tr>
+            <tr>
+              <td>11:15 - 12:00</td>
+              <td>Physics</td>
+              <td>Benny Smith</td>
+              <td>
+                <div class="_chip -class-closed">Closed</div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</main>

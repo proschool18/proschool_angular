@@ -1,0 +1,61 @@
+<div id="main-content">
+
+  <div class="row">
+    <div class="container-fluid" id="buttonId1">
+      <button routerLink="/main/classtests/CTByDate" class="button button2 hvr-pop transition">ClassTests By
+        Date</button>
+      <button routerLink="/main/classtests/CTListMarks" class="button button2 hvr-pop transition">ClassTests List
+        Marks</button>
+      <button routerLink="/main/classtests/CTAddMarks" class="button button2 hvr-pop transition">ClassTests Add
+        Marks</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="container-fluid dashboard-content">
+      <div class="card selectcard">
+        <app-subject *ngIf="user.role === 'admin'" (classEvent)="receiveClass($event)" (sectionEvent)="receiveSection($event)"
+          (subjectEvent)="receiveSubject($event)"></app-subject>
+        <app-teacher-subject *ngIf="user.role === 'teacher'" (classEvent)="receiveClass($event)" (sectionEvent)="receiveSection($event)"
+          (subjectEvent)="receiveSubject($event)"></app-teacher-subject>
+        <div class="searchForm">
+          <div class="form-group">
+            <label class="pull-left">Class Test</label>
+            <select class="form-control" [(ngModel)]="selected_ct" (change)="ctMarks()">
+              <option>select...</option>
+              <option *ngFor="let ct of classTests" value="{{ct.classTest_id}}">{{ct.title}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="card listcard">
+        <div class="pull-left">
+          <h4>Assignment Marks</h4>
+        </div>
+        <div class="searchForm">
+          <div class="table-responsive">
+            <table style="width:100%;">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Student</th>
+                  <th>Marks Obtained</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let stu of collection.students | paginate: config; let i=index">
+                  <td>{{ (config.currentPage - 1) * config.itemsPerPage + i +1 }}</td>
+                  <td>{{stu.first_name}}</td>
+                  <td>{{stu.marks}}</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="paginationdiv">
+              <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

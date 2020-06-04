@@ -1,0 +1,91 @@
+<div id="main-content">
+    <div class="row">
+        <div class="container-fluid" id="buttonId1">
+            <button routerLink="/main/studentprofile/profile/{{student_id}}/{{section_id}}" class="button button2 hvr-pop transition">Profile</button>
+            <button routerLink="/main/studentprofile/attendance/{{student_id}}/{{section_id}}" class="button button2 hvr-pop transition">Attendance</button>
+            <button routerLink="/main/studentprofile/academics/{{student_id}}/{{section_id}}" class="button button2 hvr-pop transition">Academics</button>
+            <button routerLink="/main/studentprofile/assessment/{{student_id}}/{{section_id}}" class="button button2 hvr-pop transition">Assessment</button>
+            <button routerLink="/main/studentprofile/fees/{{student_id}}/{{section_id}}" class="button button2 hvr-pop transition">Fee Collection</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="container-fluid dashboard-content">
+            <div class="card leftcard cardsryt scrollonhover">
+                <div class="row">
+                    <div class="col-md-4 formalign">
+                        <div class="form-group">
+                            <label>Examinations</label>
+                            <select class="form-control" [(ngModel)]="selected_exam" (change)="getExamAcademics()">
+                                <option value="All">All Examinations</option>
+                                <option *ngFor="let exam of academics; let i = index" value="{{exam.exam_title}}">
+                                    {{exam.exam_title}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="searchForm">
+                    <div class="table-responsive" *ngIf="allExams else allSubjects">
+                        <table style="width:100%;">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Examination</th>
+                                    <th>Marks</th>
+                                    <th>Percentage</th>
+                                    <th>Grade</th>
+                                    <th>GPA</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let exam of academics; let i = index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{exam.exam_title}}</td>
+                                    <td>{{exam.totalAllMarks}}</td>
+                                    <td>{{exam.percentage}} %</td>
+                                    <td>{{exam.Grade}}</td>
+                                    <td>{{exam.GPA}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <ng-template #allSubjects>
+                        <div class="table-responsive">
+                            <table style="width:100%;">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Examination</th>
+                                        <th>Marks</th>
+                                        <th>Percentage</th>
+                                        <th>Grade</th>
+                                        <th>GPA</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let sub of subjectMarks; let i = index">
+                                        <td>{{i+1}}</td>
+                                        <td>{{sub.subject_name}}</td>
+                                        <td>{{sub.total_marks}}</td>
+                                        <td>{{sub.percentage}} %</td>
+                                        <td>{{sub.grade}}</td>
+                                        <td>{{sub.gpa}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+
+            <div class="card rightcard">
+                <canvas baseChart [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions"
+                    [legend]="chartLegend" [chartType]="chartType"></canvas>
+            </div>
+        </div>
+    </div>
+
+</div>

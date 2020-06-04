@@ -1,0 +1,66 @@
+<main class="card mt-20 within-viewport">
+  <section class="page-actions">
+    <div class="_select-or-search">
+      <div class="_select-group">
+        <app-schedule *ngIf="user.role === 'admin'" (classEvent)="receiveClass($event)" (sectionEvent)="receiveSection($event)" (scheduleEvent)="receiveSchedule($event)"></app-schedule>
+        <app-teacher-schedule *ngIf="user.role === 'teacher'" (classEvent)="receiveClass($event)" (sectionEvent)="receiveSection($event)" (scheduleEvent)="receiveSchedule($event)"></app-teacher-schedule>
+        <select name="section" [(ngModel)]="selected_schedule" (change)="getExam_papers()" *ngIf="user.role === 'parent'">
+          <option *ngFor="let assp of assessment_patterns[0].assessment" value="{{assp.code}}">{{assp.code}}</option>
+          <option *ngFor="let assp of assessment_patterns[1].assessment" value="{{assp.code}}">{{assp.code}}</option>
+        </select>
+      </div>
+      <input type="search" name="" placeholder="Search">
+    </div>
+    <button class="btn -cta" (click)="addExamPaper()" *ngIf="user.role === 'admin'">Add ExamPaper</button>
+  </section>
+  <section class="table-and-pagination -classes-schedule">
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th align="left">Exam Title</th>
+            <th align="left">Exam Date</th>
+            <th align="left">Start Time</th>
+            <th align="left">End Time</th>
+            <th align="left" *ngIf="user.role === 'admin'">Action</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let exam of exam_papers; let i = index;">
+          <tr>
+            <td class="subjectpaper">{{exam.subject_name}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="_actions" *ngIf="user.role === 'admin'">
+              <button class="btn" (click)="editExamPaper(i)"><img src="../../../assets/images/edit-white.svg" alt="Edit" /></button>
+              <button class="btn" (click)="deleteExamPaper(exam.exam_paper_id)"><img src="../../../assets/images/trash-white.svg" alt="Delete" /></button>
+            </td>
+          </tr>
+          <tr *ngFor="let paper of exam.exams; let j = index;">
+            <td class="_s-no"><span>{{ j + 1 }}</span></td>
+            <td>{{paper.Assessment}}</td>
+            <td>{{paper.Exam_date}}</td>
+            <td>{{paper.Start_time}}</td>
+            <td>{{paper.End_time}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="_pagination">
+      <a href="" class="btn -previous">Previous</a>
+      <a href="" class="btn -current">1</a>
+      <a href="" class="btn">2</a>
+      <a href="" class="btn">3</a>
+      <a href="" class="btn">4</a>
+      <a href="" class="btn">5</a>
+      <a href="" class="btn">6</a>
+      <a href="" class="btn">7</a>
+      <a href="" class="btn">8</a>
+      <a href="" class="btn">9</a>
+      <a href="" class="btn">10</a>
+      <a href="" class="btn -next">Next</a>
+    </div>
+  </section>
+</main>

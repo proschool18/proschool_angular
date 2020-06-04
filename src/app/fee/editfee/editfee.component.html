@@ -1,0 +1,99 @@
+<form role="form" [formGroup]="feetermForm" (ngSubmit)="editFeeTerms()" *ngIf="dialog_type == 'feeTerm'">
+    <div class="row">
+        <div class="col-md-12">
+            <h4 id="heading">Edit FeeTerm</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="form-group">
+                <label class="pull-left">Fee Term</label>
+                <input class="form-control" value="{{fee_terms.fee_term}}" formControlName="fee_term"
+                    placeholder="Enter..." type="text">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="button button1 hvr-pop transition pull-right">Submit</button>
+        <div (click)="close_feeTerm()" class="button button1 hvr-pop transition pull-left">Close</div>
+    </div>
+</form>
+
+<form role="form" [formGroup]="feetypeForm" (ngSubmit)="editFeeTypes()" *ngIf="dialog_type == 'feeType'">
+    <div class="row">
+        <div class="col-md-12">
+            <h4 id="heading">Edit FeeType</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="form-group">
+                <label class="pull-left">Fee Type</label>
+                <input class="form-control" value="{{fee_types.fee_type}}" formControlName="fee_type"
+                    placeholder="Enter..." type="text">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="button button1 hvr-pop transition pull-right">Submit</button>
+        <div (click)="close_feeType()" class="button button1 hvr-pop transition pull-left">Close</div>
+    </div>
+</form>
+
+<form role="form" [formGroup]="feemasterForm" (ngSubmit)="editFeeMaster()" *ngIf="dialog_type == 'feeMaster'">
+    <div class="row">
+        <div class="col-md-12">
+            <h4 id="heading">Edit FeeMaster</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="form-group">
+                <label class="pull-left">Class</label>
+                <select class="form-control" formControlName="class_id" [value]="fee_master.class_id">
+                    <option *ngFor="let cl of classes" value="{{cl.class_id}}">{{cl.name}}
+                    </option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5">
+            <div class="form-group">
+                <label class="pull-left">Fee Term</label>
+                <select class="form-control" formControlName="fee_term_id" [value]="fee_master.fee_term_id">
+                    <option *ngFor="let term of feeTerms" value="{{term.fee_term_id}}">{{term.fee_term}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="form-group">
+                <label class="pull-left">Class</label>
+                <select class="form-control" formControlName="fee_types_id" [value]="fee_master.fee_types_id">
+                    <option *ngFor="let type of feeTypes" value="{{type.fee_types_id}}">{{type.fee_type}}
+                    </option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5">
+            <div class="form-group">
+                <label class="pull-left">Fee Amount</label>
+                <input class="form-control" value="{{fee_master.fee_amount}}" formControlName="fee_amount"
+                    placeholder="Enter..." type="number">
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="form-group">
+                <label class="pull-left">Due Date</label>
+                <input class="form-control" value="{{fee_master.due_date}}" formControlName="due_date" placeholder="Enter..." type="date">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="button button1 hvr-pop transition pull-right">Submit</button>
+        <div (click)="close_feeMaster()" class="button button1 hvr-pop transition pull-left">Close</div>
+    </div>
+</form>

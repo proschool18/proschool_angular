@@ -1,0 +1,213 @@
+<form role="form" [formGroup]="schoolprofileForm" (ngSubmit)="editSchool()">
+    <div *ngIf="schoolDetails">
+        <div class="row">
+            <div class="col-md-12">
+                <h4 id="heading">Edit School Profile</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="pull-left">School Name</label>
+                    <input class="form-control" value="{{schoolprofile.name}}" formControlName="name" 
+                        type="text">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="pull-left">Medium</label>
+                    <input class="form-control" value="{{schoolprofile.medium}}" formControlName="medium" 
+                        type="text">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="pull-left">Timings</label>
+                    <input class="form-control" value="{{schoolprofile.timings}}" formControlName="timings" 
+                        type="text">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="pull-left">Class From</label>
+                    <input class="form-control" value="{{schoolprofile.class_from}}" formControlName="class_from" 
+                        type="text">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="pull-left">Affiliation</label>
+                    <input class="form-control" value="{{schoolprofile.affiliation}}" formControlName="affiliation" 
+                        type="text">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="pull-left">Extra Curricular Activities</label>
+                    <input class="form-control" value="{{schoolprofile.extra_curricular_activites}}" formControlName="extra_curricular_activites" 
+                        type="text">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="button button1 hvr-pop transition pull-right">Submit</button>
+            <div (click)="showForm('managementDetails')" class="button button2 hvr-pop transition pull-right">Next</div>
+            <div (click)="close()" class="button button1 hvr-pop transition pull-left">Close</div>
+        </div>
+    </div>
+
+    <div *ngIf="managementDetails">
+        <div class="row">
+            <div class="col-md-12">
+                <h4 id="heading">Management Details</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="pull-left">Founder</label>
+                    <input class="form-control" value="{{schoolprofile.founder}}" formControlName="name" 
+                        type="text">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="pull-left">Coordinator</label>
+                    <input class="form-control" value="{{schoolprofile.coordinator}}" formControlName="coordinator" 
+                        type="text">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="pull-left">Vice Principal</label>
+                    <input class="form-control" value="{{schoolprofile.vice_principal}}" formControlName="vice_principal" 
+                        type="text">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="pull-left">Chairman</label>
+                    <input class="form-control" value="{{schoolprofile.chairman}}" formControlName="chairman" 
+                        type="text">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="pull-left">Principal</label>
+                    <input class="form-control" value="{{schoolprofile.principal}}" formControlName="principal" 
+                        type="text">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="pull-left">Established</label>
+                    <input class="form-control" value="{{schoolprofile.est_on}}" formControlName="est_on" 
+                        type="text">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="button button1 hvr-pop transition pull-right">Submit</button>
+            <div (click)="showForm('contactDetails')" class="button button2 hvr-pop transition pull-right">Next</div>
+            <div (click)="close()" class="button button1 hvr-pop transition pull-left">Close</div>
+            <div (click)="showForm('schoolDetails')" class="button button2 hvr-pop transition pull-left">Previous</div>
+        </div>
+    </div>
+
+    <div *ngIf="contactDetails">
+        <div class="row">
+            <div class="col-md-12">
+                <h4 id="heading">Contact Details</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="pull-left">Address</label>
+                    <input class="form-control" value="{{schoolprofile.address}}" formControlName="name"
+                        type="text">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="pull-left">Alternate Phone</label>
+                    <input class="form-control" value="{{schoolprofile.alternate_phone}}" formControlName="name"
+                        type="text">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="pull-left">Email</label>
+                    <input class="form-control" value="{{schoolprofile.email}}" formControlName="email" 
+                        type="text">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="pull-left">Contact No</label>
+                    <input class="form-control" value="{{schoolprofile.phone}}" formControlName="phone" 
+                        type="text">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="pull-left">Website</label>
+                    <input class="form-control" value="{{schoolprofile.website}}" formControlName="website" 
+                        type="text">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="button button1 hvr-pop transition pull-right">Submit</button>
+            <div (click)="showForm('about')" class="button button2 hvr-pop transition pull-right">Next</div>
+            <div (click)="close()" class="button button1 hvr-pop transition pull-left">Close</div>
+            <div (click)="showForm('managementDetails')" class="button button2 hvr-pop transition pull-left">Previous</div>        
+        </div>
+    </div>
+
+    <div *ngIf="about">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="pull-left">About School:</label>
+                    <textarea class="form-control" formControlName="about" value="{{schoolprofile.about}}" cols="30" rows="10"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="button button1 hvr-pop transition pull-right">Submit</button>
+            <div (click)="showForm('chairman_note')" class="button button2 hvr-pop transition pull-right">Next</div>
+            <div (click)="close()" class="button button1 hvr-pop transition pull-left">Close</div>
+            <div (click)="showForm('contactDetails')" class="button button2 hvr-pop transition pull-left">Previous</div>        
+        </div>
+    </div>
+
+    <div *ngIf="chairman_note">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="pull-left">Chairman Note:</label>
+                    <textarea class="form-control" formControlName="chairman_note" value="{{schoolprofile.chairman_note}}" cols="30" rows="10"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="button button1 hvr-pop transition pull-right">Submit</button>
+            <div (click)="close()" class="button button1 hvr-pop transition pull-left">Close</div>
+            <div (click)="showForm('about')" class="button button2 hvr-pop transition pull-left">Previous</div>        
+        </div>
+    </div>
+
+</form>

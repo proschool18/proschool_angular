@@ -1,0 +1,215 @@
+<div id="main-content">
+  <div class="profilediv">
+    <div class="profileboxone">
+      <div class="profilepicImg">
+        <div class="profileImg" *ngIf="profileImage">
+          <!-- <img alt="" height="100px" src="../../../assets/img/images/student.png" width="100px"> -->
+          <img alt="" height="100px" [src]="profileImage" width="100px">
+        </div>
+
+        <div class="image-upload iconFsp">
+          <label for="file-input">
+            <div class="pattrenED">
+              <i class="fa fa-pencil-square" aria-hidden="true"></i>
+            </div>
+          </label>
+          <input id="file-input" type="file" name="image" (change)="profileProgress($event.target.files)" />
+        </div>
+
+        <div class="profileFields">
+          <div class="profilediv">{{schoolprofile.chairman_note}}</div>
+        </div>
+      </div>
+      <div class="profileDetails scrollonhover">
+        <div class="imageProf">
+          <!-- <img src="../../../assets/images/proSchool.png" width="100%" height="200px"> -->
+          <div class="col-md-10">
+            <div class="image-preview mb-3 schoolProfileImg" *ngIf="schoolLogo">
+              <img [src]="schoolLogo" />
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="image-upload iconF">
+              <label for="file-input-img">
+                <div class="pattrenED">
+                  <i class="fa fa-pencil-square" aria-hidden="true"></i>
+                </div>
+              </label>
+              <input id="file-input-img" type="file" name="image" (change)="fileProgress($event.target.files)" />
+            </div>
+          </div>
+        </div>
+        <div class="profiletext">
+          <div class="schooldesc">
+            {{schoolprofile.about}}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="profileboxtwo">
+      <div>
+        <!-- <div class="row btnstopspace">
+          <div class="container-fluid" id="buttonId1">
+            <button class="button button2 hvr-pop transition">School Details</button>
+            <button class="button button2 hvr-pop transition">Management Details</button>
+            <button class="button button2 hvr-pop transition">Contact Details</button>
+          </div>
+        </div> -->
+        <div class="profileboxcontent scrollonhover">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="profpicname">
+                  <div class="row">
+                    <div class="profimg">
+                      <div class="col-md-10 profimg1">
+                        <div>
+                          <div class="proftitle1">School Details</div>
+                        </div>
+                        <div>
+                          <div class="profdesg1">Update Your School Information</div>
+                        </div>
+                        <div class="prfbtn1">
+                          <i class="far fa-sun"></i>
+                        </div>
+                      </div>
+                      <div class="col-md-2 pattrenED">
+                        <div><i class="fa fa-pencil-square" aria-hidden="true" (click)="editSchool()"></i>
+                          <!-- <i class="fa fa-pencil-square" aria-hidden="true" (click)="editFew(i)"></i> -->
+                        </div>
+                        <!-- <div class="editimg"><img src="../../../assets/img/images/edit.png" alt=""></div> -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row1">
+                  <div class="col-md-6 sdtable">
+                    <div><b>Name : </b>{{schoolprofile.name}}</div>
+                  </div>
+                  <div class="col-md-6 sdtable">
+                    <div><b>Class From : </b>{{schoolprofile.class_from}}</div>
+                  </div>
+                </div>
+                <div class="row1">
+                  <div class="col-md-6 sdtable">
+                    <div><b>Medium : </b>{{schoolprofile.medium}}</div>
+                  </div>
+                  <div class="col-md-6 sdtable">
+                    <div><b>Affiliation : </b>{{schoolprofile.affiliation}}</div>
+                  </div>
+                </div>
+                <div class="row1">
+                  <div class="col-md-6 sdtable">
+                    <div><b>Timings : </b>{{schoolprofile.timings}}</div>
+                  </div>
+                  <div class="col-md-6 sdtable">
+                    <div><b>Extra Curricular Activities : </b>{{schoolprofile.extra_curricular_activites}}</div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="profpicname">
+                  <div class="row">
+                    <div class="profimg">
+                      <div class="col-md-10 profimg1">
+                        <div>
+                          <div class="proftitle1">Management Details</div>
+                        </div>
+                        <div>
+                          <div class="profdesg1">Update Your School Management Details</div>
+                        </div>
+                        <div class="prfbtn1">
+                          <i class="far fa-sun"></i>
+                        </div>
+                      </div>
+                      <!-- <div class="col-md-2">
+                        <div class="editimg"><img src="../../../assets/img/images/edit.png" alt=""></div>
+                      </div> -->
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row1">
+                  <div class="col-md-6 sdtable">
+                    <div><b>Founder : </b>{{schoolprofile.founder}}</div>
+                  </div>
+                  <div class="col-md-6 sdtable">
+                    <div><b>Chairman : </b>{{schoolprofile.chairman}}</div>
+                  </div>
+                </div>
+                <div class="row1">
+                  <div class="col-md-6 sdtable">
+                    <div><b>Coordinator : </b>{{schoolprofile.coordinator}}</div>
+                  </div>
+                  <div class="col-md-6 sdtable">
+                    <div><b>Principal : </b>{{schoolprofile.principal}}</div>
+                  </div>
+                </div>
+                <div class="row1">
+                  <div class="col-md-6 sdtable">
+                    <div><b>Vice Principal : </b>{{schoolprofile.vice_principal}}</div>
+                  </div>
+                  <div class="col-md-6 sdtable">
+                    <div><b>Established : </b>{{schoolprofile.est_on}}</div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="profpicname">
+                  <div class="row">
+                    <div class="profimg">
+                      <div class="col-md-10 profimg1">
+                        <div>
+                          <div class="proftitle1">Contact Details</div>
+                        </div>
+                        <div>
+                          <div class="profdesg1">Update Your School Contact Details</div>
+                        </div>
+                        <div class="prfbtn1">
+                          <i class="far fa-sun"></i>
+                        </div>
+                      </div>
+                      <!-- <div class="col-md-2">
+                        <div class="editimg"><img src="../../../assets/img/images/edit.png" alt=""></div>
+                      </div> -->
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row1">
+                  <div class="col-md-6 sdtable">
+                    <div><b>Address : </b>{{schoolprofile.address}}</div>
+                  </div>
+                  <div class="col-md-6 sdtable">
+                    <div><b>Contact No : </b>{{schoolprofile.phone}}</div>
+                  </div>
+                </div>
+                <div class="row1">
+                  <div class="col-md-6 sdtable">
+                    <div><b>Alternate Phone : </b>{{schoolprofile.alternate_phone}}</div>
+                  </div>
+                  <div class="col-md-6 sdtable">
+                    <div><b>Website : </b>{{schoolprofile.website}}</div>
+                  </div>
+                </div>
+                <div class="row1">
+                  <div class="col-md-6 sdtable">
+                    <div><b>Email : </b>{{schoolprofile.email}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

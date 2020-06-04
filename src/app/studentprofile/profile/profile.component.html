@@ -1,0 +1,276 @@
+<div id="main-content">
+    <div class="row">
+        <div class="container-fluid" id="buttonId1">
+            <button routerLink="/main/studentprofile/profile/{{student_id}}/{{section_id}}"
+                class="button button2 hvr-pop transition">Profile</button>
+            <button routerLink="/main/studentprofile/attendance/{{student_id}}/{{section_id}}"
+                class="button button2 hvr-pop transition">Attendance</button>
+            <button routerLink="/main/studentprofile/academics/{{student_id}}/{{section_id}}"
+                class="button button2 hvr-pop transition">Academics</button>
+            <button routerLink="/main/studentprofile/assessment/{{student_id}}/{{section_id}}"
+                class="button button2 hvr-pop transition">Assessment</button>
+            <button routerLink="/main/studentprofile/fees/{{student_id}}/{{section_id}}"
+                class="button button2 hvr-pop transition">Fee Collection</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="container-fluid dashboard-content">
+            <div class="card cardemp1">
+                <div class="profinfotop">
+                    <div class="profpicname">
+                        <div class="profiletitle">Luke Davids</div>
+                    </div>
+                    <div class="personalmenuslist">
+                        <ul>
+                            <li><a (click)="profile_info('profile')"><i class="fas fa-user-alt"></i>Student Profile</a>
+                            </li>
+                            <li><a (click)="profile_info('pgdetails')"><i class="fas fa-user-cog"></i>Parent/Guardian
+                                    Details</a></li>
+                            <li><a (click)="profile_info('stuaddress')"><i class="far fa-sun"></i>Student Address</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="card cardemp2">
+                <div *ngIf="profilePannel" class="">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="mainprofdetails">
+                                    <div class="avtar">Student Profile</div>
+                                    <div class="avatarimg">
+                                        <div *ngIf="profileImage">
+                                            <img [src]="profileImage" width="140px" height="140px" />
+                                        </div>
+                                        <div class="image-upload iconF">
+                                            <label for="file-input-studProfPic">
+                                                <div class="pattrenI">
+                                                    <i class="fa fa-pencil-square" aria-hidden="true"></i>
+                                                </div>
+                                            </label>
+                                            <input id="file-input-studProfPic" type="file" name="image"
+                                                (change)="studentProfPic($event.target.files)" />
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-9">
+                                <div class="profpicname">
+                                    <div class="row">
+                                        <div class="profimg">
+                                            <div class="col-md-10 profimg1">
+                                                <div>
+                                                    <div class="proftitle1">Admission Details</div>
+                                                </div>
+                                                <div>
+                                                    <div class="profdesg1">Update your Admission information</div>
+                                                </div>
+                                                <div class="prfbtn1">
+                                                    <i class="far fa-sun"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="pattrenI">
+                                                    <i class="fa fa-pencil-square" aria-hidden="true"
+                                                        (click)=editStudent()></i>
+                                                </div>
+                                                <!-- <div class="editimg" (click)=editstudProf()><img src="../../../assets/img/images/edit.png" alt=""></div> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row1">
+                                    <div class="col-md-6 sdtable">
+                                        <div><b>First Name : </b>{{student_details.first_name}}</div>
+                                    </div>
+                                    <div class="col-md-6 sdtable">
+                                        <div><b>Surname : </b>{{student_details.last_name}}</div>
+                                    </div>
+                                </div>
+                                <div class="row1">
+                                    <div class="col-md-6 sdtable">
+                                        <div><b>Class : </b>{{student_details.school_classes[0].name}}</div>
+                                    </div>
+                                    <div class="col-md-6 sdtable">
+                                        <div><b>Section : </b>{{student_details.sections[0].name}}</div>
+                                    </div>
+                                </div>
+                                <div class="row1">
+                                    <div class="col-md-6 sdtable">
+                                        <div><b>Admission Number : </b>{{student_details.admission_no}}</div>
+                                    </div>
+                                    <div class="col-md-6 sdtable">
+                                        <div><b>Roll No : </b>{{student_details.roll_no}}</div>
+                                    </div>
+                                </div>
+                                <div class="row1">
+                                    <div class="col-md-6 sdtable">
+                                        <div><b>Gender : </b>{{student_details.gender}}</div>
+                                    </div>
+                                    <div class="col-md-6 sdtable">
+                                        <div><b>Contact : </b>{{student_details.phone}}</div>
+                                    </div>
+                                </div>
+                                <div class="row1">
+                                    <div class="col-md-6 sdtable">
+                                        <div><b>DOB : </b>{{student_details.dob}}</div>
+                                    </div>
+                                    <div class="col-md-6 sdtable">
+                                        <div><b>Date of Admission : </b>{{student_details.admission_date}}</div>
+                                    </div>
+                                </div>
+                                <div class="row1">
+                                    <div class="col-md-6 sdtable">
+                                        <div><b>Blood Group : </b>{{student_details.blood_group}}</div>
+                                    </div>
+                                    <div class="col-md-6 sdtable">
+                                        <div><b>Aadhar No : </b>{{student_details.aadhar_no}}</div>
+                                    </div>
+                                </div>
+
+                                <div class="row1">
+                                    <div class="col-md-6 sdtable">
+                                        <div><b>Category : </b>{{student_details.category}}</div>
+                                    </div>
+                                    <div class="col-md-6 sdtable">
+                                        <div><b>Nationality : </b>{{student_details.nationality}}</div>
+                                    </div>
+                                </div>
+                                <div class="row1">
+                                    <div class="col-md-6 sdtable">
+                                        <div><b>Email Id : </b>{{student_details.email}}</div>
+                                    </div>
+                                    <div class="col-md-6 sdtable">
+                                        <div><b>Bus Route : </b>{{student_details.bus_route_id}}</div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="pgPannel" class="">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="profpicname">
+                                    <div class="row">
+                                        <div class="profimg">
+                                            <div class="col-md-10 profimg1">
+                                                <div>
+                                                    <div class="proftitle1">Parent/Guardian Details</div>
+                                                </div>
+                                                <div>
+                                                    <div class="profdesg1">Update your Parent/Guardian information</div>
+                                                </div>
+                                                <div class="prfbtn1">
+                                                    <i class="far fa-sun"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="editimg"><img src="../../../assets/img/images/edit.png"
+                                                        alt=""></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row1">
+                                    <div class="col-md-6 sdtable">
+                                        <div><b>Father Name : </b>{{student_details.parents[0].parent_name}}</div>
+                                    </div>
+                                    <div class="col-md-6 sdtable">
+                                        <div><b>Father Occupation : </b>{{student_details.parents[0].occupation}}</div>
+                                    </div>
+                                </div>
+                                <div class="row1">
+                                    <div class="col-md-6 sdtable">
+                                        <div><b>Mother Name : </b>{{student_details.parents[1].parent_name}}</div>
+                                    </div>
+                                    <div class="col-md-6 sdtable">
+                                        <div><b>Mother Occupation : </b>{{student_details.parents[1].occupation}}</div>
+                                    </div>
+                                </div>
+                                <div class="row1">
+                                    <div class="col-md-6 sdtable">
+                                        <div><b>Guardian Name : </b>{{student_details.parents[2].parent_name}}</div>
+                                    </div>
+                                    <div class="col-md-6 sdtable">
+                                        <div><b>Guardian Occupation : </b>{{student_details.parents[2].occupation}}</div>
+                                    </div>
+                                </div>
+                                <div class="row1">
+                                    <div class="col-md-6 sdtable">
+                                        <div><b>Father Contact : </b>{{student_details.parents[0].parent_contact}}</div>
+                                    </div>
+                                    <div class="col-md-6 sdtable">
+                                        <div><b>Mother Contact : </b>{{student_details.parents[1].parent_contact}}</div>
+                                    </div>
+                                </div>
+
+                                <div class="row1">
+                                    <div class="col-md-6 sdtable">
+                                        <div><b>Guardian Contact : </b>{{student_details.parents[2].parent_contact}}</div>
+                                    </div>
+                                    <div class="col-md-6 sdtable">
+                                        <div><b>Guardian Relation : </b>{{student_details.parents[2].parent_relation}}</div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="addrPannel" class="">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="profpicname">
+                                    <div class="row">
+                                        <div class="profimg">
+                                            <div class="col-md-10 profimg1">
+                                                <div>
+                                                    <div class="proftitle1">Student Address</div>
+                                                </div>
+                                                <div>
+                                                    <div class="profdesg1">Update your Student Address information</div>
+                                                </div>
+                                                <div class="prfbtn1">
+                                                    <i class="far fa-sun"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="editimg"><img src="../../../assets/img/images/edit.png"
+                                                        alt=""></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row1">
+                                    <div class="col-md-12 sdtable">
+                                        <div><b>Current Address : </b>{{student_details.current_address[0].cur_address}}</div>
+                                    </div>
+                                </div>
+                                <div class="row1">
+                                    <div class="col-md-12 sdtable">
+                                        <div><b>Permanent Address : </b>{{student_details.permanent_address[0].perm_address}}</div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>

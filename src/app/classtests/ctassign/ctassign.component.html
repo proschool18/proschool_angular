@@ -1,0 +1,33 @@
+<div class="popup">
+  <div class="pop_header">
+    <h3 *ngIf="dialog_type == 'add'">Add ClassTest</h3>
+    <h3 *ngIf="dialog_type == 'edit'">Edit ClassTest</h3>
+  </div>
+  <form role="form" [formGroup]="classTestForm" (ngSubmit)="submitClassTest()">
+    <div class="pop_content">
+      <div class="row_content">
+        <div class="column_content">
+          <h4>ClassTest Title: </h4>
+          <input value="{{classtest.title}}" formControlName="title" placeholder="Enter the ClassTest Title..." type="text">
+        </div>
+        <div class="column_content">
+          <h4>Max Marks: </h4>
+          <input class="form-control" value="{{classtest.maxMarks}}" formControlName="maxMarks" placeholder="Enter..."
+            type="number">
+        </div>
+      </div>
+      <div class="row_content">
+        <div class="column_content">
+          <h4>ClassTest Date: </h4>
+          <input value="{{classtest.date}}" formControlName="date" placeholder="Enter..." type="date">
+        </div>
+      </div>
+      <div class="row_content">
+        <div class="button_left">
+          <button type="submit" class="btn -cta">Submit</button>
+        </div>
+        <div (click)="close()" class="btn -cancel">Cancel</div>
+      </div>
+    </div>
+  </form>
+</div>

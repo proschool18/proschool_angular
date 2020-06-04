@@ -1,0 +1,28 @@
+.cardsryt{
+    margin-right: 2%;
+}
+.formalign {
+    margin-bottom: 15px;
+    margin: 15% 0 0 25%;
+    width: 100%;
+}
+.progress {
+    width: 65%;
+    margin-left: 27px;
+    margin-top: 52px;
+}
+.leftcard {
+    height: 390px !important;
+    width: 50%;
+    background-color: white;
+    }
+
+.rightcard {
+    width: 50%;
+    background-color: white;
+    height: 390px !important;
+    }
+canvas{
+    margin: 15px 0px 0px 0px;
+    height: 370px !important;
+}    

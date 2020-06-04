@@ -1,0 +1,107 @@
+<div id="main-content">
+    <div class="row">
+        <div class="container-fluid" id="buttonId1">
+            <button routerLink="/main/studentprofile/profile/{{student_id}}/{{section_id}}"
+                class="button button2 hvr-pop transition">Profile</button>
+            <button routerLink="/main/studentprofile/attendance/{{student_id}}/{{section_id}}"
+                class="button button2 hvr-pop transition">Attendance</button>
+            <button routerLink="/main/studentprofile/academics/{{student_id}}/{{section_id}}"
+                class="button button2 hvr-pop transition">Academics</button>
+            <button routerLink="/main/studentprofile/assessment/{{student_id}}/{{section_id}}"
+                class="button button2 hvr-pop transition">Assessment</button>
+            <button routerLink="/main/studentprofile/fees/{{student_id}}/{{section_id}}"
+                class="button button2 hvr-pop transition">Fee Collection</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="container-fluid dashboard-content">
+            <div class="card leftcard cardsryt scrollonhover">
+                <div class="row formalign">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <button class="button button1" (click)="select_assessment('Assignments')">Assignments</button>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <button class="button button1" (click)="select_assessment('Classtests')">Class Tests</button>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <button class="button button1" (click)="select_assessment('Projectworks')">Project Works</button>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <select class="form-control" aria-placeholder="Select Assessment"
+                                [(ngModel)]="selected_subject" (change)="getSubjectAssessments()">
+                                <option value="All">All Subjects</option>
+                                <option *ngFor="let sub of assessments[0].subjects; let i = index" value="{{sub.subject_id}}">
+                                    {{sub.subject_name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="searchForm">
+                    <div class="table-responsive" *ngIf="allAssessments else allSubjects">
+                        <table style="width:100%;">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Chapter</th>
+                                    <th>Total Marks</th>
+                                    <th>Percentage</th>
+                                    <th>Grade</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let sub of assessments[0].subjects; let i = index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{sub.subject_name}}</td>
+                                    <td>{{sub.subjectMarks}}</td>
+                                    <td>{{sub.subjectpercentage}} %</td>
+                                    <td>{{sub.grade}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <ng-template #allSubjects>
+                        <div class="table-responsive">
+                            <table style="width:100%;">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Chapter</th>
+                                        <th>Total Assessments</th>
+                                        <th>Total Marks</th>
+                                        <th>Percentage</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let sub of subject_Assessments; let i = index">
+                                        <td>{{i+1}}</td>
+                                        <td>{{sub.title}}</td>
+                                        <td>{{sub.totalAssignments}}</td>
+                                        <td>{{sub.totalMarks}}</td>
+                                        <td>{{sub.percentage}} %</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+
+            <div class="card rightcard">
+                <canvas baseChart [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions"
+                    [legend]="chartLegend" [chartType]="chartType"></canvas>
+            </div>
+        </div>
+    </div>
+
+</div>
