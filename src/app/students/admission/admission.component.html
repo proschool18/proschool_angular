@@ -388,11 +388,11 @@
     </div>
 
     <div *ngIf="parentdetails">
-      <div class="row">
-        <div class="col-md-3">
+      <div class="row-wrapper">
+        <div class="col-full-3">
           <div class="form-group" [ngClass]="{'has-error' : sudentadmissionForm.get('father_name').errors 
             && (sudentadmissionForm.get('father_name').touched || sudentadmissionForm.get('father_name').dirty)}">
-            <label>Father Name*</label>
+            <label class="heading">Father Name*</label>
             <div><input class="inpbox" type="text" formControlName="father_name" [value]="student.parents[1].parent_name">
               <span class="help-block" *ngIf="sudentadmissionForm.get('father_name').errors 
             && (sudentadmissionForm.get('father_name').touched || sudentadmissionForm.get('father_name').dirty)">
@@ -403,10 +403,10 @@
             </div>
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-full-3">
           <div class="form-group" [ngClass]="{'has-error' : sudentadmissionForm.get('father_contact').errors 
             && (sudentadmissionForm.get('father_contact').touched || sudentadmissionForm.get('father_contact').dirty)}">
-            <label>Father Phone*</label>
+            <label class="heading">Father Phone*</label>
             <div><input type="text" class="inpbox" formControlName="father_contact" [value]="student.parents[1].parent_contact">
               <span class="help-block" *ngIf="sudentadmissionForm.get('father_contact').errors 
             && (sudentadmissionForm.get('father_contact').touched || sudentadmissionForm.get('father_contact').dirty)">
@@ -417,137 +417,139 @@
             </div>
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-full-3">
           <div class="form-group">
-            <label>Father Email</label>
+            <label class="heading">Father Email</label>
             <input class="inpbox" type="email" formControlName="father_email" [value]="student.parents[1].parent_email">
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-full-3">
           <div class="form-group">
-            <label>Father Occupation*</label>
+            <label class="heading">Father Occupation*</label>
             <input class="inpbox" type="text" formControlName="father_occupation" [value]="student.parents[1].occupation">
           </div>
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-md-3">
+      <div class="row-wrapper">
+        <div class="col-full-3">
           <div class="form-group">
-            <label>Mother Name</label>
+            <label class="heading">Mother Name</label>
             <input class="inpbox" type="text" formControlName="mother_name" [value]="student.parents[0].parent_name">
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-full-3">
           <div class="form-group">
-            <label>Mother Phone</label>
+            <label class="heading">Mother Phone</label>
             <input class="inpbox" type="number" formControlName="mother_contact" [value]="student.parents[0].parent_contact"></div>
         </div>
-        <div class="col-md-3">
+        <div class="col-full-3">
           <div class="form-group">
-            <label>Mother Email</label>
+            <label class="heading">Mother Email</label>
             <input class="inpbox" type="email" formControlName="mother_email" [value]="student.parents[0].parent_email">
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-full-3">
           <div class="form-group">
-            <label>Mother Occupation</label>
+            <label class="heading">Mother Occupation</label>
             <input class="inpbox" type="text" formControlName="mother_occupation" [value]="student.parents[0].occupation">
           </div>
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-md-3">
+      <div class="row-wrapper">
+        <div class="col-full-3">
           <div class="form-group">
-            <label>Guardian Name</label>
+            <label class="heading">Guardian Name</label>
             <input class="inpbox" type="text" formControlName="gaurdian_name" [value]="student.parents[2].parent_name">
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-full-3">
           <div class="form-group">
-            <label>Guardian Phone</label>
+            <label class="heading">Guardian Phone</label>
             <input class="inpbox" type="number" formControlName="gaurdian_contact" [value]="student.parents[2].parent_contact">
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-full-3">
           <div class="form-group">
-            <label>Guardian Email</label>
+            <label class="heading">Guardian Email</label>
             <input class="inpbox" type="email" formControlName="gaurdian_email" [value]="student.parents[2].parent_email">
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-full-3">
           <div class="form-group">
-            <label>Guardian Occupation</label>
+            <label class="heading">Guardian Occupation</label>
             <input class="inpbox" type="text" formControlName="gaurdian_occupation" [value]="student.parents[2].occupation">
           </div>
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-md-3">
+      <div class="row-wrapper">
+        <div class="col-full-3">
           <div class="form-group">
-            <label>Guardian Relation</label>
+            <label class="heading">Guardian Relation</label>
             <input class="inpbox" type="text" formControlName="gaurdian_relation" [value]="student.parents[2].parent_relation">
           </div>
         </div>
       </div>
 
-      <div>
+      <div class="row">
         <div class="col-md-3 pull-left">
-          <button class="button button1 hvr-pop transition" (click)="close()">Close</button>
-          <button class="button button1 hvr-pop transition" (click)="get_studentForm('studentdetails')">Previous</button>
+          <button class="btn -cta active-tab">Save</button>
+          <button class="btn -cta inactive-tab" (click)="close()">Cancel</button>
         </div>
         <div class="col-md-3 pull-right">
-          <button class="button button1 hvr-pop transition" (click)="get_studentForm('address')">Next</button>
+          <button class="btn -cta active-tab" (click)="get_studentForm('studentdetails')">Previous</button>
+          <button class="btn -cta active-tab" (click)="get_studentForm('address')">Next</button>
         </div>
       </div>
     </div>
 
     <div *ngIf="address">
-      <div class="row">
-        <div class="col-md-6">
+      <div class="row-wrapper">
+        <div class="col-full-6">
           <div class="form-group">
-            <label>Current Address</label>
-            <div><textarea formControlName="cur_address" cols="75" rows="5" [value]="student.current_address[0].cur_address"></textarea></div>
+            <label class="heading">Current Address :</label>
+            <div><textarea formControlName="cur_address" cols="45" rows="10" [value]="student.current_address[0].cur_address"></textarea></div>
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-full-6">
           <div class="form-group">
-            <label>Permanent Address</label>
-            <div><textarea formControlName="perm_address" cols="75" rows="5" [value]="student.permanent_address[0].perm_address"></textarea></div>
+            <label class="heading">Permanent Address :</label>
+            <div><textarea formControlName="perm_address" cols="45" rows="10" [value]="student.permanent_address[0].perm_address"></textarea></div>
           </div>
         </div>
       </div>
 
-      <div class="row">
+      <div class="row-wrapper">
         <!-- <div class="col-md-6">
           <div class="form-group">
             <label>Create Parent Account</label>
             <div><input type="radio"> Yes <input type="radio"> No </div>
           </div>
         </div> -->
-        <div class="col-md-6">
+        <div class="col-full-6">
           <div class="form-group">
-            <label>Upload Photo</label>
+            <label class="heading">Upload Photo :</label>
             <input type="file" name="image" (change)="fileProgress($event)" >
+            <label>{{studentphoto == '' ? studentphoto : 'No file chosen'}}</label>
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-full-6">
           <div class="form-group">
-            <label>Upload Documents</label>
+            <label class="heading">Upload Documents :</label>
             <input type="file">
           </div>
         </div>
       </div>
 
-      <div>
+      <div class="row">
         <div class="col-md-3 pull-left">
-          <button class="button button1 hvr-pop transition" (click)="close()">Close</button>
-          <button class="button button1 hvr-pop transition" (click)="get_studentForm('parentdetails')">Previous</button>
+          <button class="btn -cta active-tab" type="submit">Save</button>
+          <button class="btn -cta inactive-tab" (click)="close()">Cancel</button>
         </div>
         <div class="col-md-3 pull-right">
-          <button class="button button1 hvr-pop transition" type="submit">Submit</button>
+          <button class="btn -cta active-tab" (click)="get_studentForm('parentdetails')">Previous</button>
         </div>
       </div>
     </div>

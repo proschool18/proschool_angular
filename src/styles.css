@@ -943,19 +943,31 @@ html{
 
 .row-wrapper {
   display: flex;
+  padding: 15px 0;
 }
 
 .col-full-3 {
   width: 20%;
-  margin: 20px 3%;
+  margin: 0px 3%;
 }
 
-.col-full-3 .form-group label,
-.col-full-3 .form-group span  {
+.col-full-6 {
+  width: 40%;
+  margin: 0 3%;
+}
+
+.row-wrapper .form-group textarea {
+  border: 1px solid #ccc;
+  background: #F7F7F7;
+  margin-top: 10px;
+}
+
+.row-wrapper .form-group label,
+.row-wrapper .form-group span  {
   display: block;
 }
 
-.col-full-3 .form-group input {
+.row-wrapper .form-group input {
   width: inherit;
   background: #F7F7F7;
 }
@@ -970,21 +982,21 @@ html{
   width: fit-content;
 }
 
-.col-full-3 .dropdown .mat-form-field {
+.row-wrapper .dropdown .mat-form-field {
   background: #F7F7F7;
 }
 
-.col-full-3 .dropdown {
+.row-wrapper .dropdown {
     width: 100%;
 }
 
-.col-full-3 .dropbtn {
+.row-wrapper .dropbtn {
     width: inherit;
     background: #F7F7F7;
     color: #000;
 }
 
-.col-full-3 .dropdown-content a {
+.row-wrapper .dropdown-content a {
   width: 195px;
   color: #000;
 }
@@ -1015,4 +1027,14 @@ html{
 
 .btn.-cta.active-tab:hover {
   border: none;
+}
+
+
+
+.new:before {
+  display: block;
+}
+
+.new:after {
+  display: block;
 }
