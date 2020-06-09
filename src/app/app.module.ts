@@ -17,7 +17,6 @@ import { AccessDeniedComponent } from './access-denied/access-denied.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { EventlistsComponent } from './_alert/events/events.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
-import { ClickOutsideDirective } from './_directives/click-outside.directive';
 
 @NgModule({
   declarations: [
@@ -31,7 +30,6 @@ import { ClickOutsideDirective } from './_directives/click-outside.directive';
     RegistrationComponent,
     EventlistsComponent,
     SidebarComponent,
-    ClickOutsideDirective
   ],
   imports: [
     BrowserModule,
@@ -44,7 +42,6 @@ import { ClickOutsideDirective } from './_directives/click-outside.directive';
     BrowserAnimationsModule
   ],
   exports: [
-    ClickOutsideDirective
   ],
   entryComponents: [AlertComponent, EventlistsComponent],
   providers: [],
