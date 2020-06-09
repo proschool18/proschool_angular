@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { ClickOutsideDirective } from '../_directives/click-outside.directive';
 
 import { SearchModuleRoutingModule } from './search-module-routing.module';
 import { ClassComponent } from './class/class.component';
@@ -10,7 +10,7 @@ import { ScheduleComponent } from './schedule/schedule.component';
 import { ChapterComponent } from './chapters/chapters.component';
 
 @NgModule({
-  declarations: [ClassComponent, SubjectComponent, ScheduleComponent, ChapterComponent],
+  declarations: [ClassComponent, SubjectComponent, ScheduleComponent, ChapterComponent, ClickOutsideDirective],
   imports: [
     CommonModule,
     FormsModule,
