@@ -8,6 +8,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { EmployeesRoutingModule } from './employees-routing.module';
 import { InformationComponent } from './information/information.component';
 import { AdmissionComponent } from './admission/admission.component';
+import { MatDatepickerModule, MatInputModule, MatNativeDateModule } from '@angular/material';
 
 @NgModule({
   declarations: [InformationComponent, AdmissionComponent],
@@ -18,7 +19,8 @@ import { AdmissionComponent } from './admission/admission.component';
     ReactiveFormsModule,
     NgxPaginationModule,
     SearchModuleModule,
-    MatDialogModule
+    MatDialogModule,
+    MatDatepickerModule, MatInputModule, MatNativeDateModule
   ],
   entryComponents: [AdmissionComponent],
   exports: [AdmissionComponent]

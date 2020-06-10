@@ -1,12 +1,13 @@
 <div id="main-content1">
-  <div class="row">
-    <div class="container-fluid" id="buttonId1">
+  <div class="blue-top-bar"></div>
+  <div class="row-wrapper center-content">
+    <!-- <div class="container-fluid" id="buttonId1"> -->
       <!-- <button class="button button2 hvr-pop transition" (click)="get_employeeForm('employeedetails')">Bulk Employee Admission</button> -->
-      <button class="button button2 hvr-pop transition" (click)="get_employeeForm('singleemployeedetails')">Single
+      <button class="btn -cta" [ngClass]="[singleemployeedetails ? 'active-tab': 'inactive-tab']" (click)="get_employeeForm('singleemployeedetails')">Single
         Employee Admission</button>
-      <button class="button button2 hvr-pop transition" (click)="get_employeeForm('employeeaddress')">Employee
+      <button class="btn -cta" [ngClass]="[employeeaddress ? 'active-tab': 'inactive-tab']" (click)="get_employeeForm('employeeaddress')">Employee
         Address</button>
-    </div>
+    <!-- </div> -->
   </div>
   <!-- <div *ngIf="employeedetails">
         <div class="row alignrow">
@@ -55,24 +56,36 @@
         </div>
     </div> -->
 
-  <form [formGroup]="employeeadmissionForm" (ngSubmit)="submitEmployee()">
+  <form [formGroup]="employeeadmissionForm" >
     <div *ngIf="singleemployeedetails">
-      <div class="row">
-        <div class="col-md-3">
+      <div class="row-wrapper">
+        <div class="col-full-3">
           <div class="form-group">
-            <label>Title</label>
-            <select class="inpbox" formControlName="title" [value]="employee.title">
+            <label class="heading">Title</label>
+            <div class="dropdown">
+              <button class="dropbtn" (click)="showTitleList = true"
+              (clickOutside)="showTitleList = false">
+                  {{!employee.title ? '--Select--' : employee.title}}
+              </button>
+              <div class="dropdown-content" [hidden]="!showTitleList">
+                <a (click)="employee.title = '';">--Select--</a>
+                <a (click)="employee.title = 'Mr'">Mr</a>
+                <a (click)="employee.title = 'Ms'">Ms</a>
+                <a (click)="employee.title = 'Mrs'">Mrs</a>
+              </div>
+            </div>
+            <!-- <select class="inpbox" formControlName="title" [value]="employee.title">
               <option value="">--Select--</option>
               <option value="Mr">Mr</option>
               <option value="Ms">Ms</option>
               <option value="Mrs">Mrs</option>
-            </select>
+            </select> -->
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-full-3">
           <div class="form-group" [ngClass]="{'has-error' : employeeadmissionForm.get('first_name').errors 
             && (employeeadmissionForm.get('first_name').touched || employeeadmissionForm.get('first_name').dirty)}">
-            <label>Forename*</label>
+            <label class="heading">Forename*</label>
             <div><input class="inpbox" type="text" formControlName="first_name" [value]="employee.first_name">
               <span class="help-block" *ngIf="employeeadmissionForm.get('first_name').errors 
           && (employeeadmissionForm.get('first_name').touched || employeeadmissionForm.get('first_name').dirty)">
@@ -83,10 +96,10 @@
             </div>
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-full-3">
           <div class="form-group" [ngClass]="{'has-error' : employeeadmissionForm.get('last_name').errors 
             && (employeeadmissionForm.get('last_name').touched || employeeadmissionForm.get('last_name').dirty)}">
-            <label>Surname*</label>
+            <label class="heading">Surname*</label>
             <div>
               <input class="inpbox" type="text" formControlName="last_name" [value]="employee.last_name">
               <span class="help-block" *ngIf="employeeadmissionForm.get('last_name').errors 
@@ -98,10 +111,10 @@
             </div>
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-full-3">
           <div class="form-group" [ngClass]="{'has-error' : employeeadmissionForm.get('phone').errors 
             && (employeeadmissionForm.get('phone').touched || employeeadmissionForm.get('phone').dirty)}">
-            <label>Phone Number</label>
+            <label class="heading">Phone Number</label>
             <div>
               <input type="number" formControlName="phone" [value]="employee.phone">
               <span class="help-block" *ngIf="employeeadmissionForm.get('phone').errors 
@@ -115,17 +128,17 @@
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-md-3">
+      <div class="row-wrapper">
+        <div class="col-full-3">
           <div class="form-group">
-            <label>Employee Code</label>
+            <label class="heading">Employee Code</label>
             <div><input class="inpbox" type="text" formControlName="employee_code" [value]="employee.employee_code"></div>
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-full-3">
           <div class="form-group" [ngClass]="{'has-error' : employeeadmissionForm.get('designation').errors 
             && (employeeadmissionForm.get('designation').touched || employeeadmissionForm.get('designation').dirty)}">
-            <label>Designation*</label>
+            <label class="heading">Designation*</label>
             <div><input class="inpbox" type="text" formControlName="designation" [value]="employee.designation">
               <span class="help-block" *ngIf="employeeadmissionForm.get('designation').errors 
           && (employeeadmissionForm.get('designation').touched || employeeadmissionForm.get('designation').dirty)">
@@ -136,18 +149,23 @@
             </div>
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-full-3">
           <div class="form-group">
-            <label>Email</label>
+            <label class="heading">Email</label>
             <input class="inpbox" type="email" formControlName="email" [value]="employee.email">
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-full-3">
           <div class="form-group" [ngClass]="{'has-error' : employeeadmissionForm.get('joined_on').errors 
             && (employeeadmissionForm.get('joined_on').touched || employeeadmissionForm.get('joined_on').dirty)}">
-            <label>Date of Joining</label>
-            <div>
-              <input class="inpbox" type="date" formControlName="joined_on" [value]="employee.joined_on">
+            <label class="heading">Date of Joining</label>
+            <div class="dropdown">
+            <mat-form-field>
+               <input matInput [matDatepicker]="joined_on" [formControl]="joined_on">
+               <mat-datepicker-toggle matSuffix [for]="joined_on"></mat-datepicker-toggle>
+               <mat-datepicker #joined_on></mat-datepicker>
+            </mat-form-field>
+              <!-- <input class="inpbox" type="date" formControlName="joined_on" [value]="employee.joined_on"> -->
               <span class="help-block" *ngIf="employeeadmissionForm.get('joined_on').errors 
           && (employeeadmissionForm.get('joined_on').touched || employeeadmissionForm.get('joined_on').dirty)">
                 <span *ngIf="employeeadmissionForm.get('joined_on').errors.required">
@@ -155,20 +173,27 @@
                 </span>
               </span>
             </div>
-          </div>
         </div>
       </div>
+    </div>
 
-      <div class="row">
-        <div class="col-md-3">
+      <div class="row-wrapper">
+        <div class="col-full-3">
           <div class="form-group">
-            <label>Date of Birth</label>
-            <input class="inpbox" type="date" formControlName="dob" [value]="employee.dob">
+            <label class="heading">Date of Birth</label>
+            <div class="dropdown">
+              <mat-form-field>
+                 <input matInput [matDatepicker]="date_of_birth" [formControl]="joined_on">
+                 <mat-datepicker-toggle matSuffix [for]="date_of_birth"></mat-datepicker-toggle>
+                 <mat-datepicker #date_of_birth></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <!-- <input class="inpbox" type="date" formControlName="dob" [value]="employee.dob"> -->
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-full-3">
           <div class="form-group">
-            <label>Gender*</label>
+            <label class="heading">Gender*</label>
             <select class="inpbox" formControlName="gender" [value]="employee.gender">
               <option value="">--Select--</option>
               <option value="Male">Male</option>
@@ -176,24 +201,24 @@
             </select>
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-full-3">
           <div class="form-group">
-            <label>Experience</label>
+            <label class="heading">Experience</label>
             <input class="inpbox" type="text" formControlName="experience" [value]="employee.experience">
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-full-3">
           <div class="form-group">
-            <label>Salary Band</label>
+            <label class="heading">Salary Band</label>
             <input class="inpbox" type="text" formControlName="salary_band" [value]="employee.salary_band">
           </div>
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-md-3">
+      <div class="row-wrapper">
+        <div class="col-full-3">
           <div class="form-group">
-            <label>Blood Group*</label>
+            <label class="heading">Blood Group*</label>
             <select class="inpbox" formControlName="blood_group" [value]="employee.blood_group">
               <option value="">--Select--</option>
               <option value="O+">O+</option>
@@ -208,9 +233,9 @@
             </select>
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-full-3">
           <div class="form-group">
-            <label>Marital Status</label>
+            <label class="heading">Marital Status</label>
             <select class="inpbox" formControlName="marital_status" [value]="employee.marital_status">
               <option value="">--Select--</option>
               <option value="Married">Married</option>
@@ -218,45 +243,45 @@
             </select>
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-full-3">
           <div class="form-group">
-            <label>Basic Pay</label>
+            <label class="heading">Basic Pay</label>
             <input class="inpbox" type="text" formControlName="basic_pay" [value]="employee.basic_pay">
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-full-3">
 
         </div>
       </div>
 
-      <div>
+      <div class="row">
         <div class="col-md-3 pull-left">
-          <button class="button button1 hvr-pop transition" (click)="close()">Close</button>
+          <button class="btn -cta inactive-tab" (click)="close()">Close</button>
           <!-- <button class="button button1 hvr-pop transition" (click)="get_employeeForm('employeedetails')">Previous</button> -->
         </div>
         <div class="col-md-3 pull-right">
-          <button class="button button1 hvr-pop transition" (click)="get_employeeForm('employeeaddress')">Next</button>
+          <button class="btn -cta active-tab" (click)="get_employeeForm('employeeaddress')">Next</button>
         </div>
       </div>
     </div>
     <div *ngIf="employeeaddress">
 
-      <div class="row">
-        <div class="col-md-3">
+      <div class="row-wrapper">
+        <div class="col-full-3">
           <div class="form-group">
-            <label>State</label>
+            <label class="heading">State</label>
             <div><input class="inpbox" type="text" formControlName="state" [value]="employee.state"></div>
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-full-3">
           <div class="form-group">
-            <label>Country</label>
+            <label class="heading">Country</label>
             <div><input class="inpbox" type="text" formControlName="country" [value]="employee.country"></div>
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-full-3">
           <div class="form-group">
-            <label>Employe Type</label>
+            <label class="heading">Employe Type</label>
             <div>
               <select class="inpbox" formControlName="job_category" [value]="employee.job_category">
                 <option value="">--Select--</option>
@@ -267,58 +292,58 @@
             </div>
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-full-3">
           <div class="form-group">
-            <label>Pasport No</label>
+            <label class="heading">Pasport No</label>
             <input class="inpbox" type="text" formControlName="passport_no" [value]="employee.passport_no">
           </div>
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-md-3">
+      <div class="row-wrapper">
+        <div class="col-full-3">
           <div class="form-group">
-            <label>Aadhaar No</label>
+            <label class="heading">Aadhaar No</label>
             <div>
               <input class="inpbox" type="text" formControlName="aadhar_no" [value]="employee.aadhar_no">
             </div>
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-full-3">
           <div class="form-group">
-            <label>Pan No</label>
+            <label class="heading">Pan No</label>
             <div>
               <input class="inpbox" type="text" formControlName="pan_no" [value]="employee.pan_no">
             </div>
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-full-3">
           <div class="form-group">
-            <label>Postal Code</label>
+            <label class="heading">Postal Code</label>
             <div>
               <input class="inpbox" type="text" formControlName="postal_code" [value]="employee.postal_code">
             </div>
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-full-3">
           <div class="form-group">
-            <label>Spoken English</label>
+            <label class="heading">Spoken English</label>
             <input class="inpbox" type="text" formControlName="spoken_languages" [value]="employee.spoken_languages">
           </div>
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-md-6">
+      <div class="row-wrapper">
+        <div class="col-full-6">
           <div class="form-group">
-            <label>Permanent Address</label>
+            <label class="heading">Permanent Address</label>
             <div><textarea formControlName="cur_address" cols="75" rows="5" [value]="employee.current_address.cur_address"></textarea>
             </div>
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-full-6">
           <div class="form-group">
-            <label>Temporary Address</label>
+            <label class="heading">Temporary Address</label>
             <div><textarea formControlName="perm_address" cols="75" rows="5" [value]="employee.permanent_address.perm_address"></textarea>
             </div>
           </div>
@@ -327,12 +352,12 @@
 
       <div>
         <div class="col-md-3 pull-left">
-          <div class="button button1 hvr-pop transition" (click)="close()">Close</div>
-          <div class="button button1 hvr-pop transition"
-            (click)="get_employeeForm('singleemployeedetails')">Previous</div>
+          <button class="btn -cta inactive-tab" (click)="close()">Close</button>
+          <button class="btn -cta inactive-tab"
+            (click)="get_employeeForm('singleemployeedetails')">Previous</button>
         </div>
         <div class="col-md-3 pull-right">
-          <button class="button button1 hvr-pop transition" type="submit">Submit</button>
+          <button class="btn -cta active-tab" type="submit">Submit</button>
         </div>
       </div>
 

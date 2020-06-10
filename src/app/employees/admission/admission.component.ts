@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { EmployeesService } from '../../_services/employees.service';
 import { AlertComponent } from '../../_alert/alert/alert.component';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-admission',
@@ -19,6 +20,12 @@ export class AdmissionComponent implements OnInit {
   singleemployeedetails: boolean = true;
   employeeaddress: boolean = false;
 
+
+  joined_on = new FormControl(new Date);
+  date_of_birth = new FormControl(new Date);
+
+  showTitleList: boolean = false;
+    
   employee = {
     employee_id: '',
     title: '',
