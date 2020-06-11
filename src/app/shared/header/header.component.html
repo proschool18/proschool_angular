@@ -1,7 +1,10 @@
 <div class="header-content">
   <div class="page-title-and-time">
     <div class="_page-title">Dashboard</div>
-    <div class="_time">Monday, 21 April 2020, 12:21 PM</div>
+    <div class="_time"><!-- Monday, 21 April 2020, 12:21 PM -->
+      {{weekday[today.getDay()]}}, {{today.getDate()}} {{months[today.getMonth()]}} {{today.getFullYear()}}, 
+      {{formatAMPM(today)}}
+    </div>
   </div>
   <div class="account">
     <button type="button" class="_actions-trigger" aria-expanded="false">
