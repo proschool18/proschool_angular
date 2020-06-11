@@ -25,7 +25,11 @@ export class AdmissionComponent implements OnInit {
   date_of_birth = new FormControl(new Date);
 
   showTitleList: boolean = false;
-    
+  showGenderList: boolean = false;
+  showBloodGroupList: boolean = false;
+  showMaritalStatusList: boolean = false;
+  showJobCategoryList: boolean = false;
+                
   employee = {
     employee_id: '',
     title: '',

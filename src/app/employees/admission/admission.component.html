@@ -194,11 +194,23 @@
         <div class="col-full-3">
           <div class="form-group">
             <label class="heading">Gender*</label>
-            <select class="inpbox" formControlName="gender" [value]="employee.gender">
+            <div class="dropdown">
+              <button class="dropbtn" (click)="showGenderList = true"
+              (clickOutside)="showGenderList = false">
+                  {{!employee.gender ? '--Select--' : employee.gender}}
+              </button>
+              <div class="dropdown-content" [hidden]="!showGenderList">
+                <a (click)="employee.gender = '';">--Select--</a>
+                <a (click)="employee.gender = 'Male'">Male</a>
+                <a (click)="employee.gender = 'Female'">Female</a>
+              </div>
+            </div>
+
+            <!-- <select class="inpbox" formControlName="gender" [value]="employee.gender">
               <option value="">--Select--</option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
-            </select>
+            </select> -->
           </div>
         </div>
         <div class="col-full-3">
@@ -219,7 +231,25 @@
         <div class="col-full-3">
           <div class="form-group">
             <label class="heading">Blood Group*</label>
-            <select class="inpbox" formControlName="blood_group" [value]="employee.blood_group">
+            <div class="dropdown">
+              <button class="dropbtn" (click)="showBloodGroupList = true"
+              (clickOutside)="showBloodGroupList = false">
+                  {{!employee.blood_group ? '--Select--' : employee.blood_group}}
+              </button>
+              <div class="dropdown-content" [hidden]="!showBloodGroupList">
+                <a (click)="employee.blood_group = '';">--Select--</a>
+                <a (click)="employee.blood_group = 'O+'">O+</a>
+                <a (click)="employee.blood_group = 'O-'">O-</a>
+                <a (click)="employee.blood_group = 'A+'">A+</a>
+                <a (click)="employee.blood_group = 'A-'">A-</a>
+                <a (click)="employee.blood_group = 'B+'">B+</a>
+                <a (click)="employee.blood_group = 'B-'">B-</a>
+                <a (click)="employee.blood_group = 'AB+'">AB+</a>
+                <a (click)="employee.blood_group = 'AB-'">AB-</a>
+                <a (click)="employee.blood_group = 'NA'">NA</a>
+              </div>
+            </div>
+            <!-- <select class="inpbox" formControlName="blood_group" [value]="employee.blood_group">
               <option value="">--Select--</option>
               <option value="O+">O+</option>
               <option value="O-">O-</option>
@@ -230,17 +260,28 @@
               <option value="AB+">AB+</option>
               <option value="AB-">AB-</option>
               <option value="NA">NA</option>
-            </select>
+            </select> -->
           </div>
         </div>
         <div class="col-full-3">
           <div class="form-group">
             <label class="heading">Marital Status</label>
-            <select class="inpbox" formControlName="marital_status" [value]="employee.marital_status">
+            <div class="dropdown">
+              <button class="dropbtn" (click)="showMaritalStatusList = true"
+              (clickOutside)="showMaritalStatusList = false">
+                  {{!employee.marital_status ? '--Select--' : employee.marital_status}}
+              </button>
+              <div class="dropdown-content" [hidden]="!showMaritalStatusList">
+                <a (click)="employee.marital_status = '';">--Select--</a>
+                <a (click)="employee.marital_status = 'Married'">Married</a>
+                <a (click)="employee.marital_status = 'Unmarried'">Unmarried</a>
+              </div>
+            </div>
+            <!-- <select class="inpbox" formControlName="marital_status" [value]="employee.marital_status">
               <option value="">--Select--</option>
               <option value="Married">Married</option>
               <option value="Unmarried">Unmarried</option>
-            </select>
+            </select> -->
           </div>
         </div>
         <div class="col-full-3">
@@ -282,14 +323,26 @@
         <div class="col-full-3">
           <div class="form-group">
             <label class="heading">Employe Type</label>
-            <div>
+            <div class="dropdown">
+              <button class="dropbtn" (click)="showJobCategoryList = true"
+              (clickOutside)="showJobCategoryList = false">
+                  {{!employee.job_category ? '--Select--' : employee.job_category}}
+              </button>
+              <div class="dropdown-content" [hidden]="!showJobCategoryList">
+                <a (click)="employee.job_category = '';">--Select--</a>
+                <a (click)="employee.job_category = 'Teaching'">Teaching</a>
+                <a (click)="employee.job_category = 'Non-Teaching'">Non-Teaching</a>
+                <a (click)="employee.job_category = 'Administrative'">Administrative</a>
+              </div>
+            </div>
+            <!-- <div>
               <select class="inpbox" formControlName="job_category" [value]="employee.job_category">
                 <option value="">--Select--</option>
                 <option value="teaching">Teaching</option>
                 <option value="non-teaching">Non-Teaching</option>
                 <option value="administrative">Administrative</option>
               </select>
-            </div>
+            </div> -->
           </div>
         </div>
         <div class="col-full-3">
@@ -337,14 +390,14 @@
         <div class="col-full-6">
           <div class="form-group">
             <label class="heading">Permanent Address</label>
-            <div><textarea formControlName="cur_address" cols="75" rows="5" [value]="employee.current_address.cur_address"></textarea>
+            <div><textarea formControlName="cur_address" cols="45" rows="10" [value]="employee.current_address.cur_address"></textarea>
             </div>
           </div>
         </div>
         <div class="col-full-6">
           <div class="form-group">
             <label class="heading">Temporary Address</label>
-            <div><textarea formControlName="perm_address" cols="75" rows="5" [value]="employee.permanent_address.perm_address"></textarea>
+            <div><textarea formControlName="perm_address" cols="45" rows="10" [value]="employee.permanent_address.perm_address"></textarea>
             </div>
           </div>
         </div>

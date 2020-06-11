@@ -789,7 +789,7 @@ html{
 }
 
 .dropdown-content {
-    position: fixed;
+    position: absolute;
     background: #fff;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
@@ -999,6 +999,10 @@ html{
 .row-wrapper .dropdown-content a {
   width: 195px;
   color: #000;
+}
+
+.row-wrapper .dropdown-content {
+  position: fixed;
 }
 
 .blue-top-bar {

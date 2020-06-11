@@ -16,7 +16,10 @@
                 </a>
             </li>
             <li role="presentation" *ngIf="user.role === 'admin'">
-                <button type="button" class="_submenu-trigger" aria-expanded="false" aria-controls="academics-submenu" routerLink="/main/admin/profile" routerLinkActive="router-link-active">
+                <button type="button" class="_submenu-trigger" 
+                aria-expanded="false" aria-controls="academics-submenu" 
+                routerLink="/main/admin/profile" 
+                [ngClass]="isAnySubMenuActive('Admin') ? 'router-link-active' : ''">
                     <img src="../../../assets/images/book-white.svg" aria-hidden="true" class="_icon -inactive">
                     <img src="../../../assets/images/book-blue.svg" aria-hidden="true" class="_icon -show-on-hover">
                     Admin
@@ -32,7 +35,9 @@
                 </ul>
             </li>
             <li role="presentation" *ngIf="user.role === 'teacher' || user.role === 'parent'">
-                <button type="button" class="_submenu-trigger" aria-expanded="false" aria-controls="academics-submenu" routerLink="/main/admin/profile" routerLinkActive="router-link-active">
+                <button type="button" class="_submenu-trigger" aria-expanded="false" aria-controls="academics-submenu" 
+                routerLink="/main/admin/profile" 
+                [ngClass]="isAnySubMenuActive('School') ? 'router-link-active' : ''">
                     <img src="../../../assets/images/book-white.svg" aria-hidden="true" class="_icon -inactive">
                     <img src="../../../assets/images/book-blue.svg" aria-hidden="true" class="_icon -show-on-hover">
                     School
@@ -62,7 +67,9 @@
                 </a>
             </li>
             <li role="presentation">
-                <button type="button" class="_submenu-trigger" aria-expanded="false" aria-controls="attendance-submenu" routerLink="/main/attendance/studentattendance" routerLinkActive="router-link-active">
+                <button type="button" class="_submenu-trigger" aria-expanded="false" aria-controls="attendance-submenu" 
+                routerLink="/main/attendance/studentattendance" 
+                [ngClass]="isAnySubMenuActive('Attendance') ? 'router-link-active' : ''">
                     <img src="../../../assets/images/book-white.svg" aria-hidden="true" class="_icon -inactive">
                     <img src="../../../assets/images/book-blue.svg" aria-hidden="true" class="_icon -show-on-hover">
                     Attendance
@@ -75,7 +82,9 @@
                 </ul>
             </li>
             <li role="presentation">
-                <button type="button" class="_submenu-trigger" aria-expanded="false" aria-controls="academics-submenu" routerLink="/main/academics/subjects" routerLinkActive="router-link-active">
+                <button type="button" class="_submenu-trigger" aria-expanded="false" aria-controls="academics-submenu" 
+                routerLink="/main/academics/subjects" 
+                [ngClass]="isAnySubMenuActive('Academics') ? 'router-link-active' : ''">
                     <img src="../../../assets/images/book-white.svg" aria-hidden="true" class="_icon -inactive">
                     <img src="../../../assets/images/book-blue.svg" aria-hidden="true" class="_icon -show-on-hover">
                     Academics
@@ -89,7 +98,9 @@
                 </ul>
             </li>
             <li role="presentation">
-                <button type="button" class="_submenu-trigger" aria-expanded="false" aria-controls="academics-submenu" routerLink="/main/assignments" routerLinkActive="router-link-active">
+                <button type="button" class="_submenu-trigger" aria-expanded="false" aria-controls="academics-submenu" 
+                routerLink="/main/assignments" 
+                [ngClass]="isAnySubMenuActive('Assessments') ? 'router-link-active' : ''">
                     <img src="../../../assets/images/news-white.svg" aria-hidden="true" class="_icon -inactive">
                     <img src="../../../assets/images/news-blue.svg" aria-hidden="true" class="_icon -show-on-hover">
                     Assessments
@@ -102,7 +113,9 @@
                 </ul>
             </li>
             <li role="presentation">
-                <button type="button" class="_submenu-trigger" aria-expanded="false" aria-controls="academics-submenu" routerLink="/main/examinations" routerLinkActive="router-link-active">
+                <button type="button" class="_submenu-trigger" aria-expanded="false" aria-controls="academics-submenu" 
+                routerLink="/main/examinations" 
+                [ngClass]="isAnySubMenuActive('Examinations') ? 'router-link-active' : ''">
                     <img src="../../../assets/images/paper-white.svg" aria-hidden="true" class="_icon -inactive">
                     <img src="../../../assets/images/paper-blue.svg" aria-hidden="true" class="_icon -show-on-hover">
                     Examinations
@@ -115,7 +128,9 @@
                 </ul>
             </li>
             <li role="presentation">
-                <button type="button" class="_submenu-trigger" aria-expanded="false" aria-controls="academics-submenu" routerLink="/main/timetable/classwise" routerLinkActive="router-link-active">
+                <button type="button" class="_submenu-trigger" aria-expanded="false" aria-controls="academics-submenu" 
+                routerLink="/main/timetable/classwise" 
+                [ngClass]="isAnySubMenuActive('Timetable') ? 'router-link-active' : ''">
                     <img src="../../../assets/images/abc-white.svg" aria-hidden="true" class="_icon -inactive">
                     <img src="../../../assets/images/abc-blue.svg" aria-hidden="true" class="_icon -show-on-hover">
                     Timetable
@@ -127,7 +142,9 @@
                 </ul>
             </li>
             <li role="presentation">
-                <button type="button" class="_submenu-trigger" aria-expanded="false" aria-controls="academics-submenu" routerLink="/main/fee/collectfee" routerLinkActive="router-link-active">
+                <button type="button" class="_submenu-trigger" aria-expanded="false" aria-controls="academics-submenu" 
+                routerLink="/main/fee/collectfee" 
+                [ngClass]="isAnySubMenuActive('Fee') ? 'router-link-active' : ''">
                     <img src="../../../assets/images/calculator-white.svg" aria-hidden="true" class="_icon -inactive">
                     <img src="../../../assets/images/calculator-blue.svg" aria-hidden="true" class="_icon -show-on-hover">
                     Fee
@@ -141,7 +158,9 @@
                 </ul>
             </li>
             <li role="presentation">
-                <button type="button" class="_submenu-trigger" aria-expanded="false" aria-controls="academics-submenu" routerLink="/main/transportation/stations" routerLinkActive="router-link-active">
+                <button type="button" class="_submenu-trigger" aria-expanded="false" aria-controls="academics-submenu" 
+                routerLink="/main/transportation/stations" 
+                [ngClass]="isAnySubMenuActive('Transport') ? 'router-link-active' : ''">
                     <img src="../../../assets/images/bus-white.svg" aria-hidden="true" class="_icon -inactive">
                     <img src="../../../assets/images/bus-blue.svg" aria-hidden="true" class="_icon -show-on-hover">
                     Transport
