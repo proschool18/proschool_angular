@@ -33,22 +33,18 @@
             <td>{{chap.no_of_topics}}</td>
             <td>{{chap.completed_topics}}</td>
             <td>
-              <div>
-                <label class="switch">
-                  <input type="checkbox" value="1" [checked]="chap.start_check" [disabled]="chap.start_disable"
-                    (click)="updateChapter('started', chap.lession_id, i)" />
-                  <span class="slider round"></span>
-                </label>
-              </div>
+              <label class="switch">
+                <input type="checkbox" value="1" [checked]="chap.start_check" [disabled]="chap.start_disable"
+                  (click)="updateChapter('started', chap.lession_id, i)" />
+                <span class="slider start round"></span>
+              </label>
             </td>
             <td>
-              <div>
-                <label class="switch">
-                    <input type="checkbox" value="1" [checked]="chap.end_check" [disabled]="chap.end_disable"
-                    (click)="updateChapter('completed', chap.lession_id, i)" />
-                    <span class="slider round"></span>
-                </label>
-            </div>
+              <label class="switch">
+                  <input type="checkbox" value="1" [checked]="chap.end_check" [disabled]="chap.end_disable"
+                  (click)="updateChapter('completed', chap.lession_id, i)" />
+                  <span class="slider end round"></span>
+              </label>
             </td>
             <td>
               <div class="progress">
