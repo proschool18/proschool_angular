@@ -1,4 +1,4 @@
-<div id="main-content">
+<!-- <div id="main-content">
     <div class="row">
         <div class="container-fluid" id="buttonId1">
             <button routerLink="/main/studentprofile/profile/{{student_id}}/{{section_id}}" class="button button2 hvr-pop transition">Profile</button>
@@ -70,7 +70,7 @@
                                     <td>{{i+1}}</td>
                                     <td>{{att.date}}</td>
                                     <td>{{att.status}}</td>
-                                    <!-- <td [ngStyle]="{'background-color': (att.status == 'Present') ? '#1caf9a' : (att.status == 'Present') ? '#1caf9a' : '#e04b4a', 'color': 'white', 'margin-botton': '2px' }">{{att.status}}</td> -->
+                                    
                                 </tr>
                             </tbody>
                         </table>
@@ -86,4 +86,162 @@
         </div>
     </div>
 
-</div>
+</div> -->
+
+<main class="card mt-20 within-viewport" style="height: auto;">
+    <div class="page-actions"> 
+        <section class="student-intro">
+            <img src="/assets/img/images/student.png">
+            <h4>Vinod Kumar Alluri</h4>
+            <h4>Class X - A</h4>
+            <h4>Roll No : 1</h4>
+        </section>
+        <section class="student-task-section">
+            <div class="row-wrapper">
+                <button class="btn -cta active-tab">Tasks</button>
+                <button class="btn -cta active-tab">Tasks</button>
+                <button class="btn -cta active-tab">Tasks</button>
+                <button class="btn -cta active-tab">Tasks</button>
+            </div>
+
+            <section class="table-and-pagination -classes-schedule">
+                <div class="table-container">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th align="left">Priority</th>
+                        <th align="left">Task</th>
+                        <th align="left">Assignment to</th>
+                        <th align="left">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>          
+                      <tr class="task-row" (click)="selectedRowNum = 1" 
+                      [ngClass]="selectedRowNum == 1 ? 'selected-task-row' : ''">
+                        <td class="_s-no"><span>1</span></td>
+                        <td class="high-priority-task">High</td>
+                        <td>Started undertaking to...</td>
+                        <td>John Smith Doe</td>
+                        <td>
+                            <button class="status-btn pending-btn">Pending</button>
+                        </td>
+                      </tr>
+                      <tr class="task-row" (click)="selectedRowNum = 2"
+                      [ngClass]="selectedRowNum == 2 ? 'selected-task-row' : ''">
+                        <td class="_s-no"><span>2</span></td>
+                        <td class="medium-priority-task">Meduim</td>
+                        <td>The eyes seven fully...</td>
+                        <td>Shawn Thomton</td>
+                        <td>
+                             <button class="status-btn rejected-btn">Rejected</button>
+                        </td>
+                      </tr>
+                      <tr class="task-row" (click)="selectedRowNum = 3"
+                      [ngClass]="selectedRowNum == 3 ? 'selected-task-row' : ''">
+                        <td class="_s-no"><span>3</span></td>
+                        <td class="low-priority-task">Low</td>
+                        <td>Task 01</td>
+                        <td>Jonah McDonald</td>
+                        <td>
+                             <button class="status-btn approved-btn">Approved</button>
+                        </td>
+                      </tr>
+                      <tr class="task-row" (click)="selectedRowNum = 4"
+                      [ngClass]="selectedRowNum == 4 ? 'selected-task-row' : ''">
+                        <td class="_s-no"><span>4</span></td>
+                        <td class="medium-priority-task">Medium</td>
+                        <td>Task 01</td>
+                        <td>Neomi Lawrence</td>
+                        <td>
+                             <button class="status-btn pending-btn">Pending</button>
+                        </td>
+                      </tr>
+                      <tr class="task-row" (click)="selectedRowNum = 5"
+                      [ngClass]="selectedRowNum == 5 ? 'selected-task-row' : ''">
+                        <td class="_s-no"><span>5</span></td>
+                        <td class="high-priority-task">High</td>
+                        <td>Task 01</td>
+                        <td>Devnante Cooke</td>
+                        <td>
+                            <button class="status-btn approved-btn">Approved</button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+            </section>
+
+            <div class="_attendance-box">
+                <section role="tabpanel" style="height: 300px;">
+                    <div class="_metrics">
+                        <div class="_metric -total">
+                            <div class="_bar" style="--progress:73.33%"></div>
+                            <div class="_name">
+                                <span class="_legend">Total</span> 
+                                22 Days
+                            </div>
+                        </div>
+                        <div class="_metric -attend">
+                            <div class="_bar" style="--progress:43.33%"></div>
+                            <div class="_name">
+                                <span class="_legend">Attend</span> 
+                                13 Days
+                            </div>
+                        </div>
+                        <div class="_metric -due">
+                            <div class="_bar" style="--progress:30%"></div>
+                            <div class="_name">
+                                <span class="_legend">Due</span> 
+                                09 Days
+                            </div>
+                        </div>
+                        <div class="_metric -total">
+                            <div class="_bar" style="--progress:66.66%"></div>
+                            <div class="_name">
+                                <span class="_legend">Total</span> 
+                                20 Days
+                            </div>
+                        </div>
+                        <div class="_metric -attend">
+                            <div class="_bar" style="--progress:56.66%"></div>
+                            <div class="_name">
+                                <span class="_legend">Attend</span> 
+                                17 Days
+                            </div>
+                        </div>
+                        <div class="_metric -due">
+                            <div class="_bar" style="--progress:10%"></div>
+                            <div class="_name">
+                                <span class="_legend">Due</span> 
+                                03 Days
+                            </div>
+                        </div>
+                        <div class="_metric -total">
+                            <div class="_bar" style="--progress:73.33%"></div>
+                            <div class="_name">
+                                <span class="_legend">Total</span> 
+                                22 Days
+                            </div>
+                        </div>
+                        <div class="_metric -attend">
+                            <div class="_bar" style="--progress:53.33%"></div>
+                            <div class="_name">
+                                <span class="_legend">Attend</span> 
+                                16 Days
+                            </div>
+                        </div>
+                        <div class="_metric -due">
+                            <div class="_bar" style="--progress:13.33%"></div>
+                            <div class="_name">
+                                <span class="_legend">Due</span> 
+                                04 Days
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+        
+    </div>
+</main>

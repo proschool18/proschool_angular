@@ -15,7 +15,7 @@ export class AttendanceComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  selectedRowNum: number;
   student_id = this.route.snapshot.paramMap.get('id');
   section_id = this.route.snapshot.paramMap.get('sec_id');
 
