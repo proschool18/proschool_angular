@@ -52,6 +52,44 @@
                         </table>
                     </div>
 
+                    <div class="_attendance-box">
+                        <section role="tabpanel" style="height: 200px;">
+                            <div class="_metrics">
+                                <!-- <div *ngFor="let sub of subjectMarks; let i = index"
+                                 class="_metric -total">
+                                    <div class="_bar" 
+                                    [ngClass]="setProgressBar('wave'+ i, sub.percentage) ? '' :''">
+                                    </div>
+                                    <div class="_name">
+                                        <span class="_legend">{{sub.total_marks}}</span> 
+                                        {{sub.subject_name}}
+                                    </div>
+                                </div> -->
+                                <div class="_metric -total">
+                                    <div class="_bar" style="--progress:96%"></div>
+                                    <div class="_name">
+                                        <span class="_legend">46</span> 
+                                        Rhymess
+                                    </div>
+                                </div>
+                                <div class="_metric -attend">
+                                    <div class="_bar" style="--progress:98%"></div>
+                                    <div class="_name">
+                                        <span class="_legend">48</span> 
+                                        English
+                                    </div>
+                                </div>
+                                <div class="_metric -due">
+                                    <div class="_bar" style="--progress:100%"></div>
+                                    <div class="_name">
+                                        <span class="_legend">50</span> 
+                                        Maths
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
                     <ng-template #allSubjects>
                         <div class="table-responsive">
                             <table style="width:100%;">

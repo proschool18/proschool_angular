@@ -100,7 +100,7 @@
         margin: 5% 0 0 5%;
     }
     .leftcard {
-        height: 390px !important;
+        /*height: 390px !important;*//* commented by amruta temporarily*/
         width: 50%;
         background-color: white;
         }

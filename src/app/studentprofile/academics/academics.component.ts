@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { ServicesService } from '../../services.service';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material';
@@ -11,7 +11,7 @@ import { AlertComponent } from '../../_alert/alert/alert.component';
 })
 export class AcademicsComponent implements OnInit {
 
-  constructor(private service: ServicesService, private route: ActivatedRoute, public dialog: MatDialog) { }
+  constructor(private service: ServicesService, private route: ActivatedRoute, public dialog: MatDialog, private el: ElementRef) { }
 
   ngOnInit() {
     this.getStudentAcademics();
@@ -77,6 +77,11 @@ export class AcademicsComponent implements OnInit {
           res => { this.academics = res.students[0].exam_marks, this.View(), console.log(res) }
         )
     }
+  }
+
+  setProgressBar(id, height) {
+    var elem = document.getElementById(id);
+    (elem as HTMLElement).style.setProperty('--progress', height + '%');
   }
 
   View() {
