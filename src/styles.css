@@ -11,7 +11,7 @@ html{
     margin: 0; 
     background: #E9EEF7; 
     font-family: "Roboto", sans-serif; 
-    /*margin-left: 240px; */
+    margin-left: 240px; 
     padding: 20px 30px; 
     padding: var(--grid-gap, 20px) calc(var(--grid-gap, 20px) * 1.5); 
     box-sizing: border-box; 

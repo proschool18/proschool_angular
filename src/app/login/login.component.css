@@ -199,7 +199,7 @@ body, html {
   .login100-form img{
     justify-content: center;
     align-items: center;
-    margin-left: 15%;
+    margin-left: 5%;
   }
   
   .login100-form-logo {
@@ -2182,7 +2182,7 @@ body, html {
   .login100-form img{
     justify-content: center;
     align-items: center;
-    margin-left: 15%;
+    margin-left: 4%;
   }
   
   .login100-form-logo {
@@ -2530,7 +2530,7 @@ input.login-fields {
 .login-btn {
   background: #5E81F4;
   height: 40px;
-  width: 150px;
+  width: 120px;
   border-radius: 20px;
   color: #fff;
   font-size: 15px;
@@ -2544,7 +2544,7 @@ input.login-fields {
 }
 
 .registration-link, .registration-link:hover {
-  width: 150px;
+  width: 120px;
   text-align: center;
   height: 40px;
   display: block;
