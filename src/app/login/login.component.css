@@ -13,6 +13,8 @@ body, html {
 .login {
   background-color: #ffffff;
   background-image: url('../../assets/images/background3.jpg');
+  /*background-image: url('../../assets/images/login-image.png');*/
+  /*background-size: contain;*/
   background-size: cover;
   background-repeat: no-repeat;
   padding-top: 80px;
@@ -82,7 +84,7 @@ body, html {
     border-color: transparent !important;
   }
   
-  input:focus::-webkit-input-placeholder { color:transparent; }
+  /*input:focus::-webkit-input-placeholder { color:transparent; }
   input:focus:-moz-placeholder { color:transparent; }
   input:focus::-moz-placeholder { color:transparent; }
   input:focus:-ms-input-placeholder { color:transparent; }
@@ -100,7 +102,7 @@ body, html {
   textarea::-webkit-input-placeholder { color: #fff;}
   textarea:-moz-placeholder { color: #fff;}
   textarea::-moz-placeholder { color: #fff;}
-  textarea:-ms-input-placeholder { color: #fff;}
+  textarea:-ms-input-placeholder { color: #fff;}*/
   
   label {
     margin: 0;
@@ -161,7 +163,7 @@ body, html {
     z-index: 1;  
   }
   
-  .container-login100::before {
+  /*.container-login100::before {
     content: "";
     display: block;
     position: absolute;
@@ -171,7 +173,7 @@ body, html {
     top: 0;
     left: 0;
     background-color: rgba(255,255,255,0.9);
-  }
+  }*/
   
   .wrap-login100 {
     width: 500px;
@@ -197,7 +199,7 @@ body, html {
   .login100-form img{
     justify-content: center;
     align-items: center;
-    margin-left: 10%;
+    margin-left: 15%;
   }
   
   .login100-form-logo {
@@ -392,7 +394,8 @@ body, html {
     display: -ms-flexbox;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    position: relative;
+    /*justify-content: center;*/
   }
   
   .login100-form-btn {
@@ -585,7 +588,7 @@ body, html {
     border-color: transparent !important;
   }
   
-  input:focus::-webkit-input-placeholder { color:transparent; }
+  /*input:focus::-webkit-input-placeholder { color:transparent; }
   input:focus:-moz-placeholder { color:transparent; }
   input:focus::-moz-placeholder { color:transparent; }
   input:focus:-ms-input-placeholder { color:transparent; }
@@ -604,7 +607,7 @@ body, html {
   textarea:-moz-placeholder { color: #fff;}
   textarea::-moz-placeholder { color: #fff;}
   textarea:-ms-input-placeholder { color: #fff;}
-  
+  */
   label {
     margin: 0;
     display: block;
@@ -664,7 +667,7 @@ body, html {
     z-index: 1;  
   }
   
-  .container-login100::before {
+  /*.container-login100::before {
     content: "";
     display: block;
     position: absolute;
@@ -674,7 +677,7 @@ body, html {
     top: 0;
     left: 0;
     background-color: rgba(255,255,255,0.9);
-  }
+  }*/
   
   .wrap-login100 {
     width: 500px;
@@ -700,7 +703,7 @@ body, html {
   .login100-form img{
     justify-content: center;
     align-items: center;
-    margin-left: 10%;
+    margin-left: 15%;
   }
   
   .login100-form-logo {
@@ -895,7 +898,8 @@ body, html {
     display: -ms-flexbox;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    position: relative;
+    /*justify-content: center;*/
   }
   
   .login100-form-btn {
@@ -1074,7 +1078,7 @@ body, html {
     border-color: transparent !important;
   }
   
-  input:focus::-webkit-input-placeholder { color:transparent; }
+  /*input:focus::-webkit-input-placeholder { color:transparent; }
   input:focus:-moz-placeholder { color:transparent; }
   input:focus::-moz-placeholder { color:transparent; }
   input:focus:-ms-input-placeholder { color:transparent; }
@@ -1092,7 +1096,7 @@ body, html {
   textarea::-webkit-input-placeholder { color: #fff;}
   textarea:-moz-placeholder { color: #fff;}
   textarea::-moz-placeholder { color: #fff;}
-  textarea:-ms-input-placeholder { color: #fff;}
+  textarea:-ms-input-placeholder { color: #fff;}*/
   
   label {
     margin: 0;
@@ -1152,7 +1156,7 @@ body, html {
     z-index: 1;  
   }
   
-  .container-login100::before {
+  /*.container-login100::before {
     content: "";
     display: block;
     position: absolute;
@@ -1162,7 +1166,7 @@ body, html {
     top: 0;
     left: 0;
     background-color: rgba(255,255,255,0.9);
-  }
+  }*/
   
   .wrap-login100 {
     width: 500px;
@@ -1383,7 +1387,8 @@ body, html {
     display: -ms-flexbox;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    position: relative;
+    /*justify-content: center;*/
   }
   
   .login100-form-btn {
@@ -1563,7 +1568,7 @@ body, html {
     border-color: transparent !important;
   }
   
-  input:focus::-webkit-input-placeholder { color:transparent; }
+  /*input:focus::-webkit-input-placeholder { color:transparent; }
   input:focus:-moz-placeholder { color:transparent; }
   input:focus::-moz-placeholder { color:transparent; }
   input:focus:-ms-input-placeholder { color:transparent; }
@@ -1581,7 +1586,7 @@ body, html {
   textarea::-webkit-input-placeholder { color: #fff;}
   textarea:-moz-placeholder { color: #fff;}
   textarea::-moz-placeholder { color: #fff;}
-  textarea:-ms-input-placeholder { color: #fff;}
+  textarea:-ms-input-placeholder { color: #fff;}*/
   
   label {
     margin: 0;
@@ -1641,7 +1646,7 @@ body, html {
     z-index: 1;  
   }
   
-  .container-login100::before {
+  /*.container-login100::before {
     content: "";
     display: block;
     position: absolute;
@@ -1651,7 +1656,7 @@ body, html {
     top: 0;
     left: 0;
     background-color: rgba(255,255,255,0.9);
-  }
+  }*/
   
   .wrap-login100 {
     width: 500px;
@@ -1871,7 +1876,8 @@ body, html {
     display: -ms-flexbox;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    position: relative;
+    /*justify-content: center;*/
   }
   
   .login100-form-btn {
@@ -2047,11 +2053,11 @@ body, html {
     border: none;
   }
   
-  textarea:focus, input:focus {
+  /*textarea:focus, input:focus {
     border-color: transparent !important;
-  }
+  }*/
   
-  input:focus::-webkit-input-placeholder { color:transparent; }
+  /*input:focus::-webkit-input-placeholder { color:transparent; }
   input:focus:-moz-placeholder { color:transparent; }
   input:focus::-moz-placeholder { color:transparent; }
   input:focus:-ms-input-placeholder { color:transparent; }
@@ -2069,7 +2075,7 @@ body, html {
   textarea::-webkit-input-placeholder { color: #fff;}
   textarea:-moz-placeholder { color: #fff;}
   textarea::-moz-placeholder { color: #fff;}
-  textarea:-ms-input-placeholder { color: #fff;}
+  textarea:-ms-input-placeholder { color: #fff;}*/
   
   label {
     margin: 0;
@@ -2130,7 +2136,7 @@ body, html {
     z-index: 1;  
   }
   
-  .container-login100::before {
+/*  .container-login100::before {
     content: "";
     display: block;
     position: absolute;
@@ -2140,7 +2146,7 @@ body, html {
     top: 0;
     left: 0;
     background-color: rgba(255,255,255,0.9);
-  }
+  }*/
   
   .wrap-login100 {
     /* width: 35%;
@@ -2154,7 +2160,7 @@ body, html {
     border-radius: 10px;
     overflow: hidden;
     padding: 0px 40px 0px 40px;
-    height: 440px;
+    height: 400px;
     background: white;
 
     /* position: absolute;
@@ -2175,7 +2181,8 @@ body, html {
   
   .login100-form img{
     justify-content: center;
-    align-items: center;margin-left: 10%;
+    align-items: center;
+    margin-left: 15%;
   }
   
   .login100-form-logo {
@@ -2373,7 +2380,8 @@ body, html {
     display: -ms-flexbox;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    position: relative;
+    /*justify-content: center;*/
   }
   
   .login100-form-btn {
@@ -2492,6 +2500,62 @@ body, html {
   }
 }
 
+
+input.login-fields {
+    height: 40px;
+    width: 100%;
+    border: 0.5px solid #ccc;
+    background-color: #fff !important;
+    font-size: 16px;
+    background: #fff;
+    padding: 10px;
+    margin: 0 0 5px 0;
+}
+
+.space-row {
+  height: 15px;
+  width: 100%;
+  background-color: transparent;
+}
+
+.help-block {
+  visibility: hidden;
+}
+
+
+.help-block.visible {
+  visibility: visible;
+}
+
+.login-btn {
+  background: #5E81F4;
+  height: 40px;
+  width: 150px;
+  border-radius: 20px;
+  color: #fff;
+  font-size: 15px;
+}
+
+.forgot-pwd-link {
+  color: darkgray;
+  font-weight: 400;
+  margin: 10px;
+  display: block
+}
+
+.registration-link, .registration-link:hover {
+  width: 150px;
+  text-align: center;
+  height: 40px;
+  display: block;
+  padding: 10px;
+  color: #fff;
+  background: #23BAFB;
+  border-radius: 20px;
+  cursor: pointer;
+  position: absolute;
+  right: 5px;
+}
 
 
 
