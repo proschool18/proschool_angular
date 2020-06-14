@@ -91,19 +91,21 @@
 <main class="card mt-20 within-viewport" style="height: auto;">
     <div class="page-actions"> 
         <section class="student-intro">
-            <img src="/assets/img/images/student.png">
+            <img src="/assets/images/student_new.png">
             <h4>Vinod Kumar Alluri</h4>
             <h4>Class X - A</h4>
             <h4>Roll No : 1</h4>
-        </section>
-        <section class="student-task-section">
-            <div class="row-wrapper">
-                <button class="btn -cta active-tab">Tasks</button>
-                <button class="btn -cta active-tab">Tasks</button>
-                <button class="btn -cta active-tab">Tasks</button>
-                <button class="btn -cta active-tab">Tasks</button>
+
+            <div class="col-wrapper">
+                <button routerLink="/main/studentprofile/profile/{{student_id}}/{{section_id}}" class="btn -cta active-tab">Profile</button>
+                <button routerLink="/main/studentprofile/attendance/{{student_id}}/{{section_id}}" class="btn -cta active-tab">Attendance</button>
+                <button routerLink="/main/studentprofile/academics/{{student_id}}/{{section_id}}" class="btn -cta active-tab">Academics</button>
+                <button routerLink="/main/studentprofile/assessment/{{student_id}}/{{section_id}}" class="btn -cta active-tab">Assessment</button>
+                <button routerLink="/main/studentprofile/fees/{{student_id}}/{{section_id}}" class="btn -cta active-tab">Fees</button>
             </div>
 
+        </section>
+        <section class="student-task-section">
             <section class="table-and-pagination -classes-schedule">
                 <div class="table-container">
                   <table>

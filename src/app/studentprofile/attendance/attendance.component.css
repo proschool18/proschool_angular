@@ -159,8 +159,8 @@ section.student-intro {
 }
 
 .student-intro img {
-    height: 120px;
-    width: auto;
+    height: 220px;
+    width: 170px;
 }
 
 .student-intro h4 {
@@ -171,9 +171,13 @@ section.student-task-section {
     width: 100%;
 }
 
-section.student-task-section .btn {
+section.student-intro .col-wrapper {
+    margin: 0;
+}
+
+section.student-intro .col-wrapper .btn {
     width: 150px;
-    margin-right: 30px;
+    margin: 15px 0px;
 }
 
 section.student-task-section .table-and-pagination {
