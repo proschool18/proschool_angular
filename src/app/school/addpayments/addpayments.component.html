@@ -1,17 +1,48 @@
-<div id="main-content">
-
-  <div class="row">
+<!-- <div id="main-content"> -->
+<main class="card mt-20 within-viewport">
+<!--   <div class="row">
     <div class="container-fluid" id="buttonId1">
       <button routerLink="/main/admin/payments" class="button button2 hvr-pop transition">Payments</button>
       <button routerLink="/main/admin/addpayments" class="button button2 hvr-pop transition">Add Payments</button>
     </div>
-  </div>
+  </div> -->
 
   <div class="row">
     <div class="container-fluid dashboard-content">
-      <div class="card selectcard">
-        <form class="searchForm" role="form" [formGroup]="paymentForm" (ngSubmit)="addPayments()">
-          <div class="form-group">
+      <div class="container-fluid" id="buttonId1">
+          <button routerLink="/main/admin/payments" class="btn -cta">Payments</button>
+          &nbsp;&nbsp;
+          <button routerLink="/main/admin/addpayments" class="btn -cta">Add Payments</button>
+      </div>
+      <div class="card selectcard page-actions">
+        <div class="searchForm _select-or-search">
+            <div class="dropdown" >
+              <button class="dropbtn" (click)="showVendorsList = true" (clickOutside)="showVendorsList = false">
+                  {{paymentForm.value.vendor.vendor_name ? paymentForm.value.vendor.vendor_name : 'select vendor'}}
+              </button>
+              <div class="dropdown-content" [hidden]="!showVendorsList">
+                <a (click)="vendor = ''">select vendor</a>
+                <a *ngFor="let ven of vendors" (click)="paymentForm.value.vendor = ven">
+                  {{ven.vendor_name}}
+                </a>
+              </div>
+            </div>
+            <div class="dropdown" >
+              <button class="dropbtn" (click)="showMaterialsList = true" (clickOutside)="showMaterialsList = false">
+                  {{paymentForm.value.material.material ? paymentForm.value.material.material : 'select material'}}
+              </button>
+              <div class="dropdown-content" [hidden]="!showMaterialsList">
+                <a (click)="material = ''">select material</a>
+                <a *ngFor="let mat of materials" (click)="paymentForm.value.material = mat">{{mat.material}}</a>
+              </div>
+            </div>
+        </div>
+        <button type="button" class="btn -cta" (click)="get_payments()">Search</button>
+      </div>
+      
+      <div class="card selectcard page-actions">
+        <form class="searchForm _select-or-search" role="form" [formGroup]="paymentForm" (ngSubmit)="addPayments()">
+          <!-- <div class="form-group">
             <label class="pull-left">Vendor Name</label>
             <select class="form-control" formControlName="vendor" (change)="getVendorPayments()">
               <option>select...</option>
@@ -24,30 +55,37 @@
               <option>select...</option>
               <option *ngFor="let mat of materials" value="{{mat.material_id}}">{{mat.material}}</option>
             </select>
-          </div>
-          <div class="form-group pull-right">
+          </div> -->
+          <!-- <div class="form-group pull-right">
             <div (click)="get_payments()" class="button button2 hvr-pop transition">Search</div>
-          </div><br><br>
+          </div> -->
+          
           <div class="form-group">
-            <label class="pull-left">Total Payment</label>
-            <input class="form-control" formControlName="payment_toPay" [value]="total_payment" type="number">
+            <!-- <label class="pull-left">Total Payment</label> -->
+            <input class="form-control" formControlName="payment_toPay" placeholder="Enter Total Payment" [value]="total_payment" type="number">
           </div>
           <div class="form-group">
-            <label class="pull-left">Balance Payment</label>
-            <input class="form-control" formControlName="balance_payment" [value]="balance_payment" type="number" disabled>
+            <!-- <label class="pull-left">Balance Payment</label> -->
+            <input class="form-control" formControlName="balance_payment" placeholder="Enter Balance Payment" [value]="balance_payment" type="number" disabled>
           </div>
           <div class="form-group">
-            <label class="pull-left">Payment</label>
-            <input class="form-control" formControlName="payment" placeholder="Enter..." type="number">
+            <!-- <label class="pull-left">Payment</label> -->
+            <input class="form-control" formControlName="payment" placeholder="Enter Payment" type="number">
           </div>
           <div class="form-group">
-            <label class="pull-left">Payment Date</label>
-            <input class="form-control" formControlName="payment_date" placeholder="Enter..." type="date">
-          </div>
-          <div class="form-group pull-right">
-            <button type="submit" class="button button1 hvr-pop transition">Add Payment</button>
+            <!-- <label class="pull-left">Payment Date</label> -->
+            <!-- <input class="form-control" formControlName="payment_date" placeholder="Enter Payment Date" type="date"> -->
+
+            <div class="dropdown">
+              <mat-form-field>
+                 <input matInput [matDatepicker]="payment_date" [formControl]="payment_date">
+                 <mat-datepicker-toggle matSuffix [for]="payment_date"></mat-datepicker-toggle>
+                 <mat-datepicker #payment_date></mat-datepicker>
+              </mat-form-field>
+            </div>
           </div>
         </form>
+        <button type="submit" class="btn -cta">Add Payment</button>
       </div>
       <div class="card listcard">
         <div class="pull-left">
@@ -86,4 +124,5 @@
       </div>
     </div>
   </div>
-</div>
+<!-- </div> -->
+</main>

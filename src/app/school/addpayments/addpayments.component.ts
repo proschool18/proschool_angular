@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { StoreService } from '../../_services/store.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { AlertComponent } from '../../_alert/alert/alert.component';
 import { EditpaymentsComponent } from '../editpayments/editpayments.component';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-addpayments',
@@ -28,6 +30,10 @@ export class AddpaymentsComponent implements OnInit {
     this.getPayments();
   }
 
+  payment_date = new FormControl(new Date);
+  showVendorsList: boolean = false;
+  showMaterialsList: boolean = false;
+        
   pageChanged(event){
     this.config.currentPage = event;
   }
@@ -75,7 +81,7 @@ export class AddpaymentsComponent implements OnInit {
   }
 
   getVendorPayments() {
-    this.filtered_payments = this.all_payments.filter(res => res.vendor_id === this.paymentForm.value.vendor)
+    this.filtered_payments = this.all_payments.filter(res => res.vendor_id === this.paymentForm.value.vendor.vendor_id)
     this.collection.payments = [];
     this.total_payment = 0;
     this.balance_payment = 0;
@@ -93,7 +99,8 @@ export class AddpaymentsComponent implements OnInit {
   }
 
   get_payments() {
-    this.filtered_payments = this.all_payments.filter(res => res.vendor_id === this.paymentForm.value.vendor && res.material_id === this.paymentForm.value.material)
+    this.filtered_payments = this.all_payments.filter(res => res.vendor_id === this.paymentForm.value.vendor 
+    && res.material_id === this.paymentForm.value.material.material_id)
     this.collection.payments = [];
     this.total_payment = 0;
     this.balance_payment = 0;

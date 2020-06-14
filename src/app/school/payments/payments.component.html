@@ -1,41 +1,50 @@
-<div id="main-content">
+<!-- <div id="main-content"> -->
+  <main class="card mt-20 within-viewport">
 
-  <div class="row">
+ <!--  <div class="row">
     <div class="container-fluid" id="buttonId1">
-      <button routerLink="/main/admin/payments" class="button button2 hvr-pop transition">Payments</button>
+      <button routerLink="/main/admin/payments" class="button button2 hvr-pop transition">Payments</button> -->
       <!-- <button (click)="get_payments('materials')" class="button button2 hvr-pop transition">Material Payments</button> -->
-      <button routerLink="/main/admin/addpayments" class="button button2 hvr-pop transition">Add Payments</button>
+     <!--  <button routerLink="/main/admin/addpayments" class="button button2 hvr-pop transition">Add Payments</button>
     </div>
-  </div>
+  </div> -->
 
   <div class="row">
     <div class="container-fluid dashboard-content">
-      <div class="card selectcard">
-        <div class="searchForm">
-          <div class="form-group">
-            <label class="pull-left">Vendor Name</label>
-            <select class="form-control" [(ngModel)]="vendor">
-              <option>select...</option>
-              <option *ngFor="let ven of vendors" value="{{ven.vendor_id}}">{{ven.vendor_name}}</option>
-            </select>
-          </div>
-          <div class="form-group pull-right">
-            <button type="submit" class="button button2 hvr-pop transition" (click)="getVendor_Payments()">Search</button>
-          </div>
-        </div>
-        <div class="searchForm">
-          <div class="form-group">
-            <label class="pull-left">Material</label>
-            <select class="form-control" [(ngModel)]="material">
-              <option>select...</option>
-              <option *ngFor="let mat of materials" value="{{mat.material_id}}">{{mat.material}}</option>
-            </select>
-          </div>
-          <div class="form-group pull-right">
-            <button type="submit" class="button button2 hvr-pop transition" (click)="getMaterial_payments()">Search</button>
-          </div>
+      <div class="container-fluid" id="buttonId1">
+          <button routerLink="/main/admin/payments" class="btn -cta">Payments</button>
+          &nbsp;&nbsp;
+          <button routerLink="/main/admin/addpayments" class="btn -cta">Add Payments</button>
+      </div>
+      <div class="card selectcard page-actions">
+        
+        <div class="searchForm _select-or-search">
+
+            <div class="dropdown" >
+              <button class="dropbtn" (click)="showVendorsList = true" (clickOutside)="showVendorsList = false">
+                  {{vendor ? vendor.vendor_name : 'select vendor'}}
+              </button>
+              <div class="dropdown-content" [hidden]="!showVendorsList">
+                <a (click)="vendor = ''">select vendor</a>
+                <a *ngFor="let ven of vendors" (click)="vendor = ven">{{ven.vendor_name}}</a>
+              </div>
+            </div>&nbsp;
+            <button type="button" class="btn -cta" (click)="getVendor_Payments()">Search</button>
+
+            
+            <div class="dropdown" >
+              <button class="dropbtn" (click)="showMaterialsList = true" (clickOutside)="showMaterialsList = false">
+                  {{material ? material.material : 'select material'}}
+              </button>
+              <div class="dropdown-content" [hidden]="!showMaterialsList">
+                <a (click)="material = ''">select material</a>
+                <a *ngFor="let mat of materials" (click)="material = mat">{{mat.material}}</a>
+              </div>
+            </div>&nbsp;
+            <button type="button" class="btn -cta" (click)="getMaterial_payments()">Search</button>
         </div>
       </div>
+       
       <div class="card listcard">
         <div class="pull-left">
           <h4>Payments</h4>
@@ -76,6 +85,7 @@
       </div>
     </div>
   </div>
-</div>
+<!-- </div> -->
+</main>
 
 

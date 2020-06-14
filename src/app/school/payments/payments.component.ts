@@ -37,7 +37,10 @@ export class PaymentsComponent implements OnInit {
   vendor;
   material;
 
-  getPayments() {
+  showVendorsList:  boolean = false;
+  showMaterialsList: boolean = false;
+        
+ getPayments() {
     this.service.getPayments()
       .subscribe(
         res => { this.collection.payments = res.payments, this.all_payments = res.payments, console.log(res.payments) }
@@ -59,12 +62,12 @@ export class PaymentsComponent implements OnInit {
   }
 
   getVendor_Payments() {
-    this.collection.payments = this.all_payments.filter(pay => pay.vendor_id === this.vendor);
+    this.collection.payments = this.all_payments.filter(pay => pay.vendor_id === this.vendor.vendor_id);
     console.log(this.collection.payments)
   }
 
   getMaterial_payments() {
-    this.collection.payments = this.all_payments.filter(pay => pay.material_id === this.material);
+    this.collection.payments = this.all_payments.filter(pay => pay.material_id === this.material.material_id);
   }
 
 }
