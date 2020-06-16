@@ -184,12 +184,15 @@ section.student-task-section .table-and-pagination {
     width: 100%;
     position: relative;
     top: 20px;
-    bottom: 20px;
-    padding-bottom: 20px;
+    padding-bottom: 50px;
 }
 
 section.student-task-section ._attendance-box {
     width: 90%;
+}
+
+section.student-task-section .table-and-pagination.-classes-schedule .table-container {
+    height: 320px;
 }
 
 .status-btn {
