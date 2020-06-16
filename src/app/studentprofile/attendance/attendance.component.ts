@@ -15,6 +15,8 @@ export class AttendanceComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  barProgress = [80, 70, 60, 100, 45, 80, 65, 30, 10];
   selectedRowNum: number;
   student_id = this.route.snapshot.paramMap.get('id');
   section_id = this.route.snapshot.paramMap.get('sec_id');

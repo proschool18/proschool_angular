@@ -174,67 +174,94 @@
                 </div>
             </section>
 
-            <div class="_attendance-box">
-                <section role="tabpanel" style="height: 300px;">
+            <div class="_attendance-box dynamic-bar-graph">
+                <section role="tabpanel">
                     <div class="_metrics">
                         <div class="_metric -total">
-                            <div class="_bar" style="--progress:73.33%"></div>
+                            <div class="_bar">
+                                <span class="_bar_progress" [ngStyle]="{'height': barProgress[0]+'%'}">
+                                </span>
+                            </div>
                             <div class="_name">
                                 <span class="_legend">Total</span> 
                                 22 Days
                             </div>
                         </div>
                         <div class="_metric -attend">
-                            <div class="_bar" style="--progress:43.33%"></div>
+                            <div class="_bar">
+                                <span class="_bar_progress" [ngStyle]="{'height': barProgress[1]+'%'}">
+                                </span>
+                            </div>
                             <div class="_name">
                                 <span class="_legend">Attend</span> 
                                 13 Days
                             </div>
                         </div>
                         <div class="_metric -due">
-                            <div class="_bar" style="--progress:30%"></div>
+                            <div class="_bar">
+                                <span class="_bar_progress" [ngStyle]="{'height': barProgress[2]+'%'}">
+                                </span>
+                            </div>
                             <div class="_name">
                                 <span class="_legend">Due</span> 
                                 09 Days
                             </div>
                         </div>
                         <div class="_metric -total">
-                            <div class="_bar" style="--progress:66.66%"></div>
+                            <div class="_bar">
+                                <span class="_bar_progress" [ngStyle]="{'height': barProgress[3]+'%'}">
+                                </span>
+                            </div>
                             <div class="_name">
                                 <span class="_legend">Total</span> 
                                 20 Days
                             </div>
                         </div>
                         <div class="_metric -attend">
-                            <div class="_bar" style="--progress:56.66%"></div>
+                            <div class="_bar">
+                                <span class="_bar_progress" [ngStyle]="{'height': barProgress[4]+'%'}">
+                                </span>
+                            </div>
                             <div class="_name">
                                 <span class="_legend">Attend</span> 
                                 17 Days
                             </div>
                         </div>
                         <div class="_metric -due">
-                            <div class="_bar" style="--progress:10%"></div>
+                            <div class="_bar">
+                                <span class="_bar_progress" [ngStyle]="{'height': barProgress[5]+'%'}">
+                                </span>
+                            </div>
                             <div class="_name">
                                 <span class="_legend">Due</span> 
                                 03 Days
                             </div>
                         </div>
                         <div class="_metric -total">
-                            <div class="_bar" style="--progress:73.33%"></div>
+                            <div class="_bar">
+                                <span class="_bar_progress" [ngStyle]="{'height': barProgress[6]+'%'}">
+                                </span>
+                            </div>
                             <div class="_name">
                                 <span class="_legend">Total</span> 
                                 22 Days
                             </div>
                         </div>
                         <div class="_metric -attend">
-                            <div class="_bar" style="--progress:53.33%"></div>
+                            <div class="_bar">
+                                <span class="_bar_progress" [ngStyle]="{'height': barProgress[7]+'%'}">
+                                </span>
+                            </div>
                             <div class="_name">
                                 <span class="_legend">Attend</span> 
                                 16 Days
                             </div>
                         </div>
                         <div class="_metric -due">
-                            <div class="_bar" style="--progress:13.33%"></div>
+                            <div class="_bar">
+                                <span class="_bar_progress" [ngStyle]="{'height': barProgress[8]+'%'}">
+                                </span>
+                            </div>
                             <div class="_name">
                                 <span class="_legend">Due</span> 
                                 04 Days
