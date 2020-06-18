@@ -17,6 +17,7 @@ export class FeesComponent implements OnInit {
     this.getStudentFees();
   }
 
+  barProgress = [80, 70, 60, 100, 70, 30, 65, 30, 10];
   student_id = this.route.snapshot.paramMap.get('id');
   section_id = this.route.snapshot.paramMap.get('sec_id');
   i;
@@ -43,7 +44,7 @@ export class FeesComponent implements OnInit {
     },
   ];
 
-  selected_term;
+  selected_term: any = '';
 
   termwiseFee: [{
     fee_term: '',
@@ -79,13 +80,15 @@ export class FeesComponent implements OnInit {
       this.alert_message = "Please Select the Student";
       this.openAlert(this.alert_message)
     } else {
-      if(this.selected_term == 'All Terms Fee' || this.selected_term == undefined || this.selected_term == '') {
+      if(this.selected_term.FeeTerm == 'All TermFees' || this.selected_term.FeeTerm == undefined || this.selected_term.FeeTerm == '') {
+        this.allFees = true;
         this.service.getStudentFees(this.student_id)
           .subscribe(
             res => { this.fees = res.TermFeeDetails, this.View(), console.log(res) }
           )
       } else {
-        this.service.getStudentTermFees(this.student_id, this.selected_term)
+        this.allFees = false;
+        this.service.getStudentTermFees(this.student_id, this.selected_term.fee_term_id)
           .subscribe(
             res => { this.termwiseFee = res.TermFeeDetails, this.ViewTerms(), console.log(res) }
           )

@@ -1,4 +1,4 @@
-<div id="main-content">
+<!-- <div id="main-content">
     <div class="row">
         <div class="container-fluid" id="buttonId1">
             <button routerLink="/main/studentprofile/profile/{{student_id}}/{{section_id}}"
@@ -29,7 +29,8 @@
                             <label>Fee Terms</label>
                             <select class="form-control" [(ngModel)]="selected_term" (change)="getStudentFees()">
                                 <option value="All Terms Fee">All Fee Terms</option>
-                                <option *ngFor="let terms of fees[0].TermwiseFee; let i = index" value="{{terms.fee_term_id}}">
+                                <option *ngFor="let terms of fees[0].TermwiseFee; let i = index"
+                                    value="{{terms.fee_term_id}}">
                                     {{terms.FeeTerm}}
                                 </option>
                             </select>
@@ -95,4 +96,210 @@
         </div>
     </div>
 
-</div>
+</div> -->
+
+<main class="card mt-20 within-viewport" style="height: auto;">
+    <div class="page-actions">
+        <section class="student-intro">
+            <img src="/assets/images/student.png">
+            <h4>Vinod Kumar Alluri</h4>
+            <h4>Class X - A</h4>
+            <h4>Roll No : 1</h4>
+
+            <div class="col-wrapper">
+                <button routerLink="/main/studentprofile/profile/{{student_id}}/{{section_id}}"
+                    class="btn -cta active-tab">Profile</button>
+                <button routerLink="/main/studentprofile/attendance/{{student_id}}/{{section_id}}"
+                    class="btn -cta active-tab">Attendance</button>
+                <button routerLink="/main/studentprofile/academics/{{student_id}}/{{section_id}}"
+                    class="btn -cta active-tab">Academics</button>
+                <button routerLink="/main/studentprofile/assessment/{{student_id}}/{{section_id}}"
+                    class="btn -cta active-tab">Assessment</button>
+                <button routerLink="/main/studentprofile/fees/{{student_id}}/{{section_id}}"
+                    class="btn -cta active-tab">Fees</button>
+            </div>
+
+        </section>
+        <section class="student-task-section">
+            <section class="page-actions">
+                <div class="dropdown">
+                    <button class="dropbtn" (click)="showSubjectList = true" (clickOutside)="showSubjectList = false">
+                        {{!selected_term.FeeTerm ? 'Select FeeTerm' : selected_term.FeeTerm}}
+                    </button>
+                    <div class="dropdown-content" [hidden]="!showSubjectList">
+                        <a (click)="selected_term.FeeTerm = 'All TermFees'; getStudentFees();">All Fee Terms</a>
+                        <a *ngFor="let terms of fees[0].TermwiseFee"
+                            (click)="selected_term = terms; getStudentFees();">{{ terms.FeeTerm}}</a>
+                    </div>
+                </div>
+            </section>
+            <section class="table-and-pagination -classes-schedule" *ngIf="allFees else allTerms">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th align="left">Fee Term</th>
+                                <th align="left">Total Fee</th>
+                                <th align="left">Paid Fee</th>
+                                <th align="left">Balance Fee</th>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let fee of fees[0].TermwiseFee; let i = index">
+                                <td class="_s-no"><span>{{ i + 1 }}</span></td>
+                                <td>{{fee.FeeTerm}}</td>
+                                <td>Rs. {{fee.TotalTermFees}}</td>
+                                <td>Rs. {{fee.PaidTermFees}}</td>
+                                <td>Rs. {{fee.BalanceTermFee}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="_attendance-box dynamic-bar-graph">
+                    <section role="tabpanel">
+                        <div class="bar-3-group" *ngFor="let fee of fees[0].TermwiseFee; let i = index">
+                            <div class="_metric -total">
+                                <div class="_bar">
+                                    <span class="_bar_progress" [ngStyle]="{'height': '100%'}">
+                                    </span>
+                                </div>
+                                <div class="_name">
+                                    <span class="_legend">{{fee.TotalTermFees}}</span>
+                                </div>
+                            </div>
+                            <div class="_metric -due">
+                                <div class="_bar">
+                                    <span class="_bar_progress" [ngStyle]="{'height': (fee.PaidTermFees / fee.TotalTermFees * 100) +'%'}">
+                                    </span>
+                                </div>
+                                <div class="_name">
+                                    <span class="_legend">{{fee.PaidTermFees}}</span>
+                                    {{fee.FeeTerm}}
+                                </div>
+                            </div>
+                            <div class="_metric -attend">
+                                <div class="_bar">
+                                    <span class="_bar_progress" [ngStyle]="{'height': (fee.BalanceTermFee / fee.TotalTermFees * 100) +'%'}">
+                                    </span>
+                                </div>
+                                <div class="_name">
+                                    <span class="_legend">{{fee.BalanceTermFee}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+
+            <ng-template #allTerms>
+                <section class="table-and-pagination -classes-schedule">
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th align="left">Fee Type</th>
+                                    <th align="left">Total Fee</th>
+                                    <th align="left">Paid Fee</th>
+                                    <th align="left">Balance Fee</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let fee of termwiseFee[0].studentFeeDetails; let i = index">
+                                    <td class="_s-no"><span>{{ i + 1 }}</span></td>
+                                    <td>{{fee.FeeType}}</td>
+                                    <td>Rs. {{fee.TotalTypeFees}}</td>
+                                    <td>Rs. {{fee.PaidTermFees}}</td>
+                                    <td>Rs. {{fee.BalanceFee}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="_attendance-box dynamic-bar-graph">
+                        <section role="tabpanel">
+                            <div class="bar-3-group" *ngFor="let fee of termwiseFee[0].studentFeeDetails; let i = index">
+                                <div class="_metric -total">
+                                    <div class="_bar">
+                                        <span class="_bar_progress" [ngStyle]="{'height': '100%'}">
+                                        </span>
+                                    </div>
+                                    <div class="_name">
+                                        <span class="_legend">{{fee.TotalTypeFees}}</span>
+                                    </div>
+                                </div>
+                                <div class="_metric -due">
+                                    <div class="_bar">
+                                        <span class="_bar_progress" [ngStyle]="{'height': (fee.PaidTermFees / fee.TotalTypeFees * 100) +'%'}">
+                                        </span>
+                                    </div>
+                                    <div class="_name">
+                                        <span class="_legend">{{fee.PaidTermFees}}</span>
+                                        {{fee.FeeType}}
+                                    </div>
+                                </div>
+                                <div class="_metric -attend">
+                                    <div class="_bar">
+                                        <span class="_bar_progress" [ngStyle]="{'height': (fee.BalanceFee / fee.TotalTypeFees * 100) +'%'}">
+                                        </span>
+                                    </div>
+                                    <div class="_name">
+                                        <span class="_legend">{{fee.BalanceFee}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+
+                <!-- <div class="_attendance-box">
+                        <section role="tabpanel" style="height: 200px;">
+                            <div class="_metrics">
+                                <div class="_metric -total">
+                                    <div class="_bar" style="--progress:96%"></div>
+                                    <div class="_name">
+                                        <span class="_legend">46</span>
+                                        Rhymess
+                                    </div>
+                                </div>
+                                <div class="_metric -attend">
+                                    <div class="_bar" style="--progress:98%"></div>
+                                    <div class="_name">
+                                        <span class="_legend">48</span>
+                                        English
+                                    </div>
+                                </div>
+                                <div class="_metric -due">
+                                    <div class="_bar" style="--progress:100%"></div>
+                                    <div class="_name">
+                                        <span class="_legend">50</span>
+                                        Maths
+                                    </div>
+                                </div>
+                                <div class="_metric -total">
+                                    <div class="_bar" style="--progress:96%"></div>
+                                    <div class="_name">
+                                        <span class="_legend">46</span>
+                                        Rhymess
+                                    </div>
+                                </div>
+                                <div class="_metric -attend">
+                                    <div class="_bar" style="--progress:98%"></div>
+                                    <div class="_name">
+                                        <span class="_legend">48</span>
+                                        English
+                                    </div>
+                                </div>
+                                <div class="_metric -due">
+                                    <div class="_bar" style="--progress:100%"></div>
+                                    <div class="_name">
+                                        <span class="_legend">50</span>
+                                        Maths
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+            </ng-template>
+        </section>
+    </div>
+</main> -->

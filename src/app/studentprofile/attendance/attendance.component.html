@@ -1,4 +1,4 @@
-<div id="main-content">
+<!-- <div id="main-content">
     <div class="row">
         <div class="container-fluid" id="buttonId1">
             <button routerLink="/main/studentprofile/profile/{{student_id}}/{{section_id}}" class="button button2 hvr-pop transition">Profile</button>
@@ -70,14 +70,12 @@
                                     <td>{{i+1}}</td>
                                     <td>{{att.date}}</td>
                                     <td>{{att.status}}</td>
-                                    <!-- <td [ngStyle]="{'background-color': (att.status == 'Present') ? '#1caf9a' : (att.status == 'Present') ? '#1caf9a' : '#e04b4a', 'color': 'white', 'margin-botton': '2px' }">{{att.status}}</td> -->
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-
 
             <div class="card rightcard">
                 <canvas baseChart [data]="chartData" [labels]="chartLabels" [options]="chartOptions"
@@ -86,4 +84,99 @@
         </div>
     </div>
 
-</div>
+</div> -->
+
+<main class="card mt-20 within-viewport" style="height: auto;">
+    <div class="page-actions">
+        <section class="student-intro">
+            <img src="/assets/images/student.png">
+            <h4>Vinod Kumar Alluri</h4>
+            <h4>Class X - A</h4>
+            <h4>Roll No : 1</h4>
+
+            <div class="col-wrapper">
+                <button routerLink="/main/studentprofile/profile/{{student_id}}/{{section_id}}"
+                    class="btn -cta active-tab">Profile</button>
+                <button routerLink="/main/studentprofile/attendance/{{student_id}}/{{section_id}}"
+                    class="btn -cta active-tab">Attendance</button>
+                <button routerLink="/main/studentprofile/academics/{{student_id}}/{{section_id}}"
+                    class="btn -cta active-tab">Academics</button>
+                <button routerLink="/main/studentprofile/assessment/{{student_id}}/{{section_id}}"
+                    class="btn -cta active-tab">Assessment</button>
+                <button routerLink="/main/studentprofile/fees/{{student_id}}/{{section_id}}"
+                    class="btn -cta active-tab">Fees</button>
+            </div>
+
+        </section>
+        <section class="student-task-section">
+            <section class="page-actions">
+                <div class="dropdown">
+                    <button class="dropbtn" (click)="showMonthList = true" (clickOutside)="showMonthList = false">
+                        {{!selected_month.month ? 'select month' : selected_month.month}}
+                    </button>
+                    <div class="dropdown-content" [hidden]="!showMonthList">
+                        <a *ngFor="let mon of months"
+                            (click)="selected_month = mon; getstudentMonthAttendance();">{{mon.month}}</a>
+                    </div>
+                </div>
+            </section>
+            <section class="table-and-pagination -classes-schedule">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th align="left">Date</th>
+                                <th align="left">Attendance Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let att of attendance.donutchart; let i = index">
+                                <td class="_s-no"><span>{{ i + 1 }}</span></td>
+                                <td>{{att.date}}</td>
+                                <td>
+                                    <button [ngClass]="{'status-btn approved-btn': att.status === 'Present', 'status-btn rejected-btn': att.status === 'Absent', 'status-btn pending-btn': att.status === 'OnLeave'}" >{{att.status}}</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            <!-- <div class="_attendance-box dynamic-bar-graph">
+                <section role="tabpanel">
+                    <div class="bar-3-group" *ngFor="let fee of termwiseFee[0].studentFeeDetails; let i = index">
+                        <div class="_metric -total">
+                            <div class="_bar">
+                                <span class="_bar_progress" [ngStyle]="{'height': '100%'}">
+                                </span>
+                            </div>
+                            <div class="_name">
+                                <span class="_legend">{{fee.TotalTypeFees}}</span>
+                            </div>
+                        </div>
+                        <div class="_metric -due">
+                            <div class="_bar">
+                                <span class="_bar_progress" [ngStyle]="{'height': (fee.PaidTermFees / fee.TotalTypeFees * 100) +'%'}">
+                                </span>
+                            </div>
+                            <div class="_name">
+                                <span class="_legend">{{fee.PaidTermFees}}</span>
+                                {{fee.FeeType}}
+                            </div>
+                        </div>
+                        <div class="_metric -attend">
+                            <div class="_bar">
+                                <span class="_bar_progress" [ngStyle]="{'height': (fee.BalanceFee / fee.TotalTypeFees * 100) +'%'}">
+                                </span>
+                            </div>
+                            <div class="_name">
+                                <span class="_legend">{{fee.BalanceFee}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div> -->
+        </section>
+
+    </div>
+</main>

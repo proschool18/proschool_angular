@@ -1,116 +1,240 @@
 @media (min-width: 279px) and (max-width: 575px){
-    
     .formalign {
-        margin: 5% 0 0 5%;
+    margin-bottom: 15px;
+    margin: 5% 0 0 5%;
+    width: 92%;
+}
+.progress {
+    width: 90%;
+    margin-left: 30px;
+    margin-top: 52px;
+}
+.leftcard {
+    height: 390px !important;
+    width: 100%;
+    background-color: white;
     }
-    .leftcard {
-        height: 390px !important;
-        width: 100%;
-        background-color: white;
-        }
-    .rightcard {
-        width: 100%;
-        background-color: white;
-        height: 390px !important;
-        margin-bottom: 2%;
-        }
-    canvas{
-        margin: 15px 0px 0px 0px;
-        height: 370px !important;
-    } 
-    .form-control{
-        width: 95%;
-    } 
+
+.rightcard {
+    width: 100%;
+    background-color: white;
+    height: 390px !important;
+    margin-bottom: 15px;
+    }
+canvas{
+    margin: 15px 0px 0px 0px;
+    height: 370px !important;
+}    
 }
 
 @media (min-width: 576px) and (max-width: 767px){
-    
-    .formalign {
-        margin: 3% 0 0 5%;
-        width: 90%;
+.formalign {
+    /* margin-bottom: 15px;
+    margin: 5% 0 0 0%;
+    width: 100%; */
+    margin-bottom: 15px;
+    margin: 3% 0% 0 5%;
+    width: 92%;
+}
+.progress {
+    width: 86%;
+    margin-left: 40px;
+    margin-top: 52px;
+}
+.leftcard {
+    height: 390px !important;
+    width: 100%;
+    background-color: white;
     }
-    .leftcard {
-        height: 390px !important;
-        width: 100%;
-        background-color: white;
-        }
-    .rightcard {
-        width: 100%;
-        background-color: white;
-        height: 390px !important;
-        margin-bottom: 2%;
-        }
-    canvas{
-        margin: 15px 0px 0px 0px;
-        height: 370px !important;
-    }  
+
+.rightcard {
+    width: 100%;
+    background-color: white;
+    height: 390px !important;
+    margin-bottom: 15px;
+    }
+canvas{
+    margin: 15px 0px 0px 0px;
+    height: 370px !important;
+} 
 }
 
 @media (min-width: 768px) and (max-width: 991px){
-    
-    .formalign {
-        margin: 3% 0 0 5%;
-        width: 90%;
+.formalign {
+    /* margin-bottom: 15px;
+    margin: 5% 0 0 0%;
+    width: 100%; */
+    margin-bottom: 15px;
+    margin: 3% 0% 0 5%;
+    width: 92%;
+}
+.progress {
+    width: 90%;
+    margin-left: 40px;
+    margin-top: 52px;
+}
+.leftcard {
+    height: 390px !important;
+    width: 100%;
+    background-color: white;
     }
-    .leftcard {
-        height: 390px !important;
-        width: 100%;
-        background-color: white;
-        }
-    .rightcard {
-        width: 100%;
-        background-color: white;
-        height: 390px !important;
-        margin-bottom: 2%;
-        }
-    canvas{
-        margin: 15px 0px 0px 0px;
-        height: 370px !important;
-    }  
+
+.rightcard {
+    width: 100%;
+    background-color: white;
+    height: 390px !important;
+    margin-bottom: 15px;
+    }
+canvas{
+    margin: 15px 0px 0px 0px;
+    height: 370px !important;
+} 
 }
 
 @media (min-width: 992px) and (max-width: 1199px){
-    .cardsryt{
-        margin-right: 2%;
+.cardsryt{
+    margin-right: 2%;
+}
+.formalign {
+    margin-bottom: 15px;
+    margin: 15% 0 0 25%;
+    width: 100%;
+}
+.progress {
+    width: 65%;
+    margin-left: 27px;
+    margin-top: 52px;
+}
+.leftcard {
+    height: 390px !important;
+    width: 50%;
+    background-color: white;
     }
-    .formalign {
-        margin: 5% 0 0 5%;
+
+.rightcard {
+    width: 50%;
+    background-color: white;
+    height: 390px !important;
     }
-    .leftcard {
-        height: 390px !important;
-        width: 50%;
-        background-color: white;
-        }
-    .rightcard {
-        width: 50%;
-        background-color: white;
-        height: 390px !important;
-        }
-    canvas{
-        margin: 15px 0px 0px 0px;
-        height: 370px !important;
-    }  
+canvas{
+    margin: 15px 0px 0px 0px;
+    height: 370px !important;
+}
 }
 
 @media (min-width: 1200px){
-    .cardsryt{
-        margin-right: 2%;
+.cardsryt{
+    margin-right: 2%;
+}
+.formalign {
+    margin-bottom: 15px;
+    margin: 15% 0 0 25%;
+    width: 100%;
+}
+.progress {
+    width: 65%;
+    margin-left: 27px;
+    margin-top: 52px;
+}
+.leftcard {
+    height: 390px !important;
+    width: 50%;
+    background-color: white;
     }
-    .formalign {
-        margin: 5% 0 0 5%;
+
+.rightcard {
+    width: 50%;
+    background-color: white;
+    height: 390px !important;
     }
-    .leftcard {
-        height: 390px !important;
-        width: 50%;
-        background-color: white;
-        }
-    .rightcard {
-        width: 50%;
-        background-color: white;
-        height: 390px !important;
-        }
-    canvas{
-        margin: 15px 0px 0px 0px;
-        height: 370px !important;
-    }  
+canvas{
+    margin: 15px 0px 0px 0px;
+    height: 370px !important;
+}    
+}
+
+section.student-intro {
+padding: 0 60px 0 30px;
+width: 20%;
+}
+
+.student-intro img {
+height: 220px;
+width: 170px;
+}
+
+.student-intro h4 {
+margin: 10px 0;
+}
+
+section.student-task-section {
+width: 100%;
+}
+
+section.student-intro .col-wrapper {
+margin: 0;
+}
+
+section.student-intro .col-wrapper .btn {
+width: 150px;
+margin: 15px 0px;
+}
+
+section.student-task-section .table-and-pagination {
+width: 100%;
+position: relative;
+top: 20px;
+padding-bottom: 50px;
+}
+
+section.student-task-section ._attendance-box {
+width: 90%;
+}
+
+section.student-task-section .table-and-pagination.-classes-schedule .table-container {
+height: 320px;
+}
+
+.status-btn {
+color: #fff;
+border-radius: 3px;
+width: 80px;
+}
+
+.pending-btn {
+background-color: #6186ed;
+}
+
+.rejected-btn {
+background-color: #e56761;
+}
+
+.approved-btn {
+background-color: #77c284;
+}
+
+.high-priority-task {
+color: #e56761;
+font-weight: 600;
+}
+
+.medium-priority-task {
+color: #77c284;
+font-weight: 600;
+}
+
+.low-priority-task {
+color: #FFD566;
+font-weight: 600;
+}
+
+.task-row {
+cursor: pointer;
+}
+
+.task-row:hover,
+.selected-task-row {
+-webkit-box-shadow: 0px 0px 7px -2px rgba(204,204,204,1);
+-moz-box-shadow: 0px 0px 7px -2px rgba(204,204,204,1);
+box-shadow: 0px 0px 7px -2px rgba(204,204,204,1);
 }

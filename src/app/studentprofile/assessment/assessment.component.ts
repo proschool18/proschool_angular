@@ -22,6 +22,7 @@ export class AssessmentComponent implements OnInit {
   i;
 
   assessment_type = "Assignments";
+  showSubjectList: boolean = false;
 
   allAssessments: boolean = true;
   alert_message: string;
@@ -64,7 +65,7 @@ export class AssessmentComponent implements OnInit {
     totalAssignments: '',
   }];
 
-  selected_subject;
+  selected_subject: any = {subject_id: '', subject_name: ''};
   selected_chapter;
 
   chartData = [{
@@ -136,7 +137,7 @@ export class AssessmentComponent implements OnInit {
   getSubjectAssessments() {
     this.chartType = 'horizontalBar';
 
-    if (this.selected_subject == "All") {
+    if (this.selected_subject.subject_id == "All") {
       this.allAssessments = true;
       this.View();
 
@@ -158,7 +159,7 @@ export class AssessmentComponent implements OnInit {
       ];
       this.chartLabels = [];
 
-      this.subject_Assessments = this.assessments[0].subjects.filter(data => data.subject_id === this.selected_subject)[0].chapters;
+      this.subject_Assessments = this.assessments[0].subjects.filter(data => data.subject_id === this.selected_subject.subject_id)[0].chapters;
 
       for (this.i = 0; this.i < this.subject_Assessments.length; this.i++) {
         this.chartData[0].data.push(this.subject_Assessments[this.i].percentage);
@@ -172,7 +173,7 @@ export class AssessmentComponent implements OnInit {
   select_assessment(select) {
     this.assessment_type = select;
     this.allAssessments = true;
-    this.selected_subject = '';
+    this.selected_subject.subject_id = '';
     this.getStudentAssessments();
   }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { ServicesService } from '../../services.service';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material';
@@ -11,7 +11,7 @@ import { AlertComponent } from '../../_alert/alert/alert.component';
 })
 export class AcademicsComponent implements OnInit {
 
-  constructor(private service: ServicesService, private route: ActivatedRoute, public dialog: MatDialog) { }
+  constructor(private service: ServicesService, private route: ActivatedRoute, public dialog: MatDialog, private el: ElementRef) { }
 
   ngOnInit() {
     this.getStudentAcademics();
@@ -49,23 +49,7 @@ export class AcademicsComponent implements OnInit {
     }
   ]
 
-  chartData = [{
-    label: 'Marks Scored',
-    data: [],
-    order: 1
-  },
-  {
-    label: 'Marks Scored',
-    data: [],
-    type: 'line',
-    order: 2
-  }];
-  chartType = 'bar';
-  chartLabels = [];
-  public chartOptions: any = {
-    responsive: true
-  };
-  public chartLegend: true;
+  showExamList: boolean = false;
 
   getStudentAcademics() {
     if (this.student_id == undefined || this.student_id == '') {
@@ -74,66 +58,29 @@ export class AcademicsComponent implements OnInit {
     } else {
       this.service.getStudentAcademics(this.student_id)
         .subscribe(
-          res => { this.academics = res.students[0].exam_marks, this.View(), console.log(res) }
+          res => { this.academics = res.students[0].exam_marks, console.log(res) }
         )
     }
   }
 
-  View() {
-
-    this.chartData = [{
-      label: 'Marks Scored',
-      data: [],
-      order: 1
-    },
-    {
-      label: 'Marks Scored',
-      data: [],
-      type: 'line',
-      order: 2
-    }
-    ];
-    this.chartLabels = [];
-
-    for (this.i = 0; this.i < this.academics.length; this.i++) {
-      this.chartData[0].data.push(this.academics[this.i].percentage);
-      this.chartData[1].data.push(this.academics[this.i].percentage);
-      this.chartLabels.push(this.academics[this.i].exam_title)
-    }
+  setProgressBar(id, height) {
+    var elem = document.getElementById(id);
+    (elem as HTMLElement).style.setProperty('--progress', height + '%');
   }
 
   getExamAcademics() {
 
     if (this.selected_exam == "All") {
       this.allExams = true;
-      this.View();
 
     } else {
 
       this.allExams = false;
 
-      this.chartData = [{
-        label: 'Marks Scored',
-        data: [],
-        order: 1
-      },
-      {
-        label: 'Marks Scored',
-        data: [],
-        type: 'line',
-        order: 2
-      }
-      ];
-      this.chartLabels = [];
       this.subjectMarks = [];
 
       this.subjectMarks = this.academics.filter(data => data.exam_title === this.selected_exam)[0].subjects;
 
-      for (this.i = 0; this.i < this.subjectMarks.length; this.i++) {
-        this.chartData[0].data.push(this.subjectMarks[this.i].percentage);
-        this.chartData[1].data.push(this.subjectMarks[this.i].percentage);
-        this.chartLabels.push(this.subjectMarks[this.i].subject_name)
-      }
     }
 
   }
