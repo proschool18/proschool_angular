@@ -181,14 +181,31 @@ section.student-intro .col-wrapper .btn {
 }
 
 section.student-task-section .table-and-pagination {
-    width: 100%;
+    width: 80%;
     position: relative;
     top: 20px;
     padding-bottom: 50px;
 }
 
 section.student-task-section ._attendance-box {
-    width: 90%;
+    width: 80%;
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+
+section.student-task-section ._attendance-box::-webkit-scrollbar-thumb {
+    background-color: #d8e1ff;
+    border-radius: 2px;
+    border: 1px solid transparent;
+}
+
+section.student-task-section ._attendance-box::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+section.student-task-section ._attendance-box::-webkit-scrollbar {
+    /*width: 4px;*/
+    height: 4px;
 }
 
 section.student-task-section .table-and-pagination.-classes-schedule .table-container {
@@ -241,6 +258,7 @@ section.student-task-section .table-and-pagination.-classes-schedule .table-cont
 
 .bar-3-group {
     display: flex;
+    margin-right: 50px;
 }
 
 .bar-3-group ._metric {
