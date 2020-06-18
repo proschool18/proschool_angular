@@ -70,14 +70,12 @@
                                     <td>{{i+1}}</td>
                                     <td>{{att.date}}</td>
                                     <td>{{att.status}}</td>
-                                    
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-
 
             <div class="card rightcard">
                 <canvas baseChart [data]="chartData" [labels]="chartLabels" [options]="chartOptions"
@@ -89,306 +87,96 @@
 </div> -->
 
 <main class="card mt-20 within-viewport" style="height: auto;">
-    <div class="page-actions"> 
+    <div class="page-actions">
         <section class="student-intro">
-            <img src="/assets/images/student_new.png">
+            <img src="/assets/images/student.png">
             <h4>Vinod Kumar Alluri</h4>
             <h4>Class X - A</h4>
             <h4>Roll No : 1</h4>
 
             <div class="col-wrapper">
-                <button routerLink="/main/studentprofile/profile/{{student_id}}/{{section_id}}" class="btn -cta active-tab">Profile</button>
-                <button routerLink="/main/studentprofile/attendance/{{student_id}}/{{section_id}}" class="btn -cta active-tab">Attendance</button>
-                <button routerLink="/main/studentprofile/academics/{{student_id}}/{{section_id}}" class="btn -cta active-tab">Academics</button>
-                <button routerLink="/main/studentprofile/assessment/{{student_id}}/{{section_id}}" class="btn -cta active-tab">Assessment</button>
-                <button routerLink="/main/studentprofile/fees/{{student_id}}/{{section_id}}" class="btn -cta active-tab">Fees</button>
+                <button routerLink="/main/studentprofile/profile/{{student_id}}/{{section_id}}"
+                    class="btn -cta active-tab">Profile</button>
+                <button routerLink="/main/studentprofile/attendance/{{student_id}}/{{section_id}}"
+                    class="btn -cta active-tab">Attendance</button>
+                <button routerLink="/main/studentprofile/academics/{{student_id}}/{{section_id}}"
+                    class="btn -cta active-tab">Academics</button>
+                <button routerLink="/main/studentprofile/assessment/{{student_id}}/{{section_id}}"
+                    class="btn -cta active-tab">Assessment</button>
+                <button routerLink="/main/studentprofile/fees/{{student_id}}/{{section_id}}"
+                    class="btn -cta active-tab">Fees</button>
             </div>
 
         </section>
         <section class="student-task-section">
-            <section class="table-and-pagination -classes-schedule">
-                <div class="table-container">
-                  <table>
-                    <thead>
-                      <tr>
-                        <th>#</th>
-                        <th align="left">Priority</th>
-                        <th align="left">Task</th>
-                        <th align="left">Assignment to</th>
-                        <th align="left">Status</th>
-                      </tr>
-                    </thead>
-                    <tbody>          
-                      <tr class="task-row" (click)="selectedRowNum = 1" 
-                      [ngClass]="selectedRowNum == 1 ? 'selected-task-row' : ''">
-                        <td class="_s-no"><span>1</span></td>
-                        <td class="high-priority-task">High</td>
-                        <td>Started undertaking to...</td>
-                        <td>John Smith Doe</td>
-                        <td>
-                            <div class="hor-progress-wrapper">
-                                <div class="hor-progress-track">
-                                    <span class="hor-progress-filled" 
-                                    [ngStyle]="{'width': barProgress[0]+'%'}"></span>
-                                </div>
-                                <span class="hor-progress-title">{{barProgress[0]}}%</span>
-                            </div>
-                        </td>
-                      </tr>
-                      <tr class="task-row" (click)="selectedRowNum = 2"
-                      [ngClass]="selectedRowNum == 2 ? 'selected-task-row' : ''">
-                        <td class="_s-no"><span>2</span></td>
-                        <td class="medium-priority-task">Meduim</td>
-                        <td>The eyes seven fully...</td>
-                        <td>Shawn Thomton</td>
-                        <td>
-                             <div class="hor-progress-wrapper">
-                                <div class="hor-progress-track">
-                                    <span class="hor-progress-filled" 
-                                    [ngStyle]="{'width': barProgress[1]+'%'}"></span>
-                                </div>
-                                <span class="hor-progress-title">{{barProgress[1]}}%</span>
-                            </div>
-                        </td>
-                      </tr>
-                      <tr class="task-row" (click)="selectedRowNum = 3"
-                      [ngClass]="selectedRowNum == 3 ? 'selected-task-row' : ''">
-                        <td class="_s-no"><span>3</span></td>
-                        <td class="low-priority-task">Low</td>
-                        <td>Task 01</td>
-                        <td>Jonah McDonald</td>
-                        <td>
-                             <div class="hor-progress-wrapper">
-                                <div class="hor-progress-track">
-                                    <span class="hor-progress-filled" 
-                                    [ngStyle]="{'width': barProgress[2]+'%'}"></span>
-                                </div>
-                                <span class="hor-progress-title">{{barProgress[2]}}%</span>
-                            </div>
-                        </td>
-                      </tr>
-                      <tr class="task-row" (click)="selectedRowNum = 4"
-                      [ngClass]="selectedRowNum == 4 ? 'selected-task-row' : ''">
-                        <td class="_s-no"><span>4</span></td>
-                        <td class="medium-priority-task">Medium</td>
-                        <td>Task 01</td>
-                        <td>Neomi Lawrence</td>
-                        <td>
-                             <div class="hor-progress-wrapper">
-                                <div class="hor-progress-track">
-                                    <span class="hor-progress-filled" 
-                                    [ngStyle]="{'width': barProgress[3]+'%'}"></span>
-                                </div>
-                                <span class="hor-progress-title">{{barProgress[3]}}%</span>
-                            </div>
-                        </td>
-                      </tr>
-                      <tr class="task-row" (click)="selectedRowNum = 5"
-                      [ngClass]="selectedRowNum == 5 ? 'selected-task-row' : ''">
-                        <td class="_s-no"><span>5</span></td>
-                        <td class="high-priority-task">High</td>
-                        <td>Task 01</td>
-                        <td>Devnante Cooke</td>
-                        <td>
-                           <div class="hor-progress-wrapper">
-                                <div class="hor-progress-track">
-                                    <span class="hor-progress-filled" 
-                                    [ngStyle]="{'width': barProgress[4]+'%'}"></span>
-                                </div>
-                                <span class="hor-progress-title">{{barProgress[4]}}%</span>
-                            </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+            <section class="page-actions">
+                <div class="dropdown">
+                    <button class="dropbtn" (click)="showMonthList = true" (clickOutside)="showMonthList = false">
+                        {{!selected_month.month ? 'select month' : selected_month.month}}
+                    </button>
+                    <div class="dropdown-content" [hidden]="!showMonthList">
+                        <a *ngFor="let mon of months"
+                            (click)="selected_month = mon; getstudentMonthAttendance();">{{mon.month}}</a>
+                    </div>
                 </div>
             </section>
-
-            <div class="_attendance-box dynamic-bar-graph">
+            <section class="table-and-pagination -classes-schedule">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th align="left">Date</th>
+                                <th align="left">Attendance Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let att of attendance.donutchart; let i = index">
+                                <td class="_s-no"><span>{{ i + 1 }}</span></td>
+                                <td>{{att.date}}</td>
+                                <td>
+                                    <button [ngClass]="{'status-btn approved-btn': att.status === 'Present', 'status-btn rejected-btn': att.status === 'Absent', 'status-btn pending-btn': att.status === 'OnLeave'}" >{{att.status}}</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            <!-- <div class="_attendance-box dynamic-bar-graph">
                 <section role="tabpanel">
-                    <div class="bar-3-group">
+                    <div class="bar-3-group" *ngFor="let fee of termwiseFee[0].studentFeeDetails; let i = index">
                         <div class="_metric -total">
                             <div class="_bar">
-                                <span class="_bar_progress" [ngStyle]="{'height': barProgress[0]+'%'}">
+                                <span class="_bar_progress" [ngStyle]="{'height': '100%'}">
                                 </span>
                             </div>
                             <div class="_name">
-                                <span class="_legend">22</span> 
+                                <span class="_legend">{{fee.TotalTypeFees}}</span>
                             </div>
                         </div>
                         <div class="_metric -due">
                             <div class="_bar">
-                                <span class="_bar_progress" [ngStyle]="{'height': barProgress[1]+'%'}">
+                                <span class="_bar_progress" [ngStyle]="{'height': (fee.PaidTermFees / fee.TotalTypeFees * 100) +'%'}">
                                 </span>
                             </div>
                             <div class="_name">
-                                <span class="_legend">13</span> 
-                                Telugu
+                                <span class="_legend">{{fee.PaidTermFees}}</span>
+                                {{fee.FeeType}}
                             </div>
                         </div>
                         <div class="_metric -attend">
                             <div class="_bar">
-                                <span class="_bar_progress" [ngStyle]="{'height': barProgress[2]+'%'}">
+                                <span class="_bar_progress" [ngStyle]="{'height': (fee.BalanceFee / fee.TotalTypeFees * 100) +'%'}">
                                 </span>
                             </div>
                             <div class="_name">
-                                <span class="_legend">09</span> 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bar-3-group">
-                        <div class="_metric -total">
-                            <div class="_bar">
-                                <span class="_bar_progress" [ngStyle]="{'height': barProgress[3]+'%'}">
-                                </span>
-                            </div>
-                            <div class="_name">
-                                <span class="_legend">20</span> 
-                            </div>
-                        </div>
-                        <div class="_metric -due">
-                            <div class="_bar">
-                                <span class="_bar_progress" [ngStyle]="{'height': barProgress[4]+'%'}">
-                                </span>
-                            </div>
-                            <div class="_name">
-                                <span class="_legend">17</span> 
-                                English
-                            </div>
-                        </div>
-                        <div class="_metric -attend">
-                            <div class="_bar">
-                                <span class="_bar_progress" [ngStyle]="{'height': barProgress[5]+'%'}">
-                                </span>
-                            </div>
-                            <div class="_name">
-                                <span class="_legend">03</span> 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bar-3-group">
-                        <div class="_metric -total">
-                            <div class="_bar">
-                                <span class="_bar_progress" [ngStyle]="{'height': barProgress[6]+'%'}">
-                                </span>
-                            </div>
-                            <div class="_name">
-                                <span class="_legend">22</span> 
-                            </div>
-                        </div>
-                        <div class="_metric -due">
-                            <div class="_bar">
-                                <span class="_bar_progress" [ngStyle]="{'height': barProgress[7]+'%'}">
-                                </span>
-                            </div>
-                            <div class="_name">
-                                <span class="_legend">16</span> 
-                                Mathematics
-                            </div>
-                        </div>
-                        <div class="_metric -attend">
-                            <div class="_bar">
-                                <span class="_bar_progress" [ngStyle]="{'height': barProgress[8]+'%'}">
-                                </span>
-                            </div>
-                            <div class="_name">
-                                <span class="_legend">04</span> 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bar-3-group">
-                        <div class="_metric -total">
-                            <div class="_bar">
-                                <span class="_bar_progress" [ngStyle]="{'height': barProgress[3]+'%'}">
-                                </span>
-                            </div>
-                            <div class="_name">
-                                <span class="_legend">20</span> 
-                            </div>
-                        </div>
-                        <div class="_metric -due">
-                            <div class="_bar">
-                                <span class="_bar_progress" [ngStyle]="{'height': barProgress[4]+'%'}">
-                                </span>
-                            </div>
-                            <div class="_name">
-                                <span class="_legend">17</span> 
-                                Hindi
-                            </div>
-                        </div>
-                        <div class="_metric -attend">
-                            <div class="_bar">
-                                <span class="_bar_progress" [ngStyle]="{'height': barProgress[5]+'%'}">
-                                </span>
-                            </div>
-                            <div class="_name">
-                                <span class="_legend">03</span> 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bar-3-group">
-                        <div class="_metric -total">
-                            <div class="_bar">
-                                <span class="_bar_progress" [ngStyle]="{'height': barProgress[6]+'%'}">
-                                </span>
-                            </div>
-                            <div class="_name">
-                                <span class="_legend">22</span> 
-                            </div>
-                        </div>
-                        <div class="_metric -due">
-                            <div class="_bar">
-                                <span class="_bar_progress" [ngStyle]="{'height': barProgress[7]+'%'}">
-                                </span>
-                            </div>
-                            <div class="_name">
-                                <span class="_legend">16</span> 
-                                Science
-                            </div>
-                        </div>
-                        <div class="_metric -attend">
-                            <div class="_bar">
-                                <span class="_bar_progress" [ngStyle]="{'height': barProgress[8]+'%'}">
-                                </span>
-                            </div>
-                            <div class="_name">
-                                <span class="_legend">04</span> 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bar-3-group">
-                        <div class="_metric -total">
-                            <div class="_bar">
-                                <span class="_bar_progress" [ngStyle]="{'height': barProgress[0]+'%'}">
-                                </span>
-                            </div>
-                            <div class="_name">
-                                <span class="_legend">22</span> 
-                            </div>
-                        </div>
-                        <div class="_metric -due">
-                            <div class="_bar">
-                                <span class="_bar_progress" [ngStyle]="{'height': barProgress[1]+'%'}">
-                                </span>
-                            </div>
-                            <div class="_name">
-                                <span class="_legend">13</span> 
-                                History
-                            </div>
-                        </div>
-                        <div class="_metric -attend">
-                            <div class="_bar">
-                                <span class="_bar_progress" [ngStyle]="{'height': barProgress[2]+'%'}">
-                                </span>
-                            </div>
-                            <div class="_name">
-                                <span class="_legend">09</span> 
+                                <span class="_legend">{{fee.BalanceFee}}</span>
                             </div>
                         </div>
                     </div>
                 </section>
-            </div>
+            </div> -->
         </section>
-        
+
     </div>
 </main>

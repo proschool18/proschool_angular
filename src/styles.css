@@ -1167,7 +1167,7 @@ input:checked + .slider:before {
 .main-dashboard ._attendance-box.dynamic-bar-graph [role=tabpanel] {
   height: 300px;
   display: flex;
-  margin: 20px 0;
+  margin: 60px 0;
 }
 
 .dynamic-bar-graph ._bar_progress {
@@ -1182,4 +1182,12 @@ input:checked + .slider:before {
 
 .main-dashboard .dynamic-bar-graph ._metric ._bar:before {
   display: none;
+}
+
+.dynamic-bar-graph ._metrics {
+  width: 100%;
+}
+
+.dynamic-bar-graph .wide-bars ._metric ._bar {
+  width: 70px;
 }

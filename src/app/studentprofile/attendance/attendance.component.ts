@@ -16,7 +16,6 @@ export class AttendanceComponent implements OnInit {
   ngOnInit() {
   }
 
-  barProgress = [80, 70, 60, 100, 70, 30, 65, 30, 10];
   selectedRowNum: number;
   student_id = this.route.snapshot.paramMap.get('id');
   section_id = this.route.snapshot.paramMap.get('sec_id');
@@ -27,8 +26,9 @@ export class AttendanceComponent implements OnInit {
     absent: '',
     onleave: '',
   };
-  month;
+  selected_month: any = {month: '', value: ''};
   months = [{ 'month': 'January', 'value': '01' }, { 'month': 'February', 'value': '02' }, { 'month': 'March', 'value': '03' }, { 'month': 'April', 'value': '04' }, { 'month': 'May', 'value': '05' }, { 'month': 'June', 'value': '06' }, { 'month': 'July', 'value': '07' }, { 'month': 'August', 'value': '08' }, { 'month': 'September', 'value': '09' }, { 'month': 'October', 'value': '10' }, { 'month': 'November', 'value': '11' }, { 'month': 'December', 'value': '12' }]
+  showMonthList: boolean = false;
 
   chartData = [];
   chartType = 'doughnut';
@@ -44,7 +44,7 @@ export class AttendanceComponent implements OnInit {
       this.alert_message = "Please Select the Student";
       this.openAlert(this.alert_message)
     } else {
-      this.service.getStudentAttendance(this.month, this.student_id)
+      this.service.getStudentAttendance(this.selected_month.value, this.student_id)
         .subscribe(
           res => { this.attendance = res, this.View(), console.log(res) }
         )
