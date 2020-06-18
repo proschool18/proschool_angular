@@ -126,7 +126,13 @@
                         <td>Started undertaking to...</td>
                         <td>John Smith Doe</td>
                         <td>
-                            <button class="status-btn pending-btn">Pending</button>
+                            <div class="hor-progress-wrapper">
+                                <div class="hor-progress-track">
+                                    <span class="hor-progress-filled" 
+                                    [ngStyle]="{'width': barProgress[0]+'%'}"></span>
+                                </div>
+                                <span class="hor-progress-title">{{barProgress[0]}}%</span>
+                            </div>
                         </td>
                       </tr>
                       <tr class="task-row" (click)="selectedRowNum = 2"
@@ -136,7 +142,13 @@
                         <td>The eyes seven fully...</td>
                         <td>Shawn Thomton</td>
                         <td>
-                             <button class="status-btn rejected-btn">Rejected</button>
+                             <div class="hor-progress-wrapper">
+                                <div class="hor-progress-track">
+                                    <span class="hor-progress-filled" 
+                                    [ngStyle]="{'width': barProgress[1]+'%'}"></span>
+                                </div>
+                                <span class="hor-progress-title">{{barProgress[1]}}%</span>
+                            </div>
                         </td>
                       </tr>
                       <tr class="task-row" (click)="selectedRowNum = 3"
@@ -146,7 +158,13 @@
                         <td>Task 01</td>
                         <td>Jonah McDonald</td>
                         <td>
-                             <button class="status-btn approved-btn">Approved</button>
+                             <div class="hor-progress-wrapper">
+                                <div class="hor-progress-track">
+                                    <span class="hor-progress-filled" 
+                                    [ngStyle]="{'width': barProgress[2]+'%'}"></span>
+                                </div>
+                                <span class="hor-progress-title">{{barProgress[2]}}%</span>
+                            </div>
                         </td>
                       </tr>
                       <tr class="task-row" (click)="selectedRowNum = 4"
@@ -156,7 +174,13 @@
                         <td>Task 01</td>
                         <td>Neomi Lawrence</td>
                         <td>
-                             <button class="status-btn pending-btn">Pending</button>
+                             <div class="hor-progress-wrapper">
+                                <div class="hor-progress-track">
+                                    <span class="hor-progress-filled" 
+                                    [ngStyle]="{'width': barProgress[3]+'%'}"></span>
+                                </div>
+                                <span class="hor-progress-title">{{barProgress[3]}}%</span>
+                            </div>
                         </td>
                       </tr>
                       <tr class="task-row" (click)="selectedRowNum = 5"
@@ -166,7 +190,13 @@
                         <td>Task 01</td>
                         <td>Devnante Cooke</td>
                         <td>
-                            <button class="status-btn approved-btn">Approved</button>
+                           <div class="hor-progress-wrapper">
+                                <div class="hor-progress-track">
+                                    <span class="hor-progress-filled" 
+                                    [ngStyle]="{'width': barProgress[4]+'%'}"></span>
+                                </div>
+                                <span class="hor-progress-title">{{barProgress[4]}}%</span>
+                            </div>
                         </td>
                       </tr>
                     </tbody>
