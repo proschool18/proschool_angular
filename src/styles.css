@@ -1175,7 +1175,7 @@ input:checked + .slider:before {
     display: block;
     margin-top: auto;
     background-color: var(--fill);
-    border-radius: 2px 2px 0 0;
+    border-radius: 5px 5px 0 0;
 }
 
 .main-dashboard .dynamic-bar-graph ._metric ._bar:before {

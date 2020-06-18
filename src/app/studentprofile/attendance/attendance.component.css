@@ -238,3 +238,15 @@ section.student-task-section .table-and-pagination.-classes-schedule .table-cont
     -moz-box-shadow: 0px 0px 7px -2px rgba(204,204,204,1);
     box-shadow: 0px 0px 7px -2px rgba(204,204,204,1);
 }
+
+.bar-3-group {
+    display: flex;
+}
+
+.bar-3-group ._metric {
+    margin-left: 0;
+}
+
+.bar-3-group ._metric ._name {
+    margin-left: 0;
+} 
