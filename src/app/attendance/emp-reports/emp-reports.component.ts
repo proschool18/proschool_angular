@@ -21,6 +21,7 @@ export class EmpReportsComponent implements OnInit {
     onleave: '',
     donutchart: ''
   };
+  showEmployeeTypeList: boolean = false;
   chart = [];
   category;
   date;

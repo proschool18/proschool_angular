@@ -2,15 +2,22 @@
   <section class="page-actions">
     <div class="_select-or-search">
       <div class="_select-group">
-
+        <div class="dropdown">
+          <button class="dropbtn" (click)="showScheduleList = true" (clickOutside)="showScheduleList = false">
+            {{!selected_schedule ? 'select schedule' : selected_schedule}}
+          </button>
+          <div class="dropdown-content" [hidden]="!showScheduleList">
+            <a *ngFor="let assp of assessment_patterns[0].assessment;"
+              (click)="selected_schedule = assp.code;">{{assp.code}}</a>
+            <a *ngFor="let assp of assessment_patterns[1].assessment;"
+              (click)="selected_schedule = assp.code;">{{assp.code}}</a>
+          </div>
+        </div>
       </div>
     </div>
     <div class="add_div">
-      <form role="form" class="searchForm" [formGroup]="scheduleForm" (ngSubmit)="addExam_schedules()" *ngIf="user.role === 'admin'">
-        <select name="section" formControlName="exam_title">
-          <option *ngFor="let assp of assessment_patterns[0].assessment" value="{{assp.code}}">{{assp.code}}</option>
-          <option *ngFor="let assp of assessment_patterns[1].assessment" value="{{assp.code}}">{{assp.code}}</option>
-        </select>
+      <form role="form" class="searchForm" [formGroup]="scheduleForm" (ngSubmit)="addExam_schedules()"
+        *ngIf="user.role === 'admin'">
         <input class="form-control" formControlName="from_date" placeholder="Enter..." type="date">
         <input class="form-control" formControlName="end_date" placeholder="Enter..." type="date">
         <button class="btn -cta" type="submit">Add Schedule</button>

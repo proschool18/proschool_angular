@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SearchModuleModule } from '../search-module/search-module.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { DirectivesModule } from '../_directives/_directives.module';
 
 import { SchoolRoutingModule } from './school-routing.module';
 import { ProfileComponent } from './profile/profile.component';
@@ -31,16 +32,10 @@ import { EditschoolprofileComponent } from './editschoolprofile/editschoolprofil
 import { CommunicationsComponent } from './communications/communications.component';
 import { AddMessageComponent } from './add-message/add-message.component';
 import { OpenMessageComponent } from './open-message/open-message.component';
-import { DirectivesModule } from '../_directives/_directives.module';
 import { MatDatepickerModule, MatInputModule, MatNativeDateModule } from '@angular/material';
 
 @NgModule({
-  declarations: [ProfileComponent, AddClassComponent, TimingsComponent, PatternsComponent, 
-  ParentinfoComponent, EmployeeinfoComponent, TasksComponent, AddtasksComponent, VendorsComponent, 
-  MaterialComponent, MaterialInComponent, MaterialOutComponent, ExpensesComponent, PaymentsComponent, 
-  AddpaymentsComponent, ClaimsComponent, EditclassComponent, EditstoreComponent, EditpaymentsComponent, 
-  EditexpensesComponent, PendingTasksComponent, EditschoolprofileComponent, CommunicationsComponent, 
-    AddMessageComponent, OpenMessageComponent],
+  declarations: [ProfileComponent, AddClassComponent, TimingsComponent, PatternsComponent, ParentinfoComponent, EmployeeinfoComponent, TasksComponent, AddtasksComponent, VendorsComponent, MaterialComponent, MaterialInComponent, MaterialOutComponent, ExpensesComponent, PaymentsComponent, AddpaymentsComponent, ClaimsComponent, EditclassComponent, EditstoreComponent, EditpaymentsComponent, EditexpensesComponent, PendingTasksComponent, EditschoolprofileComponent, CommunicationsComponent, AddMessageComponent, OpenMessageComponent],
   imports: [
     CommonModule,
     SchoolRoutingModule,

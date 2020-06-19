@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SearchModuleModule } from '../search-module/search-module.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { DirectivesModule } from '../_directives/_directives.module';
 
 import { EmployeesRoutingModule } from './employees-routing.module';
 import { InformationComponent } from './information/information.component';
@@ -20,7 +21,8 @@ import { MatDatepickerModule, MatInputModule, MatNativeDateModule } from '@angul
     NgxPaginationModule,
     SearchModuleModule,
     MatDialogModule,
-    MatDatepickerModule, MatInputModule, MatNativeDateModule
+    MatDatepickerModule, MatInputModule, MatNativeDateModule,
+    DirectivesModule
   ],
   entryComponents: [AdmissionComponent],
   exports: [AdmissionComponent]

@@ -22,9 +22,11 @@ export class SchedulesComponent implements OnInit {
     assessment: []
   }];
 
-  selected_schedule;
+  selected_schedule: any = '';
   dialog_type: string;
   alert_message: string;
+
+  showScheduleList: boolean = false;
 
   scheduleForm: FormGroup = this.fb.group({
     exam_title: ['', Validators.required],
@@ -55,6 +57,7 @@ export class SchedulesComponent implements OnInit {
   }
 
   addExam_schedules() {
+    this.scheduleForm.value.exam_title = this.selected_schedule;
     this.service.addExam_schedules(this.scheduleForm.value)
     .subscribe(
       res => { 

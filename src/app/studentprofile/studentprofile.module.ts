@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ChartsModule } from 'ng2-charts';
 import { StudentsModule } from '../students/students.module';
 import { MatDialogModule } from '@angular/material/dialog';
+import { DirectivesModule } from '../_directives/_directives.module';
 
 import { StudentprofileRoutingModule } from './studentprofile-routing.module';
 import { ProfileComponent } from './profile/profile.component';
@@ -21,7 +22,8 @@ import { FeesComponent } from './fees/fees.component';
     ReactiveFormsModule,
     ChartsModule,
     StudentsModule,
-    MatDialogModule
+    MatDialogModule,
+    DirectivesModule
   ],
   entryComponents: [],
 })

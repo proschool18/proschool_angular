@@ -18,6 +18,8 @@ export class AttendanceComponent implements OnInit {
 
   employee_id = this.route.snapshot.paramMap.get('id');
 
+  showMonthList: boolean = false;
+
   attendance = [{
     monthName: '',
     month: '',
@@ -31,7 +33,7 @@ export class AttendanceComponent implements OnInit {
       onLeavePercent: '',
     }
   }];
-  month;
+  month: any = {'month': '', 'value': ''};
   months = [{ 'month': 'January', 'value': 1 }, { 'month': 'February', 'value': 2 }, { 'month': 'March', 'value': 3 }, { 'month': 'April', 'value': 4 }, { 'month': 'May', 'value': 5 }, { 'month': 'June', 'value': 6 }, { 'month': 'July', 'value': 7 }, { 'month': 'August', 'value': 8 }, { 'month': 'September', 'value': 9 }, { 'month': 'October', 'value': 10 }, { 'month': 'November', 'value': 11 }, { 'month': 'December', 'value': 12 }]
 
   chartData = [];
@@ -51,14 +53,14 @@ export class AttendanceComponent implements OnInit {
     } else {
         this.service.getEmployeeMonthlyAttendance(this.employee_id)
           .subscribe(
-            res => { this.attendance = res.employeeAttendence.filter(data => data.month === parseInt(this.month)), this.View(), console.log(this.attendance) }
+            res => { this.attendance = res.employeeAttendence.filter(data => data.month === parseInt(this.month.value)), this.View(), console.log(this.attendance) }
           )
     }
   }
 
   View() {
     this.chartData = [];
-    if (this.month === 'all') {
+    if (this.month.value === 'all') {
 
     } else {
       this.chartData.push((this.attendance[0].attendance.present).toString());

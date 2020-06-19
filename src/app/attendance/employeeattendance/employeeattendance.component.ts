@@ -3,6 +3,7 @@ import { ServicesService } from '../../services.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { AlertComponent } from '../../_alert/alert/alert.component';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-employeeattendance',
@@ -26,6 +27,10 @@ export class EmployeeattendanceComponent implements OnInit {
   current_year;
   alert_message: string;
   i;
+
+  showEmployeeTypeList: boolean = false;
+  employee_type;
+  date = new FormControl(new Date);
 
   employeeForm: FormGroup = this.fb.group({
     employee_type: ['', Validators.required],
@@ -54,15 +59,15 @@ export class EmployeeattendanceComponent implements OnInit {
   }
 
   get_selectedemployees() {   
-    if(this.employeeForm.value.employee_type == undefined || this.employeeForm.value.employee_type == '') {
+    if(this.employee_type == undefined || this.employee_type == '') {
       this.alert_message = "Please Select Employee Type";
       this.openAlert(this.alert_message)
     } else {
-      if(this.employeeForm.value.employee_type === "teaching") {
+      if(this.employee_type === "teaching") {
         this.employees = this.all_employees.filter(emp => emp.job_category === "teaching");
-      } else if(this.employeeForm.value.employee_type === "non-teaching") {
+      } else if(this.employee_type === "non-teaching") {
         this.employees = this.all_employees.filter(emp => emp.job_category === "non-teaching");
-      } else if(this.employeeForm.value.employee_type === "administrative") {
+      } else if(this.employee_type === "administrative") {
         this.employees = this.all_employees.filter(emp => emp.job_category === "administrative");
       } else {
         this.employees = this.all_employees;
@@ -87,7 +92,7 @@ export class EmployeeattendanceComponent implements OnInit {
   }
 
   addEmployeeAttendance() { 
-    if(this.employeeForm.value.employee_type == undefined || this.employeeForm.value.employee_type == '') {
+    if(this.employee_type == undefined || this.employee_type == '') {
       this.alert_message = "Please Select the Employee Category";
       this.openAlert(this.alert_message)
     } else if(this.employees[0].status == 1) {
@@ -105,7 +110,7 @@ export class EmployeeattendanceComponent implements OnInit {
       }
       this.current_year = new Date().getFullYear();
       this.employeeForm.value.date = this.current_year + '-' + this.current_month + '-' + this.current_date;
-      this.service.addEmployeeAttendance(this.employees, this.employeeForm.value.date)
+      this.service.addEmployeeAttendance(this.employees, this.date)
       .subscribe(
         res => { 
           console.log(res),
@@ -114,7 +119,7 @@ export class EmployeeattendanceComponent implements OnInit {
         }
       )
     } else {
-      this.service.addEmployeeAttendance(this.employees, this.employeeForm.value.date)
+      this.service.addEmployeeAttendance(this.employees, this.date)
       .subscribe(
         res => {
           console.log(res), 

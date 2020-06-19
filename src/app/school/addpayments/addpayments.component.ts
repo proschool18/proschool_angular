@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { StoreService } from '../../_services/store.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { AlertComponent } from '../../_alert/alert/alert.component';
 import { EditpaymentsComponent } from '../editpayments/editpayments.component';
@@ -13,16 +12,12 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./addpayments.component.css']
 })
 export class AddpaymentsComponent implements OnInit {
-  config: any;
-  collection = { count: '', payments: [] };
 
-  constructor(private service: StoreService, private fb: FormBuilder, public dialog: MatDialog) {
-    this.config = {
-      itemsPerPage: 5,
-      currentPage: 1,
-      totalItems: this.collection.count
-    };
-   }
+  constructor(private service: StoreService, private fb: FormBuilder, public dialog: MatDialog) {}
+
+  payment_date = new FormControl(new Date);
+  showVendorsList: boolean = false;
+  showMaterialsList: boolean = false;
 
   ngOnInit() {
     this.getVendors();
@@ -30,18 +25,12 @@ export class AddpaymentsComponent implements OnInit {
     this.getPayments();
   }
 
-  payment_date = new FormControl(new Date);
-  showVendorsList: boolean = false;
-  showMaterialsList: boolean = false;
-        
-  pageChanged(event){
-    this.config.currentPage = event;
-  }
-
   vendors = [];
   materials = [];
+  vendor = {vendor_id: '', vendor_name: ''};
+  material = {material_id: '', material: ''};
   all_payments = [];
-  //payments = [];
+  payments = [];
   filtered_payments = []; i; j;
   total_payment = 0;
   balance_payment = 0;
@@ -62,7 +51,7 @@ export class AddpaymentsComponent implements OnInit {
   getPayments() {
     this.service.getPayments()
       .subscribe(
-        res => { this.collection.payments = res.payments[0].payments, this.all_payments = res.payments, console.log(res) }
+        res => { this.payments = res.payments[0].payments, this.all_payments = res.payments, console.log(res) }
       )
   }
 
@@ -81,38 +70,37 @@ export class AddpaymentsComponent implements OnInit {
   }
 
   getVendorPayments() {
-    this.filtered_payments = this.all_payments.filter(res => res.vendor_id === this.paymentForm.value.vendor.vendor_id)
-    this.collection.payments = [];
+    this.filtered_payments = this.all_payments.filter(res => res.vendor_id === this.vendor.vendor_id)
+    this.payments = [];
     this.total_payment = 0;
     this.balance_payment = 0;
     for(this.i = 0; this.i < this.filtered_payments.length; this.i++) {
       this.total_payment += this.filtered_payments[this.i].payment_toPay;
       this.balance_payment += this.filtered_payments[this.i].payment_balance;
       for(this.j = 0; this.j < this.filtered_payments[this.i].payments.length; this.j++) {
-        this.collection.payments.push({
+        this.payments.push({
           payment: this.filtered_payments[this.i].payments[this.j].payment,
           payment_date: this.filtered_payments[this.i].payments[this.j].payment_date,
         })
-        console.log(this.collection.payments)
+        console.log(this.payments)
       }      
     }
   }
 
   get_payments() {
-    this.filtered_payments = this.all_payments.filter(res => res.vendor_id === this.paymentForm.value.vendor 
-    && res.material_id === this.paymentForm.value.material.material_id)
-    this.collection.payments = [];
+    this.filtered_payments = this.all_payments.filter(res => res.vendor_id === this.vendor.vendor_id && res.material_id === this.material.material)
+    this.payments = [];
     this.total_payment = 0;
     this.balance_payment = 0;
     for(this.i = 0; this.i < this.filtered_payments.length; this.i++) {
       this.total_payment += this.filtered_payments[this.i].payment_toPay;
       this.balance_payment += this.filtered_payments[this.i].payment_balance;
       for(this.j = 0; this.j < this.filtered_payments[this.i].payments.length; this.j++) {
-        this.collection.payments.push({
+        this.payments.push({
           payment: this.filtered_payments[this.i].payments[this.j].payment,
           payment_date: this.filtered_payments[this.i].payments[this.j].payment_date,
         })
-        console.log(this.collection.payments)
+        console.log(this.payments)
       }      
     }
     this.paymentForm.patchValue({
@@ -159,7 +147,7 @@ export class AddpaymentsComponent implements OnInit {
 
   deletePayment(i) {
     console.log(this.filtered_payments)
-    this.service.deletePayments(this.filtered_payments[0], this.collection.payments[i].payment)
+    this.service.deletePayments(this.filtered_payments[0], this.payments[i].payment)
       .subscribe(
         res => { 
           if(res == true) {
@@ -178,7 +166,7 @@ export class AddpaymentsComponent implements OnInit {
   }
 
   editPayment(i) {
-    this.selected_payment = this.collection.payments[i];
+    this.selected_payment = this.payments[i];
     console.log(this.selected_payment)
     this.dialog_type = 'payment';
     this.openDialog(this.dialog_type)
@@ -200,8 +188,8 @@ export class AddpaymentsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(
       data => {
-        this.collection.payments.filter( res => res.payment_id == data.payment_id)[0].payment = data.payment,
-        this.collection.payments.filter( res => res.payment_id == data.payment_id)[0].payment_date = data.payment_date,
+        this.payments.filter( res => res.payment_id == data.payment_id)[0].payment = data.payment,
+        this.payments.filter( res => res.payment_id == data.payment_id)[0].payment_date = data.payment_date,
         console.log("Dialog output:", data)
       }
     );

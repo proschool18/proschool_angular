@@ -15,6 +15,9 @@ export class ClassWiseComponent implements OnInit {
   constructor(private service: ServicesService, private fb: FormBuilder, public dialog: MatDialog) { }
         
   user: User;
+  showSubjectList: boolean = false;
+  showTeacherList: boolean = false;
+  showDayList: boolean = false;
 
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('currentUser'));

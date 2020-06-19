@@ -48,10 +48,11 @@
             </td>
             <td>
               <div class="progress">
-                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60"
+                <div [ngStyle]="{'background-color': '#6286ED', 'color': 'white', 'width': (chap.completion_percentage) + '%' }">{{chap.completion_percentage}} %</div>
+                <!-- <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60"
                   aria-valuemin="0" aria-valuemax="100" [ngStyle]="{'width': (chap.completion_percentage) + '%'}">
                   {{chap.completion_percentage}} %
-                </div>
+                </div> -->
               </div>
             </td>
             <td class="_actions" *ngIf="user.role === 'admin'">

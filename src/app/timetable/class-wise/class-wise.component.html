@@ -5,36 +5,65 @@
         <app-class *ngIf="user.role === 'admin'" (classEvent)="receiveClass($event)" (sectionEvent)="receiveSection($event)"></app-class>
       </div>
     </div>
-  </section>
-  <section class="page-actions">
-    <div class="_select-or-search">
-      <div class="_select-group">
-        <form role="form" [formGroup]="timetableForm" (ngSubmit)="addTimetable()" *ngIf="user.role === 'admin'">
-          <select name="section" formControlName="subject_id" (change)="getSubject_teachers()">
-            <option *ngFor="let sub of subjects" value="{{sub.subject_id}}">{{sub.name}}</option>
-          </select>
-          <select name="section" formControlName="teacher_id">
-            <option *ngFor="let tch of teachers" value="{{tch.teacher_id}}">{{tch.teacher_name}}</option>
-          </select>
-          <select name="section" formControlName="day">
-            <option value="monday">Monday</option>
-            <option value="tuesday">Tuesday</option>
-            <option value="wednesday">Wednesday</option>
-            <option value="thursday">Thursday</option>
-            <option value="friday">Friday</option>
-            <option value="saturday">Saturday</option>
-            <option value="sunday">Sunday</option>
-          </select>
-          <select name="section" formControlName="session_id" (change)="getTime()">
-            <option *ngFor="let tim of timings; let j = index" value="{{tim.session_id}}">{{tim.session}}</option>
-          </select>
-          <div class="form-group pull-right">
-            <button type="submit" class="button button1 hvr-pop transition">Add Timetable</button>
+    <div class="add_div">
+      <form role="form" [formGroup]="timetableForm" (ngSubmit)="addTimetable()" *ngIf="user.role === 'admin'">
+        <div class="dropdown">
+          <button class="dropbtn" (click)="showSubjectList = true" (clickOutside)="showSubjectList = false">
+            {{!selected_subject ? 'select subject' : selected_subject}}
+          </button>
+          <div class="dropdown-content" [hidden]="!showSubjectList">
+            <a *ngFor="let sub of subjects;" (click)="timetableForm.value.subject_id = sub.subject_id;">{{sub.name}}</a>
           </div>
-        </form>
-      </div>
+        </div>
+        <div class="dropdown">
+          <button class="dropbtn" (click)="showTeacherList = true" (clickOutside)="showTeacherList = false">
+            {{!selected_teacher ? 'select teacher' : selected_teacher}}
+          </button>
+          <div class="dropdown-content" [hidden]="!showTeacherList">
+            <a *ngFor="let tch of teachers;" (click)="timetableForm.value.teacher_id = tch.teacher_id;">{{tch.teacher_name}}</a>
+          </div>
+        </div>
+        <div class="dropdown">
+          <button class="dropbtn" (click)="showDayList = true" (clickOutside)="showDayList = false">
+            {{!selected_day ? 'select day' : selected_day}}
+          </button>
+          <div class="dropdown-content" [hidden]="!showDayList">
+            <a *ngFor="let tch of teachers;" (click)="timetableForm.value.teacher_id = tch.teacher_id;">{{tch.teacher_name}}</a>
+          </div>
+        </div>
+        <div class="dropdown">
+          <button class="dropbtn" (click)="showDayList = true" (clickOutside)="showDayList = false">
+            {{!selected_day ? 'select day' : selected_day}}
+          </button>
+          <div class="dropdown-content" [hidden]="!showDayList">
+            <a *ngFor="let tch of teachers;" (click)="timetableForm.value.teacher_id = tch.teacher_id;">{{tch.teacher_name}}</a>
+          </div>
+        </div>
+        <!-- <select name="section" formControlName="subject_id" (change)="getSubject_teachers()">
+          <option *ngFor="let sub of subjects" value="{{sub.subject_id}}">{{sub.name}}</option>
+        </select> -->
+        <!-- <select name="section" formControlName="teacher_id">
+          <option *ngFor="let tch of teachers" value="{{tch.teacher_id}}">{{tch.teacher_name}}</option>
+        </select> -->
+        <select name="section" formControlName="day">
+          <option value="monday">Monday</option>
+          <option value="tuesday">Tuesday</option>
+          <option value="wednesday">Wednesday</option>
+          <option value="thursday">Thursday</option>
+          <option value="friday">Friday</option>
+          <option value="saturday">Saturday</option>
+          <option value="sunday">Sunday</option>
+        </select>
+        <select name="section" formControlName="session_id" (change)="getTime()">
+          <option *ngFor="let tim of timings; let j = index" value="{{tim.session_id}}">{{tim.session}}</option>
+        </select>
+        <div class="form-group pull-right">
+          <button type="submit" class="btn -cta">Add Timetable</button>
+        </div>
+      </form>
     </div>
   </section>
+
   <section class="table-and-pagination -classes-schedule">
     <div class="table-container">
       <table>
@@ -134,116 +163,7 @@
               <!-- <div class="timebtn txt">{{tbl.name}}</div>
               <div class="timebtn sbclr txt">{{tbl.teacher_name}}</div> -->
             </td>
-          </tr>
-          <tr class="trdivider">
-            <td>
-              <div class="imgDiv">
-                <div>
-                  <div><img src="../../../assets/images/student.jpg" alt=""></div>
-                </div>
-                <div class="text">
-                  <div class="headtext">Kazi Mohammed Erfan</div>
-                  <div class="subtext">Availability 48h</div>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="timebtn txt">Closed</div>
-            </td>
-            <td>
-              <div class="timebtn bclr txt">10.30-19.00</div>
-            </td>
-            <td>
-              <div class="timebtn sbclr txt">10.30-19.00</div>
-              <div class="timebtn sbclr txt">10.30-19.00</div>
-            </td>
-            <td>
-              <div class="timebtn bclr txt">10.30-19.00</div>
-            </td>
-            <td>
-              <div class="timebtn sbclr txt">10.30-19.00</div>
-            </td>
-            <td>
-              <div class="timebtn bclr txt">10.30-19.00</div>
-            </td>
-            <td>
-              <div class="timebtn sbclr txt">10.30-19.00</div>
-              <div class="timebtn txt">Closed</div>
-            </td>
-          </tr>
-          <tr class="trdivider">
-            <td>
-              <div class="imgDiv">
-                <div>
-                  <div><img src="../../../assets/images/student.jpg" alt=""></div>
-                </div>
-                <div class="text">
-                  <div class="headtext">Kazi Mohammed Erfan</div>
-                  <div class="subtext">Availability 48h</div>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="timebtn txt">Closed</div>
-            </td>
-            <td>
-              <div class="timebtn bclr txt">10.30-19.00</div>
-            </td>
-            <td>
-              <div class="timebtn sbclr txt">10.30-19.00</div>
-              <div class="timebtn sbclr txt">10.30-19.00</div>
-            </td>
-            <td>
-              <div class="timebtn bclr txt">10.30-19.00</div>
-            </td>
-            <td>
-              <div class="timebtn sbclr txt">10.30-19.00</div>
-            </td>
-            <td>
-              <div class="timebtn bclr txt">10.30-19.00</div>
-            </td>
-            <td>
-              <div class="timebtn sbclr txt">10.30-19.00</div>
-              <div class="timebtn txt">Closed</div>
-            </td>
-          </tr>
-          <tr class="trdivider">
-            <td>
-              <div class="imgDiv">
-                <div>
-                  <div><img src="../../../assets/images/student.jpg" alt=""></div>
-                </div>
-                <div class="text">
-                  <div class="headtext">Kazi Mohammed Erfan</div>
-                  <div class="subtext">Availability 48h</div>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="timebtn txt">Closed</div>
-            </td>
-            <td>
-              <div class="timebtn bclr txt">10.30-19.00</div>
-            </td>
-            <td>
-              <div class="timebtn sbclr txt">10.30-19.00</div>
-              <div class="timebtn sbclr txt">10.30-19.00</div>
-            </td>
-            <td>
-              <div class="timebtn bclr txt">10.30-19.00</div>
-            </td>
-            <td>
-              <div class="timebtn sbclr txt">10.30-19.00</div>
-            </td>
-            <td>
-              <div class="timebtn bclr txt">10.30-19.00</div>
-            </td>
-            <td>
-              <div class="timebtn sbclr txt">10.30-19.00</div>
-              <div class="timebtn txt">Closed</div>
-            </td>
-          </tr>    
-                                  
+          </tr> 
         </tbody>
       </table>
     </div>

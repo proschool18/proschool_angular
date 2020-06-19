@@ -1,4 +1,4 @@
-<div id="main-content">
+<!-- <div id="main-content">
 
   <div class="row">
     <div class="container-fluid" id="buttonId1">
@@ -90,4 +90,61 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
+
+<main class="card mt-20 within-viewport">
+  <section class="page-actions">
+    <div class="_select_div">
+      <button class="btn -cta" routerLink="/main/admin/materials">Material</button>
+      <button class="btn -cta" routerLink="/main/admin/vendors">Vendors</button>
+      <button class="btn -cta" routerLink="/main/admin/materialIn">Material-In</button>
+      <button class="btn -cta" routerLink="/main/admin/materialOut">Material-Out</button>
+    </div>
+    <div class="add_div">
+      <button type="submit" class="btn -cta">Add Material-Out</button>
+    </div>
+  </section>
+  <section class="table-and-pagination -classes-schedule">
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th align="left">Material</th>
+            <th align="left">Receiver</th>
+            <th align="left">No of Units</th>
+            <th align="left">Received Date</th>
+            <th align="left">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let mat of materialsOut; let i=index">
+            <td>{{ i + 1 }}</td>
+            <td>{{mat.material}}</td>
+            <td>{{mat.first_name}}</td>
+            <td>{{mat.no_of_units}}</td>
+            <td>{{mat.received_date}}</td>
+            <td class="_actions">
+              <button class="btn" (click)="editMaterialOut(i)"><img src="../../../assets/images/edit-white.svg" alt="Edit" /></button>
+              <button class="btn" (click)="deleteMaterialOut(mat.material_out_id)"><img src="../../../assets/images/trash-white.svg" alt="Delete" /></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="_pagination">
+      <a href="" class="btn -previous">Previous</a>
+      <a href="" class="btn -current">1</a>
+      <a href="" class="btn">2</a>
+      <a href="" class="btn">3</a>
+      <a href="" class="btn">4</a>
+      <a href="" class="btn">5</a>
+      <a href="" class="btn">6</a>
+      <a href="" class="btn">7</a>
+      <a href="" class="btn">8</a>
+      <a href="" class="btn">9</a>
+      <a href="" class="btn">10</a>
+      <a href="" class="btn -next">Next</a>
+    </div>
+  </section>
+</main>

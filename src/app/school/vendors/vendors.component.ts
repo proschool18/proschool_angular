@@ -11,27 +11,17 @@ import { EditstoreComponent } from '../editstore/editstore.component';
   styleUrls: ['./vendors.component.css']
 })
 export class VendorsComponent implements OnInit {
-  config: any;
-  collection = { count: '', vendors: [] };
 
-  constructor(private service: StoreService, private fb: FormBuilder, public dialog: MatDialog) { 
-    this.config = {
-      itemsPerPage: 5,
-      currentPage: 1,
-      totalItems: this.collection.count
-    };
-  }
+  constructor(private service: StoreService, private fb: FormBuilder, public dialog: MatDialog) {}
+
+  showMaterialList: boolean = false;
 
   ngOnInit() {
     this.getVendors();
     this.getMaterials();
   }
 
-  pageChanged(event){
-    this.config.currentPage = event;
-  }
-
-  //vendors = [];
+  vendors = [];
   materials = [];
   selected_vendor;
   dialog_type: string;
@@ -49,7 +39,7 @@ export class VendorsComponent implements OnInit {
   getVendors() {
     this.service.getVendors()
       .subscribe(
-        res => { this.collection.vendors = res.vendor, console.log(res) }
+        res => { this.vendors = res.vendor, console.log(res) }
       )
   }
 
@@ -65,7 +55,7 @@ export class VendorsComponent implements OnInit {
     .subscribe(
       res => { 
         if(res == true) {
-          this.collection.vendors.push({
+          this.vendors.push({
             vendor_name: this.vendorForm.value.vendor_name,
             material: this.materials.filter(res => res.material_id === this.vendorForm.value.material)[0].material,
             material_id: this.vendorForm.value.material,
@@ -89,7 +79,7 @@ export class VendorsComponent implements OnInit {
       .subscribe(
         res => { 
           if(res == true) {
-            this.collection.vendors = this.collection.vendors.filter(res => res.vendor_id !== vendor_id)
+            this.vendors = this.vendors.filter(res => res.vendor_id !== vendor_id)
             this.alert_message = "Vendor Deleted Successfully";
             this.openAlert(this.alert_message)
           } else {
@@ -101,7 +91,7 @@ export class VendorsComponent implements OnInit {
   }
 
   editVendor(i) {
-    this.selected_vendor = this.collection.vendors[i];
+    this.selected_vendor = this.vendors[i];
     this.dialog_type = 'vendor';
     this.openDialog(this.dialog_type)
   }
@@ -123,11 +113,11 @@ export class VendorsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(
       data => {
         if(data) {
-          this.collection.vendors.filter( res => res.vendor_id == data.vendor_id)[0].vendor_name = data.vendor_name,
-          this.collection.vendors.filter( res => res.vendor_id == data.vendor_id)[0].material = this.materials.filter(res => res.material_id === data.material)[0].material,
-          this.collection.vendors.filter( res => res.vendor_id == data.vendor_id)[0].contact_no = data.contact_no,
-          this.collection.vendors.filter( res => res.vendor_id == data.vendor_id)[0].email = data.email,
-          this.collection.vendors.filter( res => res.vendor_id == data.vendor_id)[0].location = data.location,
+          this.vendors.filter( res => res.vendor_id == data.vendor_id)[0].vendor_name = data.vendor_name,
+          this.vendors.filter( res => res.vendor_id == data.vendor_id)[0].material = this.materials.filter(res => res.material_id === data.material)[0].material,
+          this.vendors.filter( res => res.vendor_id == data.vendor_id)[0].contact_no = data.contact_no,
+          this.vendors.filter( res => res.vendor_id == data.vendor_id)[0].email = data.email,
+          this.vendors.filter( res => res.vendor_id == data.vendor_id)[0].location = data.location,
           console.log("Dialog output:", data)
         }
       }

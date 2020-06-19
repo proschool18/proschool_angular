@@ -1,91 +1,78 @@
-<div id="main-content">
-
-  <div class="row">
-    <div class="container-fluid" id="buttonId1">
-      <button routerLink="/main/admin/materials" class="button button2 hvr-pop transition">Material</button>
-      <button routerLink="/main/admin/vendors" class="button button2 hvr-pop transition">Vendors</button>
-      <button routerLink="/main/admin/materialIn" class="button button2 hvr-pop transition">Material-In</button>
-      <button routerLink="/main/admin/materialOut" class="button button2 hvr-pop transition">Material-Out</button>
+<main class="card mt-20 within-viewport">
+  <section class="page-actions">
+    <div class="_select_div">
+      <button class="btn -cta" routerLink="/main/admin/materials">Material</button>
+      <button class="btn -cta" routerLink="/main/admin/vendors">Vendors</button>
+      <button class="btn -cta" routerLink="/main/admin/materialIn">Material-In</button>
+      <button class="btn -cta" routerLink="/main/admin/materialOut">Material-Out</button>
     </div>
-  </div>
+    <div class="add_div">
+      <button type="submit" class="btn -cta">Add Vendor</button>
+      <!-- <form role="form" [formGroup]="vendorForm" (ngSubmit)="addVendor()">
+        <input formControlName="vendor_name" placeholder="Enter Vendor Name..." type="text">
 
-  <div class="row">
-    <div class="container-fluid dashboard-content">
-      <div class="card selectcard">
-        <form class="searchForm" role="form" [formGroup]="vendorForm" (ngSubmit)="addVendor()">
-          <div class="form-group">
-            <label class="pull-left">Vendor Name</label>
-            <input class="form-control" formControlName="vendor_name" placeholder="Enter..." type="text">
-          </div>
-          <div class="form-group">
-            <label class="pull-left">Material</label>
-            <select class="form-control" formControlName="material">
-              <option>select...</option>
-              <option *ngFor="let mat of materials" value="{{mat.material_id}}">{{mat.material}}</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="pull-left">Email</label>
-            <input class="form-control" formControlName="email" placeholder="Enter..." type="email">
-          </div>
-          <div class="form-group">
-            <label class="pull-left">Contact Number</label>
-            <input class="form-control" formControlName="contact_no" placeholder="Enter..." type="number">
-          </div>
-          <div class="form-group">
-            <label class="pull-left">Location</label>
-            <input class="form-control" formControlName="location" placeholder="Enter..." type="text">
-          </div>
-          <div class="form-group">
-            <label class="pull-left">Address</label>
-            <input class="form-control" formControlName="address" placeholder="Enter..." type="text">
-          </div>
-          <div class="form-group pull-right">
-            <button type="submit" class="button button1 hvr-pop transition">Add Vendor</button>
-          </div>
-        </form>
-      </div>
-      <div class="card listcard">
-        <div class="pull-left">
-          <h4>Vendors</h4>
-        </div>
-        <div class="searchForm">
-          <div class="table-responsive">
-            <table style="width:100%;">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Vendor Name</th>
-                  <th>Material</th>
-                  <th>Contact Number</th>
-                  <th>Email</th>
-                  <th>Location</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let ven of collection.vendors | paginate: config; let i=index">
-                  <td>{{ (config.currentPage - 1) * config.itemsPerPage + i +1 }}</td>
-                  <td>{{ven.vendor_name}}</td>
-                  <td>{{ven.material}}</td>
-                  <td>{{ven.contact_no}}</td>
-                  <td>{{ven.email}}</td>
-                  <td>{{ven.location}}</td>
-                  <td>
-                        <div class="pattrenED">
-                          <div><i class="fa fa-pencil-square" aria-hidden="true" (click)="editVendor(i)"></i></div>
-                          <div><i class="fa fa-trash" aria-hidden="true" (click)="deleteVendor(ven.vendor_id)"></i></div>
-                        </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <div class="paginationdiv">
-              <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
-            </div>
-          </div>
-        </div>
-      </div>
+        <select name="standard" formControlName="material">
+          <option>select...</option>
+          <option *ngFor="let mat of materials" value="{{mat.material_id}}">{{mat.material}}</option>
+        </select>
+
+        <input formControlName="email" placeholder="Enter Email..." type="email">
+        
+        <input formControlName="contact_no" placeholder="Enter Contact Number..." type="number">
+
+        <input formControlName="location" placeholder="Enter the Location..." type="text">
+        
+        <input formControlName="address" placeholder="Enter the Address..." type="text">
+
+        <button type="submit" class="btn -cta">Add Vendor</button>
+      </form> -->
     </div>
-  </div>
-</div>
+  </section>
+  <section class="table-and-pagination -classes-schedule">
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th align="left">Vendor Name</th>
+            <th align="left">Material</th>
+            <th align="left">Contact Number</th>
+            <th align="left">Email</th>
+            <th align="left">Location</th>
+            <th align="left">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let ven of vendors; let i=index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ven.vendor_name}}</td>
+            <td>{{ven.material}}</td>
+            <td>{{ven.contact_no}}</td>
+            <td>{{ven.email}}</td>
+            <td>{{ven.location}}</td>
+            <td class="_actions">
+              <button class="btn" (click)="editVendor(i)"><img src="../../../assets/images/edit-white.svg"
+                  alt="Edit" /></button>
+              <button class="btn" (click)="deleteVendor(ven.vendor_id)"><img
+                  src="../../../assets/images/trash-white.svg" alt="Delete" /></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="_pagination">
+      <a href="" class="btn -previous">Previous</a>
+      <a href="" class="btn -current">1</a>
+      <a href="" class="btn">2</a>
+      <a href="" class="btn">3</a>
+      <a href="" class="btn">4</a>
+      <a href="" class="btn">5</a>
+      <a href="" class="btn">6</a>
+      <a href="" class="btn">7</a>
+      <a href="" class="btn">8</a>
+      <a href="" class="btn">9</a>
+      <a href="" class="btn">10</a>
+      <a href="" class="btn -next">Next</a>
+    </div>
+  </section>
+</main>

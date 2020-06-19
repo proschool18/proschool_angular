@@ -8,16 +8,11 @@ import { StoreService } from '../../_services/store.service';
   styleUrls: ['./payments.component.css']
 })
 export class PaymentsComponent implements OnInit {
-  config: any;
-  collection = { count: '', payments: [] };
 
-  constructor(private service: ServicesService, private storeservice: StoreService) { 
-    this.config = {
-      itemsPerPage: 5,
-      currentPage: 1,
-      totalItems: this.collection.count
-    };
-  }
+  constructor(private service: ServicesService, private storeservice: StoreService) {}
+
+  showVendorList = false;
+  showMaterialList = false;
 
   ngOnInit() {
     this.getVendors();
@@ -25,25 +20,18 @@ export class PaymentsComponent implements OnInit {
     this.getPayments();
   }
 
-  pageChanged(event){
-    this.config.currentPage = event;
-  }
-
   vendors = [];
   materials = [];
   all_payments = [];
-  //payments = [];
+  payments = [];
 
-  vendor;
-  material;
+  vendor = {vendor_id: '', vendor_name: ''};
+  material = {material_id: '', material: ''};
 
-  showVendorsList:  boolean = false;
-  showMaterialsList: boolean = false;
-        
- getPayments() {
+  getPayments() {
     this.service.getPayments()
       .subscribe(
-        res => { this.collection.payments = res.payments, this.all_payments = res.payments, console.log(res.payments) }
+        res => { this.payments = res.payments, this.all_payments = res.payments, console.log(res.payments) }
       )
   }
 
@@ -62,12 +50,12 @@ export class PaymentsComponent implements OnInit {
   }
 
   getVendor_Payments() {
-    this.collection.payments = this.all_payments.filter(pay => pay.vendor_id === this.vendor.vendor_id);
-    console.log(this.collection.payments)
+    this.payments = this.all_payments.filter(pay => pay.vendor_id === this.vendor.vendor_id);
+    console.log(this.payments)
   }
 
   getMaterial_payments() {
-    this.collection.payments = this.all_payments.filter(pay => pay.material_id === this.material.material_id);
+    this.payments = this.all_payments.filter(pay => pay.material_id === this.material.material_id);
   }
 
 }

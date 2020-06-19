@@ -15,14 +15,18 @@ export class SubjectComponent implements OnInit {
   @Output() sectionEvent = new EventEmitter<string>();
   @Output() subjectEvent = new EventEmitter<string>();
 
-  selected_class;
-  selected_section;
-  selected_subject;
+  selected_class:any = " ";
+  selected_section:any = " ";
+  selected_subject:any = " ";
 
   classes = [];
   all_sections = [];
   class_sections = [];
   subjects = [];
+
+  showClassList: boolean = false;
+  showSectionList: boolean = false;
+  showSubjectList: boolean = false;
 
   ngOnInit() {
     this.getClasses();
@@ -36,24 +40,24 @@ export class SubjectComponent implements OnInit {
   }
 
   getSections() {
-    this.classEvent.emit(this.selected_class)
-    this.service.getSections(this.selected_class)
+    this.classEvent.emit(this.selected_class.class_id)
+    this.service.getSections(this.selected_class.class_id)
       .subscribe(
         res => { this.class_sections = res.class_sections, console.log(res) }
       )
   }
   
   getSubjects() {
-    this.service.getSubjects(this.selected_section)
+    this.service.getSubjects(this.selected_section.section_id)
       .subscribe(
         res => { this.subjects = res.subjects, console.log(res) }
       )
   }
 
   get_sub() {
-    this.classEvent.emit(this.selected_class);
-    this.sectionEvent.emit(this.selected_section);
-    this.subjectEvent.emit(this.selected_subject);
+    this.classEvent.emit(this.selected_class.class_id);
+    this.sectionEvent.emit(this.selected_section.section_id);
+    this.subjectEvent.emit(this.selected_subject.subject_id);
   }
 
 }

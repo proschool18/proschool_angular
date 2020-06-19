@@ -13,16 +13,8 @@ import { User } from '../../_models/user';
   styleUrls: ['./expenses.component.css']
 })
 export class ExpensesComponent implements OnInit {
-  config: any;
-  collection = { count: '', expenses: [] };
 
-  constructor(private expenseService: ExpensesService, public dialog: MatDialog) { 
-    this.config = {
-      itemsPerPage: 5,
-      currentPage: 1,
-      totalItems: this.collection.count
-    };
-  }
+  constructor(private expenseService: ExpensesService, public dialog: MatDialog) {}
 
   user: User;
 
@@ -36,11 +28,7 @@ export class ExpensesComponent implements OnInit {
     }
   }
 
-  pageChanged(event){
-    this.config.currentPage = event;
-  }
-
-  //expenses = [];
+  expenses = [];
   all_expenses = [];
   merchants = [];
   // all_employees = [];
@@ -52,24 +40,24 @@ export class ExpensesComponent implements OnInit {
   getExpenses() {
     this.expenseService.getExpenses()
       .subscribe(
-        res => { this.collection.expenses = this.all_expenses = res.expenses, console.log(res) }
+        res => { this.expenses = this.all_expenses = res.expenses, console.log(res) }
       )
   }
 
   getEmployeeExpenses() {
     this.expenseService.getExpenses()
       .subscribe(
-        res => { this.collection.expenses = this.all_expenses = res.expenses.filter(data => data.employee_id === this.user.employee_id), console.log(this.all_expenses) }
+        res => { this.expenses = this.all_expenses = res.expenses.filter(data => data.employee_id === this.user.employee_id), console.log(this.all_expenses) }
       )
   }
 
   update_expense(status, i) {
     if(status == "pending") {     
-      this.collection.expenses[i].payment_status =  this.all_expenses[i].payment_status = "completed";
+      this.expenses[i].payment_status =  this.all_expenses[i].payment_status = "completed";
     } else {
-      this.collection.expenses[i].payment_status =  this.all_expenses[i].payment_status = "pending";
+      this.expenses[i].payment_status =  this.all_expenses[i].payment_status = "pending";
     }
-    this.expenseService.update_expense(this.collection.expenses[i].payment_status, this.collection.expenses[i].expense_id)
+    this.expenseService.update_expense(this.expenses[i].payment_status, this.expenses[i].expense_id)
     .subscribe(
       res => { 
         if(res == true) {

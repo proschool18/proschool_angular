@@ -6,6 +6,7 @@ import { TeacherSearchModule } from '../teacher-search/teacher-search.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { DirectivesModule } from '../_directives/_directives.module';
+
 import { StudentsRoutingModule } from './students-routing.module';
 import { InformationComponent } from './information/information.component';
 import { AdmissionComponent } from './admission/admission.component';

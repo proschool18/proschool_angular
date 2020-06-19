@@ -13,18 +13,10 @@ import { User } from '../../_models/user';
 })
 export class CommunicationsComponent implements OnInit {
 
-  config: any;
-  collection = { count: '', messages: [] };
-
-  constructor(private service: MessageService, public dialog: MatDialog) { 
-    this.config = {
-      itemsPerPage: 5,
-      currentPage: 1,
-      totalItems: this.collection.count
-    };
-  }
+  constructor(private service: MessageService, public dialog: MatDialog) {}
 
   user: User;
+  messages = [];
   employee_id;
   student_id;
   sent_to;
@@ -48,10 +40,6 @@ export class CommunicationsComponent implements OnInit {
     }
   }
 
-  pageChanged(event){
-    this.config.currentPage = event;
-  }
-
   selected_class: string;
   selected_section: string;
   dialog_type: string;
@@ -61,7 +49,7 @@ export class CommunicationsComponent implements OnInit {
     this.title = 'Inbox Messages';
     this.service.getInbox(this.sent_to)
     .subscribe(
-      res => { this.collection.messages = res.messages, console.log(res) }
+      res => { this.messages = res.messages, console.log(res) }
     )
   }
 
@@ -69,7 +57,7 @@ export class CommunicationsComponent implements OnInit {
     this.title = 'Inbox Messages';
     this.service.getParentsInbox(this.sent_to, this.selected_class, this.selected_section)
     .subscribe(
-      res => { this.collection.messages = res.messages, console.log(res) }
+      res => { this.messages = res.messages, console.log(res) }
     )
   }
 
@@ -77,7 +65,7 @@ export class CommunicationsComponent implements OnInit {
     this.title = 'Outbox Messages';
     this.service.getOutbox(this.sent_to)
     .subscribe(
-      res => { this.collection.messages = res.messages, console.log(res) }
+      res => { this.messages = res.messages, console.log(res) }
     )
   }
 
@@ -92,7 +80,7 @@ export class CommunicationsComponent implements OnInit {
     dialogConfig.width = '40%';
 
     dialogConfig.data = {
-      message: this.collection.messages.filter(data => data.message_id === message_id),
+      message: this.messages.filter(data => data.message_id === message_id),
       title: this.title
     };
 

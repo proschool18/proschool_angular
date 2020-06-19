@@ -13,16 +13,8 @@ import { User } from '../../_models/user';
   styleUrls: ['./claims.component.css']
 })
 export class ClaimsComponent implements OnInit {
-  config: any;
-  collection = { count: '', claims: [] };
 
-  constructor(private service: ServicesService, private expenseService: ExpensesService, private fb: FormBuilder, public dialog: MatDialog) { 
-    this.config = {
-      itemsPerPage: 5,
-      currentPage: 1,
-      totalItems: this.collection.count
-    };
-  }
+  constructor(private service: ServicesService, private expenseService: ExpensesService, private fb: FormBuilder, public dialog: MatDialog) {}
 
   user: User;
 
@@ -38,11 +30,7 @@ export class ClaimsComponent implements OnInit {
 
   }
 
-  pageChanged(event){
-    this.config.currentPage = event;
-  }
-
-  //claims = [];
+  claims = [];
   merchants = [];
   all_employees = [];
   employees = [];
@@ -73,14 +61,14 @@ export class ClaimsComponent implements OnInit {
   getClaims() {
     this.expenseService.getClaims()
       .subscribe(
-        res => { this.collection.claims = res.claims, console.log(res) }
+        res => { this.claims = res.claims, console.log(res) }
       )
   }
 
   getEmployeeClaims() {
     this.expenseService.getClaims()
       .subscribe(
-        res => { this.collection.claims = res.claims.filter(data => data.employee_id === this.user.employee_id), console.log(this.collection.claims) }
+        res => { this.claims = res.claims.filter(data => data.employee_id === this.user.employee_id), console.log(this.claims) }
       )
   }
 
@@ -89,7 +77,7 @@ export class ClaimsComponent implements OnInit {
     .subscribe(
       res => { 
         if(res == true) {
-          this.collection.claims.push({
+          this.claims.push({
             first_name: this.employees.filter(res => res.employee_id === this.claimForm.value.employee_id)[0].first_name,
             amount: this.claimForm.value.amount,
             date: this.claimForm.value.date,
@@ -108,11 +96,11 @@ export class ClaimsComponent implements OnInit {
 
   update_claim(status, i) {
     if(status == "pending") {     
-      this.collection.claims[i].claim_status = "Approved";
+      this.claims[i].claim_status = "Approved";
     } else {
-      this.collection.claims[i].claim_status = "pending";
+      this.claims[i].claim_status = "pending";
     }
-    this.expenseService.update_claim(this.collection.claims[i])
+    this.expenseService.update_claim(this.claims[i])
     .subscribe(
       res => { 
         if(res == true) {
@@ -131,7 +119,7 @@ export class ClaimsComponent implements OnInit {
       .subscribe(
         res => { 
           if(res == true) {
-            this.collection.claims = this.collection.claims.filter(res => res.claim_id !== claim_id)
+            this.claims = this.claims.filter(res => res.claim_id !== claim_id)
             this.alert_message = "Claim Deleted Successfully";
             this.openAlert(this.alert_message)
           } else {
@@ -143,7 +131,7 @@ export class ClaimsComponent implements OnInit {
   }
 
   editClaim(i) {
-    this.selected_claim = this.collection.claims[i];
+    this.selected_claim = this.claims[i];
     this.dialog_type = 'claims';
     this.openDialog(this.dialog_type)
   }

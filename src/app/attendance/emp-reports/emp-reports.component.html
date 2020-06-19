@@ -1,14 +1,4 @@
-<div id="main-content">
-
-    <!-- <div class="row">
-        <div class="container-fluid" id="buttonId1">
-            <button routerLink="/attendance/empreports" class="button button2 hvr-pop transition">Employees Day
-                Reports</button>
-            <button routerLink="/attendance/empreportsmonth" class="button button2 hvr-pop transition">Employees Month
-                Reports</button>
-        </div>
-    </div> -->
-
+<!-- <div id="main-content">
     <div class="row">
         <div class="container-fluid dashboard-content">
             <div class="card selectcard">
@@ -66,7 +56,6 @@
                                     <td>{{att.employee_doc[0].employee_code}}</td>
                                     <td>{{att.employee_doc[0].gender}}</td>
                                     <td [ngStyle]="{'background-color': (att.status == 'Present') ? '#5cb85c' : (att.status == 'Absent') ? '#d9534f' : '#f0ad4e', 'color': 'white' }">{{att.status}}</td>
-                                    <!-- <td [ngStyle]="{'background-color': (att.status == 'Present') ? '#1caf9a' : (att.status == 'Present') ? '#1caf9a' : '#e04b4a', 'color': 'white', 'margin-botton': '2px' }">{{att.status}}</td> -->
                                 </tr>
                             </tbody>
                         </table>
@@ -81,4 +70,65 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
+
+<main id="main-content" class="card mt-20 within-viewport">
+    <section class="page-actions">
+      <div class="_select-or-search">
+        <div class="_select-group">
+            <div class="dropdown">
+                <button class="dropbtn" (click)="showEmployeeTypeList = true" (clickOutside)="showEmployeeTypeList = false">
+                    {{!employee_type ? 'employee type' : employee_type}}
+                </button>
+                <div class="dropdown-content" [hidden]="!showEmployeeTypeList">
+                  <a (click)="category = 'teaching';">Teaching</a>
+                  <a (click)="category = 'non-teaching';">Non-Teaching</a>
+                  <a (click)="category = 'administrative';">Administrative</a>
+                </div>
+            </div>
+          <input class="form-control" [(ngModel)]="date" placeholder="Enter..." type="date">
+          <input class="form-control" [(ngModel)]="month" placeholder="Enter..." type="date">
+        </div>
+      </div>
+      <button (click)="getEmployeeAttendance()" class="btn -cta">Search</button>
+    </section>
+  
+    <section class="table-and-pagination -classes-schedule">
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th align="left">Name</th>
+              <th align="left">Employee Code</th>
+              <th align="left">Gender</th>
+              <th align="left">Attendance</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let att of attendance.employeeAttendence; let i = index">
+              <td>{{i+1}}</td>
+              <td>{{att.employee_doc[0].first_name}} {{att.employee_doc[0].last_name}}</td>
+              <td>{{att.employee_doc[0].employee_code}}</td>
+              <td>{{att.employee_doc[0].gender}}</td>
+              <td [ngStyle]="{'background-color': (att.status == 'Present') ? '#5cb85c' : (att.status == 'Absent') ? '#d9534f' : '#f0ad4e', 'color': 'white' }">{{att.status}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="_pagination">
+        <a href="" class="btn -previous">Previous</a>
+        <a href="" class="btn -current">1</a>
+        <a href="" class="btn">2</a>
+        <a href="" class="btn">3</a>
+        <a href="" class="btn">4</a>
+        <a href="" class="btn">5</a>
+        <a href="" class="btn">6</a>
+        <a href="" class="btn">7</a>
+        <a href="" class="btn">8</a>
+        <a href="" class="btn">9</a>
+        <a href="" class="btn">10</a>
+        <a href="" class="btn -next">Next</a>
+      </div>
+    </section>
+</main>

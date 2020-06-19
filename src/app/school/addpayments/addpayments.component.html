@@ -1,128 +1,102 @@
-<!-- <div id="main-content"> -->
 <main class="card mt-20 within-viewport">
-<!--   <div class="row">
-    <div class="container-fluid" id="buttonId1">
-      <button routerLink="/main/admin/payments" class="button button2 hvr-pop transition">Payments</button>
-      <button routerLink="/main/admin/addpayments" class="button button2 hvr-pop transition">Add Payments</button>
+  <section class="page-actions">
+    <div class="dropdown">
+      <button class="dropbtn" (click)="showVendorList = true" (clickOutside)="showVendorList = false">
+        {{!vendor.vendor_name ? 'select vendor' : vendor.vendor_name}}
+      </button>
+      <div class="dropdown-content" [hidden]="!showVendorList">
+        <a *ngFor="let ven of vendors" (click)="vendor = ven; getVendorPayments();">{{ven.vendor_name}}</a>
+      </div>
     </div>
-  </div> -->
-
-  <div class="row">
-    <div class="container-fluid dashboard-content">
-      <div class="container-fluid" id="buttonId1">
-          <button routerLink="/main/admin/payments" class="btn -cta">Payments</button>
-          &nbsp;&nbsp;
-          <button routerLink="/main/admin/addpayments" class="btn -cta">Add Payments</button>
+    <div class="dropdown">
+      <button class="dropbtn" (click)="showMaterialList = true" (clickOutside)="showMaterialList = false">
+        {{!material.material ? 'select material' : material.material}}
+      </button>
+      <div class="dropdown-content" [hidden]="!showMaterialList">
+        <a *ngFor="let mat of materials" (click)="material = mat; get_payments();">{{mat.material}}</a>
       </div>
-      <div class="card selectcard page-actions">
-        <div class="searchForm _select-or-search">
-            <div class="dropdown" >
-              <button class="dropbtn" (click)="showVendorsList = true" (clickOutside)="showVendorsList = false">
-                  {{paymentForm.value.vendor.vendor_name ? paymentForm.value.vendor.vendor_name : 'select vendor'}}
-              </button>
-              <div class="dropdown-content" [hidden]="!showVendorsList">
-                <a (click)="vendor = ''">select vendor</a>
-                <a *ngFor="let ven of vendors" (click)="paymentForm.value.vendor = ven">
-                  {{ven.vendor_name}}
-                </a>
+    </div>
+    <div class="add_div">
+      <button class="btn -cta" routerLink="/main/admin/payments">Payments</button>
+      <button class="btn -cta" routerLink="/main/admin/addpayments">Add Payments</button>
+    </div>
+  </section>
+
+  <section class="page-actions">
+    <div class="row-wrapper">
+      <div class="container-fluid dashboard-content">
+        <div class="card selectcard page-actions">
+          <form class="_select-or-search" role="form" [formGroup]="paymentForm" (ngSubmit)="addPayments()">
+  
+            <div class="form-group">
+              <!-- <label class="pull-left">Total Payment</label> -->
+              <input class="form-control" formControlName="payment_toPay" placeholder="Enter Total Payment"
+                [value]="total_payment" type="number">
+            </div>
+            <div class="form-group">
+              <!-- <label class="pull-left">Balance Payment</label> -->
+              <input class="form-control" formControlName="balance_payment" placeholder="Enter Balance Payment"
+                [value]="balance_payment" type="number" disabled>
+            </div>
+            <div class="form-group">
+              <!-- <label class="pull-left">Payment</label> -->
+              <input class="form-control" formControlName="payment" placeholder="Enter Payment" type="number">
+            </div>
+            <div class="form-group">
+              <div class="dropdown">
+                <mat-form-field>
+                  <input matInput [matDatepicker]="payment_date" [formControl]="payment_date">
+                  <mat-datepicker-toggle matSuffix [for]="payment_date"></mat-datepicker-toggle>
+                  <mat-datepicker #payment_date></mat-datepicker>
+                </mat-form-field>
               </div>
             </div>
-            <div class="dropdown" >
-              <button class="dropbtn" (click)="showMaterialsList = true" (clickOutside)="showMaterialsList = false">
-                  {{paymentForm.value.material.material ? paymentForm.value.material.material : 'select material'}}
-              </button>
-              <div class="dropdown-content" [hidden]="!showMaterialsList">
-                <a (click)="material = ''">select material</a>
-                <a *ngFor="let mat of materials" (click)="paymentForm.value.material = mat">{{mat.material}}</a>
-              </div>
+            <div class="add_div">
+              <button type="submit" class="btn -cta">Add Payment</button>
             </div>
-        </div>
-        <button type="button" class="btn -cta" (click)="get_payments()">Search</button>
-      </div>
-      
-      <div class="card selectcard page-actions">
-        <form class="searchForm _select-or-search" role="form" [formGroup]="paymentForm" (ngSubmit)="addPayments()">
-          <!-- <div class="form-group">
-            <label class="pull-left">Vendor Name</label>
-            <select class="form-control" formControlName="vendor" (change)="getVendorPayments()">
-              <option>select...</option>
-              <option *ngFor="let ven of vendors" value="{{ven.vendor_id}}">{{ven.vendor_name}}</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="pull-left">Material</label>
-            <select class="form-control" formControlName="material">
-              <option>select...</option>
-              <option *ngFor="let mat of materials" value="{{mat.material_id}}">{{mat.material}}</option>
-            </select>
-          </div> -->
-          <!-- <div class="form-group pull-right">
-            <div (click)="get_payments()" class="button button2 hvr-pop transition">Search</div>
-          </div> -->
-          
-          <div class="form-group">
-            <!-- <label class="pull-left">Total Payment</label> -->
-            <input class="form-control" formControlName="payment_toPay" placeholder="Enter Total Payment" [value]="total_payment" type="number">
-          </div>
-          <div class="form-group">
-            <!-- <label class="pull-left">Balance Payment</label> -->
-            <input class="form-control" formControlName="balance_payment" placeholder="Enter Balance Payment" [value]="balance_payment" type="number" disabled>
-          </div>
-          <div class="form-group">
-            <!-- <label class="pull-left">Payment</label> -->
-            <input class="form-control" formControlName="payment" placeholder="Enter Payment" type="number">
-          </div>
-          <div class="form-group">
-            <!-- <label class="pull-left">Payment Date</label> -->
-            <!-- <input class="form-control" formControlName="payment_date" placeholder="Enter Payment Date" type="date"> -->
-
-            <div class="dropdown">
-              <mat-form-field>
-                 <input matInput [matDatepicker]="payment_date" [formControl]="payment_date">
-                 <mat-datepicker-toggle matSuffix [for]="payment_date"></mat-datepicker-toggle>
-                 <mat-datepicker #payment_date></mat-datepicker>
-              </mat-form-field>
-            </div>
-          </div>
-        </form>
-        <button type="submit" class="btn -cta">Add Payment</button>
-      </div>
-      <div class="card listcard">
-        <div class="pull-left">
-          <h4>Payment</h4>
-        </div>
-
-        <div class="searchForm">
-          <div class="table-responsive">
-            <table style="width:100%;">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Payment Paid</th>
-                  <th>Payment Date</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let pay of collection.payments | paginate: config; let i=index">
-                  <td>{{ (config.currentPage - 1) * config.itemsPerPage + i +1 }}</td>
-                  <td>{{pay.payment}}</td>
-                  <td>{{pay.payment_date}}</td>
-                  <td>
-                        <div class="pattrenED">
-                          <div><i class="fa fa-trash" aria-hidden="true" (click)="deletePayment((config.currentPage - 1) * config.itemsPerPage + i)"></i></div>
-                        </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <div class="paginationdiv">
-              <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
-            </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>
-  </div>
-<!-- </div> -->
+  </section>
+  
+  <section class="table-and-pagination -classes-schedule">
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Payment Paid</th>
+            <th>Payment Date</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pay of payments; let i=index">
+            <td>{{ i + 1 }}</td>
+            <td>{{pay.payment}}</td>
+            <td>{{pay.payment_date}}</td>
+            <td class="_actions">
+              <button class="btn" (click)="deletePayment(i)"><img src="../../../assets/images/trash-white.svg"
+                  alt="Delete" /></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="_pagination">
+      <a href="" class="btn -previous">Previous</a>
+      <a href="" class="btn -current">1</a>
+      <a href="" class="btn">2</a>
+      <a href="" class="btn">3</a>
+      <a href="" class="btn">4</a>
+      <a href="" class="btn">5</a>
+      <a href="" class="btn">6</a>
+      <a href="" class="btn">7</a>
+      <a href="" class="btn">8</a>
+      <a href="" class="btn">9</a>
+      <a href="" class="btn">10</a>
+      <a href="" class="btn -next">Next</a>
+    </div>
+  </section>
 </main>

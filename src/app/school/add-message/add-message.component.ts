@@ -16,6 +16,13 @@ import { User } from '../../_models/user';
 })
 export class AddMessageComponent implements OnInit {
 
+  showCategoryList: boolean = false;
+  showClassList: boolean = false;
+  showSectionList: boolean = false;
+  showStudentList: boolean = false;
+  showEmployeeTypeList: boolean = false;
+  showEmployeeList: boolean = false;
+
   class: string;
   section: string;
   dialog_type: string;

@@ -19,6 +19,7 @@ export class EmployeeinfoComponent implements OnInit {
   employees = [];
   alert_message: string;
   employee_type;
+  showEmployeeList: boolean = true;
 
   employeeForm: FormGroup = this.fb.group({
     employee_type: ['', Validators.required],

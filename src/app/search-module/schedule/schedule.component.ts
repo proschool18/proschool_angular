@@ -15,9 +15,13 @@ export class ScheduleComponent implements OnInit {
   @Output() sectionEvent = new EventEmitter<string>();
   @Output() scheduleEvent = new EventEmitter<string>();
 
-  selected_class;
-  selected_section;
-  selected_schedule;
+  selected_class: any = '';
+  selected_section: any = '';
+  selected_schedule: any = '';
+
+  showClassList: boolean = false;
+  showSectionList: boolean = false;
+  showScheduleList: boolean = false;
 
   classes = [];
   all_sections = [];
@@ -38,7 +42,7 @@ export class ScheduleComponent implements OnInit {
 
   getSections() {
     // this.classEvent.emit(this.classForm.value.selected_class)
-    this.service.getSections(this.selected_class)
+    this.service.getSections(this.selected_class.class_id)
       .subscribe(
         res => { this.class_sections = res.class_sections, console.log(res) }
       )
@@ -53,8 +57,8 @@ export class ScheduleComponent implements OnInit {
   }
 
   get_sch() {
-    this.classEvent.emit(this.selected_class);
-    this.sectionEvent.emit(this.selected_section);
+    this.classEvent.emit(this.selected_class.class_id);
+    this.sectionEvent.emit(this.selected_section.section_id);
     this.scheduleEvent.emit(this.selected_schedule);
   }
 

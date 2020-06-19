@@ -1,91 +1,69 @@
-<!-- <div id="main-content"> -->
-  <main class="card mt-20 within-viewport">
-
- <!--  <div class="row">
-    <div class="container-fluid" id="buttonId1">
-      <button routerLink="/main/admin/payments" class="button button2 hvr-pop transition">Payments</button> -->
-      <!-- <button (click)="get_payments('materials')" class="button button2 hvr-pop transition">Material Payments</button> -->
-     <!--  <button routerLink="/main/admin/addpayments" class="button button2 hvr-pop transition">Add Payments</button>
-    </div>
-  </div> -->
-
-  <div class="row">
-    <div class="container-fluid dashboard-content">
-      <div class="container-fluid" id="buttonId1">
-          <button routerLink="/main/admin/payments" class="btn -cta">Payments</button>
-          &nbsp;&nbsp;
-          <button routerLink="/main/admin/addpayments" class="btn -cta">Add Payments</button>
-      </div>
-      <div class="card selectcard page-actions">
-        
-        <div class="searchForm _select-or-search">
-
-            <div class="dropdown" >
-              <button class="dropbtn" (click)="showVendorsList = true" (clickOutside)="showVendorsList = false">
-                  {{vendor ? vendor.vendor_name : 'select vendor'}}
-              </button>
-              <div class="dropdown-content" [hidden]="!showVendorsList">
-                <a (click)="vendor = ''">select vendor</a>
-                <a *ngFor="let ven of vendors" (click)="vendor = ven">{{ven.vendor_name}}</a>
-              </div>
-            </div>&nbsp;
-            <button type="button" class="btn -cta" (click)="getVendor_Payments()">Search</button>
-
-            
-            <div class="dropdown" >
-              <button class="dropbtn" (click)="showMaterialsList = true" (clickOutside)="showMaterialsList = false">
-                  {{material ? material.material : 'select material'}}
-              </button>
-              <div class="dropdown-content" [hidden]="!showMaterialsList">
-                <a (click)="material = ''">select material</a>
-                <a *ngFor="let mat of materials" (click)="material = mat">{{mat.material}}</a>
-              </div>
-            </div>&nbsp;
-            <button type="button" class="btn -cta" (click)="getMaterial_payments()">Search</button>
-        </div>
-      </div>
-       
-      <div class="card listcard">
-        <div class="pull-left">
-          <h4>Payments</h4>
-        </div>
-        <div class="searchForm">
-          <div class="table-responsive">
-            <table style="width:100%;">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Vendor</th>
-                  <th>Material</th>
-                  <th>Payment to Pay</th>
-                  <th>Paid</th>
-                  <th>Balance</th>
-                  <th>Payment Status</th>
-                  <th>Due Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let pay of collection.payments | paginate: config; let i=index">
-                  <td>{{ (config.currentPage - 1) * config.itemsPerPage + i +1 }}</td>
-                  <td>{{pay.vendor_name}}</td>
-                  <td>{{pay.material}}</td>
-                  <td>{{pay.payment_toPay}}</td>
-                  <td>{{pay.payment_paid}}</td>
-                  <td>{{pay.payment_balance}}</td>
-                  <td>{{pay.payment_status}}</td>
-                  <td>{{pay.payment_dueDate}}</td>
-                </tr>
-              </tbody>
-            </table>
-            <div class="paginationdiv">
-              <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
-            </div>
-          </div>
-        </div>
+<main class="card mt-20 within-viewport">
+  <section class="page-actions">
+    <div class="dropdown" >
+      <button class="dropbtn" (click)="showVendorList = true" (clickOutside)="showVendorList = false">
+          {{!vendor.vendor_name ? 'select vendor' : vendor.vendor_name}}
+       </button>
+      <div class="dropdown-content" [hidden]="!showVendorList">
+        <a *ngFor="let ven of vendors" (click)="vendor = ven; getVendor_Payments();">{{ven.vendor_name}}</a>
       </div>
     </div>
-  </div>
-<!-- </div> -->
+    <div class="dropdown" >
+      <button class="dropbtn" (click)="showMaterialList = true" (clickOutside)="showMaterialList = false">
+          {{!material.material ? 'select material' : material.material}}
+       </button>
+      <div class="dropdown-content" [hidden]="!showMaterialList">
+        <a *ngFor="let mat of materials" (click)="material = mat; getMaterial_payments();">{{mat.material}}</a>
+      </div>
+    </div>
+    <div class="add_div">
+      <button class="btn -cta" routerLink="/main/admin/payments">Payments</button>
+      <button class="btn -cta" routerLink="/main/admin/addpayments">Add Payments</button>
+    </div>
+  </section>
+  <section class="table-and-pagination -classes-schedule">
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th align="left">Vendor</th>
+            <th align="left">Material</th>
+            <th align="left">Payment to Pay</th>
+            <th align="left">Paid</th>
+            <th align="left">Balance</th>
+            <th align="left">Payment Status</th>
+            <th align="left">Due Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pay of payments; let i=index">
+            <td>{{ i + 1 }}</td>
+            <td>{{pay.vendor_name}}</td>
+            <td>{{pay.material}}</td>
+            <td>{{pay.payment_toPay}}</td>
+            <td>{{pay.payment_paid}}</td>
+            <td>{{pay.payment_balance}}</td>
+            <td>{{pay.payment_status}}</td>
+            <td>{{pay.payment_dueDate}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="_pagination">
+      <a href="" class="btn -previous">Previous</a>
+      <a href="" class="btn -current">1</a>
+      <a href="" class="btn">2</a>
+      <a href="" class="btn">3</a>
+      <a href="" class="btn">4</a>
+      <a href="" class="btn">5</a>
+      <a href="" class="btn">6</a>
+      <a href="" class="btn">7</a>
+      <a href="" class="btn">8</a>
+      <a href="" class="btn">9</a>
+      <a href="" class="btn">10</a>
+      <a href="" class="btn -next">Next</a>
+    </div>
+  </section>
 </main>
-
 

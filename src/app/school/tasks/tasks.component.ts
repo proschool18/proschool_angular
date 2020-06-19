@@ -11,16 +11,8 @@ import { User } from '../../_models/user';
   styleUrls: ['./tasks.component.css']
 })
 export class TasksComponent implements OnInit {
-  config: any;
-  collection = { count: '', tasks: [] };
 
-  constructor(private taskservice: TasksService, private fb: FormBuilder, public dialog: MatDialog) {
-    this.config = {
-      itemsPerPage: 5,
-      currentPage: 1,
-      totalItems: this.collection.count
-    };
-   }
+  constructor(private taskservice: TasksService, private fb: FormBuilder, public dialog: MatDialog) {}
   
   user: User;
   alert_message: string;
@@ -32,11 +24,7 @@ export class TasksComponent implements OnInit {
     this.getTasks();
   }
 
-  pageChanged(event){
-    this.config.currentPage = event;
-  }
-
-  //tasks = [];
+  tasks = [];
   all_tasks = [];
 
   getTasks() {
@@ -48,9 +36,9 @@ export class TasksComponent implements OnInit {
 
   get_Tasks() {
     if(this.user.role === 'admin') {
-      this.collection.tasks = this.all_tasks.filter(task => task.task_status === 'completed');
+      this.tasks = this.all_tasks.filter(task => task.task_status === 'completed');
     } else if(this.user.role === 'teacher') {
-      this.collection.tasks = this.all_tasks.filter(task => task.employee_id === this.user.employee_id && task.task_status === 'completed');
+      this.tasks = this.all_tasks.filter(task => task.employee_id === this.user.employee_id && task.task_status === 'completed');
     }
   }
 
@@ -59,7 +47,7 @@ export class TasksComponent implements OnInit {
       .subscribe(
         res => { 
           if(res == true) {
-            this.collection.tasks = this.collection.tasks.filter(res => res.task_id !== task_id);
+            this.tasks = this.tasks.filter(res => res.task_id !== task_id);
             this.all_tasks = this.all_tasks.filter(res => res.task_id !== task_id)
             this.alert_message = "Task Deleted Successfully";
             this.openAlert(this.alert_message)
@@ -73,11 +61,11 @@ export class TasksComponent implements OnInit {
 
   update_status(status, i) {    
     if(status == "pending") {     
-      this.collection.tasks[i].task_status = "completed";
+      this.tasks[i].task_status = "completed";
     } else {
-      this.collection.tasks[i].task_status = "pending";
+      this.tasks[i].task_status = "pending";
     }
-    this.taskservice.updateStatus(this.collection.tasks[i].task_status, this.collection.tasks[i].task_id)
+    this.taskservice.updateStatus(this.tasks[i].task_status, this.tasks[i].task_id)
     .subscribe(
       res => { 
         if(res == true) {

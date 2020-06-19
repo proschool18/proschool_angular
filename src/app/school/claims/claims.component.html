@@ -1,4 +1,4 @@
-<div id="main-content">
+<!-- <div id="main-content">
 
   <div class="row">
     <div class="container-fluid" id="buttonId1">
@@ -110,4 +110,71 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
+
+<main class="card mt-20 within-viewport">
+  <section class="page-actions">
+    <div class="_select_div">
+      <button class="btn -cta" routerLink="/main/admin/expenses">Expenses</button>
+      <button class="btn -cta" routerLink="/main/admin/claims">Claims</button>
+    </div>
+  </section>
+  <section class="table-and-pagination -classes-schedule">
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th align="left">Employee</th>
+            <th align="left">Amount</th>
+            <th align="left">Category</th>
+            <th align="left">Claim Date</th>
+            <th align="left">Status</th>
+            <th align="left" *ngIf="user.role === 'admin'"></th>
+            <th align="left" class="pull-right">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let cl of claims; let i=index">
+            <td>{{ i + 1 }}</td>
+            <td>{{cl.first_name}}</td>
+            <td>Rs. {{cl.amount}}</td>
+            <td>{{cl.category}}</td>
+            <td>{{cl.date}}</td>
+            <td>{{cl.claim_status}}</td>
+            <td *ngIf="user.role === 'admin' && cl.claim_status == 'pending'">
+              <span class="_chip -class-running"
+                [ngStyle]="{'background-color': '#5cb85c', 'color': 'white' }"
+                (click)="update_claim(cl.claim_status, i)">Approve</span>
+            </td>
+            <td *ngIf="user.role === 'admin' && cl.claim_status == 'Approved'">
+              <span class="_chip -class-running"
+                [ngStyle]="{'background-color': '#d9534f', 'color': 'white' }"
+                (click)="update_claim(cl.claim_status, i)">Unapprove</span>
+            </td>
+            <td class="_actions">
+              <button class="btn" (click)="editClaim(i)"><img src="../../../assets/images/edit-white.svg"
+                  alt="Edit" /></button>
+              <button class="btn" (click)="deleteClaim(cl.claim_id)"><img
+                  src="../../../assets/images/trash-white.svg" alt="Delete" /></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="_pagination">
+      <a href="" class="btn -previous">Previous</a>
+      <a href="" class="btn -current">1</a>
+      <a href="" class="btn">2</a>
+      <a href="" class="btn">3</a>
+      <a href="" class="btn">4</a>
+      <a href="" class="btn">5</a>
+      <a href="" class="btn">6</a>
+      <a href="" class="btn">7</a>
+      <a href="" class="btn">8</a>
+      <a href="" class="btn">9</a>
+      <a href="" class="btn">10</a>
+      <a href="" class="btn -next">Next</a>
+    </div>
+  </section>
+</main>

@@ -11,26 +11,15 @@ import { EditstoreComponent } from '../editstore/editstore.component';
   styleUrls: ['./material.component.css']
 })
 export class MaterialComponent implements OnInit {
-  config: any;
-  collection = { count: '', materials: [] };
 
-  constructor(private service: StoreService, private fb: FormBuilder, public dialog: MatDialog) { 
-    this.config = {
-      itemsPerPage: 5,
-      currentPage: 1,
-      totalItems: this.collection.count
-    };
-  }
+
+  constructor(private service: StoreService, private fb: FormBuilder, public dialog: MatDialog) {}
 
   ngOnInit() {
     this.getMaterials();
   }
 
-  pageChanged(event){
-    this.config.currentPage = event;
-  }
-
-  //materials = [];
+  materials = [];
   selected_material;
   dialog_type: string;
   alert_message: string;
@@ -45,7 +34,7 @@ export class MaterialComponent implements OnInit {
   getMaterials() {
     this.service.getMaterials()
       .subscribe(
-        res => { this.collection.materials = res.material, console.log(res) }
+        res => { this.materials = res.material, console.log(res) }
       )
   }
 
@@ -54,7 +43,7 @@ export class MaterialComponent implements OnInit {
     .subscribe(
       res => { 
         if(res == true) {
-          this.collection.materials.push(this.materialForm.value)
+          this.materials.push(this.materialForm.value)
           this.alert_message = "Material Added Successfully";
           this.openAlert(this.alert_message)
         } else {
@@ -70,7 +59,7 @@ export class MaterialComponent implements OnInit {
       .subscribe(
         res => { 
           if(res == true) {
-            this.collection.materials = this.collection.materials.filter(res => res.material_id !== material_id)
+            this.materials = this.materials.filter(res => res.material_id !== material_id)
             this.alert_message = "Material Deleted Successfully";
             this.openAlert(this.alert_message)
           } else {
@@ -82,7 +71,7 @@ export class MaterialComponent implements OnInit {
   }
 
   editMaterial(i) {
-    this.selected_material = this.collection.materials[i];
+    this.selected_material = this.materials[i];
     this.dialog_type = 'material';
     this.openDialog(this.dialog_type)
   }
@@ -104,8 +93,8 @@ export class MaterialComponent implements OnInit {
     dialogRef.afterClosed().subscribe(
       data => {
         if(data) {
-          this.collection.materials.filter( res => res.material_id == data.material_id)[0].material = data.material,
-          this.collection.materials.filter( res => res.material_id == data.material_id)[0].category = data.category,
+          this.materials.filter( res => res.material_id == data.material_id)[0].material = data.material,
+          this.materials.filter( res => res.material_id == data.material_id)[0].category = data.category,
           console.log("Dialog output:", data)
         }
       }

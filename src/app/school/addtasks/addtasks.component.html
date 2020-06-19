@@ -1,4 +1,4 @@
-<form role="form" [formGroup]="tasksForm" (ngSubmit)="submitTask()">
+<!-- <form role="form" [formGroup]="tasksForm" (ngSubmit)="submitTask()">
   <div class="row" id="list-heading">
     <div class="pull-left">
       <h4>Add Tasks</h4>
@@ -59,4 +59,67 @@
       <div (click)="close()" class="button button1 hvr-pop transition pull-left">Close</div>
     </div>
   </div>
-</form>
+</form> -->
+
+<div id="main-content1">
+  <div class="blue-top-bar"></div>
+  <form role="form" [formGroup]="tasksForm" (ngSubmit)="submitTask()">
+    <div class="row-wrapper">
+      <div class="col-full-3">
+        Task :
+      </div>
+      <div class="col-full-6">
+        <textarea formControlName="task" [value]="tasks.task" cols="60" rows="5"></textarea>
+      </div>
+    </div>
+    <div class="row-wrapper">
+      <div class="col-full-3">
+        Department :
+      </div>
+      <div class="col-full-3">
+        <select class="form-control" formControlName="department" [value]="tasks.department" (change)="get_employees()">
+          <option>Select...</option>
+          <option value="teaching">Teaching</option>
+          <option value="non-teaching">Non-Teaching</option>
+          <option value="adminstrative">Administrative</option>
+        </select>
+      </div>
+      <div class="col-full-3">
+        Assigned To :
+      </div>
+      <div class="col-full-3">
+        <select class="form-control" formControlName="assigned_to" [value]="tasks.assigned_to">
+          <option>Select...</option>
+          <option *ngFor="let emp of employees" value="{{emp.employee_id}}">{{emp.first_name}}
+            {{emp.last_name}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="row-wrapper">
+      <div class="col-full-3">
+        Priority :
+      </div>
+      <div class="col-full-3">
+        <select class="form-control" formControlName="priority">
+          <option>Select...</option>
+          <option [defaultSelected]="tasks.priority === 'urgent'" value="urgent">Urgent</option>
+          <option [defaultSelected]="tasks.priority === 'normal'" value="normal">Normal</option>
+        </select>
+      </div>
+      <div class="col-full-3">
+        Due Date :
+      </div>
+      <div class="col-full-3">
+        <input type="date" class="form-control" [value]="tasks.assigned_on" formControlName="assigned_on">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3 pull-left">
+          <div class="btn -cta inactive-tab" (click)="close()">Cancel</div>
+      </div>
+      <div class="col-md-3 pull-right">
+          <button class="btn -cta active-tab" type="submit">Submit</button>
+      </div>
+  </div>
+  </form>
+</div>

@@ -12,8 +12,8 @@
               {{status}}
           </button>
           <div class="dropdown-content" [hidden]="!showStatusList">
-            <a (click)="getStudentsByStatus(); status = 'active';">Active</a>
-            <a (click)="getStudentsByStatus(); status = 'inactive';">Inactive</a>
+            <a (click)=" status = 'active'; getStudentsByStatus();">Active</a>
+            <a (click)="status = 'inactive'; getStudentsByStatus();">Inactive</a>
           </div>
         </div>
       </div>

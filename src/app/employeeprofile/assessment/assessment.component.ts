@@ -19,6 +19,8 @@ export class AssessmentComponent implements OnInit {
   employee_id = this.route.snapshot.paramMap.get('id');
   i;j;
   n = 0;
+  showClassList: boolean = false;
+  showSectionList: boolean = false;
 
   alert_message: string;
 
@@ -61,8 +63,8 @@ export class AssessmentComponent implements OnInit {
     }
   ]
 
-  selected_class;
-  selected_section;
+  selected_class: any = {class_id: '', name: ''};
+  selected_section: any = {section_id: '', name: ''};
 
   classes = [];
   sections = [];
@@ -85,26 +87,26 @@ export class AssessmentComponent implements OnInit {
   getTeacherClasses() {
     this.teacherService.getTeacherClasses(this.employee_id)
     .subscribe(
-      res => { this.classes = res.school_classes, this.selected_class = res.school_classes[0].class_id, this.getTeacherSections(), console.log(res) }
+      res => { this.classes = res.school_classes, this.selected_class.class_id = res.school_classes[0].class_id, this.getTeacherSections(), console.log(res) }
     )
   }
 
   getTeacherSections() {
-    this.teacherService.getTeacherSections(this.employee_id, this.selected_class)
+    this.teacherService.getTeacherSections(this.employee_id, this.selected_class.class_id)
     .subscribe(
-      res => { this.sections = res.class_sections, this.selected_section = res.class_sections[0].section_id, this.getTeachingAssessment(), this.getCourseAssessment(), console.log(res) }
+      res => { this.sections = res.class_sections, this.selected_section.section_id = res.class_sections[0].section_id, this.getTeachingAssessment(), this.getCourseAssessment(), console.log(res) }
     )
   }
 
   getTeachingAssessment() {
-    this.teacherService.getTeachingAssessment(this.employee_id, this.selected_section)
+    this.teacherService.getTeachingAssessment(this.employee_id, this.selected_section.section_id)
     .subscribe(
       res => { this.teaching_assessments = res, this.View(this.n, 'teaching'), console.log(this.teaching_assessments)}
     )
   }
 
   getCourseAssessment() {
-    this.teacherService.getCourseAssessment(this.employee_id, this.selected_section)
+    this.teacherService.getCourseAssessment(this.employee_id, this.selected_section.section_id)
     .subscribe(
       res => { this.delivery_assessments = res, console.log(this.delivery_assessments)}
     )
@@ -131,6 +133,7 @@ export class AssessmentComponent implements OnInit {
         this.chartData.push(this.teaching_assessments[n].examResults[this.i].efficiency);
         console.log(this.chartData)
         this.chartLabels.push(this.teaching_assessments[n].examResults[this.i].exam_title);
+        console.log(this.chartLabels)
       }
     } else if(assessment === 'course') {
       for(this.i = 0; this.i < this.delivery_assessments[n].chapters.length; this.i++) {      

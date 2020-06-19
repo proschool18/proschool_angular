@@ -1,81 +1,76 @@
-<div id="main-content">
-
-  <!-- <div class="row">
-    <div class="container-fluid" id="buttonId1">
-      <button (click)="att_date(0)" class="button button2 hvr-pop transition">Attendance</button>
-      <button (click)="att_date(1)" class="button button2 hvr-pop transition">Attendance with Date</button>
-      <button routerLink="/academics/chapters" class="button button2 hvr-pop transition">Attendance Edit</button>
-    </div>
-  </div> -->
-
-  <div class="row">
-    <div class="container-fluid dashboard-content">
-      <div class="card selectcard">
-        <form class="searchForm" role="form" [formGroup]="employeeForm" (ngSubmit)="get_selectedemployees()">
-          <div class="form-group">
-            <label class="pull-left">Employee Type</label>
-            <select class="form-control" formControlName="employee_type">
-              <option value="all">All</option>
-              <option value="teaching">Teaching</option>
-              <option value="non-teaching">Non-Teaching</option>
-              <option value="administrative">Administrative</option>
-            </select>
+<main id="main-content" class="card mt-20 within-viewport">
+  <section class="page-actions">
+    <div class="_select-or-search">
+      <div class="_select-group">
+        <div class="dropdown">
+          <button class="dropbtn" (click)="showEmployeeTypeList = true" (clickOutside)="showEmployeeTypeList = false">
+            {{!employee_type ? 'All Employees' : employee_type}}
+          </button>
+          <div class="dropdown-content" [hidden]="!showEmployeeTypeList">
+            <a (click)="employee_type = 'teaching'; get_selectedemployees();">Teaching</a>
+            <a (click)="employee_type = 'non-teaching'; get_selectedemployees();">Non-Teaching</a>
+            <a (click)="employee_type = 'administrative'; get_selectedemployees();">Administrative</a>
           </div>
-          <div class="form-group">
-            <label class="pull-left">Date</label>
-            <input class="form-control" formControlName="date" placeholder="Enter..." type="date">
-          </div>
-          <div class="form-group pull-right">
-            <button type="submit" class="button button2 hvr-pop transition">Select</button>
-          </div>
-        </form>
+        </div>
+        <div class="form-group searchForm dropdown">
+          <mat-form-field>
+            <input matInput [matDatepicker]="picker" [formControl]="date">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <!-- </div> -->
       </div>
+    </div>
+    <button (click)="addEmployeeAttendance()" class="btn -cta">Submit</button>
+  </section>
+  <!-- </div> -->
 
-      <div class="card listcard">
-        <div class="row">
+  <!-- <div class="card listcard"> -->
+  <!--  <div class="row">
           <div class="pull-left">
-            <h4>Employee Attendance</h4>
+            <h4>Student Attendance</h4>
           </div>
-        </div>
-        <div class="row" style="margin: 0px 78px 0px 38px">
-          <div class="form-group pull-left">
-            <button type="submit" class="button button1 hvr-pop transition"
-              style="margin-right: 10px; background-color: #5cb85c" (click)="allAttendance('Present')">All
-              Present</button>
-            <button type="submit" class="button button1 hvr-pop transition"
-              style="margin-right: 10px; background-color: #d9534f" (click)="allAttendance('Absent')">All
-              Absent</button>
-            <button type="submit" class="button button1 hvr-pop transition"
-              style="margin-right: 10px; background-color: #f0ad4e" (click)="allAttendance('On Leave')">All On
-              Leave</button>
-          </div>
-          <div class="form-group pull-right">
-            <button type="submit" class="button button1 hvr-pop transition" (click)="addEmployeeAttendance()">Submit
+        </div> -->
+  <!-- <div class="row"> -->
+  <section class="table-and-pagination -classes-schedule">
+    <div class="attendance-filter-group">
+      <button type="submit" class="button btn-attendance-filter bg-green"
+        (click)="allAttendance('Present')">Present</button>
+      <button type="submit" class="button btn-attendance-filter bg-red"
+        (click)="allAttendance('Absent')">Absent</button>
+      <button type="submit" class="button btn-attendance-filter bg-yellow" (click)="allAttendance('On Leave')">On
+        Leave</button>
+    </div>
+    <!-- <div class="form-group pull-right">
+            <button type="submit" class="button button1 hvr-pop transition" (click)="addAttendance()">Submit
               Attendance</button>
-          </div>
-        </div>
+          </div> -->
+    <!-- </div> -->
 
-        <div class="searchForm">
-          <div class="card attendancecard hvr-bounce-in transition" *ngFor="let emp of employees; let i = index;">
-            <div class="attprofpic">
-              <img src="../../../assets/images/student.jpg" alt="">
-            </div>
-            <div>
-              <div class="nameroll">{{emp.first_name}}</div>
-              <div class="nameroll">Code: {{emp.employee_code}}</div>
-            </div>
-            <div class="attreport">
-              <div class="attreportbtn present" (click)="submit(i, 'Present')"
-                [ngClass]="{'present-select': emp.status === 'Present'}">P</div>
-              <div class="attreportbtn absent" (click)="submit(i, 'Absent')"
-                [ngClass]="{'absent-select': emp.status === 'Absent'}">A</div>
-              <div class="attreportbtn leave" (click)="submit(i, 'On Leave')"
-                [ngClass]="{'leave-select': emp.status === 'On Leave'}">L</div>
-            </div>
-          </div>
+    <div class="attendance-card-group">
+      <div class="attendance-student-card" *ngFor="let emp of employees; let i = index;">
+        <div class="attprofpic">
+          <img src="../../../assets/images/student.png" alt="">
+        </div>
+        <div>
+          <div class="nameroll">{{std.first_name}} {{std.last_name}}</div>
+          <div class="nameroll">Roll no: {{std.roll_no}}</div>
+        </div>
+        <div class="attreport">
+          <div class="attreportbtn present" (click)="submit(i, 'Present')"
+            [ngClass]="{'present-select': std.status === 'Present'}"><span>P</span></div>
+          <div class="attreportbtn absent" (click)="submit(i, 'Absent')"
+            [ngClass]="{'absent-select': std.status === 'Absent'}"><span>A</span></div>
+          <div class="attreportbtn leave" (click)="submit(i, 'On Leave')"
+            [ngClass]="{'leave-select': std.status === 'On Leave'}"><span>L</span></div>
         </div>
       </div>
-
     </div>
-  </div>
-</div>
+  </section>
+  <!-- </div> -->
+
+  <!-- </div> -->
+  <!-- </div> -->
+
+</main>

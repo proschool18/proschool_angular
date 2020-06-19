@@ -1,4 +1,4 @@
-<div id="main-content">
+<!-- <div id="main-content">
     <div class="row">
         <div class="container-fluid" id="buttonId1">
             <button routerLink="/main/employeeprofile/profile/{{employee_id}}"
@@ -95,4 +95,105 @@
         </div>
     </div>
 
-</div>
+</div> -->
+
+<main class="card mt-20 within-viewport" style="height: auto;">
+    <div class="page-actions">
+        <section class="student-intro">
+            <img src="/assets/images/student.png">
+            <h4>Vinod Kumar Alluri</h4>
+            <h4>Class X - A</h4>
+            <h4>Roll No : 1</h4>
+
+            <div class="col-wrapper">
+                <button routerLink="/main/employeeprofile/profile/{{employee_id}}"
+                    class="btn -cta active-tab">Profile</button>
+                <button routerLink="/main/employeeprofile/attendance/{{employee_id}}"
+                    class="btn -cta active-tab">Attendance</button>
+                <button routerLink="/main/employeeprofile/academics/{{employee_id}}"
+                    class="btn -cta active-tab">Academics</button>
+                <button routerLink="/main/employeeprofile/assessment/{{employee_id}}"
+                    class="btn -cta active-tab">Assessment</button>
+            </div>
+
+        </section>
+        <section class="student-task-section">
+            <section class="page-actions">
+                <div class="dropdown">
+                    <button class="dropbtn" (click)="showClassList = true" (clickOutside)="showClassList = false">
+                        {{!selected_class.name ? 'Select Class' : selected_class.name}}
+                    </button>
+                    <div class="dropdown-content" [hidden]="!showClassList">
+                        <a *ngFor="let class of classes"
+                            (click)="selected_class = class; getTeacherSections();">{{class.name}}</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <button class="dropbtn" (click)="showSectionList = true" (clickOutside)="showSectionList = false">
+                        {{!selected_section.name ? 'Select Section' : selected_section.name}}
+                    </button>
+                    <div class="dropdown-content" [hidden]="!showSectionList">
+                        <a *ngFor="let sec of sections"
+                            (click)="selected_section = sec; getTeachingAssessment(); getCourseAssessment();">{{sec.name}}</a>
+                    </div>
+                </div>
+            </section>
+            <section class="table-and-pagination -classes-schedule">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th align="left">Subject</th>
+                                <th align="left">Teaching</th>
+                                <th align="left">Course Delivery</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let teach of teaching_assessments; let i = index; let course of delivery_assessments">
+                                <td>{{i+1}}</td>
+                                <td>{{teach.subject_name}}</td>
+                                <td (click)="View(i, 'teaching')">
+                                    <div class="hor-progress-wrapper">
+                                        <div class="hor-progress-track">
+                                            <span class="hor-progress-filled" 
+                                            [ngStyle]="{'width': teach.totalEfficiency + '%'}"></span>
+                                        </div>
+                                        <span class="hor-progress-title">{{teach.totalEfficiency}}%</span>
+                                    </div>
+                                </td>
+                                <td (click)="View(i, 'course')">
+                                    <div class="hor-progress-wrapper">
+                                        <div class="hor-progress-track">
+                                            <span class="hor-progress-filled" 
+                                            [ngStyle]="{'width': delivery_assessments[i].totalEfficiency + '%'}"></span>
+                                        </div>
+                                        <span class="hor-progress-title">{{delivery_assessments[i].totalEfficiency}}%</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="_attendance-box dynamic-bar-graph">
+                    <section role="tabpanel">
+                        <div class="_metrics">
+                            <div *ngFor="let data of chartData; let i = index; let label of chartLabels;">
+                                <div [ngClass] = "{'-total': data >= 80, '-due': (data > 60 && data < 80), '-attend': data <= 60}" class="_metric">
+                                    <div class="_bar">
+                                        <span class="_bar_progress" [ngStyle]="{'height': data +'%'}">
+                                        </span>
+                                    </div>
+                                    <div class="_name">
+                                        <span class="_legend">{{label}} %</span>
+                                        {{chartLabels[i]}} 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+        </section>
+    </div>
+</main>

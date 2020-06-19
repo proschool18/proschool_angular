@@ -65,8 +65,10 @@ export class InformationComponent implements OnInit {
   getStudentsByStatus() {
     if(this.status === 'active') {
       this.students = this.all_students.filter(data => data.status === 1)
+      console.log(this.students)
     } else if(this.status === 'inactive') {
       this.students = this.all_students.filter(data => data.status === 0)
+      console.log(this.students)
     }   
   }
 

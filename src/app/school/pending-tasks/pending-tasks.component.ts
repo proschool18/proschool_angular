@@ -12,8 +12,6 @@ import { User } from '../../_models/user';
   styleUrls: ['./pending-tasks.component.css']
 })
 export class PendingTasksComponent implements OnInit {
-  config: any;
-  collection = { count: '', tasks: [] };
 
   user: User;
   selected_task = {
@@ -33,13 +31,7 @@ export class PendingTasksComponent implements OnInit {
   dialog_type;
   alert_message: string;
 
-  constructor(private taskservice: TasksService, private fb: FormBuilder, public dialog: MatDialog) {
-    this.config = {
-      itemsPerPage: 5,
-      currentPage: 1,
-      totalItems: this.collection.count
-    };
-   }
+  constructor(private taskservice: TasksService, private fb: FormBuilder, public dialog: MatDialog) {}
 
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('currentUser'));
@@ -47,11 +39,7 @@ export class PendingTasksComponent implements OnInit {
     this.getTasks();
   }
 
-  pageChanged(event){
-    this.config.currentPage = event;
-  }
-
-  //tasks = [];
+  tasks = [];
   all_tasks = [];
 
   getTasks() {
@@ -64,9 +52,9 @@ export class PendingTasksComponent implements OnInit {
 
   get_Tasks() {
     if(this.user.role === 'admin') {
-      this.collection.tasks = this.all_tasks.filter(task => task.task_status === 'pending');
+      this.tasks = this.all_tasks.filter(task => task.task_status === 'pending');
     } else if(this.user.role === 'teacher') {
-      this.collection.tasks = this.all_tasks.filter(task => task.employee_id === this.user.employee_id && task.task_status === 'pending');
+      this.tasks = this.all_tasks.filter(task => task.employee_id === this.user.employee_id && task.task_status === 'pending');
     }
   }
 
@@ -80,7 +68,7 @@ export class PendingTasksComponent implements OnInit {
       .subscribe(
         res => { 
           if(res == true) {
-            this.collection.tasks = this.collection.tasks.filter(res => res.task_id !== task_id);
+            this.tasks = this.tasks.filter(res => res.task_id !== task_id);
             this.all_tasks = this.all_tasks.filter(res => res.task_id !== task_id)
             this.alert_message = "Task Deleted Successfully";
             this.openAlert(this.alert_message)
@@ -93,18 +81,18 @@ export class PendingTasksComponent implements OnInit {
   }
 
   editTask(i) {
-    this.selected_task = this.collection.tasks[i];
+    this.selected_task = this.tasks[i];
     this.dialog_type = 'edit';
     this.openDialog(this.dialog_type)
   }
 
   update_status(status, i) {    
     if(status == "pending") {     
-      this.collection.tasks[i].task_status = "completed";
+      this.tasks[i].task_status = "completed";
     } else {
-      this.collection.tasks[i].task_status = "pending";
+      this.tasks[i].task_status = "pending";
     }
-    this.taskservice.updateStatus(this.collection.tasks[i].task_status, this.collection.tasks[i].task_id)
+    this.taskservice.updateStatus(this.tasks[i].task_status, this.tasks[i].task_id)
     .subscribe(
       res => { 
         if(res == true) {
@@ -123,7 +111,7 @@ export class PendingTasksComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.autoFocus = true;
-    dialogConfig.width = '40%';
+    dialogConfig.width = '60%';
 
     dialogConfig.data = {
       selected_task: this.selected_task,

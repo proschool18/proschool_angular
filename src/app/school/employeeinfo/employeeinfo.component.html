@@ -2,12 +2,16 @@
   <section class="page-actions">
     <div class="_select-or-search">
       <div class="_select-group">
-        <select name="section" [(ngModel)]="employee_type" (change)="getEmployeesInfo()">
-          <option value="" selected>Select</option>
-          <option value="teaching">Teaching</option>
-          <option value="non-teaching">Non-Teaching</option>
-          <option value="administrative">Administrative</option>
-        </select>
+        <div class="dropdown">
+          <button class="dropbtn" (click)="showEmployeeList = true" (clickOutside)="showEmployeeList = false">
+            {{!employee_type ? 'select class' : employee_type}}
+          </button>
+          <div class="dropdown-content" [hidden]="!showEmployeeList">
+            <a (click)="employee_type = 'teaching'; getEmployeesInfo();">Teaching</a>
+            <a (click)="employee_type = 'non-teaching'; getEmployeesInfo();">Non-Teaching</a>
+            <a (click)="employee_type = 'administrative'; getEmployeesInfo();">Administrative</a>
+          </div>
+        </div>
       </div>
       <input type="search" name="" placeholder="Search">
     </div>
@@ -15,14 +19,13 @@
       <button class="btn -cta" routerLink="/main/admin/parentinfo">Parent Info</button>
       <button class="btn -cta" routerLink="/main/admin/employeeinfo">Employee Info</button>
     </div>
-    <button class="btn -cta" (click)="addchapter()" *ngIf="user.role === 'admin'">Add Chapter</button>
   </section>
   <section class="table-and-pagination -classes-schedule">
     <div class="table-container">
       <table>
         <thead>
           <tr>
-            <th>#</th>
+            <th align="left">#</th>
             <th align="left">Employee Name</th>
             <th align="left">User Name</th>
             <th align="left">Password</th>

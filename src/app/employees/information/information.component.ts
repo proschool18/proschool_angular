@@ -60,9 +60,10 @@ export class InformationComponent implements OnInit {
 
   getEmployeesByStatus() {
     if(this.status === 'active') {
-      this.employees = this.all_employees.filter(data => data.status === 1)
+      this.employees = this.all_employees.filter(data => data.status === 1 && data.job_category === this.employee_type);
+      console.log(this.employees)
     } else if(this.status === 'inactive') {
-      this.employees = this.all_employees.filter(data => data.status === 0)
+      this.employees = this.all_employees.filter(data => data.status === 0 && data.job_category === this.employee_type)
     }   
   }
 

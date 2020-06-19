@@ -12,16 +12,8 @@ import { EditstoreComponent } from '../editstore/editstore.component';
   styleUrls: ['./material-out.component.css']
 })
 export class MaterialOutComponent implements OnInit {
-  config: any;
-  collection = { count: '', materialsOut: [] };
 
-  constructor(private service: StoreService, private employeeservice: EmployeesService, private fb: FormBuilder, public dialog: MatDialog) { 
-    this.config = {
-      itemsPerPage: 5,
-      currentPage: 1,
-      totalItems: this.collection.count
-    };
-  }
+  constructor(private service: StoreService, private employeeservice: EmployeesService, private fb: FormBuilder, public dialog: MatDialog) {}
 
   ngOnInit() {    
     this.getMaterialsOut();
@@ -29,14 +21,10 @@ export class MaterialOutComponent implements OnInit {
     this.getMaterials();
   }
 
-  pageChanged(event){
-    this.config.currentPage = event;
-  }
-
   employees = [];
   all_employees = [];
   materials = [];
-  //materialsOut = [];
+  materialsOut = [];
   selected_materialOut;
   dialog_type: string;
   alert_message: string;
@@ -52,7 +40,7 @@ export class MaterialOutComponent implements OnInit {
   getMaterialsOut() {
     this.service.getMaterialsOut()
       .subscribe(
-        res => { this.collection.materialsOut = res.material_out, console.log(res) }
+        res => { this.materialsOut = res.material_out, console.log(res) }
       )
   }
 
@@ -108,11 +96,11 @@ export class MaterialOutComponent implements OnInit {
   }
 
   deleteMaterialOut(material_out_id) {
-    this.service.deleteMaterialsOut(material_out_id, this.collection.materialsOut.filter(data => data.material_out_id === material_out_id)[0])
+    this.service.deleteMaterialsOut(material_out_id, this.materialsOut.filter(data => data.material_out_id === material_out_id)[0])
       .subscribe(
         res => { 
           if(res == true) {
-            this.collection.materialsOut = this.collection.materialsOut.filter(res => res.material_out_id !== material_out_id)
+            this.materialsOut = this.materialsOut.filter(res => res.material_out_id !== material_out_id)
             this.alert_message = "Material-Out Deleted Successfully";
             this.openAlert(this.alert_message)
           } else {
@@ -124,7 +112,7 @@ export class MaterialOutComponent implements OnInit {
   }
 
   editMaterialOut(i) {
-    this.selected_materialOut = this.collection.materialsOut[i];
+    this.selected_materialOut = this.materialsOut[i];
     this.dialog_type = 'material-out';
     this.openDialog(this.dialog_type)
   }

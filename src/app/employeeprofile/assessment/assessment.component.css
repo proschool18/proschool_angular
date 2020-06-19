@@ -1,14 +1,147 @@
+@media (min-width: 279px) and (max-width: 575px){
+    .formalign {
+    margin-bottom: 15px;
+    margin: 5% 0 0 5%;
+    width: 92%;
+}
+.progress {
+    width: 90%;
+    margin-left: 30px;
+    margin-top: 52px;
+}
+.leftcard {
+    height: 390px !important;
+    width: 100%;
+    background-color: white;
+    }
+
+.rightcard {
+    width: 100%;
+    background-color: white;
+    height: 390px !important;
+    margin-bottom: 15px;
+    }
+canvas{
+    margin: 15px 0px 0px 0px;
+    height: 370px !important;
+}    
+}
+
+@media (min-width: 576px) and (max-width: 767px){
+.formalign {
+    /* margin-bottom: 15px;
+    margin: 5% 0 0 0%;
+    width: 100%; */
+    margin-bottom: 15px;
+    margin: 3% 0% 0 5%;
+    width: 92%;
+}
+.progress {
+    width: 86%;
+    margin-left: 40px;
+    margin-top: 52px;
+}
+.leftcard {
+    height: 390px !important;
+    width: 100%;
+    background-color: white;
+    }
+
+.rightcard {
+    width: 100%;
+    background-color: white;
+    height: 390px !important;
+    margin-bottom: 15px;
+    }
+canvas{
+    margin: 15px 0px 0px 0px;
+    height: 370px !important;
+} 
+}
+
+@media (min-width: 768px) and (max-width: 991px){
+.formalign {
+    /* margin-bottom: 15px;
+    margin: 5% 0 0 0%;
+    width: 100%; */
+    margin-bottom: 15px;
+    margin: 3% 0% 0 5%;
+    width: 92%;
+}
+.progress {
+    width: 90%;
+    margin-left: 40px;
+    margin-top: 52px;
+}
+.leftcard {
+    height: 390px !important;
+    width: 100%;
+    background-color: white;
+    }
+
+.rightcard {
+    width: 100%;
+    background-color: white;
+    height: 390px !important;
+    margin-bottom: 15px;
+    }
+canvas{
+    margin: 15px 0px 0px 0px;
+    height: 370px !important;
+} 
+}
+
+@media (min-width: 992px) and (max-width: 1199px){
 .cardsryt{
     margin-right: 2%;
 }
 .formalign {
-    margin: 5% 0 0 5%;
+    margin-bottom: 15px;
+    margin: 15% 0 0 25%;
+    width: 100%;
+}
+.progress {
+    width: 65%;
+    margin-left: 27px;
+    margin-top: 52px;
 }
 .leftcard {
     height: 390px !important;
     width: 50%;
     background-color: white;
     }
+
+.rightcard {
+    width: 50%;
+    background-color: white;
+    height: 390px !important;
+    }
+canvas{
+    margin: 15px 0px 0px 0px;
+    height: 370px !important;
+}
+}
+
+@media (min-width: 1200px){
+.cardsryt{
+    margin-right: 2%;
+}
+.formalign {
+    margin-bottom: 15px;
+    margin: 15% 0 0 25%;
+    width: 100%;
+}
+.progress {
+    width: 65%;
+    margin-left: 27px;
+    margin-top: 52px;
+}
+.leftcard {
+    height: 390px !important;
+    width: 50%;
+    background-color: white;
+    }
+
 .rightcard {
     width: 50%;
     background-color: white;
@@ -18,10 +151,145 @@ canvas{
     margin: 15px 0px 0px 0px;
     height: 370px !important;
 }    
-.form-group{
-    margin-top: 25px;
 }
-.form-control{
-    margin-left: 38px;
-    width: 60%;
+
+section.student-intro {
+padding: 0 60px 0 30px;
+width: 20%;
+}
+
+.student-intro img {
+height: 220px;
+width: 170px;
+}
+
+.student-intro h4 {
+margin: 10px 0;
+}
+
+section.student-task-section {
+width: 80%;
+}
+
+section.student-intro .col-wrapper {
+margin: 0;
+}
+
+section.student-intro .col-wrapper .btn {
+width: 150px;
+margin: 15px 0px;
+}
+
+section.student-task-section .table-and-pagination {
+width: 90%;
+position: relative;
+top: 20px;
+padding-bottom: 50px;
+}
+
+section.student-task-section ._attendance-box {
+width: 90%;
+overflow-x: scroll;
+overflow-y: hidden;
+}
+
+section.student-task-section ._attendance-box::-webkit-scrollbar-thumb {
+background-color: #d8e1ff;
+border-radius: 2px;
+border: 1px solid transparent;
+}
+
+section.student-task-section ._attendance-box::-webkit-scrollbar-track {
+background: transparent;
+}
+
+section.student-task-section ._attendance-box::-webkit-scrollbar {
+/*width: 4px;*/
+height: 4px;
+}
+
+section.student-task-section .table-and-pagination.-classes-schedule .table-container {
+height: 320px;
+}
+
+.status-btn {
+color: #fff;
+border-radius: 3px;
+width: 80px;
+}
+
+.pending-btn {
+background-color: #6186ed;
+}
+
+.rejected-btn {
+background-color: #e56761;
+}
+
+.approved-btn {
+background-color: #77c284;
+}
+
+.high-priority-task {
+color: #e56761;
+font-weight: 600;
+}
+
+.medium-priority-task {
+color: #77c284;
+font-weight: 600;
+}
+
+.low-priority-task {
+color: #FFD566;
+font-weight: 600;
+}
+
+.task-row {
+cursor: pointer;
+}
+
+.task-row:hover,
+.selected-task-row {
+-webkit-box-shadow: 0px 0px 7px -2px rgba(204,204,204,1);
+-moz-box-shadow: 0px 0px 7px -2px rgba(204,204,204,1);
+box-shadow: 0px 0px 7px -2px rgba(204,204,204,1);
+}
+
+.bar-3-group {
+display: flex;
+margin-right: 50px;
+}
+
+.bar-3-group ._metric {
+margin-left: 0;
+}
+
+.bar-3-group ._metric ._name {
+margin-left: 0;
+} 
+
+.hor-progress-wrapper {
+display: flex;
+}
+
+.hor-progress-track {
+height: 20px;
+width: 100px;
+margin: 0;
+border-radius: 3px;
+background-color: #f2f5fe;
+}
+
+.hor-progress-filled {
+content: "";
+height: 100%;
+display: block;
+margin-top: auto;
+background-color: #6186ed;
+border-radius: 3px 0 0 3px;
+}
+
+.hor-progress-title{
+display: inline-block;
 }

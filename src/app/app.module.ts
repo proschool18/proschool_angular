@@ -29,7 +29,7 @@ import { SidebarComponent } from './shared/sidebar/sidebar.component';
     AccessDeniedComponent,
     RegistrationComponent,
     EventlistsComponent,
-    SidebarComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,
@@ -42,6 +42,7 @@ import { SidebarComponent } from './shared/sidebar/sidebar.component';
     BrowserAnimationsModule
   ],
   exports: [
+    
   ],
   entryComponents: [AlertComponent, EventlistsComponent],
   providers: [],

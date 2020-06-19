@@ -18,6 +18,10 @@ export class AcademicsComponent implements OnInit {
   employee_id = this.route.snapshot.paramMap.get('id');
   i;j;
 
+  showClassList: boolean = false;
+  showSectionList: boolean = false;
+  showSubjectList: boolean = false;
+
   alert_message: string;
 
   academics = [
@@ -38,9 +42,9 @@ export class AcademicsComponent implements OnInit {
     },
   ]
 
-  selected_class;
-  selected_section;
-  selected_subject;
+  selected_class: any = {class_id: '', name: ''};
+  selected_section: any = {section_id: '', name: ''};
+  selected_subject: any = {subject_id: '', name: ''};
 
   classes = [];
   sections = [];
@@ -63,26 +67,26 @@ export class AcademicsComponent implements OnInit {
   getTeacherClasses() {
     this.teacherService.getTeacherClasses(this.employee_id)
     .subscribe(
-      res => { this.classes = res.school_classes, this.selected_class = res.school_classes[0].class_id, this.getTeacherSections(), console.log(res) }
+      res => { this.classes = res.school_classes, this.selected_class = res.school_classes[0], this.getTeacherSections(), console.log(res) }
     )
   }
 
   getTeacherSections() {
-    this.teacherService.getTeacherSections(this.employee_id, this.selected_class)
+    this.teacherService.getTeacherSections(this.employee_id, this.selected_class.class_id)
     .subscribe(
-      res => { this.sections = res.class_sections, this.selected_section = res.class_sections[0].section_id, this.getTeacherSubjects(), console.log(res) }
+      res => { this.sections = res.class_sections, this.selected_section = res.class_sections[0], this.getTeacherSubjects(), console.log(res) }
     )
   }
 
   getTeacherSubjects() {
-    this.teacherService.getTeacherSubjects(this.employee_id, this.selected_section)
+    this.teacherService.getTeacherSubjects(this.employee_id, this.selected_section.section_id)
     .subscribe(
-      res => { this.subjects = res.subjects, this.selected_subject = res.subjects[0].subject_id, this.getAcademicEvaluation(), console.log(res) }
+      res => { this.subjects = res.subjects, this.selected_subject = res.subjects[0], this.getAcademicEvaluation(), console.log(res) }
     )
   }
 
   getAcademicEvaluation() {
-    this.teacherService.getAcademicEvaluation(this.selected_subject, this.selected_section)
+    this.teacherService.getAcademicEvaluation(this.selected_subject.subject_id, this.selected_section.section_id)
     .subscribe(
       res => { this.academics = res.students, this.View(), console.log(this.academics)}
     )

@@ -11,16 +11,8 @@ import { EditstoreComponent } from '../editstore/editstore.component';
   styleUrls: ['./material-in.component.css']
 })
 export class MaterialInComponent implements OnInit {
-  config: any;
-  collection = { count: '', materialsIn: [] };
 
-  constructor(private service: StoreService, private fb: FormBuilder, public dialog: MatDialog) {
-    this.config = {
-      itemsPerPage: 5,
-      currentPage: 1,
-      totalItems: this.collection.count
-    };
-   }
+  constructor(private service: StoreService, private fb: FormBuilder, public dialog: MatDialog) {}
 
   ngOnInit() {
     this.getVendors();
@@ -28,13 +20,9 @@ export class MaterialInComponent implements OnInit {
     this.getMaterialsIn();
   }
 
-  pageChanged(event){
-    this.config.currentPage = event;
-  }
-
   vendors = [];
   materials = [];
-  //materialsIn = [];
+  materialsIn = [];
   selected_materialIn;
   dialog_type: string;
   alert_message: string;
@@ -51,7 +39,7 @@ export class MaterialInComponent implements OnInit {
   getMaterialsIn() {
     this.service.getMaterialsIn()
       .subscribe(
-        res => { this.collection.materialsIn = res.material_in, console.log(res) }
+        res => { this.materialsIn = res.material_in, console.log(res) }
       )
   }
 
@@ -82,7 +70,7 @@ export class MaterialInComponent implements OnInit {
             //   no_of_units: this.materialInForm.value.no_of_units,
             //   purchased_date: this.materialInForm.value.purchased_date,
             // })
-            console.log(this.collection.materialsIn)
+            console.log(this.materialsIn)
             this.alert_message = "Material-In Added Successfully";
             this.openAlert(this.alert_message)
           } else {
@@ -95,11 +83,11 @@ export class MaterialInComponent implements OnInit {
   }
 
   deleteMaterialIn(material_in_id) {
-    this.service.deleteMaterialsIn(material_in_id, this.collection.materialsIn.filter(data => data.material_in_id === material_in_id)[0])
+    this.service.deleteMaterialsIn(material_in_id, this.materialsIn.filter(data => data.material_in_id === material_in_id)[0])
       .subscribe(
         res => { 
           if(res == true) {
-            this.collection.materialsIn = this.collection.materialsIn.filter(res => res.material_in_id !== material_in_id)
+            this.materialsIn = this.materialsIn.filter(res => res.material_in_id !== material_in_id)
             this.alert_message = "Material-In Deleted Successfully";
             this.openAlert(this.alert_message)
           } else {
@@ -111,7 +99,7 @@ export class MaterialInComponent implements OnInit {
   }
 
   editMaterialIn(i) {
-    this.selected_materialIn = this.collection.materialsIn[i];
+    this.selected_materialIn = this.materialsIn[i];
     this.dialog_type = 'material-in';
     this.openDialog(this.dialog_type)
   }

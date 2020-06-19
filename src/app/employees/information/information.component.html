@@ -2,38 +2,25 @@
   <section class="page-actions">
     <div class="_select-or-search">
       <div class="_select-group">
-        <!-- <select class="form-control" [(ngModel)]="employee_type" (change)="get_selectedemployees()">
-          <option value="all">All</option>
-          <option value="teaching">Teaching</option>
-          <option value="non-teaching">Non-Teaching</option>
-          <option value="administrative">Administrative</option>
-        </select> -->
         <div class="dropdown">
-          <button class="dropbtn" (click)="showEmployeeTypeList = true" 
-          (clickOutside)="showEmployeeTypeList = false">
-              {{!employee_type ? 'employee type' : employee_type.name}}
+          <button class="dropbtn" (click)="showEmployeeTypeList = true" (clickOutside)="showEmployeeTypeList = false">
+              {{!employee_type ? 'employee type' : employee_type}}
           </button>
           <div class="dropdown-content" [hidden]="!showEmployeeTypeList">
-            <a *ngFor="let e_type of employee_types"
-              (click)="employee_type = e_type; get_selectedemployees();">{{e_type.name}}</a>
+            <a (click)="employee_type = 'teaching'; get_selectedemployees();">Teaching</a>
+            <a (click)="employee_type = 'non-teaching'; get_selectedemployees();">Non-Teaching</a>
+            <a (click)="employee_type = 'administrative'; get_selectedemployees();">Administrative</a>
           </div>
         </div>
         <div class="dropdown">
-          <button class="dropbtn" (click)="showStatusList = true" 
-          (clickOutside)="showStatusList = false">
-              {{!status ? 'select status' : status}}
+          <button class="dropbtn" (click)="showStatusList = true" (clickOutside)="showStatusList = false">
+              {{status}}
           </button>
           <div class="dropdown-content" [hidden]="!showStatusList">
-            <a (click)="status = ''; getEmployeesByStatus();">select...</a>
             <a (click)="status = 'active'; getEmployeesByStatus();">Active</a>
             <a (click)="status = 'inactive'; getEmployeesByStatus();">Inactive</a>
           </div>
         </div>
-        <!-- <select class="form-control" [(ngModel)]="status" (change)="getEmployeesByStatus()">
-          <option>select...</option>
-          <option value="active">Active</option>
-          <option value="inactive">Inactive</option>
-        </select> -->
       </div>
       <input type="search" name="" placeholder="Search">
     </div>
