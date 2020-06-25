@@ -50,7 +50,6 @@ body, html {
    
   .wrap-login100 {
     width: 320px;
-    border-radius: 10px;
     overflow: hidden;
     padding: 55px 55px 37px 55px;
     background: white;
@@ -100,7 +99,6 @@ body, html {
   
   .wrap-login100 {
     width: 320px;
-    border-radius: 10px;
     overflow: hidden;
     padding: 20px;
     background: white;
@@ -134,7 +132,6 @@ body, html {
   
   .wrap-login100 {
     width: 320px;
-    border-radius: 10px;
     overflow: hidden;
     padding: 0;
     height: auto;
@@ -154,7 +151,7 @@ body, html {
     left: 40%;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-}
+  }
   
   
   .login100-form {
@@ -177,7 +174,6 @@ body, html {
   
   .wrap-login100 {
     width: 320px;
-    border-radius: 10px;
     overflow: hidden;
     padding: 0;
     background: white;
@@ -208,7 +204,6 @@ body, html {
 @media (min-width: 1200px){
   .wrap-login100 {
     width: 320px;
-    border-radius: 10px;
     overflow: hidden;
     padding: 0px;
     height: auto;
