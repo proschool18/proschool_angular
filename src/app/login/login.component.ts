@@ -29,6 +29,8 @@ export class LoginComponent implements OnInit {
     this.authenticationService.logout();
   }
 
+  isRememberMe: boolean = true;
+    
   login() {
     this.loading = true;
     this.authenticationService.login(this.loginForm.value)

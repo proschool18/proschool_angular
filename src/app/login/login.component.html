@@ -1,66 +1,54 @@
 <div class="login">
-    <div class="container-login100">
+    <div class="side-image">
+        <img src="../../assets/images/new-login-img.png" alt="ProSchool">
+    </div>
+    <div class="login-form-wrapper">
         <div class="wrap-login100">
+            <img src="../../assets/images/new-login-logo.png" alt="ProSchool">
+            <h1 class="login-heading"><b>Welcome Back,</b> Please login to your accound</h1>
+
             <form class="login100-form validate-form" [formGroup]="loginForm" (ngSubmit)="login()">
-
-                <!-- <span class="login100-form-title p-b-34 p-t-27">
-                    Log in
-                </span> -->
-                <!-- <img src="../../assets/images/high-school.png" width="80px" height="80px"
-                style="text-align: center;"> -->
-                <img src="../../assets/images/proSchool.png" width="250px" height="120px">
-
-                <!-- <div class="wrap-input100" [ngClass]="{'has-error' : loginForm.get('email').errors 
-                && (loginForm.get('email').touched || loginForm.get('email').dirty)}"> -->
-                    <input class="login-fields" type="email" formControlName="email" placeholder="Username">
-                    <!-- <span class="focus-input100" data-placeholder="&#xf207;"></span> -->
-                    <span class="help-block" [ngClass]="[loginForm.get('email').errors 
-          && (loginForm.get('email').touched || loginForm.get('email').dirty) ? 'visible' : '']">
-                        <span *ngIf="loginForm.get('email').errors.required">
-                            Username is required
-                        </span>
+                <input class="login-fields" type="email" id="loginEmailId" formControlName="email" placeholder="Username">
+                <span class="help-block" [ngClass]="[loginForm.get('email').errors 
+                && (loginForm.get('email').touched || loginForm.get('email').dirty) ? 'visible' : '']">
+                    <span *ngIf="loginForm.get('email').errors.required">
+                        Username is required
                     </span>
-                <!-- </div> -->
+                </span>
+                
                 <div class="space-row"></div>
-                <!-- <div class="wrap-input100" [ngClass]="{'has-error' : loginForm.get('password').errors 
-                && (loginForm.get('password').touched || loginForm.get('password').dirty)}"> -->
-                    <input class="login-fields" type="password" formControlName="password" placeholder="Password">
-                   <!--  <span class="focus-input100" data-placeholder="&#xf191;"></span> -->
-                    <span class="help-block" [ngClass]="[loginForm.get('password').errors 
-          && (loginForm.get('password').touched || loginForm.get('password').dirty) ? 'visible' : '']">
-                        <span *ngIf="loginForm.get('password').errors.required">
-                            Password is required
-                        </span>
+               
+                <input class="login-fields" type="password" id="loginPassword" formControlName="password" placeholder="Password">
+                <span class="help-block" [ngClass]="[loginForm.get('password').errors 
+                && (loginForm.get('password').touched || loginForm.get('password').dirty) ? 'visible' : '']">
+                    <span *ngIf="loginForm.get('password').errors.required">
+                        Password is required
                     </span>
-                <!-- </div> -->
-
-                <!-- <div class="contact100-form-checkbox">
-                    <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
-                    <label class="label-checkbox100" for="ckb1">
-                        Remember me
-                    </label>
-                </div> -->
+                </span>
+                
                 <div class="space-row"></div>
+
                 <div class="container-login100-form-btn">
-                    <button type="submit" class="login-btn">
-                        Login
-                    </button>
+                    <label class="switch remember-me">
+                        <input type="checkbox" [(ngModel)]="isRememberMe">
+                        <span class="slider start round"></span>
+                    </label>
+                    <span class="remember-me-title" (click)="isRememberMe = !isRememberMe">Remember me</span>
 
-                    <a class="registration-link" (click)="RegistrationPage()">
-                        Registration
-                    </a>
                     
-                </div>
-
-                <!-- <div class="text-center p-t-90" style="margin-left: -60px;"> -->
-                    <!-- <a class="txt1" href="#">
-                        Forgot Password
+                    <!-- <a class="registration-link" (click)="RegistrationPage()">
+                        Registration
                     </a> -->
+
                     <a class="forgot-pwd-link" href="#">
                         Forgot Password
                     </a>
                     
-                <!-- </div> -->
+                </div>
+                <button type="submit" class="login-btn">
+                    sign in
+                </button>
+                
             </form>
         </div>
     </div>
