@@ -1180,9 +1180,9 @@ width: inherit;
 }
 
 .main-dashboard ._attendance-box.dynamic-bar-graph [role=tabpanel] {
-height: 300px;
-display: flex;
-margin: 20px 0;
+  height: 300px;
+  display: flex;
+  margin: 60px 0;
 }
 
 .dynamic-bar-graph ._bar_progress {
