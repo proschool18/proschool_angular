@@ -53,6 +53,16 @@
     padding: 15px;
     position: relative;
     cursor: pointer;
+    padding-left: 40px;
+    min-height: 60px;
+}
+
+.mail-short-detail-wrapper:hover {
+    border-left: 2px solid #5E81F4;
+    background: #fff;
+    -webkit-box-shadow: 1px 1px 4px 1px rgba(224,224,224,0.6);
+	-moz-box-shadow: 1px 1px 4px 1px rgba(224,224,224,0.6);
+	box-shadow: 1px 1px 4px 1px rgba(224,224,224,0.6);
 }
 
 p.mail-from {
@@ -60,6 +70,71 @@ p.mail-from {
     font-weight: bold;
     text-transform: capitalize;
     padding: 5px 0;
+    position: relative;
+}
+
+.mail-from:before {
+	content: "";
+    height: 7px;
+    width: 7px;
+    display: inline-block;
+    border-radius: 100%;
+    /*background-color: red;*/
+    position: absolute;
+    top: 13px;
+    left: -20px;
+    /*-webkit-box-shadow: 1px 1px 4px 1px rgba(255,0,0,0.2);
+	-moz-box-shadow: 1px 1px 4px 1px rgba(255,0,0,0.2);
+    box-shadow: 1px 1px 4px 4px rgba(255,0,0,0.2);*/
+}
+
+.mail-short-detail-wrapper:nth-child(1n+1) .mail-from:before {  
+	background-color: #FF0000;
+	-webkit-box-shadow: 1px 1px 4px 1px rgba(255,0,0,0.2);
+	-moz-box-shadow: 1px 1px 4px 1px rgba(255,0,0,0.2);
+	box-shadow: 1px 1px 4px 4px rgba(255,0,0,0.2);
+}
+
+.mail-short-detail-wrapper:nth-child(2n+2) .mail-from:before {  
+	background-color: #90EE90;
+	-webkit-box-shadow: 1px 1px 4px 1px rgba(144,238,144,0.2);
+	-moz-box-shadow: 1px 1px 4px 1px rgba(144,238,144,0.2);
+	box-shadow: 1px 1px 4px 4px rgba(144,238,144,0.2);
+}
+
+.mail-short-detail-wrapper:nth-child(3n+3) .mail-from:before {  
+	background-color: #0000FF;
+	-webkit-box-shadow: 1px 1px 4px 1px rgba(0,0,255,0.2);
+	-moz-box-shadow: 1px 1px 4px 1px rgba(0,0,255,0.2);
+	box-shadow: 1px 1px 4px 4px rgba(0,0,255,0.2);
+}
+
+.mail-short-detail-wrapper:nth-child(4n+4) .mail-from:before {  
+	background-color: #FFA500;
+	-webkit-box-shadow: 1px 1px 4px 1px rgba(255,165,0,0.2);
+	-moz-box-shadow: 1px 1px 4px 1px rgba(255,165,0,0.2);
+	box-shadow: 1px 1px 4px 4px rgba(255,165,0,0.2);
+}
+
+.mail-short-detail-wrapper:nth-child(5n+5) .mail-from:before {  
+	background-color:  #FF0080;
+	-webkit-box-shadow: 1px 1px 4px 1px rgba(255, 0, 128,0.2);
+	-moz-box-shadow: 1px 1px 4px 1px rgba(255, 0, 128,0.2);
+	box-shadow: 1px 1px 4px 4px rgba(255, 0, 128,0.2);
+}
+
+.mail-short-detail-wrapper:nth-child(6n+6) .mail-from:before {  
+	background-color: #ff7f50;
+	-webkit-box-shadow: 1px 1px 4px 1px rgba(255, 127, 80,0.2);
+	-moz-box-shadow: 1px 1px 4px 1px rgba(255, 127, 80,0.2);
+	box-shadow: 1px 1px 4px 4px rgba(255, 127, 80,0.2);
+}
+
+.mail-short-detail-wrapper:nth-child(7n+7) .mail-from:before {  
+	background-color: #87ceeb;
+	-webkit-box-shadow: 1px 1px 4px 1px rgba(135, 206, 235,0.2);
+	-moz-box-shadow: 1px 1px 4px 1px rgba(135, 206, 235,0.2);
+	box-shadow: 1px 1px 4px 4px rgba(135, 206, 235,0.2);
 }
 
 p.mail-subject {
