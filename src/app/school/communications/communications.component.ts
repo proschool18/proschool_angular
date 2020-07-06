@@ -44,7 +44,9 @@ export class CommunicationsComponent implements OnInit {
   selected_section: string;
   dialog_type: string;
   alert_message: string;
-
+  selectedMail: {};
+  isInbox: boolean = true;
+    
   getInbox() {
     this.title = 'Inbox Messages';
     this.service.getInbox(this.sent_to)
@@ -59,6 +61,8 @@ export class CommunicationsComponent implements OnInit {
     .subscribe(
       res => { this.messages = res.messages, console.log(res) }
     )
+
+    // this.selectedMail = this.messages[0];
   }
 
   getOutbox() {
@@ -67,6 +71,7 @@ export class CommunicationsComponent implements OnInit {
     .subscribe(
       res => { this.messages = res.messages, console.log(res) }
     )
+    // this.selectedMail = this.messages[0];
   }
 
   addMessage() {
@@ -105,5 +110,7 @@ export class CommunicationsComponent implements OnInit {
     dialogRef.afterClosed().subscribe();    
 
   }
+
+
 
 }

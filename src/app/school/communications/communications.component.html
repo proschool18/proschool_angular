@@ -1,5 +1,5 @@
-<main class="card mt-20 within-viewport">
-    <section class="page-actions">
+<main class="card mt-20 within-viewport mailbox">
+    <!-- <section class="page-actions">
         <div class="_select_div">
             <button class="btn -cta" (click)="getInbox()">Inbox</button>
             <button class="btn -cta" (click)="getOutbox()">Outbox</button>
@@ -45,5 +45,56 @@
             <a href="" class="btn">10</a>
             <a href="" class="btn -next">Next</a>
         </div>
-    </section>
+    </section> -->
+
+    <div class="mail-setcion-wrapper">
+        <div class="mails-list-wrapper">
+            <input type="text" class="search-box" name="mailSearchCriteria" placeholder="Search message">
+            <div class="mail-list">
+                <div *ngFor="let mail of messages" (click)="selectedMail = mail" class="mail-short-detail-wrapper">
+                    <p class="mail-from">{{mail.sender_name}}</p>
+                    <p class="mail-subject">{{mail.subject}}</p>
+                    <p class="mail-content-short">{{mail.message}}</p>
+                    <p class="mail-day">Tuesday</p>
+                    <p class="mail-date-time">{{mail.posted_on}}</p>
+                    <span class="mail-read-flag" *ngIf="isInbox"
+                    [ngClass]="mail.status === 1 ? 'mail-read' : 'mail-unread'"></span>
+                    <span class="mail-read-flag" *ngIf="!isInbox"
+                    [ngClass]="mail.status === 1 ? 'mail-sent' : 'mail-unsent'"></span>
+                </div>
+            </div>
+            <div class="compose-btn-wrapper">
+                <button (click)="addMessage()" class="compose-btn">Compose</button>
+            </div>
+        </div>
+
+        <div class="mail-content-wrapper">
+            <div class="inbox-outbox-btn-wrapper">
+                <button class="box-selection-btn" 
+                [ngClass]="isInbox ? 'selected': ''" 
+                (click)="getInbox(); isInbox = true;">Inbox</button>
+
+                <button class="box-selection-btn" 
+                [ngClass]="!isInbox ? 'selected': ''" 
+                (click)="getOutbox(); isInbox = false;">Outbox</button>
+
+            </div>
+            <div class="mail-body-wrapper">
+                <div class="mail-content" *ngIf="selectedMail">
+                    <span class="mail-body-icon">
+                        <img _ngcontent-ttv-c6="" src="../../../assets/images/man2.jpg">
+                    </span>
+                    <span class="mail-body-from-name">{{selectedMail.sender_name}}</span>
+                    <p class="mail-body-day">Tuesday</p>
+                    <p class="mail-body-date-time">{{selectedMail.posted_on}}</p>
+                    <p class="mail-to-desc">To : {{selectedMail.sent_to}}</p>
+                    <p class="mail-body-subject">{{selectedMail.subject}}</p>
+                    <p class="mail-body">{{selectedMail.message}}</p>
+                    <span class="mail-body-read-flag" *ngIf="!isInbox"
+                    [ngClass]="selectedMail.status === 1 ? 'mail-sent' : 'mail-unsent'"></span>
+                </div>
+            </div>
+            <button class="mail-body-reply-btn" *ngIf="selectedMail">Click here to reply</button>
+        </div>
+    </div>
 </main>
