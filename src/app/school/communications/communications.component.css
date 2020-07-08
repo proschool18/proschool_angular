@@ -55,9 +55,11 @@
     cursor: pointer;
     padding-left: 40px;
     min-height: 60px;
+    border-left: 2px solid transparent;
 }
 
-.mail-short-detail-wrapper:hover {
+.mail-short-detail-wrapper:hover,
+.mail-short-detail-wrapper.selected-mail {
     border-left: 2px solid #5E81F4;
     background: #fff;
     -webkit-box-shadow: 1px 1px 4px 1px rgba(224,224,224,0.6);
@@ -79,13 +81,9 @@ p.mail-from {
     width: 7px;
     display: inline-block;
     border-radius: 100%;
-    /*background-color: red;*/
     position: absolute;
     top: 13px;
     left: -20px;
-    /*-webkit-box-shadow: 1px 1px 4px 1px rgba(255,0,0,0.2);
-	-moz-box-shadow: 1px 1px 4px 1px rgba(255,0,0,0.2);
-    box-shadow: 1px 1px 4px 4px rgba(255,0,0,0.2);*/
 }
 
 .mail-short-detail-wrapper:nth-child(1n+1) .mail-from:before {  
@@ -170,7 +168,7 @@ p.mail-date-time {
 
 .mail-read-flag.mail-unread {
 	content: "";
-	background: url('../../../assets/images/mail-inbox-unread.png');
+	background: url('../../../assets/images/mail-inbox-unread.png') no-repeat;
 	width: 26px;
 	height: 21px;
 	display: inline-block;
@@ -181,7 +179,7 @@ p.mail-date-time {
 
 .mail-read-flag.mail-read {
 	content: "";
-	background: url('../../../assets/images/mail-inbox-read.png');
+	background: url('../../../assets/images/mail-inbox-read.png') no-repeat;
 	width: 24px;
 	height: 23px;
 	display: inline-block;
@@ -192,7 +190,7 @@ p.mail-date-time {
 
 .mail-read-flag.mail-unsent {
 	content: "";
-	background: url('../../../assets/images/mail-outbox-unsent.png');
+	background: url('../../../assets/images/mail-outbox-unsent.png') no-repeat;
 	width: 24px;
 	height: 17px;
 	display: inline-block;
@@ -203,7 +201,7 @@ p.mail-date-time {
 
 .mail-read-flag.mail-sent {
 	content: "";
-	background: url('../../../assets/images/mail-outbox-sent.png');
+	background: url('../../../assets/images/mail-outbox-sent.png') no-repeat;
 	width: 24px;
 	height: 17px;
 	display: inline-block;
@@ -214,7 +212,7 @@ p.mail-date-time {
 
 .mail-body-read-flag.mail-unsent {
 	content: "";
-	background: url('../../../assets/images/mail-outbox-unsent.png');
+	background: url('../../../assets/images/mail-outbox-unsent.png') no-repeat;
 	width: 24px;
 	height: 17px;
 	display: inline-block;
@@ -225,7 +223,7 @@ p.mail-date-time {
 
 .mail-body-read-flag.mail-sent {
 	content: "";
-	background: url('../../../assets/images/mail-outbox-sent.png');
+	background: url('../../../assets/images/mail-outbox-sent.png') no-repeat;
 	width: 24px;
 	height: 17px;
 	display: inline-block;
@@ -234,7 +232,7 @@ p.mail-date-time {
     right: 40px;
 }
 
-.compose-btn-wrapper {
+.blank-wrapper {
     background: none;
     border: none;
     width: 100%;
@@ -243,11 +241,42 @@ p.mail-date-time {
     text-align: center;
 }
 
+
+
+.inbox-outbox-btn-wrapper {
+	display: flex;
+	background-color: #E9EEF7;
+}
+
+button.box-selection-btn {
+    width: 38%;
+    padding: 20px 0;
+    text-transform: uppercase;
+    color: #888;
+    background-color: transparent;
+}
+
+button.box-selection-btn.selected {
+	color: #5E81F4;
+    background: #fff;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border: 2px solid lightgray;
+    border-bottom: 0;
+    font-weight: 600;
+}
+
+.compose-wrapper {
+    text-align: center;
+    width: 24%;
+    padding-top: 12px;
+}
+
 .compose-btn {
     height: 40px;
     background: #5E81F4;
     color: #fff;
-    width: 170px;
+    width: 150px;
     font-size: 16px;
     border-radius: 2px;
     position: relative;
@@ -260,20 +289,9 @@ p.mail-date-time {
 	width: 24px;
     vertical-align: -webkit-baseline-middle;
     position: absolute;
-    left: 15px;
+    left: 10px;
 }
 
-button.box-selection-btn {
-    width: 50%;
-    padding: 20px 0;
-    text-transform: uppercase;
-    color: #888;
-}
-
-button.box-selection-btn.selected {
-	color: #5E81F4;
-	border-bottom: 1px solid #5E81F4;
-}
 
 .mail-content {
     position: relative;

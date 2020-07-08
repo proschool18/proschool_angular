@@ -51,7 +51,9 @@
         <div class="mails-list-wrapper">
             <input type="text" class="search-box" name="mailSearchCriteria" placeholder="Search message">
             <div class="mail-list">
-                <div *ngFor="let mail of messages" (click)="selectedMail = mail" class="mail-short-detail-wrapper">
+                <div *ngFor="let mail of messages" (click)="selectedMail = mail" 
+                class="mail-short-detail-wrapper"
+                [ngClass]="selectedMail._id === mail._id ? 'selected-mail' : ''">
                     <p class="mail-from">{{mail.sender_name}}</p>
                     <p class="mail-subject">{{mail.subject}}</p>
                     <p class="mail-content-short">{{mail.message}}</p>
@@ -63,8 +65,8 @@
                     [ngClass]="mail.status === 1 ? 'mail-sent' : 'mail-unsent'"></span>
                 </div>
             </div>
-            <div class="compose-btn-wrapper">
-                <button (click)="addMessage()" class="compose-btn">Compose</button>
+            <div class="blank-wrapper">
+                
             </div>
         </div>
 
@@ -77,6 +79,10 @@
                 <button class="box-selection-btn" 
                 [ngClass]="!isInbox ? 'selected': ''" 
                 (click)="getOutbox(); isInbox = false;">Outbox</button>
+
+                <div class="compose-wrapper">
+                    <button (click)="addMessage()" class="compose-btn">Compose</button>
+                </div>
 
             </div>
             <div class="mail-body-wrapper">
