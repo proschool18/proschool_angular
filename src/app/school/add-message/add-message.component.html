@@ -1,5 +1,8 @@
-<div id="main-content1">
-    <div class="blue-top-bar"></div>
+<div id="main-content1" class="new-message-wrapper">
+   <div class="header-wrapper">
+        <p>New Message</p>
+        <button class="btn-close" (click)="close()"></button>
+    </div>
 
     <div class="row-wrapper">
         <div class="col-full-3">
@@ -116,7 +119,7 @@
                 Subject :
             </div>
             <div class="col-full-6">
-                <input type="text" class="inpbox" formControlName="subject">
+                <input type="text" class="inpbox" placeholder="Type your Subject here" formControlName="subject">
             </div>
         </div>
         <div class="row-wrapper">
@@ -124,13 +127,13 @@
                 Message :
             </div>
             <div class="col-full-6">
-                <textarea class="inpbox" formControlName="message" cols="30" rows="5"></textarea>
+                <textarea class="inpbox" formControlName="message" placeholder="Type your message here" cols="30" rows="5"></textarea>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-3 pull-left">
+            <!-- <div class="col-md-3 pull-left">
                 <button class="btn -cta inactive-tab" (click)="close()">Cancel</button>
-            </div>
+            </div> -->
             <div class="col-md-3 pull-right">
                 <button class="btn -cta active-tab" type="submit">Submit</button>
             </div>

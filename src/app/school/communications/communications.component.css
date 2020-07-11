@@ -202,8 +202,8 @@ p.mail-date-time {
 .mail-read-flag.mail-sent {
 	content: "";
 	background: url('../../../assets/images/mail-outbox-sent.png') no-repeat;
-	width: 24px;
-	height: 17px;
+	width: 25px;
+	height: 16px;
 	display: inline-block;
 	position: absolute;
     bottom: 15px;
@@ -213,8 +213,8 @@ p.mail-date-time {
 .mail-body-read-flag.mail-unsent {
 	content: "";
 	background: url('../../../assets/images/mail-outbox-unsent.png') no-repeat;
-	width: 24px;
-	height: 17px;
+	width: 25px;
+	height: 16px;
 	display: inline-block;
 	position: absolute;
     bottom: 40px;
@@ -224,8 +224,8 @@ p.mail-date-time {
 .mail-body-read-flag.mail-sent {
 	content: "";
 	background: url('../../../assets/images/mail-outbox-sent.png') no-repeat;
-	width: 24px;
-	height: 17px;
+	width: 25px;
+	height: 16px;
 	display: inline-block;
 	position: absolute;
     bottom: 40px;
@@ -252,8 +252,9 @@ button.box-selection-btn {
     width: 38%;
     padding: 20px 0;
     text-transform: uppercase;
-    color: #888;
+    color: #A6A6A6;
     background-color: transparent;
+    font-weight: 600;
 }
 
 button.box-selection-btn.selected {
