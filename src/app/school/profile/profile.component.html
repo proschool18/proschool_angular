@@ -1,215 +1,98 @@
-<div id="main-content">
-  <div class="profilediv">
-    <div class="profileboxone">
-      <div class="profilepicImg">
-        <div class="profileImg" *ngIf="profileImage">
-          <!-- <img alt="" height="100px" src="../../../assets/img/images/student.png" width="100px"> -->
-          <img alt="" height="100px" [src]="profileImage" width="100px">
-        </div>
-
-        <div class="image-upload iconFsp">
-          <label for="file-input">
-            <div class="pattrenED">
-              <i class="fa fa-pencil-square" aria-hidden="true"></i>
-            </div>
-          </label>
-          <input id="file-input" type="file" name="image" (change)="profileProgress($event.target.files)" />
-        </div>
-
-        <div class="profileFields">
-          <div class="profilediv">{{schoolprofile.chairman_note}}</div>
-        </div>
-      </div>
-      <div class="profileDetails scrollonhover">
-        <div class="imageProf">
-          <!-- <img src="../../../assets/images/proSchool.png" width="100%" height="200px"> -->
-          <div class="col-md-10">
-            <div class="image-preview mb-3 schoolProfileImg" *ngIf="schoolLogo">
-              <img [src]="schoolLogo" />
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="image-upload iconF">
-              <label for="file-input-img">
-                <div class="pattrenED">
-                  <i class="fa fa-pencil-square" aria-hidden="true"></i>
-                </div>
-              </label>
-              <input id="file-input-img" type="file" name="image" (change)="fileProgress($event.target.files)" />
-            </div>
-          </div>
-        </div>
-        <div class="profiletext">
-          <div class="schooldesc">
-            {{schoolprofile.about}}
-          </div>
-        </div>
-      </div>
+<main _ngcontent-tvu-c4="" class="card mt-20 within-viewport school-details-part" style="height: auto;">
+  <h1 class="main-title">School Information</h1>
+  <div class="school-wrapper">
+    <div class="school-picture-wrapper">
+      <button class="school-picture-edit-btn"></button>
+      <img scr="../../../assets/images/school.png" />
     </div>
-
-    <div class="profileboxtwo">
-      <div>
-        <!-- <div class="row btnstopspace">
-          <div class="container-fluid" id="buttonId1">
-            <button class="button button2 hvr-pop transition">School Details</button>
-            <button class="button button2 hvr-pop transition">Management Details</button>
-            <button class="button button2 hvr-pop transition">Contact Details</button>
-          </div>
-        </div> -->
-        <div class="profileboxcontent scrollonhover">
-          <div class="container-fluid">
-            <div class="row">
-              <div class="col-sm-12">
-                <div class="profpicname">
-                  <div class="row">
-                    <div class="profimg">
-                      <div class="col-md-10 profimg1">
-                        <div>
-                          <div class="proftitle1">School Details</div>
-                        </div>
-                        <div>
-                          <div class="profdesg1">Update Your School Information</div>
-                        </div>
-                        <div class="prfbtn1">
-                          <i class="far fa-sun"></i>
-                        </div>
-                      </div>
-                      <div class="col-md-2 pattrenED">
-                        <div><i class="fa fa-pencil-square" aria-hidden="true" (click)="editSchool()"></i>
-                          <!-- <i class="fa fa-pencil-square" aria-hidden="true" (click)="editFew(i)"></i> -->
-                        </div>
-                        <!-- <div class="editimg"><img src="../../../assets/img/images/edit.png" alt=""></div> -->
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row1">
-                  <div class="col-md-6 sdtable">
-                    <div><b>Name : </b>{{schoolprofile.name}}</div>
-                  </div>
-                  <div class="col-md-6 sdtable">
-                    <div><b>Class From : </b>{{schoolprofile.class_from}}</div>
-                  </div>
-                </div>
-                <div class="row1">
-                  <div class="col-md-6 sdtable">
-                    <div><b>Medium : </b>{{schoolprofile.medium}}</div>
-                  </div>
-                  <div class="col-md-6 sdtable">
-                    <div><b>Affiliation : </b>{{schoolprofile.affiliation}}</div>
-                  </div>
-                </div>
-                <div class="row1">
-                  <div class="col-md-6 sdtable">
-                    <div><b>Timings : </b>{{schoolprofile.timings}}</div>
-                  </div>
-                  <div class="col-md-6 sdtable">
-                    <div><b>Extra Curricular Activities : </b>{{schoolprofile.extra_curricular_activites}}</div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-12">
-                <div class="profpicname">
-                  <div class="row">
-                    <div class="profimg">
-                      <div class="col-md-10 profimg1">
-                        <div>
-                          <div class="proftitle1">Management Details</div>
-                        </div>
-                        <div>
-                          <div class="profdesg1">Update Your School Management Details</div>
-                        </div>
-                        <div class="prfbtn1">
-                          <i class="far fa-sun"></i>
-                        </div>
-                      </div>
-                      <!-- <div class="col-md-2">
-                        <div class="editimg"><img src="../../../assets/img/images/edit.png" alt=""></div>
-                      </div> -->
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row1">
-                  <div class="col-md-6 sdtable">
-                    <div><b>Founder : </b>{{schoolprofile.founder}}</div>
-                  </div>
-                  <div class="col-md-6 sdtable">
-                    <div><b>Chairman : </b>{{schoolprofile.chairman}}</div>
-                  </div>
-                </div>
-                <div class="row1">
-                  <div class="col-md-6 sdtable">
-                    <div><b>Coordinator : </b>{{schoolprofile.coordinator}}</div>
-                  </div>
-                  <div class="col-md-6 sdtable">
-                    <div><b>Principal : </b>{{schoolprofile.principal}}</div>
-                  </div>
-                </div>
-                <div class="row1">
-                  <div class="col-md-6 sdtable">
-                    <div><b>Vice Principal : </b>{{schoolprofile.vice_principal}}</div>
-                  </div>
-                  <div class="col-md-6 sdtable">
-                    <div><b>Established : </b>{{schoolprofile.est_on}}</div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-12">
-                <div class="profpicname">
-                  <div class="row">
-                    <div class="profimg">
-                      <div class="col-md-10 profimg1">
-                        <div>
-                          <div class="proftitle1">Contact Details</div>
-                        </div>
-                        <div>
-                          <div class="profdesg1">Update Your School Contact Details</div>
-                        </div>
-                        <div class="prfbtn1">
-                          <i class="far fa-sun"></i>
-                        </div>
-                      </div>
-                      <!-- <div class="col-md-2">
-                        <div class="editimg"><img src="../../../assets/img/images/edit.png" alt=""></div>
-                      </div> -->
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row1">
-                  <div class="col-md-6 sdtable">
-                    <div><b>Address : </b>{{schoolprofile.address}}</div>
-                  </div>
-                  <div class="col-md-6 sdtable">
-                    <div><b>Contact No : </b>{{schoolprofile.phone}}</div>
-                  </div>
-                </div>
-                <div class="row1">
-                  <div class="col-md-6 sdtable">
-                    <div><b>Alternate Phone : </b>{{schoolprofile.alternate_phone}}</div>
-                  </div>
-                  <div class="col-md-6 sdtable">
-                    <div><b>Website : </b>{{schoolprofile.website}}</div>
-                  </div>
-                </div>
-                <div class="row1">
-                  <div class="col-md-6 sdtable">
-                    <div><b>Email : </b>{{schoolprofile.email}}</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="school-details-wrapper">
+      <button class="school-details-edit-btn">Edit</button>
+      <h3>School Details</h3>
+      <table class="school-details-table" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td class="school-detail-heading">Name:</td>
+          <td class="school-detail-value">Newton English Medium</td>
+          <td class="school-detail-heading">Class Form:</td>
+          <td class="school-detail-value">Newton English Medium</td>
+        </tr>
+         <tr>
+          <td class="school-detail-heading">Medium:</td>
+          <td class="school-detail-value">Newton English Medium</td>
+          <td class="school-detail-heading">Affiliation:</td>
+          <td class="school-detail-value">Newton English Medium</td>
+        </tr>
+         <tr>
+          <td class="school-detail-heading">Timings:</td>
+          <td class="school-detail-value">Newton English Medium</td>
+          <td class="school-detail-heading">Extra Curricular Activities:</td>
+          <td class="school-detail-value">Newton English Medium</td>
+        </tr>
+      </table>
     </div>
+  </div>
+  <p class="school-desc">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br>
+      At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi.<br>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam. 
+    </p>
+</main>
+
+<div class="mgmt-contact-wrapper">
+  <div class="mgmt-wrapper">
+    <h3>Management Details</h3>
+    <table class="school-details-table" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td class="school-detail-heading">Founder:</td>
+          <td class="school-detail-value">Newton English Medium</td>
+        </tr>
+         <tr>
+          <td class="school-detail-heading">Chairman:</td>
+          <td class="school-detail-value">Prabhu</td>
+        </tr>
+         <tr>
+          <td class="school-detail-heading">Coordinator:</td>
+          <td class="school-detail-value">Shankar</td>
+        </tr>
+        <tr>
+          <td class="school-detail-heading">Principal:</td>
+          <td class="school-detail-value">Gopal</td>
+        </tr>
+         <tr>
+          <td class="school-detail-heading">Vice Principal:</td>
+          <td class="school-detail-value">Top</td>
+        </tr>
+         <tr>
+          <td class="school-detail-heading">Established:</td>
+          <td class="school-detail-value">1900</td>
+        </tr>
+      </table>
+      <button class="mgmt-contact-edit-btn">Edit</button>
+  </div>
+  <div class="contact-wrapper">
+    <h3>Contact Details</h3>
+    <table class="school-details-table" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td class="school-detail-heading">Address:</td>
+          <td class="school-detail-value">Newton English Medium</td>
+        </tr>
+         <tr>
+          <td class="school-detail-heading">Contact No:</td>
+          <td class="school-detail-value">+91 9999999999</td>
+        </tr>
+         <tr>
+          <td class="school-detail-heading">Alternate <br>Phone No:</td>
+          <td class="school-detail-value">+91 9999999999</td>
+        </tr>
+        <tr>
+          <td class="school-detail-heading">Website:</td>
+          <td class="school-detail-value">www.proschool.com</td>
+        </tr>
+         <tr>
+          <td class="school-detail-heading">Email:</td>
+          <td class="school-detail-value">proschool@gmail.com</td>
+        </tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+      </table>
+      <button class="mgmt-contact-edit-btn">Edit</button>
   </div>
 </div>
