@@ -1,4 +1,4 @@
-<main class="card mt-20 within-viewport">
+<main class="card mt-20 within-viewport new-student-listing">
   <section class="page-actions">
     <div class="_select-or-search">
       <div class="_select-group">
@@ -48,8 +48,8 @@
             <td>{{std.gender}}</td>
             <td>{{std.phone}}</td>
             <td class="_actions" *ngIf="user.role === 'admin'">
-              <button class="btn" *ngIf="status === 'active'" (click)="editStudent(std.student_id)"><img src="../../../assets/images/edit-white.svg" alt="Edit" /></button>
-              <button class="btn" *ngIf="status === 'active'" (click)="deleteStudent(std.student_id)"><img src="../../../assets/images/trash-white.svg" alt="Delete" /></button>
+              <button class="btn" *ngIf="status === 'active'" (click)="editStudent(std.student_id)"><img src="../../../assets/images/edit-black-outline.svg" alt="Edit" /></button>
+              <button class="btn" *ngIf="status === 'active'" (click)="deleteStudent(std.student_id)"><img src="../../../assets/images/delete-black-outline.svg" alt="Delete" /></button>
               <button class="btn" *ngIf="status === 'inactive'" (click)="restoreStudent(std.student_id)"><img src="../../../assets/images/trash-white.svg" alt="Restore" /></button>
             </td>
           </tr>
