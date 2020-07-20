@@ -1,398 +1,184 @@
+.page-content-wrapper {
+    background: #fff;
+    padding: 60px;
+}
 
-#pro {
-    padding: 5px 5px 5px 10px;
-    background-color: #efeff5;
+.student-info-wrapper {
+    display: flex;
+}
+
+.student-details {
+    width: 30%;
+}
+
+.student-img-wrapper {
+    height: 200px;
+    width: 200px;
+    border-radius: 100%;
+    overflow: hidden;
+    border: 1px solid #E9EEF7;
+}
+
+.student-img-wrapper img {
+    width: 100%;
+}
+
+p.student-basic-info {
+    color: #696969;
+    font-weight: bold;
+    margin: 50px 0 0 30px
+}
+
+p.student-basic-info span {
+    color: #000;
+    display: inline-block;
+    padding-left: 30px;
+}
+
+.student-details-tablist-wrapper {
+    width: 70%;
+}
+
+.student-details-tablist-wrapper ul.tab-menu {
+    display: flex;
+    list-style-type: none;
+    width: 100%;
+    background: #E9EEF7;
     border-radius: 5px;
-    color: #506ee4;
-    font-weight: bold;
-    margin-top: 25px;    
+    padding-left: 0;
 }
-#build {
-    padding: 5px 42px 5px 5px;
-    color: #efeff5;
-    background-color: #506ee4;
-    font-weight: bold;
+
+ul.tab-menu li {
+    width: 33.33%;
+    padding: 10px 0;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
 }
-.contentpanel{
-    /* width: 86%; */
-    font-family: sans-serif;
-    /* border-radius: 60px 0px 0px 60px; */
-    margin: 0px 20px 0px 20px;
-    background: #efeff5;
-    border-radius: 20px;
+
+ul.tab-menu li.selected-tab {
+    background: #5E81F4;
+    color: #fff;
+    border-radius: 5px;
 }
-.profpic{
-    margin: 115px 0 0 18px;
+
+
+ul.tab-menu li:after {
+    display: inline-block;
+    width: 1px;
+    content: "";
+    height: 20px;
+    right: 0;
+    position: absolute;
+    background-color: #5E81F4;
 }
-.hmemenus{
-    padding: 0px 0px 0px 10px;
+
+ul.tab-menu li.selected-tab:after,
+ul.tab-menu li:last-child:after {
+    display: none;
 }
-.hmemenus ul{
-    padding: 0;
+
+.student-profile {
+    padding: 50px 0;
+    position: relative;
+    min-height: 250px;
+}
+
+table.student-details-table {
+    box-shadow: none;
+    border: 0;
     margin: 0;
 }
-.hmemenus ul li{
-    list-style: none;
-    margin-top: 10px;
-    padding: 15px;
-}
-.hmemenus ul li:hover {
-    background-color: #efeff5;
-    padding: 15px;
-}
-.hmemenus ul li a{
-    text-decoration: none;
-    color: whitesmoke;
-}
-.hmemenus ul li a:hover{
-    color: #506ee4;
-}
-.hmemenus ul li a i{
-    margin-right: 10px;
-}
-.profpic {
-    margin: 115px 0 0 18px;
-}
-.profiletitle{
-    font-size: 15px;
-    font-weight: 900;
-    padding: 20px 20px 15px 20px;
-    margin-left: 35px;
-}
-.histimg img {
-    width: 40px;
+
+table.student-details-table tr {
     height: 40px;
-    border-radius: 20px;
-}
-.navbar {
-    width: 99%;
-    height: 75px;
-    background-color: #506ee4;
-    margin: 20px 0px 0px 5px;
-    box-shadow: 0px 0px 10px 5px lightgray;
-    border-radius: 10px;
-}
-/* Emp table */
-table{
-    width: 99%;
-    margin: 10px 7px 7px 7px;
-    box-shadow: 0px 0px 10px 5px lightgray;
-    border-radius: 20px;
-}
-table, tr {
-    border: 1px solid #EDECFE;
-    border-collapse: collapse;
-    background-color: white;
-    height: 60px;
-    border-radius: 20px;
-  }
-  table, th, tr:hover {
-    background-color: #EDECFE;
-    cursor: pointer;
-  }
-  th, td, tr {
-    padding: 15px;
-    text-align: left;
-  }
-  table th {
-    background-color: white;
-    color: #506ee4;
-    border-bottom: solid 2px #ded9d9;
-  }
-  table th input, td input, .clbtn input{
-    margin-right: 10px;
-  }
-  table th span {
-    margin-left: 10px;
-  }
-  table td{
-      font-size: 14px;
-      color: gray;
-      font-weight: normal !important;
-  }
-  .filterspan{
-      width: 100%;
-      display: flex;
-  }
-  .classesbtn{
-    width: 20%;
-    height: 50px;
-    margin: 40px 7px 7px 7px;
-    box-shadow: 0px 0px 10px 5px lightgray;
-    background: white;
-  }
-  .clbtn{
-      padding: 15px 0 0 20px;
-  }
-  .filter1{
-    width: 5%;
-    height: 50px;
-    margin: 40px 7px 7px 7px;
-    box-shadow: 0px 0px 10px 5px lightgray;
-    background: white;
-  }
-  .filter1 i{
-    padding: 18px 0 0 21px;
-  }
-  .filter2{
-    width: 5%;
-    height: 50px;
-    margin: 40px 7px 7px 630px;
-    box-shadow: 0px 0px 10px 5px lightgray;
-    background: white;
-  }
-  .filter2 i {
-    padding: 18px 0 0 21px;
-  }
-  .filter3{
-    width: 5%;
-    height: 50px;
-    margin: 40px 7px 7px 7px;
-    box-shadow: 0px 0px 10px 5px lightgray;
-    background: white;
-  }
-  .filter3 i{
-    padding: 18px 0 0 21px;
-  }
-  .clbtn i{
-      position: relative;
-      top: -3px;
-  }
-  .clbtn .g{
-    position: relative;
-    left: 100px;
-    top: 1px;
-}
-th .asc, .desc{
-    position: relative;
-    top: 1px;
-    left: -9px;
+    border: 0;
 }
 
-/* profile pannel */
-.profpannel{
-    width: 96%;
-    height: 700px;
-    margin: 20px 0px 15px 26px;
-    display: flex;
-}
-.profpan{
-    display: flex;
-}
-.profinf{
-    width: 25%;
-}
-.profinfotop{
-    /* height: 450px; */
-    background-color: white;
-    border-radius: 5px;
-    /* box-shadow: 0px 0px 10px 5px lightgray; */
-}
-.profinfobot{
-    height: 235px;
-    background-color: white;
-    border-radius: 5px;
-    margin-top: 15px;
-    /* box-shadow: 0px 0px 10px 5px lightgray; */
-}
-.profdesc{
-    width: 74%;
-    background-color: white;
-    /* box-shadow: 0px 0px 10px 5px lightgray; */
-    border-radius: 5px;
-    margin-left: 15px;
-}
-.profpicname{
-    border-bottom: solid 1px #d2d2d2;
-}
-.proftitle{
-    font-size: 15px;
-    font-weight: 600;
-    color: #3f3c3c;
-    padding: 10px 0 0 15px;
-}
-.proftitle1{
-    font-size: 16px;
-    font-weight: 600;
-    color: #3f3c3c;
-    padding: 10px 0 0 0px;
-}
-.profdesg{
-    font-size: 12px;
-    font-weight: 400;
-    color: gray;
-    padding: 5px 0 0 15px;
-}
-.profimg{
-    display: flex;
-    padding: 10px 0 20px 20px;
-}
-.profimg1{
-    display: flex;
-}
-.profimg img{
-    width: 50px;
-    height: 50px;
-    border-radius: 50px;
-}
-.prfbtn i{
-    padding: 20px 0 0px 60px;
-    color: gray;
-    cursor: pointer;
-}
-.personalmenuslist ul{
-    list-style: none;
-}
-.personalmenuslist ul li{
-    padding: 20px 5px 5px 5px;
-}
-.personalmenuslist ul li a{
-    text-decoration: none;
-    color: black;
-    font-size: 14px;
-    font-weight: 600;
-    color: gray;
-}
-.personalmenuslist ul li a i{
-    margin-right: 10px;
-}
-.personalmenuslist ul li a:hover{
-    color: blue;
-    cursor: pointer;
-}
-.impupd{
-    display: flex;
-    padding: 30px 0 0 30px;
-}
-.impupd1{
-    padding: 20px 5px 0 20px;
-    color: gray;
-}
-.impupdateheading{
-    font-size: 14px;
-    font-weight: 600;
-    color: crimson;
-}
-.nowbutton{
-    padding: 2px 8px;
-    background-color: crimson;
-    color: white;
-    border-radius: 3px;
-    margin: 0 0 0 60px;
-}
-.nowbutton:hover,.takeactionbtn:hover,.dismissbtn:hover{
-    background-color: #506ee4;
-    cursor: pointer;
-}
-.takeact{
-    display: flex;
-    padding: 30px 0 0 30px;
-}
-.takeactionbtn{
-    padding: 4px 8px;
-    background-color: crimson;
-    color: white;
-    border-radius: 3px;
-    margin-right: 5px;
-}
-.dismissbtn{
-    padding: 4px 10px;
-    background-color: white;
-    color: gray;
-    border-radius: 3px;
-}
-.profdesg1{
-    font-size: 12px;
-    font-weight: 400;
-    color: gray;
-    padding: 12px 0 0 15px;
-}
-.prfbtn1 i{
-    padding: 12px 0 0px 12px;
-    color: gray;
-    cursor: pointer;
-}
-/* .mainprofdetails{
-    padding: 20px 20px 0 60px;
-    display: flex;
-} */
-.avtar{
-    color: gray;
-    font-size: 13px;
-    font-weight: 600;
-    margin: 20px 0px 10px 10px;
-}
-/* .avatarimg{
-    margin: -10px 0px 0px 30px;
-} */
-.avatarimg{
-    display: flex;
-}
-.avtar1{
-    margin: 0px 25px 0px -30px;
-    color: gray;
-    font-size: 13px;
-    font-weight: 600;
-}
-.inputfn{
-    margin: -2px 0px 0px -4px;
-}
-.inputfn input[type=text],input[type=email]{
-    width: 200px;
-    height: 28px;
-    border: solid 2px #f4f4f4;
-    margin: 5px 0px 0px 10px;
-    margin: 0px 0px 0px 30px;
-}
-input{
-    text-indent: 10px;
-  }
-
-  .card {
-    text-align: left !important;
-}
-.card1{
-    height: 390px !important;
-    margin-right: 2%;
+table.student-details-table tr td {
+    padding: 10px 15px;
+    color: #000;
+    font-weight: 600 !important;
 }
 
-.card2 {
-    height: 390px !important;
+table.student-details-table tr td.heading {
+    color: #686868;
+    font-weight: bold !important;
+    width: 100px;
 }
 
-.editimg{
+table.student-details-table tr td.heading.long {
+    width: 150px;
+}
+
+table.student-details-table tr:hover {
+    background-color: #fff;
+}
+
+.edit-info-btn {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    background: #5E81F4;
+    padding: 5px 20px;
     text-align: right;
-    margin-left: 10px;
-}
-.editimg img{
-    width: 30px;
-    height: 30px;
-    border-radius: 5px;
-    padding: 5px;
-    background-color: #F0F0F0;
-}
-.editimg img:hover{
-    cursor: pointer;
-    background-color: #36879F;
-}
-.sdhead{
-    background-color: #5F9EA0;
-    padding: 12px 0px 10px 15px;
-    border-radius: 5px;
-    font-size: 16px;
-}
-.row{
-    margin-right: 0px !important;
+    font-weight: 600;
+    width: 100px;
+    color: #fff;
+    border-radius: 2px;
 }
 
-.row1{
-    margin-right: 0px !important;
+.edit-info-btn:before {
+    content: url('../../../assets/images/edit-white.svg');
+    height: 12px;
+    width: 12px;
+    display: inline-block;
+    margin-right: 10px;
 }
-.sdtable{
-    border: solid 1px #F4F4F4;
-    padding: 10px 0px 10px 20px;
-    font-size: 12px;
+
+.menu-bar {
+    display: flex;
+    margin: 30px 0 -5px 0;
 }
+
+.menu-bar button {
+    width: 20%;
+    background: transparent;
+    padding: 25px 0;
+    color: #A6A6A6;
+    text-transform: uppercase;
+    font-weight: bold;
+    outline: none;
+    position: relative;
+}
+
+.menu-bar button:after {
+    display: inline-block;
+    width: 1px;
+    content: "";
+    height: 20px;
+    right: 0;
+    position: absolute;
+    background-color: #A6A6A6;
+}
+
+.menu-bar button.active {
+    background: #fff;
+    color: #5E81F4;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.menu-bar button.active:after,
+.menu-bar button:last-child:after {
+    display: none;
+}
+
+
+.image-upload>input {
+    display: none;
+  }
+
 .pattrenI i{
     padding: 3px;
     font-size: 20px;
@@ -402,62 +188,4 @@ input{
     cursor: pointer;
     color: white;
     background-color: #5e81f4;
-}
-.image-upload>input {
-    display: none;
-  }
-  .iconF{
-    margin-top: -4px;
-}
-
-@media (min-width: 279px) and (max-width: 575px){
-
-}
-
-@media (min-width: 576px) and (max-width: 767px){
-
-}
-
-@media (min-width: 768px) and (max-width: 991px){
-
-}
-
-@media (min-width: 992px) and (max-width: 1199px){
-    .personalmenuslist ul{
-        list-style: none;
-        margin-left: -15px;
-    }
-    .personalmenuslist ul li{
-        padding: 20px 5px 5px 5px;
-    }
-    .personalmenuslist ul li a{
-        text-decoration: none;
-        color: black;
-        font-size: 12px;
-        font-weight: 600;
-        color: gray;
-    }
-    .personalmenuslist ul li a i{
-        margin-right: 0px;
-    }
-    .personalmenuslist ul li a:hover{
-        color: blue;
-        cursor: pointer;
-    }
-    .profiletitle {
-        font-size: 15px;
-        font-weight: 900;
-        padding: 20px 20px 15px 20px;
-        margin-left: 12px;
-    }
-    .proftitle1 {
-        font-size: 14px;
-        font-weight: 600;
-        color: #3f3c3c;
-        padding: 10px 0 0 0px;
-    }
-}
-
-@media (min-width: 1200px){
-
 }
