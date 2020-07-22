@@ -1,0 +1,75 @@
+.new-noticeboard-listing {
+	background-color: transparent;
+}
+
+.new-noticeboard-listing h2 {
+    color: #696969;
+}
+
+.new-noticeboard-listing .search-box {
+    border-radius: 20px;
+    background: transparent;
+    margin-left: 30px;
+    outline: none;
+    border: 1px solid lightgray;
+}
+
+.new-noticeboard-listing thead tr > th {
+	color: #696969;
+}
+
+.new-noticeboard-listing input[type="text"] {
+    border-radius: 20px;
+}
+
+.new-noticeboard-listing .-classes-schedule table {
+	border-collapse: separate !important;
+    border-spacing: 0 10px !important;
+}
+
+.new-noticeboard-listing .-classes-schedule table tr {
+	border-radius: 10px;
+}
+
+.new-noticeboard-listing .-classes-schedule table tr td:first-child {
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+}
+
+.new-noticeboard-listing .-classes-schedule table tr td:last-child {
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+}
+
+.new-noticeboard-listing .-classes-schedule table tr td {
+	background: #fff;
+    color: #000;
+    padding: 10px 0;
+    font-weight: bold;
+}
+
+.new-noticeboard-listing .-classes-schedule table ._s-no span {
+	background: #fff;
+    color: #000;
+    font-weight: bold;
+}
+
+.new-noticeboard-listing .-classes-schedule table thead tr > th {
+	background: #E9EEF7;
+    padding: 15px 10px;
+}
+
+.new-noticeboard-listing .-classes-schedule table tr:first-child td {
+	padding: 10px 0 !important;
+}
+
+.new-noticeboard-listing .-classes-schedule table ._actions .btn {
+    width: 34px;
+    height: 34px;
+    background: #5E81F4;
+    color: #fff;
+    font-weight: 500;
+    font-size: 15px;
+    margin: 0 5px;
+    border-radius: 20px;
+}
