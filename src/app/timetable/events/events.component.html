@@ -1,68 +1,216 @@
-<div id="main-content">
-
-    <div class="row">
-        <div class="container-fluid dashboard-content">
-            <div class="card selectcard">
-                <form class="searchForm" role="form" [formGroup]="eventForm" (ngSubmit)="addEvents()"
-                    *ngIf="user.role === 'admin'">
-                    <div class="form-group">
-                        <label class="pull-left">Event Title</label>
-                        <input class="form-control" formControlName="event_title" placeholder="Enter..." type="text">
-                    </div>
-                    <div class="form-group">
-                        <label class="pull-left">Event Date</label>
-                        <input class="form-control" formControlName="date" placeholder="Enter..." type="date">
-                    </div>
-                    <div class="form-group">
-                        <label class="pull-left">Event Time</label>
-                        <input class="form-control" formControlName="time" placeholder="Enter..." type="time">
-                    </div>
-                    <div class="form-group">
-                        <label class="pull-left">Description</label>
-                        <textarea class="form-control" formControlName="description" cols="5" rows="5"
-                            placeholder="Enter..."></textarea>
-                    </div>
-                    <div class="form-group pull-right">
-                        <button type="submit" class="button button1 hvr-pop transition">Add Event</button>
-                    </div>
-                </form>
-                <div class="searchForm" *ngIf="user.role === 'teacher' || user.role === 'parent'">
-                    <div class="form-group">
-                        <label class="pull-left">Events</label>
-                        <select class="form-control" [(ngModel)]="event" (change)="getSubject_teachers()">
-                            <option>select...</option>
-                            <option *ngFor="let event of events" value="{{event.event_id}}">{{event.title}}</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="events">
-                <div class="month">
-                    <ul>
-                        <li class="prev" (click)="getPrevious()">&#10094;</li>
-                        <li class="next" (click)="getNext()">&#10095;</li>
-                        <li>
-                            {{month}}<br>
-                            <!-- <span style="text-align:center">2017</span> -->
-                        </li>
-                        <li>{{year}}</li>
-                    </ul>
-                </div>
-                <ul class="weekdays">
-                    <li>Su</li>
-                    <li>Mo</li>
-                    <li>Tu</li>
-                    <li>We</li>
-                    <li>Th</li>
-                    <li>Fr</li>
-                    <li>Sa</li>
-                </ul>
-                <ul class="days">
-                    <li *ngFor="let day of dummy_daylist; let i = index">{{day}}</li>
-                    <li *ngFor="let day of daylist; let i = index" (click)="getEvents(day)" [ngClass]="{'date-highlight': date === day}">{{day}}</li>
-                </ul>
-            </div>
-
-        </div>
+<main class="card mt-20 within-viewport new-events-listing">
+    <div class="month-nav-wrapper">
+        <button class="previous-month-btn"><</button>
+        <h2>November 2020</h2>
+        <button class="next-month-btn">></button>
     </div>
-</div>
+    <section class="table-container timetable-chart">
+    <table cellspacing="0" class="_task-list">
+      <thead>
+        <tr>
+          <th align="left">MON</th>
+          <th align="left">TUE</th>
+          <th align="left">WED</th>
+          <th align="left">THU</th>
+          <th align="left">FRI</th>
+          <th align="left">SAT</th>
+          <th align="left">SUN</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="_task">
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+          <td>4</td>
+          <td>5</td>
+          <td>6</td>
+          <td>7</td>
+        </tr>
+        <tr class="_task">
+          <td>8</td>
+          <td>9</td>
+          <td>10</td>
+          <td class="special-day schedule-box">
+            11
+            <button class="plus-btn">+</button>
+            <p class="day-special-info">Earth Day Founder's Day</p>
+            <div class="row-content-detail">
+              <p><span class="heading">Title :</span><span class="value">Founder's Day</span></p>
+              <p><span class="heading">Date :</span><span class="value">Thursday 11, November</span></p>
+              <p><span class="heading">Time :</span><span class="value">8:00 AM - 12:00 PM</span></p>
+              <p><span class="heading">Description :</span><span class="value">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam hendrerit nisi sed sollicitudin pellentesque</span></p>
+            </div>
+          </td>
+          <td>12</td>
+          <td>13</td>
+          <td>14</td>
+        </tr>
+        <tr class="_task">
+          <td>15</td>
+          <td>16</td>
+          <td>17</td>
+          <td>18</td>
+          <td>19</td>
+          <td>20</td>
+          <td>21</td>
+        </tr>
+        <tr class="_task">
+          <td>22</td>
+          <td>23</td>
+          <td class="special-day schedule-box">24
+            <p class="day-special-info">Annual Day</p>
+          </td>
+          <td>25</td>
+          <td>26</td>
+          <td>27</td>
+          <td>28</td>
+        </tr>
+        <tr class="_task">
+          <td>29</td>
+          <td>30</td>
+          <td>31</td>
+          <td>Dec 1</td>
+          <td>Dec 2</td>
+          <td>Dec 3</td>
+          <td>Dec 4</td>
+        </tr>
+        <tr class="_task">
+          <td>Dec 5</td>
+          <td>Dec 6</td>
+          <td>Dec 7</td>
+          <td>Dec 8</td>
+          <td>Dec 9</td>
+          <td>Dec 10</td>
+          <td>Dec 11</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <div class="row table-section">
+      <section class="page-actions">
+        <div class="_select-or-search">
+          <h2>Events</h2>
+          <input type="search" class="search-box" placeholder="Search by title">
+        </div>
+      </section>
+      <section class="table-and-pagination -classes-schedule">
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>S.No</th>
+                <th align="left">Title</th>
+                <th align="left">Date</th>
+                <th align="left">Time</th>
+                <th align="left">Description</th>
+                <th align="left">Action</th>
+              </tr>
+            </thead>
+            <tbody>          
+              <tr>
+                <td class="_s-no"><span>1</span></td>
+                <td>Admission Process</td>
+                <td>Thursday 11, November</td>
+                <td>8:00 AM</td>
+                <td>Lorem ipsumdoram isat pem, disrotiorum</td>
+                <td class="_actions">
+                  <button class="btn"><img src="../../../assets/images/pencil-white-outline.svg" alt="Edit" /></button>
+                  <button class="btn"><img src="../../../assets/images/trash-white.svg" alt="Delete" /></button>
+                </td>
+              </tr>
+              <tr>
+                <td class="_s-no"><span>2</span></td>
+                <td>Admission Process</td>
+                <td>Thursday 11, November</td>
+                <td>8:00 AM</td>
+                <td>Lorem ipsumdoram isat pem, disrotiorum</td>
+                <td class="_actions">
+                  <button class="btn"><img src="../../../assets/images/pencil-white-outline.svg" alt="Edit" /></button>
+                  <button class="btn"><img src="../../../assets/images/trash-white.svg" alt="Delete" /></button>
+                </td>
+              </tr>
+              <tr>
+                <td class="_s-no"><span>3</span></td>
+                <td>Admission Process</td>
+                <td>Thursday 11, November</td>
+                <td>8:00 AM</td>
+                <td>Lorem ipsumdoram isat pem, disrotiorum</td>
+                <td class="_actions">
+                  <button class="btn"><img src="../../../assets/images/pencil-white-outline.svg" alt="Edit" /></button>
+                  <button class="btn"><img src="../../../assets/images/trash-white.svg" alt="Delete" /></button>
+                </td>
+              </tr>
+              <tr>
+                <td class="_s-no"><span>4</span></td>
+                <td>Admission Process</td>
+                <td>Thursday 11, November</td>
+                <td>8:00 AM</td>
+                <td>Lorem ipsumdoram isat pem, disrotiorum</td>
+                <td class="_actions">
+                  <button class="btn"><img src="../../../assets/images/pencil-white-outline.svg" alt="Edit" /></button>
+                  <button class="btn"><img src="../../../assets/images/trash-white.svg" alt="Delete" /></button>
+                </td>
+              </tr>
+              <tr>
+                <td class="_s-no"><span>5</span></td>
+                <td>Admission Process</td>
+                <td>Thursday 11, November</td>
+                <td>8:00 AM</td>
+                <td>Lorem ipsumdoram isat pem, disrotiorum</td>
+                <td class="_actions">
+                  <button class="btn"><img src="../../../assets/images/pencil-white-outline.svg" alt="Edit" /></button>
+                  <button class="btn"><img src="../../../assets/images/trash-white.svg" alt="Delete" /></button>
+                </td>
+              </tr>
+              <tr>
+                <td class="_s-no"><span>6</span></td>
+                <td>Admission Process</td>
+                <td>Thursday 11, November</td>
+                <td>8:00 AM</td>
+                <td>Lorem ipsumdoram isat pem, disrotiorum</td>
+                <td class="_actions">
+                  <button class="btn"><img src="../../../assets/images/pencil-white-outline.svg" alt="Edit" /></button>
+                  <button class="btn"><img src="../../../assets/images/trash-white.svg" alt="Delete" /></button>
+                </td>
+              </tr>
+              <tr>
+                <td class="_s-no"><span>7</span></td>
+                <td>Admission Process</td>
+                <td>Thursday 11, November</td>
+                <td>8:00 AM</td>
+                <td>Lorem ipsumdoram isat pem, disrotiorum</td>
+                <td class="_actions">
+                  <button class="btn"><img src="../../../assets/images/pencil-white-outline.svg" alt="Edit" /></button>
+                  <button class="btn"><img src="../../../assets/images/trash-white.svg" alt="Delete" /></button>
+                </td>
+              </tr>
+              <tr>
+                <td class="_s-no"><span>8</span></td>
+                <td>Admission Process</td>
+                <td>Thursday 11, November</td>
+                <td>8:00 AM</td>
+                <td>Lorem ipsumdoram isat pem, disrotiorum</td>
+                <td class="_actions">
+                  <button class="btn"><img src="../../../assets/images/pencil-white-outline.svg" alt="Edit" /></button>
+                  <button class="btn"><img src="../../../assets/images/trash-white.svg" alt="Delete" /></button>
+                </td>
+              </tr>
+              <tr>
+                <td class="_s-no"><span>9</span></td>
+                <td>Admission Process</td>
+                <td>Thursday 11, November</td>
+                <td>8:00 AM</td>
+                <td>Lorem ipsumdoram isat pem, disrotiorum</td>
+                <td class="_actions">
+                  <button class="btn"><img src="../../../assets/images/pencil-white-outline.svg" alt="Edit" /></button>
+                  <button class="btn"><img src="../../../assets/images/trash-white.svg" alt="Delete" /></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+  </div>
+</main>
