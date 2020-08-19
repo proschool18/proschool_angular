@@ -268,6 +268,65 @@ export class AdmissionComponent implements OnInit {
 
   }
 
+  validateDate(date) {
+    var input = date;
+    var re = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/;
+    var is_date_valid = re.test(date);
+    var dateArray = date.split("/");
+    if (is_date_valid) {
+    if (parseInt(dateArray[0]) > 31 || parseInt(dateArray[0]) < 1 || (parseInt(dateArray[1]) === 2 
+    && parseInt(dateArray[0]) > 29) || parseInt(dateArray[1]) > 12 || parseInt(dateArray[1]) < 1) {
+      is_date_valid = false;
+      }
+    }
+
+    if (parseInt(dateArray[2]) > new Date().getFullYear() ||
+    parseInt(dateArray[2]) < ((new Date().getFullYear()) - 100)) {
+    is_date_valid = false;
+    }
+    if (!is_date_valid) {
+      // this.dobError = "Please enter a valid Date of Birth.";
+    } else {
+      // this.dobError = "";
+    }
+  }
+
+  addSlashToDOB(e) {
+    if (e.keyCode != 8) {
+      if (this.student.dob.length == 2) {
+      this.student.dob = this.student.dob + "/";
+    } else if (this.student.dob.length == 5) {
+      this.student.dob = this.student.dob + "/";
+      } else {
+        return true;
+      }
+    }
+    return true;
+  }
+
+  addSlashToDOfAdmission(e) {
+    if (e.keyCode != 8) {
+      if (this.student.admission_date.length == 2) {
+        this.student.admission_date = this.student.admission_date + "/";
+      } else if (this.student.admission_date.length == 5) {
+        this.student.admission_date = this.student.admission_date + "/";
+      } else {
+        return true;
+      }
+    }
+    return true;
+  }
+
+  isMobileValid() {
+    var re = /^[6789]\d{9}$/;
+    var is_mobile = re.test(this.student.phone);
+    if (is_mobile) {
+      // this.mobileError = '';
+    } else {
+      // this.mobileError = 'Please enter a valid mobile number.';
+    }
+  }
+
   openAlert(alert_message) {
     const alertConfig = new MatDialogConfig();
 

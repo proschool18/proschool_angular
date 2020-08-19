@@ -66,7 +66,7 @@
             && (sudentadmissionForm.get('admission_no').touched || sudentadmissionForm.get('admission_no').dirty)}">
             <label class="heading">Admission No*</label>
             <div>
-              <input class="inpbox" type="text" formControlName="admission_no" [value]="student.admission_no">
+              <input class="inpbox" type="text" formControlName="admission_no" [(ngModel)]="student.admission_no">
               <span class="help-block" *ngIf="sudentadmissionForm.get('admission_no').errors 
           && (sudentadmissionForm.get('admission_no').touched || sudentadmissionForm.get('admission_no').dirty)">
                 <span *ngIf="sudentadmissionForm.get('admission_no').errors.required">
@@ -80,7 +80,7 @@
           <div class="form-group" [ngClass]="{'has-error' : sudentadmissionForm.get('roll_no').errors 
             && (sudentadmissionForm.get('roll_no').touched || sudentadmissionForm.get('roll_no').dirty)}">
             <label class="heading">Roll No*</label>
-            <div><input type="text" class="inpbox" formControlName="roll_no" [value]="student.roll_no">
+            <div><input type="text" class="inpbox" formControlName="roll_no" [(ngModel)]="student.roll_no">
               <span class="help-block" *ngIf="sudentadmissionForm.get('roll_no').errors 
                 && (sudentadmissionForm.get('roll_no').touched || sudentadmissionForm.get('roll_no').dirty)">
                 <span *ngIf="sudentadmissionForm.get('roll_no').errors.required">
@@ -106,7 +106,7 @@
             </div>
             <!-- <select class="inpbox" formControlName="class_id" (change)="sectionChange()">
               <option value="">--Select--</option>
-              <option [value]="school_classes.class_id" *ngFor="let school_classes of classes">{{school_classes.name}}
+              <option [(ngModel)]="school_classes.class_id" *ngFor="let school_classes of classes">{{school_classes.name}}
               </option>
             </select> -->
           </div>
@@ -125,9 +125,9 @@
                 (click)="selectedSection = section">{{section.name}}</a>
               </div>
             </div>
-            <!-- <select class="inpbox" formControlName="section_id" [value]="student.section_id">
+            <!-- <select class="inpbox" formControlName="section_id" [(ngModel)]="student.section_id">
               <option value="">--Select--</option>
-              <option [value]="section.section_id" *ngFor="let section of sections">{{section.name}}</option>
+              <option [(ngModel)]="section.section_id" *ngFor="let section of sections">{{section.name}}</option>
             </select> -->
           </div>
         </div>
@@ -138,7 +138,7 @@
           <div class="form-group" [ngClass]="{'has-error' : sudentadmissionForm.get('first_name').errors 
             && (sudentadmissionForm.get('first_name').touched || sudentadmissionForm.get('first_name').dirty)}">
             <label class="heading">First Name*</label>
-            <div><input class="inpbox" type="text" formControlName="first_name" [value]="student.first_name">
+            <div><input class="inpbox" type="text" formControlName="first_name" [(ngModel)]="student.first_name">
               <span class="help-block" *ngIf="sudentadmissionForm.get('first_name').errors 
                 && (sudentadmissionForm.get('first_name').touched || sudentadmissionForm.get('first_name').dirty)">
                 <span *ngIf="sudentadmissionForm.get('first_name').errors.required">
@@ -152,7 +152,7 @@
           <div class="form-group" [ngClass]="{'has-error' : sudentadmissionForm.get('last_name').errors 
             && (sudentadmissionForm.get('last_name').touched || sudentadmissionForm.get('last_name').dirty)}">
             <label class="heading">Last Name*</label>
-            <div><input type="text" class="inpbox" formControlName="last_name" [value]="student.last_name">
+            <div><input type="text" class="inpbox" formControlName="last_name" [(ngModel)]="student.last_name">
               <span class="help-block" *ngIf="sudentadmissionForm.get('last_name').errors 
                 && (sudentadmissionForm.get('last_name').touched || sudentadmissionForm.get('last_name').dirty)">
                 <span *ngIf="sudentadmissionForm.get('last_name').errors.required">
@@ -187,20 +187,13 @@
           <div class="form-group" [ngClass]="{'has-error' : sudentadmissionForm.get('dob').errors 
             && (sudentadmissionForm.get('dob').touched || sudentadmissionForm.get('dob').dirty)}">
             <label class="heading">Date of Birth*</label>
-            <div class="dropdown">
-              <!-- <input type="date" class="inpbox" formControlName="dob" [value]="student.dob"> -->
-              <mat-form-field>
-                 <input matInput [matDatepicker]="date_of_birth" [formControl]="date_of_birth">
-                 <mat-datepicker-toggle matSuffix [for]="date_of_birth"></mat-datepicker-toggle>
-                 <mat-datepicker #date_of_birth></mat-datepicker>
-              </mat-form-field>
+              <input type="text" formControlName="dob" [(ngModel)]="student.dob" placeholder="DD/MM/YYYY" inputmode="numeric" autocomplete="off"  class="form-control" (keyup)="addSlashToDOB($event)" (blur)="validateDate(student.dob)" />
               <span class="help-block" *ngIf="sudentadmissionForm.get('dob').errors 
             && (sudentadmissionForm.get('dob').touched || sudentadmissionForm.get('dob').dirty)">
                 <span *ngIf="sudentadmissionForm.get('dob').errors.required">
                   DOB is required
                 </span>
               </span>
-            </div>
           </div>
         </div>
       </div>
@@ -241,7 +234,7 @@
           <div class="form-group" [ngClass]="{'has-error' : sudentadmissionForm.get('nationality').errors 
             && (sudentadmissionForm.get('nationality').touched || sudentadmissionForm.get('nationality').dirty)}">
             <label class="heading">Nationality*</label>
-            <div><input type="text" class="inpbox" formControlName="nationality" [value]="student.nationality">
+            <div><input type="text" class="inpbox" formControlName="nationality" [(ngModel)]="student.nationality">
               <span class="help-block" *ngIf="sudentadmissionForm.get('nationality').errors 
             && (sudentadmissionForm.get('nationality').touched || sudentadmissionForm.get('nationality').dirty)">
                 <span *ngIf="sudentadmissionForm.get('nationality').errors.required">
@@ -256,7 +249,7 @@
             && (sudentadmissionForm.get('phone').touched || sudentadmissionForm.get('phone').dirty)}">
             <label class="heading">Contact No*</label>
             <div>
-              <input type="number" class="inpbox" formControlName="phone" [value]="student.phone">
+              <input type="text" class="inpbox" formControlName="phone" [(ngModel)]="student.phone" placeholder="" maxlength="10" inputmode="numeric" autocomplete="off" (keyup)="isMobileValid()" class="form-control"/>
               <span class="help-block" *ngIf="sudentadmissionForm.get('phone').errors 
             && (sudentadmissionForm.get('phone').touched || sudentadmissionForm.get('phone').dirty)">
                 <span *ngIf="sudentadmissionForm.get('phone').errors.required">
@@ -271,7 +264,7 @@
             && (sudentadmissionForm.get('aadhar_no').touched || sudentadmissionForm.get('aadhar_no').dirty)}">
             <label class="heading">Aadhaar No*</label>
             <div>
-              <input type="text" class="inpbox" formControlName="aadhar_no" [value]="student.aadhar_no">
+              <input type="text" class="inpbox" formControlName="aadhar_no" [(ngModel)]="student.aadhar_no">
               <span class="help-block" *ngIf="sudentadmissionForm.get('aadhar_no').errors 
             && (sudentadmissionForm.get('aadhar_no').touched || sudentadmissionForm.get('aadhar_no').dirty)">
                 <span *ngIf="sudentadmissionForm.get('aadhar_no').errors.required">
@@ -305,7 +298,7 @@
                 <a (click)="selectedBloodGroup = 'NA'">NA</a>
               </div>
             </div>
-            <!-- <select class="inpbox" formControlName="blood_group" [value]="student.blood_group">
+            <!-- <select class="inpbox" formControlName="blood_group" [(ngModel)]="student.blood_group">
               <option value="">--Select--</option>
               <option value="O+">O+</option>
               <option value="O-">O-</option>
@@ -323,20 +316,13 @@
           <div class="form-group" [ngClass]="{'has-error' : sudentadmissionForm.get('admission_date').errors 
             && (sudentadmissionForm.get('admission_date').touched || sudentadmissionForm.get('admission_date').dirty)}">
             <label class="heading">Admission Date*</label>
-            <div class="dropdown">
-              <mat-form-field>
-                 <input matInput [matDatepicker]="date_of_admission" [formControl]="date_of_admission">
-                 <mat-datepicker-toggle matSuffix [for]="date_of_admission"></mat-datepicker-toggle>
-                 <mat-datepicker #date_of_admission></mat-datepicker>
-              </mat-form-field>
-              <!-- <input type="date" class="inpbox" formControlName="admission_date" [value]="student.admission_date"> -->
+              <input type="text" formControlName="admission_date" [(ngModel)]="student.admission_date" placeholder="DD/MM/YYYY" inputmode="numeric" autocomplete="off"  class="form-control" (keyup)="addSlashToDOfAdmission($event)" (blur)="validateDate(student.admission_date)" />
               <span class="help-block" *ngIf="sudentadmissionForm.get('admission_date').errors 
             && (sudentadmissionForm.get('admission_date').touched || sudentadmissionForm.get('admission_date').dirty)">
                 <span *ngIf="sudentadmissionForm.get('admission_date').errors.required">
                   Admission Date is required
                 </span>
               </span>
-            </div>
           </div>
         </div>
         <div class="col-full-3">
@@ -363,7 +349,7 @@
         <div class="col-full-3">
           <div class="form-group">
             <label class="heading">Email</label>
-            <div><input type="email" class="inpbox" formControlName="email" [value]="student.email"></div>
+            <div><input type="email" class="inpbox" formControlName="email" [(ngModel)]="student.email"></div>
           </div>
         </div>
       </div>
@@ -393,7 +379,7 @@
           <div class="form-group" [ngClass]="{'has-error' : sudentadmissionForm.get('father_name').errors 
             && (sudentadmissionForm.get('father_name').touched || sudentadmissionForm.get('father_name').dirty)}">
             <label class="heading">Father Name*</label>
-            <div><input class="inpbox" type="text" formControlName="father_name" [value]="student.parents[1].parent_name">
+            <div><input class="inpbox" type="text" formControlName="father_name" [(ngModel)]="student.parents[1].parent_name">
               <span class="help-block" *ngIf="sudentadmissionForm.get('father_name').errors 
             && (sudentadmissionForm.get('father_name').touched || sudentadmissionForm.get('father_name').dirty)">
                 <span *ngIf="sudentadmissionForm.get('father_name').errors.required">
@@ -407,7 +393,7 @@
           <div class="form-group" [ngClass]="{'has-error' : sudentadmissionForm.get('father_contact').errors 
             && (sudentadmissionForm.get('father_contact').touched || sudentadmissionForm.get('father_contact').dirty)}">
             <label class="heading">Father Phone*</label>
-            <div><input type="text" class="inpbox" formControlName="father_contact" [value]="student.parents[1].parent_contact">
+            <div><input type="text" class="inpbox" formControlName="father_contact" [(ngModel)]="student.parents[1].parent_contact">
               <span class="help-block" *ngIf="sudentadmissionForm.get('father_contact').errors 
             && (sudentadmissionForm.get('father_contact').touched || sudentadmissionForm.get('father_contact').dirty)">
                 <span *ngIf="sudentadmissionForm.get('father_contact').errors.required">
@@ -420,13 +406,13 @@
         <div class="col-full-3">
           <div class="form-group">
             <label class="heading">Father Email</label>
-            <input class="inpbox" type="email" formControlName="father_email" [value]="student.parents[1].parent_email">
+            <input class="inpbox" type="email" formControlName="father_email" [(ngModel)]="student.parents[1].parent_email">
           </div>
         </div>
         <div class="col-full-3">
           <div class="form-group">
             <label class="heading">Father Occupation*</label>
-            <input class="inpbox" type="text" formControlName="father_occupation" [value]="student.parents[1].occupation">
+            <input class="inpbox" type="text" formControlName="father_occupation" [(ngModel)]="student.parents[1].occupation">
           </div>
         </div>
       </div>
@@ -435,24 +421,24 @@
         <div class="col-full-3">
           <div class="form-group">
             <label class="heading">Mother Name</label>
-            <input class="inpbox" type="text" formControlName="mother_name" [value]="student.parents[0].parent_name">
+            <input class="inpbox" type="text" formControlName="mother_name" [(ngModel)]="student.parents[0].parent_name">
           </div>
         </div>
         <div class="col-full-3">
           <div class="form-group">
             <label class="heading">Mother Phone</label>
-            <input class="inpbox" type="number" formControlName="mother_contact" [value]="student.parents[0].parent_contact"></div>
+            <input class="inpbox" type="number" formControlName="mother_contact" [(ngModel)]="student.parents[0].parent_contact"></div>
         </div>
         <div class="col-full-3">
           <div class="form-group">
             <label class="heading">Mother Email</label>
-            <input class="inpbox" type="email" formControlName="mother_email" [value]="student.parents[0].parent_email">
+            <input class="inpbox" type="email" formControlName="mother_email" [(ngModel)]="student.parents[0].parent_email">
           </div>
         </div>
         <div class="col-full-3">
           <div class="form-group">
             <label class="heading">Mother Occupation</label>
-            <input class="inpbox" type="text" formControlName="mother_occupation" [value]="student.parents[0].occupation">
+            <input class="inpbox" type="text" formControlName="mother_occupation" [(ngModel)]="student.parents[0].occupation">
           </div>
         </div>
       </div>
@@ -461,25 +447,25 @@
         <div class="col-full-3">
           <div class="form-group">
             <label class="heading">Guardian Name</label>
-            <input class="inpbox" type="text" formControlName="gaurdian_name" [value]="student.parents[2].parent_name">
+            <input class="inpbox" type="text" formControlName="gaurdian_name" [(ngModel)]="student.parents[2].parent_name">
           </div>
         </div>
         <div class="col-full-3">
           <div class="form-group">
             <label class="heading">Guardian Phone</label>
-            <input class="inpbox" type="number" formControlName="gaurdian_contact" [value]="student.parents[2].parent_contact">
+            <input class="inpbox" type="number" formControlName="gaurdian_contact" [(ngModel)]="student.parents[2].parent_contact">
           </div>
         </div>
         <div class="col-full-3">
           <div class="form-group">
             <label class="heading">Guardian Email</label>
-            <input class="inpbox" type="email" formControlName="gaurdian_email" [value]="student.parents[2].parent_email">
+            <input class="inpbox" type="email" formControlName="gaurdian_email" [(ngModel)]="student.parents[2].parent_email">
           </div>
         </div>
         <div class="col-full-3">
           <div class="form-group">
             <label class="heading">Guardian Occupation</label>
-            <input class="inpbox" type="text" formControlName="gaurdian_occupation" [value]="student.parents[2].occupation">
+            <input class="inpbox" type="text" formControlName="gaurdian_occupation" [(ngModel)]="student.parents[2].occupation">
           </div>
         </div>
       </div>
@@ -488,7 +474,7 @@
         <div class="col-full-3">
           <div class="form-group">
             <label class="heading">Guardian Relation</label>
-            <input class="inpbox" type="text" formControlName="gaurdian_relation" [value]="student.parents[2].parent_relation">
+            <input class="inpbox" type="text" formControlName="gaurdian_relation" [(ngModel)]="student.parents[2].parent_relation">
           </div>
         </div>
       </div>
@@ -510,13 +496,13 @@
         <div class="col-full-6">
           <div class="form-group">
             <label class="heading">Current Address :</label>
-            <div><textarea formControlName="cur_address" cols="45" rows="10" [value]="student.current_address[0].cur_address"></textarea></div>
+            <div><textarea formControlName="cur_address" cols="45" rows="10" [(ngModel)]="student.current_address[0].cur_address"></textarea></div>
           </div>
         </div>
         <div class="col-full-6">
           <div class="form-group">
             <label class="heading">Permanent Address :</label>
-            <div><textarea formControlName="perm_address" cols="45" rows="10" [value]="student.permanent_address[0].perm_address"></textarea></div>
+            <div><textarea formControlName="perm_address" cols="45" rows="10" [(ngModel)]="student.permanent_address[0].perm_address"></textarea></div>
           </div>
         </div>
       </div>
