@@ -93,7 +93,7 @@ export class AdmissionComponent implements OnInit {
     }
   }
 
-  sudentadmissionForm: FormGroup = this.fb.group({
+  studentadmissionForm: FormGroup = this.fb.group({
     admission_no: ['', Validators.required],
     first_name: ['', Validators.required],
     category: ['', Validators.required],
@@ -135,7 +135,7 @@ export class AdmissionComponent implements OnInit {
   ngOnInit() {
     this.getClasses();
     if(this.dialog_type === 'edit') {
-      this.sudentadmissionForm.patchValue({
+      this.studentadmissionForm.patchValue({
         admission_no: this.student.admission_no,
         first_name: this.student.first_name,
         category: this.student.category,
@@ -194,7 +194,7 @@ export class AdmissionComponent implements OnInit {
 
   fileProgress(event) {
     this.studentphoto = <File>event.target.files[0];
-    this.sudentadmissionForm.patchValue({ file: this.studentphoto });
+    this.studentadmissionForm.patchValue({ file: this.studentphoto });
   }
 
   close() {
@@ -202,10 +202,10 @@ export class AdmissionComponent implements OnInit {
   }
 
   submitStudent() {
-    this.sudentadmissionForm.value.student_id = this.student.student_id;
-    this.dialogRef.close(this.sudentadmissionForm.value);
+    this.studentadmissionForm.value.student_id = this.student.student_id;
+    this.dialogRef.close(this.studentadmissionForm.value);
     if (this.dialog_type == 'add') {
-      this.studentservice.addStudentadmission(this.sudentadmissionForm.value.section_id, this.sudentadmissionForm.value)
+      this.studentservice.addStudentadmission(this.studentadmissionForm.value.section_id, this.studentadmissionForm.value)
         .subscribe(
           res => {
             if (res == true) {
@@ -218,7 +218,7 @@ export class AdmissionComponent implements OnInit {
           }
         )
     } else if (this.dialog_type == 'edit') {
-      this.studentservice.editStudent(this.sudentadmissionForm.value.student_id, this.sudentadmissionForm.value)
+      this.studentservice.editStudent(this.studentadmissionForm.value.student_id, this.studentadmissionForm.value)
         .subscribe(
           res => {
             if (res == true) {
@@ -251,6 +251,9 @@ export class AdmissionComponent implements OnInit {
   selectedBloodGroup: any;
   showBloodGroupList: boolean = false;
 
+  selectedBusRoute: any;
+  showBusRouteList: boolean = false;
+
     
   classListbtnClicked() {
     this.showClassList = true;
@@ -268,26 +271,35 @@ export class AdmissionComponent implements OnInit {
 
   }
 
-  validateDate(date) {
+  isDOBValid: boolean = true;
+  isDOfAdmissionValid: boolean = true;
+
+  validateDate(date, dateName) {
     var input = date;
     var re = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/;
     var is_date_valid = re.test(date);
     var dateArray = date.split("/");
     if (is_date_valid) {
-    if (parseInt(dateArray[0]) > 31 || parseInt(dateArray[0]) < 1 || (parseInt(dateArray[1]) === 2 
-    && parseInt(dateArray[0]) > 29) || parseInt(dateArray[1]) > 12 || parseInt(dateArray[1]) < 1) {
-      is_date_valid = false;
+      if (parseInt(dateArray[0]) > 31 || parseInt(dateArray[0]) < 1 || (parseInt(dateArray[1]) === 2 
+      && parseInt(dateArray[0]) > 29) || parseInt(dateArray[1]) > 12 || parseInt(dateArray[1]) < 1) {
+        is_date_valid = false;
+      } else {
+        is_date_valid = true;
       }
     }
 
-    if (parseInt(dateArray[2]) > new Date().getFullYear() ||
-    parseInt(dateArray[2]) < ((new Date().getFullYear()) - 100)) {
-    is_date_valid = false;
-    }
-    if (!is_date_valid) {
-      // this.dobError = "Please enter a valid Date of Birth.";
-    } else {
-      // this.dobError = "";
+    switch (dateName) {
+      case "dob":
+        this.isDOBValid = is_date_valid;
+        break;
+
+      case "dateOfAdmission":
+        this.isDOfAdmissionValid = is_date_valid;
+        break;
+      
+      default:
+        // code...
+        break;
     }
   }
 
@@ -317,13 +329,171 @@ export class AdmissionComponent implements OnInit {
     return true;
   }
 
-  isMobileValid() {
+
+  is_student_mobile_valid: boolean = true;
+  is_father_mobile_valid: boolean = true;
+  is_mother_mobile_valid: boolean = true;
+  is_guardian_mobile_valid: boolean = true;
+    
+  isMobileValid(person) {
     var re = /^[6789]\d{9}$/;
-    var is_mobile = re.test(this.student.phone);
-    if (is_mobile) {
-      // this.mobileError = '';
-    } else {
-      // this.mobileError = 'Please enter a valid mobile number.';
+    switch (person) {
+      case "student":
+        this.is_student_mobile_valid = re.test(this.student.phone);
+        break;
+      case "father":
+        this.is_father_mobile_valid = re.test(this.student.parents[1].parent_contact);
+        break;
+      case "mother":
+        this.is_mother_mobile_valid = re.test(this.student.parents[0].parent_contact);
+        break;
+      case "guardian":
+        this.is_guardian_mobile_valid = re.test(this.student.parents[2].parent_contact);
+        break;
+      
+      default:
+        // code...
+        break;
+    }
+  }
+
+  validFirstName:boolean = true;
+  validLastName: boolean = true;
+  validNationality: boolean = true;
+
+  is_father_name_valid: boolean = true;
+  is_mother_name_valid: boolean = true;
+  is_guardian_name_valid: boolean = true;
+  is_father_occ_valid: boolean = true;
+  is_mother_occ_valid: boolean = true;
+  is_guardian_occ_valid: boolean = true;
+  is_guardian_relation_valid: boolean = true;
+  is_current_address_valid: boolean = true;
+  is_perm_address_valid: boolean = true;
+    
+  validateText(textString, stringName) {
+    var re = /^([a-zA-Z]+\s)*[a-zA-Z]+$/i;
+    switch (stringName) {
+        case "first-name":
+          this.validFirstName = re.test(textString.replace(/\s/g, ''));
+          break;
+
+        case "last-name":
+          this.validLastName = re.test(textString.replace(/\s/g, ''));
+          break;
+
+        case "nationality":
+          this.validNationality = re.test(textString.replace(/\s/g, ''));
+          break;
+
+        case "father-name":
+          this.is_father_name_valid = re.test(textString.replace(/\s/g, ''));
+          break;
+
+        case "mother-name":
+          this.is_mother_name_valid = re.test(textString.replace(/\s/g, ''));
+          break;
+
+        case "guardian-name":
+          this.is_guardian_name_valid = re.test(textString.replace(/\s/g, ''));
+          break;
+
+        case "father-occ":
+          this.is_father_occ_valid = re.test(textString.replace(/\s/g, ''));
+          break;
+
+        case "mother-occ":
+          this.is_mother_occ_valid = re.test(textString.replace(/\s/g, ''));
+          break;
+
+        case "guardian-occ":
+          this.is_guardian_occ_valid = re.test(textString.replace(/\s/g, ''));
+          break;
+
+        case "guardian-relation":
+          this.is_guardian_relation_valid = re.test(textString.replace(/\s/g, ''));
+          break;
+
+        case "current-address":
+          this.is_current_address_valid = re.test(textString.replace(/\s/g, ''));
+          break;
+
+        case "perm-address":
+          this.is_perm_address_valid = re.test(textString.replace(/\s/g, ''));
+          break;
+        
+        default:
+          // code...
+          break;
+      }
+  }
+
+  isValidClassDD: boolean = true;
+  isValidSectionDD: boolean = true;
+  isValidGenderDD: boolean = true;
+  isValidCategoryDD: boolean = true;
+  isValidBloodDD: boolean = true;
+  isValidBusRouteDD: boolean = true;
+            
+  validateDropdown(dropDownName) {
+    switch (dropDownName) {
+      case "class-dd":
+        this.isValidClassDD = this.selectedClass == '' ? false : true;
+        break;
+
+      case "section-dd":
+        this.isValidSectionDD = this.selectedSection == '' ? false : true;
+        break;
+
+      case "gender-dd":
+        this.isValidGenderDD = this.selectedGender == '' ? false : true;
+        break;
+
+      case "category-dd":
+        this.isValidCategoryDD = this.selectedCategory == '' ? false : true;
+        break;
+
+      case "blood-dd":
+        this.isValidBloodDD = this.selectedBloodGroup == '' ? false : true;
+        break;
+
+      case "bus-route-dd":
+        this.isValidBusRouteDD = this.selectedBusRoute == '' ? false : true;
+        break;
+      
+      default:
+        // code...
+        break;
+    }
+  }
+
+  is_student_email_valid:boolean = true;
+  is_father_email_valid: boolean = true;
+  is_mother_email_valid: boolean = true;
+  is_guardian_email_valid: boolean = true;
+
+  verifyEmailId(emailId, emailName) {
+    var re = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    switch (emailName) {
+      case "student-email":
+        this.is_student_email_valid = re.test(emailId);
+        break;
+
+      case "father-email":
+        this.is_father_email_valid = re.test(emailId);
+        break;
+
+      case "mother-email":
+        this.is_mother_email_valid = re.test(emailId);
+        break;
+
+      case "guardian-email":
+        this.is_guardian_email_valid = re.test(emailId);
+        break;
+      
+      default:
+        // code...
+        break;
     }
   }
 
