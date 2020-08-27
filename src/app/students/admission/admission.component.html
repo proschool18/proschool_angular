@@ -8,7 +8,7 @@
       <button class="btn -cta" [ngClass]="[address ? 'active-tab': 'inactive-tab']" (click)="get_studentForm('address')">Address</button>
   </div>
 
-  <form [formGroup]="studentadmissionForm" >
+  <form [formGroup]="studentadmissionForm" (submit)="submitStudent()" >
 
     <div *ngIf="studentdetails">
       <div class="row-wrapper">
@@ -18,12 +18,7 @@
             <label class="heading">Admission No*</label>
             <div>
               <input class="inpbox" type="text" formControlName="admission_no" [(ngModel)]="student.admission_no">
-              <span class="help-block" *ngIf="studentadmissionForm.get('admission_no').errors 
-          && (studentadmissionForm.get('admission_no').touched || studentadmissionForm.get('admission_no').dirty)">
-                <span *ngIf="studentadmissionForm.get('admission_no').errors.required">
-                  Admission Number is required
-                </span>
-              </span>
+              <span class="help-block" *ngIf="!is_admission_no_valid">Please enter valid admission number.</span>
             </div>
           </div>
         </div>
@@ -32,12 +27,7 @@
             && (studentadmissionForm.get('roll_no').touched || studentadmissionForm.get('roll_no').dirty)}">
             <label class="heading">Roll No*</label>
             <div><input type="text" class="inpbox" formControlName="roll_no" [(ngModel)]="student.roll_no">
-              <span class="help-block" *ngIf="studentadmissionForm.get('roll_no').errors 
-                && (studentadmissionForm.get('roll_no').touched || studentadmissionForm.get('roll_no').dirty)">
-                <span *ngIf="studentadmissionForm.get('roll_no').errors.required">
-                  Roll Number is required
-                </span>
-              </span>
+              <span class="help-block" *ngIf="!is_roll_no_valid">Please enter valid roll number.</span>
             </div>
           </div>
         </div>
@@ -55,6 +45,7 @@
                   (click)="selectedClass = school_classes;sectionChange();">{{school_classes.name}}</a>
               </div>
             </div>
+             <span class="help-block dropdown-error-msg" *ngIf="!isValidClassDD">Please select class.</span>
           </div>
         </div>
         <div class="col-full-3">
@@ -71,6 +62,7 @@
                 (click)="selectedSection = section">{{section.name}}</a>
               </div>
             </div>
+            <span class="help-block dropdown-error-msg" *ngIf="!isValidSectionDD">Please select section.</span>
           </div>
         </div>
       </div>
@@ -80,13 +72,7 @@
           <div class="form-group" [ngClass]="{'has-error' : studentadmissionForm.get('first_name').errors 
             && (studentadmissionForm.get('first_name').touched || studentadmissionForm.get('first_name').dirty)}">
             <label class="heading">First Name*</label>
-            <div><input class="inpbox" type="text" formControlName="first_name" [(ngModel)]="student.first_name" (input)="validateText(student.first_name, 'first-name')">
-              <!-- <span class="help-block" *ngIf="studentadmissionForm.get('first_name').errors 
-                && (studentadmissionForm.get('first_name').touched || studentadmissionForm.get('first_name').dirty)">
-                <span *ngIf="studentadmissionForm.get('first_name').errors.required">
-                  First Name is required
-                </span>
-              </span> -->
+            <div><input class="inpbox" type="text" formControlName="first_name" [(ngModel)]="student.first_name">
                <span class="help-block" *ngIf="!validFirstName">Please enter valid first name.</span>
             </div>
           </div>
@@ -95,13 +81,7 @@
           <div class="form-group" [ngClass]="{'has-error' : studentadmissionForm.get('last_name').errors 
             && (studentadmissionForm.get('last_name').touched || studentadmissionForm.get('last_name').dirty)}">
             <label class="heading">Last Name*</label>
-            <div><input type="text" class="inpbox" formControlName="last_name" [(ngModel)]="student.last_name" (input)="validateText(student.last_name, 'last-name')">
-              <!-- <span class="help-block" *ngIf="studentadmissionForm.get('last_name').errors 
-                && (studentadmissionForm.get('last_name').touched || studentadmissionForm.get('last_name').dirty)">
-                <span *ngIf="studentadmissionForm.get('last_name').errors.required">
-                  Last Name is required
-                </span>
-              </span> -->
+            <div><input type="text" class="inpbox" formControlName="last_name" [(ngModel)]="student.last_name">
               <span class="help-block" *ngIf="!validLastName">Please enter valid last name.</span>
             </div>
           </div>
@@ -120,19 +100,14 @@
                 <a (click)="selectedGender = 'Female';">Female</a>
               </div>
             </div>
+            <span class="help-block dropdown-error-msg" *ngIf="!isValidGenderDD">Please select gender.</span>
           </div>
         </div>
         <div class="col-full-3">
           <div class="form-group" [ngClass]="{'has-error' : studentadmissionForm.get('dob').errors 
             && (studentadmissionForm.get('dob').touched || studentadmissionForm.get('dob').dirty)}">
             <label class="heading">Date of Birth*</label>
-              <input type="text" formControlName="dob" [(ngModel)]="student.dob" placeholder="DD/MM/YYYY" inputmode="numeric" autocomplete="off"  class="form-control" (keyup)="addSlashToDOB($event)" (blur)="validateDate(student.dob, 'dob')" />
-              <!-- <span class="help-block" *ngIf="studentadmissionForm.get('dob').errors 
-            && (studentadmissionForm.get('dob').touched || studentadmissionForm.get('dob').dirty)">
-                <span *ngIf="studentadmissionForm.get('dob').errors.required">
-                  DOB is required
-                </span>
-              </span> -->
+              <input type="text" formControlName="dob" [(ngModel)]="student.dob" placeholder="DD/MM/YYYY" inputmode="numeric" autocomplete="off"  class="form-control" (keyup)="addSlashToDOB($event)" />
               <span *ngIf="!isDOBValid" class="help-block">Please enter valid DOB.</span>
           </div>
         </div>
@@ -158,19 +133,14 @@
                 <a (click)="selectedCategory = 'Minority'">Minority</a>
               </div>
             </div>
+            <span class="help-block dropdown-error-msg" *ngIf="!isValidCategoryDD">Please select category.</span>
           </div>
         </div>
         <div class="col-full-3">
           <div class="form-group" [ngClass]="{'has-error' : studentadmissionForm.get('nationality').errors 
             && (studentadmissionForm.get('nationality').touched || studentadmissionForm.get('nationality').dirty)}">
             <label class="heading">Nationality*</label>
-            <div><input type="text" class="inpbox" formControlName="nationality" [(ngModel)]="student.nationality" (input)="validateText(student.nationality, 'nationality')">
-              <!-- <span class="help-block" *ngIf="studentadmissionForm.get('nationality').errors 
-            && (studentadmissionForm.get('nationality').touched || studentadmissionForm.get('nationality').dirty)">
-                <span *ngIf="studentadmissionForm.get('nationality').errors.required">
-                  Nationality is required
-                </span>
-              </span> -->
+            <div><input type="text" class="inpbox" formControlName="nationality" [(ngModel)]="student.nationality">
               <span *ngIf="!validNationality" class="help-block">Please enter valid nationality.</span>
             </div>
           </div>
@@ -180,13 +150,7 @@
             && (studentadmissionForm.get('phone').touched || studentadmissionForm.get('phone').dirty)}">
             <label class="heading">Contact No*</label>
             <div>
-              <input type="text" class="inpbox" formControlName="phone" [(ngModel)]="student.phone" placeholder="" maxlength="10" inputmode="numeric" autocomplete="off" (keyup)="isMobileValid('student')" class="form-control"/>
-              <!-- <span class="help-block" *ngIf="studentadmissionForm.get('phone').errors 
-            && (studentadmissionForm.get('phone').touched || studentadmissionForm.get('phone').dirty)">
-                <span *ngIf="studentadmissionForm.get('phone').errors.required">
-                  Phone Number is required
-                </span>
-              </span> -->
+              <input type="text" class="inpbox" formControlName="phone" [(ngModel)]="student.phone" placeholder="" maxlength="10" inputmode="numeric" autocomplete="off" class="form-control"/>
               <span class="help-block" *ngIf="!is_student_mobile_valid">Please enter valid contact number.</span>
             </div>
           </div>
@@ -197,12 +161,7 @@
             <label class="heading">Aadhaar No*</label>
             <div>
               <input type="text" class="inpbox" formControlName="aadhar_no" [(ngModel)]="student.aadhar_no">
-              <span class="help-block" *ngIf="studentadmissionForm.get('aadhar_no').errors 
-            && (studentadmissionForm.get('aadhar_no').touched || studentadmissionForm.get('aadhar_no').dirty)">
-                <span *ngIf="studentadmissionForm.get('aadhar_no').errors.required">
-                  Aadhar Number is required
-                </span>
-              </span>
+              <span class="help-block" *ngIf="!is_adhar_no_valid">Please enter valid ADHAR number.</span>
             </div>
           </div>
         </div>
@@ -211,7 +170,7 @@
       <div class="row-wrapper">
         <div class="col-full-3">
           <div class="form-group">
-            <label class="heading">Blood Group*</label>
+            <label class="heading">Blood Group</label>
             <div class="dropdown">
               <button class="dropbtn" (click)="showBloodGroupList = true"
               (clickOutside)="showBloodGroupList = false">
@@ -236,13 +195,7 @@
           <div class="form-group" [ngClass]="{'has-error' : studentadmissionForm.get('admission_date').errors 
             && (studentadmissionForm.get('admission_date').touched || studentadmissionForm.get('admission_date').dirty)}">
             <label class="heading">Admission Date*</label>
-              <input type="text" formControlName="admission_date" [(ngModel)]="student.admission_date" placeholder="DD/MM/YYYY" inputmode="numeric" autocomplete="off"  class="form-control" (keyup)="addSlashToDOfAdmission($event)" (blur)="validateDate(student.admission_date, 'dateOfAdmission')" />
-              <!-- <span class="help-block" *ngIf="studentadmissionForm.get('admission_date').errors 
-            && (studentadmissionForm.get('admission_date').touched || studentadmissionForm.get('admission_date').dirty)">
-                <span *ngIf="studentadmissionForm.get('admission_date').errors.required">
-                  Admission Date is required
-                </span>
-              </span> -->
+              <input type="text" formControlName="admission_date" [(ngModel)]="student.admission_date" placeholder="DD/MM/YYYY" inputmode="numeric" autocomplete="off"  class="form-control" (keyup)="addSlashToDOfAdmission($event)" />
               <span class="help-block" *ngIf="!isDOfAdmissionValid">Please enter valid date of admission.</span>
           </div>
         </div>
@@ -266,7 +219,7 @@
           <div class="form-group">
             <label class="heading">Email</label>
             <div><input type="email" class="inpbox" formControlName="email" [(ngModel)]="student.email"
-              (blur)="verifyEmailId(student.email, 'student-email')">
+              >
               <span class="help-block" *ngIf="!is_student_email_valid">Please enter valid email id.</span>
             </div>
           </div>
@@ -275,7 +228,6 @@
 
       <div class="row">
         <div class="col-md-3 pull-left">
-          <button class="btn -cta active-tab">Save</button>
           <button class="btn -cta inactive-tab" (click)="close()">Cancel</button>
         </div>
         <div class="col-md-3 pull-right">
@@ -290,16 +242,7 @@
           <div class="form-group" [ngClass]="{'has-error' : studentadmissionForm.get('father_name').errors 
             && (studentadmissionForm.get('father_name').touched || studentadmissionForm.get('father_name').dirty)}">
             <label class="heading">Father Name*</label>
-            <div><input class="inpbox" type="text" formControlName="father_name" [(ngModel)]="student.parents[1].parent_name" (blur)="validateText(student.parents[1].parent_name, 'father-name')">
-              <!-- <span class="help-block" *ngIf="studentadmissionForm.get('father_name').errors 
-            && (studentadmissionForm.get('father_name').touched || studentadmissionForm.get('father_name').dirty)">
-                <span *ngIf="studentadmissionForm.get('father_name').errors.required">
-                  Father Name is required
-                </span>
-                <span *ngIf="studentadmissionForm.get('father_name').errors.required">
-                  Father Name is required
-                </span>
-              </span> -->
+            <div><input class="inpbox" type="text" formControlName="father_name" [value]="student.parents[1].parent_name" (blur)="validateText(student.parents[1].parent_name, 'father-name')">
               <span class="help-block" *ngIf="!is_father_name_valid">Please enter valid father name.</span>
             </div>
           </div>
@@ -309,14 +252,7 @@
             && (studentadmissionForm.get('father_contact').touched || studentadmissionForm.get('father_contact').dirty)}">
             <label class="heading">Father Phone*</label>
             <div>
-              <!-- <input type="text" class="inpbox" formControlName="father_contact" [(ngModel)]="student.parents[1].parent_contact"> -->
-              <input type="text" class="inpbox" formControlName="father_contact" [(ngModel)]="student.parents[1].parent_contact" placeholder="" maxlength="10" inputmode="numeric" autocomplete="off" (blur)="isMobileValid('father')" class="form-control"/>
-              <!-- <span class="help-block" *ngIf="studentadmissionForm.get('father_contact').errors 
-            && (studentadmissionForm.get('father_contact').touched || studentadmissionForm.get('father_contact').dirty)">
-                <span *ngIf="studentadmissionForm.get('father_contact').errors.required">
-                  Father Contact is required
-                </span>
-              </span> -->
+              <input type="text" class="inpbox" formControlName="father_contact" [value]="student.parents[1].parent_contact" placeholder="" maxlength="10" inputmode="numeric" autocomplete="off" (blur)="isMobileValid('father')" class="form-control"/>
               <span class="help-block" *ngIf="!is_father_mobile_valid">Please enter valid contact number.</span>
             </div>
           </div>
@@ -324,14 +260,14 @@
         <div class="col-full-3">
           <div class="form-group">
             <label class="heading">Father Email</label>
-            <input class="inpbox" type="email" formControlName="father_email" [(ngModel)]="student.parents[1].parent_email" (blur)="verifyEmailId(student.parents[1].parent_email, 'father-email')">
+            <input class="inpbox" type="email" formControlName="father_email" [value]="student.parents[1].parent_email" (blur)="verifyEmailId(student.parents[1].parent_email, 'father-email')">
               <span class="help-block" *ngIf="!is_father_email_valid">Please enter valid email id.</span>
           </div>
         </div>
         <div class="col-full-3">
           <div class="form-group">
             <label class="heading">Father Occupation*</label>
-            <input class="inpbox" type="text" formControlName="father_occupation" [(ngModel)]="student.parents[1].occupation" (blur)="validateText(student.parents[1].occupation, 'father-occ')">
+            <input class="inpbox" type="text" formControlName="father_occupation" [value]="student.parents[1].occupation" (blur)="validateText(student.parents[1].occupation, 'father-occ')">
             <span class="help-block" *ngIf="!is_father_occ_valid">Please enter valid occupation.</span>
           </div>
         </div>
@@ -341,28 +277,28 @@
         <div class="col-full-3">
           <div class="form-group">
             <label class="heading">Mother Name</label>
-            <input class="inpbox" type="text" formControlName="mother_name" [(ngModel)]="student.parents[0].parent_name" (blur)="validateText(student.parents[0].parent_name, 'mother-name')">
+            <input class="inpbox" type="text" formControlName="mother_name" [value]="student.parents[0].parent_name" (blur)="validateText(student.parents[0].parent_name, 'mother-name')">
             <span class="help-block" *ngIf="!is_mother_name_valid">Please enter valid mother name.</span>
           </div>
         </div>
         <div class="col-full-3">
           <div class="form-group">
             <label class="heading">Mother Phone</label>
-            <input type="text" class="inpbox" formControlName="mother_contact" [(ngModel)]="student.parents[0].parent_contact" placeholder="" maxlength="10" inputmode="numeric" autocomplete="off" (blur)="isMobileValid('mother')" class="form-control"/>
+            <input type="text" class="inpbox" formControlName="mother_contact" [value]="student.parents[0].parent_contact" placeholder="" maxlength="10" inputmode="numeric" autocomplete="off" (blur)="isMobileValid('mother')" class="form-control"/>
             <span class="help-block" *ngIf="!is_mother_mobile_valid">Please enter valid contact number.</span>
           </div>
         </div>
         <div class="col-full-3">
           <div class="form-group">
             <label class="heading">Mother Email</label>
-            <input class="inpbox" type="email" formControlName="mother_email" [(ngModel)]="student.parents[0].parent_email" (blur)="verifyEmailId(student.parents[0].parent_email, 'mother-email')">
+            <input class="inpbox" type="email" formControlName="mother_email" [value]="student.parents[0].parent_email" (blur)="verifyEmailId(student.parents[0].parent_email, 'mother-email')">
               <span class="help-block" *ngIf="!is_mother_email_valid">Please enter valid email id.</span>
           </div>
         </div>
         <div class="col-full-3">
           <div class="form-group">
             <label class="heading">Mother Occupation</label>
-            <input class="inpbox" type="text" formControlName="mother_occupation" [(ngModel)]="student.parents[0].occupation" (blur)="validateText(student.parents[0].occupation, 'mother-occ')">
+            <input class="inpbox" type="text" formControlName="mother_occupation" [value]="student.parents[0].occupation" (blur)="validateText(student.parents[0].occupation, 'mother-occ')">
             <span class="help-block" *ngIf="!is_mother_occ_valid">Please enter valid occupation.</span>
           </div>
         </div>
@@ -372,28 +308,28 @@
         <div class="col-full-3">
           <div class="form-group">
             <label class="heading">Guardian Name</label>
-            <input class="inpbox" type="text" formControlName="gaurdian_name" [(ngModel)]="student.parents[2].parent_name" (blur)="validateText(student.parents[2].parent_name, 'guardian-name')">
+            <input class="inpbox" type="text" formControlName="gaurdian_name" [value]="student.parents[2].parent_name" (blur)="validateText(student.parents[2].parent_name, 'guardian-name')">
             <span class="help-block" *ngIf="!is_guardian_name_valid">Please enter valid guardian name.</span>
           </div>
         </div>
         <div class="col-full-3">
           <div class="form-group">
             <label class="heading">Guardian Phone</label>
-            <input type="text" class="inpbox" formControlName="gaurdian_contact" [(ngModel)]="student.parents[2].parent_contact" placeholder="" maxlength="10" inputmode="numeric" autocomplete="off" (blur)="isMobileValid('guardian')" class="form-control"/>
+            <input type="text" class="inpbox" formControlName="gaurdian_contact" [value]="student.parents[2].parent_contact" placeholder="" maxlength="10" inputmode="numeric" autocomplete="off" (blur)="isMobileValid('guardian')" class="form-control"/>
             <span class="help-block" *ngIf="!is_guardian_mobile_valid">Please enter valid contact number.</span>
           </div>
         </div>
         <div class="col-full-3">
           <div class="form-group">
             <label class="heading">Guardian Email</label>
-            <input class="inpbox" type="email" formControlName="gaurdian_email" [(ngModel)]="student.parents[2].parent_email" (blur)="verifyEmailId(student.parents[2].parent_email, 'guardian-email')">
+            <input class="inpbox" type="email" formControlName="gaurdian_email" [value]="student.parents[2].parent_email" (blur)="verifyEmailId(student.parents[2].parent_email, 'guardian-email')">
               <span class="help-block" *ngIf="!is_guardian_email_valid">Please enter valid email id.</span>
           </div>
         </div>
         <div class="col-full-3">
           <div class="form-group">
             <label class="heading">Guardian Occupation</label>
-            <input class="inpbox" type="text" formControlName="gaurdian_occupation" [(ngModel)]="student.parents[2].occupation" (blur)="validateText(student.parents[2].occupation, 'guardian-occ')">
+            <input class="inpbox" type="text" formControlName="gaurdian_occupation" [value]="student.parents[2].occupation" (blur)="validateText(student.parents[2].occupation, 'guardian-occ')">
             <span class="help-block" *ngIf="!is_guardian_occ_valid">Please enter valid occupation.</span>
           </div>
         </div>
@@ -403,7 +339,7 @@
         <div class="col-full-3">
           <div class="form-group">
             <label class="heading">Guardian Relation</label>
-            <input class="inpbox" type="text" formControlName="gaurdian_relation" [(ngModel)]="student.parents[2].parent_relation" (blur)="validateText(student.parents[2].parent_relation, 'guardian-relation')">
+            <input class="inpbox" type="text" formControlName="gaurdian_relation" [value]="student.parents[2].parent_relation" (blur)="validateText(student.parents[2].parent_relation, 'guardian-relation')">
             <span class="help-block" *ngIf="!is_guardian_relation_valid">Please enter valid guardian relation.</span>
           </div>
         </div>
@@ -411,7 +347,6 @@
 
       <div class="row">
         <div class="col-md-3 pull-left">
-          <button class="btn -cta active-tab">Save</button>
           <button class="btn -cta inactive-tab" (click)="close()">Cancel</button>
         </div>
         <div class="col-md-3 pull-right">
@@ -426,7 +361,7 @@
         <div class="col-full-6">
           <div class="form-group">
             <label class="heading">Current Address :</label>
-            <div><textarea formControlName="cur_address" cols="45" rows="10" [(ngModel)]="student.current_address[0].cur_address"
+            <div><textarea formControlName="cur_address" cols="45" rows="10" [value]="student.current_address[0].cur_address"
             (blur)="validateText(student.current_address[0].cur_address, 'current-address')">
            </textarea>
           <span class="help-block" *ngIf="!is_current_address_valid">Please enter valid address.</span>
@@ -436,7 +371,7 @@
         <div class="col-full-6">
           <div class="form-group">
             <label class="heading">Permanent Address :</label>
-            <div><textarea formControlName="perm_address" cols="45" rows="10" [(ngModel)]="student.permanent_address[0].perm_address"
+            <div><textarea formControlName="perm_address" cols="45" rows="10" [value]="student.permanent_address[0].perm_address"
               (blur)="validateText(student.permanent_address[0].perm_address, 'perm-address')"></textarea>
               <span class="help-block" *ngIf="!is_perm_address_valid">Please enter valid address.</span>
             </div>

@@ -26,9 +26,9 @@ export class AdmissionComponent implements OnInit {
   selectedGender:any;
   showGenderList: boolean = false;
         
-   class: string;
+  class: string;
   section: string;
-  student = {
+  student:any = {
     student_id: '',
     admission_no: '',
     first_name: '',
@@ -59,8 +59,8 @@ export class AdmissionComponent implements OnInit {
     father_occupation: '',
     mother_occupation: '',
     gaurdian_occupation: '',
-    cur_address: '',
-    perm_address: '',
+    current_address: [{ "cur_address": "" }],
+    permanent_address: [{ "perm_address": "" }],
     parents: [{
       "parent_name" : "",
       "parent_contact" : '',
@@ -68,7 +68,23 @@ export class AdmissionComponent implements OnInit {
       "parent_relation" : "",
       "parent_address" : "",
       "occupation" : ""
-    }],
+    },
+      {
+        "parent_name": "",
+        "parent_contact": '',
+        "parent_email": "",
+        "parent_relation": "",
+        "parent_address": "",
+        "occupation": ""
+      },
+      {
+        "parent_name": "",
+        "parent_contact": '',
+        "parent_email": "",
+        "parent_relation": "",
+        "parent_address": "",
+        "occupation": ""
+      }],
     school_classes: [],
     sections: [],
   }
@@ -177,18 +193,70 @@ export class AdmissionComponent implements OnInit {
   }
 
   get_studentForm(select) {
+    
     if (select === 'studentdetails') {
-      this.studentdetails = true;
-      this.parentdetails = false;
-      this.address = false;
-    } else if (select === 'parentdetails') {
-      this.studentdetails = false;
-      this.parentdetails = true;
-      this.address = false;
-    } else if (select === 'address') {
-      this.studentdetails = false;
-      this.parentdetails = false;
-      this.address = true;
+      if(this.address) {
+        this.stepThreeVerification();
+        if (this.is_step_three_valid) {
+          this.studentdetails = true;
+          this.parentdetails = false;
+          this.address = false;
+        } else {
+          return true;
+        }
+      } else if(this.parentdetails) {
+        this.stepTwoVerification();
+        if(this.is_step_two_valid) {
+          this.studentdetails = true;
+          this.parentdetails = false;
+          this.address = false;
+        } else {
+          return true;
+        }
+      }
+      
+    } 
+    else if (select === 'parentdetails') {
+      if (this.studentdetails) {
+        this.stepOneVerification();
+        if (this.is_step_one_valid) {
+          this.studentdetails = false;
+          this.parentdetails = true;
+          this.address = false;
+        } else {
+          return true;
+        }
+      } else if (this.address) {
+        this.stepThreeVerification();
+        if (this.is_step_three_valid) {
+          this.studentdetails = false;
+          this.parentdetails = true;
+          this.address = false;
+        } else {
+          return true;
+        }
+      }
+    } 
+    else if (select === 'address') {
+      if (this.parentdetails) {
+        this.stepTwoVerification();
+        if (this.is_step_two_valid) {
+          this.studentdetails = false;
+          this.parentdetails = false;
+          this.address = true;
+        } else {
+          return true;
+        }
+      } else if (this.studentdetails) {
+        this.stepOneVerification();
+        if (this.is_step_one_valid) {
+          this.studentdetails = false;
+          this.parentdetails = false;
+          this.address = true;
+        } else {
+          return true;
+        }
+      }
     }
   }
 
@@ -438,27 +506,27 @@ export class AdmissionComponent implements OnInit {
   validateDropdown(dropDownName) {
     switch (dropDownName) {
       case "class-dd":
-        this.isValidClassDD = this.selectedClass == '' ? false : true;
+        this.isValidClassDD = !this.selectedClass  ? false : true;
         break;
 
       case "section-dd":
-        this.isValidSectionDD = this.selectedSection == '' ? false : true;
+        this.isValidSectionDD = !this.selectedSection  ? false : true;
         break;
 
       case "gender-dd":
-        this.isValidGenderDD = this.selectedGender == '' ? false : true;
+        this.isValidGenderDD = !this.selectedGender  ? false : true;
         break;
 
       case "category-dd":
-        this.isValidCategoryDD = this.selectedCategory == '' ? false : true;
+        this.isValidCategoryDD = !this.selectedCategory  ? false : true;
         break;
 
       case "blood-dd":
-        this.isValidBloodDD = this.selectedBloodGroup == '' ? false : true;
+        this.isValidBloodDD = !this.selectedBloodGroup  ? false : true;
         break;
 
       case "bus-route-dd":
-        this.isValidBusRouteDD = this.selectedBusRoute == '' ? false : true;
+        this.isValidBusRouteDD = !this.selectedBusRoute ? false : true;
         break;
       
       default:
@@ -495,6 +563,95 @@ export class AdmissionComponent implements OnInit {
         // code...
         break;
     }
+  }
+
+  is_admission_no_valid: boolean = true;
+  is_roll_no_valid: boolean = true;
+  is_adhar_no_valid: boolean = true;
+
+  is_step_one_valid: boolean = true;
+
+  stepOneVerification() {
+    
+    this.is_admission_no_valid = this.student.admission_no == '' ? false : true;
+    this.is_roll_no_valid = this.student.roll_no == '' ? false : true;
+    this.is_adhar_no_valid = this.student.aadhar_no == '' ? false : true;
+
+    this.validateText(this.student.first_name, 'first-name');
+    this.validateText(this.student.last_name, 'last-name');
+    this.validateText(this.student.nationality, 'nationality');
+
+    this.validateDropdown('class-dd');
+    this.validateDropdown('section-dd');
+    this.validateDropdown('gender-dd');
+    this.validateDropdown('category-dd'); 
+
+    this.validateDate(this.student.dob, 'dob');
+    this.validateDate(this.student.admission_date, 'dateOfAdmission');
+
+    this.isMobileValid('student');
+
+    if (this.student.email !== '') {
+      this.verifyEmailId(this.student.email, 'student-email');
+    }
+
+    if (this.is_admission_no_valid && this.is_roll_no_valid && this.is_adhar_no_valid 
+    && this.validFirstName && this.validLastName && this.validNationality
+    && this.isValidClassDD && this.isValidSectionDD && this.isValidGenderDD && this.isValidCategoryDD
+    && this.isDOBValid && this.isDOfAdmissionValid && this.is_student_mobile_valid
+    && this.is_student_email_valid) {
+      this.is_step_one_valid = true;
+    }
+    this.is_step_one_valid = false;
+  }
+
+  is_step_two_valid: boolean = true;
+
+  stepTwoVerification() {
+    this.validateText(this.student.parents[1].parent_name, 'father-name');
+    this.validateText(this.student.parents[1].occupation, 'father-occ');
+    this.isMobileValid('father');
+
+    this.student.parents[0].parent_name !== '' ? this.validateText(this.student.parents[0].parent_name, 'mother-name') : true;
+    this.student.parents[2].parent_name !== '' ? this.validateText(this.student.parents[2].parent_name, 'guardian-name') : true;
+    this.student.parents[0].occupation !== '' ? this.validateText(this.student.parents[0].occupation, 'mother-occ') : true;
+    this.student.parents[2].occupation !== '' ? this.validateText(this.student.parents[2].occupation, 'guardian-occ') : true;
+    this.student.parents[2].parent_relation !== '' ? this.validateText(this.student.parents[2].parent_relation, 'guardian-relation') : true;
+    
+    this.student.parents[0].parent_contact !== '' ? this.isMobileValid('mother') : true;
+    this.student.parents[2].parent_contact !== '' ? this.isMobileValid('guardian') : true;
+
+    if (this.student.parents[1].parent_email !== '') {
+      this.verifyEmailId(this.student.parents[1].parent_email, 'father-email');
+    }
+
+    if (this.student.parents[0].parent_email !== '') {
+      this.verifyEmailId(this.student.parents[0].parent_email, 'mother-email');
+    }
+
+    if (this.student.parents[2].parent_email !== '') {
+      this.verifyEmailId(this.student.parents[2].parent_email, 'guardian-email');
+    }
+
+    if (this.is_father_email_valid && this.is_mother_email_valid && this.is_guardian_email_valid
+      && this.is_father_name_valid && this.is_mother_name_valid && this.is_guardian_name_valid
+      && this.is_father_occ_valid && this.is_mother_occ_valid && this.is_guardian_occ_valid
+      && this.is_guardian_relation_valid && this.is_father_mobile_valid
+      && this.is_mother_mobile_valid && this.is_guardian_mobile_valid) {
+        this.is_step_two_valid = true;
+    }
+    this.is_step_two_valid = false;
+  }
+
+  is_step_three_valid: boolean = true;
+
+  stepThreeVerification() {
+    this.student.current_address[0].cur_address !== '' ? this.validateText(this.student.current_address[0].cur_address, 'current-address') : true;
+    this.student.permanent_address[0].perm_address !== '' ? this.validateText(this.student.permanent_address[0].perm_address, 'perm-address') : true;
+    if (this.is_current_address_valid && this.is_perm_address_valid) {
+      this.is_step_three_valid = true;
+    }
+    this.is_step_three_valid = false;
   }
 
   openAlert(alert_message) {
