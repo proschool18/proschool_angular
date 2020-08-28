@@ -18,6 +18,8 @@ export class HeaderComponent implements OnInit {
 
   }
 
+	viewNotifications: boolean = false;
+
 	formatAMPM(date) {
 		var hours = date.getHours();
 		var minutes = date.getMinutes();

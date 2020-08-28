@@ -22,7 +22,7 @@
           </span>
           <span class="_text">Messages</span>
         </a>
-        <a href="" class="_item">
+        <a class="_item" (click)="viewNotifications = !viewNotifications">
           <span class="_icon">
             <img src="../../../assets/images/bell@3x.png" alt="Notifications">
           </span>
@@ -34,6 +34,40 @@
           </span>
           <span class="_text">Logout</span>
         </a>
+
+        <div class="notification-box-wrapper" *ngIf="viewNotifications">
+          <div class="notification">
+            <div class="notification-icon"><img src="../../../assets/images/man2.jpg"></div>
+            <p class="notification-timespan">Yesterday</p>
+            <a class="notification-title">Mahmud Sent you a file to the on your drive.</a>
+          </div>
+          <div class="notification red-alert">
+            <div class="notification-icon"><img src="../../../assets/images/alert-triangle-red.svg"></div>
+            <p class="notification-timespan">4 Feb, 2020</p>
+            <a class="notification-title">In bread to of the future.</a>
+          </div>
+          <div class="notification green-alert ">
+            <div class="notification-icon"><img src="../../../assets/images/alert-circle-green.svg"></div>
+            <p class="notification-timespan">Today</p>
+            <a class="notification-title">The although systems.</a>
+          </div>
+          <div class="notification red-alert">
+            <div class="notification-icon"><img src="../../../assets/images/alert-triangle-red.svg"></div>
+            <p class="notification-timespan">4 Feb, 2020</p>
+            <a class="notification-title">Name respective notch.</a>
+          </div>
+          <div class="notification">
+            <div class="notification-icon"><img src="../../../assets/images/man2.jpg"></div>
+            <p class="notification-timespan">Yesterday</p>
+            <a class="notification-title">John smith sent you a file to the on your drive.</a>
+          </div>
+          <div class="notification red-alert">
+            <div class="notification-icon"><img src="../../../assets/images/alert-triangle-red.svg"></div>
+            <p class="notification-timespan">4 Feb, 2020</p>
+            <a class="notification-title">Name respective notch.</a>
+          </div>
+          <button class="notification-view-all-btn">See All Notification</button>
+        </div>
       </div>
     </div>
   </div>

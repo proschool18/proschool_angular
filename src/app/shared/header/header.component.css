@@ -1,3 +1,79 @@
 .header-content {
     display: flex;
 }
+
+.account ._actions {
+	position: relative;
+}
+
+.notification-box-wrapper {
+    background: #fff;
+    position: absolute;
+    width: 300px;
+    height: 500px;
+    right: 50px;
+    top: 40px;
+    border-radius: 4px;
+    padding: 10px;
+    box-shadow: 0px 0px 15px 2px lightgrey;
+}
+
+.notification {
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+    min-height: 55px;
+}
+
+.notification-icon {
+    height: 40px;
+    border-radius: 20px;
+    width: 40px;
+    position: absolute;
+    overflow: hidden;
+    text-align: center;
+}
+
+.red-alert .notification-icon {
+	background: rgba(255, 0, 0, 0.1);
+}
+
+.green-alert .notification-icon {
+	background: rgba(0,255,0, 0.1);
+}
+
+.notification-icon img {
+	width: 100%;
+}
+
+.red-alert .notification-icon img,
+.green-alert .notification-icon img {
+    width: auto;
+    padding-top: 5px;
+}
+
+.notification-timespan {
+    margin: 0;
+    color: #ccc;
+    font-size: 12px;
+    font-weight: 600;
+    padding-left: 50px;
+}
+
+.notification-title {
+    color: #000;
+    margin: 0;
+    font-size: 13px;
+    padding-left: 50px;
+    display: block;
+}
+
+.red-alert .notification-title {
+	color: red;
+}
+
+.notification-view-all-btn {
+	padding: 15px 0;
+    font-size: 12px;
+    color: #5E81F4;
+    outline: none;
+}
