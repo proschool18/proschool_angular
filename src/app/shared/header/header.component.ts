@@ -19,6 +19,7 @@ export class HeaderComponent implements OnInit {
   }
 
 	viewNotifications: boolean = false;
+	viewMailBox: boolean = false;
 
 	formatAMPM(date) {
 		var hours = date.getHours();

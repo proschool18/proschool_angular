@@ -6,7 +6,8 @@
 	position: relative;
 }
 
-.notification-box-wrapper {
+.notification-box-wrapper, 
+.mail-box-wrapper {
     background: #fff;
     position: absolute;
     width: 300px;
@@ -14,17 +15,33 @@
     right: 50px;
     top: 40px;
     border-radius: 4px;
-    padding: 10px;
+    padding: 0;
     box-shadow: 0px 0px 15px 2px lightgrey;
 }
 
-.notification {
-    padding: 10px 0;
+.notification, 
+.mail {
+    padding: 10px 10px;
     border-bottom: 1px solid #ddd;
     min-height: 55px;
+    position: relative;
 }
 
-.notification-icon {
+.mail-box-wrapper {
+	height: 425px;
+}
+
+.mail {
+	min-height: 35px;
+}
+
+.mail:hover {
+	cursor: pointer;
+	background: #F7F7F7;
+}
+
+.notification-icon,
+.mail-sender-icon {
     height: 40px;
     border-radius: 20px;
     width: 40px;
@@ -41,7 +58,8 @@
 	background: rgba(0,255,0, 0.1);
 }
 
-.notification-icon img {
+.notification-icon img,
+.mail-sender-icon img {
 	width: 100%;
 }
 
@@ -71,9 +89,62 @@
 	color: red;
 }
 
-.notification-view-all-btn {
-	padding: 15px 0;
+.notification-view-all-btn,
+.message-view-all-btn {
+	padding: 15px 10px;
     font-size: 12px;
     color: #5E81F4;
     outline: none;
+}
+
+.mail-sender-name {
+	margin: 0;
+    color: #000;
+    font-size: 16px;
+    font-weight: 400;
+    padding-left: 50px;
+}
+
+.mail:hover .mail-sender-name,
+.mail:hover .mail-content {
+	font-weight: 600;
+}
+
+.you-sender-title {
+    color: #888;
+    font-weight: 600;
+}
+
+.mail-content {
+    margin: 0;
+    color: #000;
+    font-size: 12px;
+    font-weight: 400;
+    padding-left: 50px;
+    width: 190px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.mail-reply-btn {
+    position: absolute;
+    right: 5px;
+    top: 32px;
+    font-size: 12px;
+    color: #5E81F4;
+}
+
+.sender-online::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    position: absolute;
+    background-color: #77C385;
+    bottom: 15px;
+    left: 40px;
+    z-index: 99;
+    border: 2px solid #fff;
 }

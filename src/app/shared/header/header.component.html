@@ -16,13 +16,13 @@
         <div class="_name">Madgul Bala Krishna</div>
       </div>
       <div class="_actions">
-        <a href="" class="_item">
+        <a class="_item" (click)="viewMailBox = !viewMailBox; viewNotifications = false;">
           <span class="_icon">
             <img src="../../../assets/images/message-square@3x.png" alt="Messages">
           </span>
           <span class="_text">Messages</span>
         </a>
-        <a class="_item" (click)="viewNotifications = !viewNotifications">
+        <a class="_item" (click)="viewNotifications = !viewNotifications; viewMailBox = false;">
           <span class="_icon">
             <img src="../../../assets/images/bell@3x.png" alt="Notifications">
           </span>
@@ -67,6 +67,46 @@
             <a class="notification-title">Name respective notch.</a>
           </div>
           <button class="notification-view-all-btn">See All Notification</button>
+        </div>
+
+        <div class="mail-box-wrapper" *ngIf="viewMailBox">
+          <div class="mail sender-online">
+            <div class="mail-sender-icon"><img src="../../../assets/images/man2.jpg"></div>
+            <p class="mail-sender-name">Mahmuddul</p>
+            <p class="mail-content"><span class="you-sender-title">You:&nbsp;</span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi u.</p>
+            <button class="mail-reply-btn">Reply</button>
+          </div>
+          <div class="mail">
+            <div class="mail-sender-icon"><img src="../../../assets/images/man2.jpg"></div>
+            <p class="mail-sender-name">Carley</p>
+            <p class="mail-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi u.</p>
+            <button class="mail-reply-btn">Reply</button>
+          </div>
+          <div class="mail">
+            <div class="mail-sender-icon"><img src="../../../assets/images/man2.jpg"></div>
+            <p class="mail-sender-name">Annalise</p>
+            <p class="mail-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi u.</p>
+            <button class="mail-reply-btn">Reply</button>
+          </div>
+          <div class="mail">
+            <div class="mail-sender-icon"><img src="../../../assets/images/man2.jpg"></div>
+            <p class="mail-sender-name">Stephanie</p>
+            <p class="mail-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi u.</p>
+            <button class="mail-reply-btn">Reply</button>
+          </div>
+          <div class="mail">
+            <div class="mail-sender-icon"><img src="../../../assets/images/man2.jpg"></div>
+            <p class="mail-sender-name">Milton</p>
+            <p class="mail-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi u.</p>
+            <button class="mail-reply-btn">Reply</button>
+          </div>
+          <div class="mail">
+            <div class="mail-sender-icon"><img src="../../../assets/images/man2.jpg"></div>
+            <p class="mail-sender-name">Cassidy</p>
+            <p class="mail-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi u.</p>
+            <button class="mail-reply-btn">Reply</button>
+          </div>
+          <button class="message-view-all-btn">See All Messages</button>
         </div>
       </div>
     </div>
