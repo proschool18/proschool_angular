@@ -11,7 +11,7 @@
     background: #fff;
     position: absolute;
     width: 300px;
-    height: 500px;
+    height: 405px;
     right: 50px;
     top: 40px;
     border-radius: 4px;
@@ -19,32 +19,32 @@
     box-shadow: 0px 0px 15px 2px lightgrey;
 }
 
+.mails-group,
+.notification-group {
+	height: 360px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
 .notification, 
 .mail {
     padding: 10px 10px;
-    border-bottom: 1px solid #ddd;
-    min-height: 55px;
+    border-bottom: 1px solid #eee;
+    min-height: 35px;
     position: relative;
 }
 
-.mail-box-wrapper {
-	height: 425px;
-}
-
-.mail {
-	min-height: 35px;
-}
-
-.mail:hover {
+.mail:hover,
+.notification:hover {
 	cursor: pointer;
 	background: #F7F7F7;
 }
 
 .notification-icon,
 .mail-sender-icon {
-    height: 40px;
-    border-radius: 20px;
-    width: 40px;
+    height: 30px;
+    border-radius: 50%;
+    width: 30px;
     position: absolute;
     overflow: hidden;
     text-align: center;
@@ -72,16 +72,16 @@
 .notification-timespan {
     margin: 0;
     color: #ccc;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
-    padding-left: 50px;
+    padding-left: 40px;
 }
 
 .notification-title {
     color: #000;
     margin: 0;
-    font-size: 13px;
-    padding-left: 50px;
+    font-size: 12px;
+    padding-left: 40px;
     display: block;
 }
 
@@ -100,13 +100,15 @@
 .mail-sender-name {
 	margin: 0;
     color: #000;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 400;
-    padding-left: 50px;
+    padding-left: 40px;
 }
 
 .mail:hover .mail-sender-name,
-.mail:hover .mail-content {
+.mail:hover .mail-content,
+.notification:hover .notification-timespan,
+.notification:hover .notification-title {
 	font-weight: 600;
 }
 
@@ -120,7 +122,7 @@
     color: #000;
     font-size: 12px;
     font-weight: 400;
-    padding-left: 50px;
+    padding-left: 40px;
     width: 190px;
     white-space: nowrap;
     overflow: hidden;
@@ -143,8 +145,8 @@
     display: inline-block;
     position: absolute;
     background-color: #77C385;
-    bottom: 15px;
-    left: 40px;
+    bottom: 20px;
+    left: 30px;
     z-index: 99;
     border: 2px solid #fff;
 }
@@ -170,3 +172,24 @@
 .message-count-bubble {
 	right: -9px;
 }
+
+
+.mails-group,
+.notification-group {
+    scrollbar-width: thin; 
+    scrollbar-color: #d8e1ff transparent;
+  }
+  .mails-group::-webkit-scrollbar,
+  .notification-group::-webkit-scrollbar {
+    width: 4px;
+  }
+  .mails-group::-webkit-scrollbar-track,
+  .notification-group::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .mails-group::-webkit-scrollbar-thumb,
+  .notification-group::-webkit-scrollbar-thumb {
+    background-color: #d8e1ff;
+    border-radius: 6px;
+    border: 3px solid transparent;
+  }
