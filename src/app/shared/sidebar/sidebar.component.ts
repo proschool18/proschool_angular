@@ -75,8 +75,8 @@ export class SidebarComponent implements OnInit {
         break;
 
       case "Assessments":
-      if (this.router.url == "/main/assignments/assignmentsByDate" || this.router.url == "/main/classtests/CTByDate" ||
-      this.router.url == "/main/projectworks/PWByDate" || this.router.url == "/main/reports/assignmentreports") {
+        if (this.router.url == "/main/assignments/assignmentsByDate" || this.router.url == "/main/classtests/CTByDate" ||
+          this.router.url == "/main/projectworks/PWByDate" || this.router.url == "/main/reports/assignmentreports") {
           return true;
         } else {
           return false;
@@ -105,9 +105,9 @@ export class SidebarComponent implements OnInit {
         if (this.router.url == "/main/fee/collectfee" || this.router.url == "/main/fee/feeterm" ||
             this.router.url == "/main/fee/feetype" || this.router.url == "/main/fee/feemaster" ||
             this.router.url == "/main/fee/studentfee") {
-        return true;
-      } else {
-        return false;
+          return true;
+        } else {
+          return false;
       }
       break;
 
