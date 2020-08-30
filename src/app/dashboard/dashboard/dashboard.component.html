@@ -2,13 +2,17 @@
   <div class="main-dashboard-section-1">
     <div class="tasks-events-notices-expenses card tabbed">
       <div class="_tab-group" role="tablist">
-        <button role="tab" id="tasks-tab" aria-selected="true">Tasks</button>
-        <button role="tab" id="events-tab" tabindex="-1">Events</button>
-        <button role="tab" id="notices-tab" tabindex="-1">Notice</button>
-        <button role="tab" id="expenses-tab" tabindex="-1">Expenses</button>
+        <button role="tab" id="tasks-tab" [ngClass]="[selectedTab === 'tasks' ? 'selected-tab' : '']" 
+        (click)="selectedTab = 'tasks'">Tasks</button>
+        <button role="tab" id="events-tab" [ngClass]="[selectedTab === 'events' ? 'selected-tab' : '']" 
+        (click)="selectedTab = 'events'">Events</button>
+        <button role="tab" id="notices-tab" [ngClass]="[selectedTab === 'notice' ? 'selected-tab' : '']"
+        (click)="selectedTab = 'notice'">Notice</button>
+        <button role="tab" id="expenses-tab" [ngClass]="[selectedTab === 'expenses' ? 'selected-tab' : '']"
+        (click)="selectedTab = 'expenses'">Expenses</button>
       </div>
       <div class="_tab-panel-group">
-        <section role="tabpanel" tabindex="-1" aria-labelledby="tasks-tab" class="table-container">
+        <section role="tabpanel" tabindex="-1" *ngIf="selectedTab === 'tasks'" class="table-container">
           <table cellspacing="0" class="_task-list">
             <thead>
               <tr>
@@ -131,13 +135,33 @@
             </tbody>
           </table>
         </section>
-        <section role="tabpanel" tabindex="-1" aria-labelledby="events-tab">
-          <h3>Events</h3>
+        <section role="tabpanel" tabindex="-1"*ngIf="selectedTab === 'events'" class="table-container">
+          <div class="event-content">
+            <p class="event-title">Saw only make the and step who of by from</p>
+            <p class="event-date">02 January, 2020</p>
+            <p class="event-desc">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+          </div>
+          <div class="event-content">
+            <p class="event-title">Ut enim ad minim veniam, quis nostrud</p>
+            <p class="event-date">02 January, 2020</p>
+            <p class="event-desc">
+              Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur et dolore magna aliqua.
+            </p>
+          </div>
+          <div class="event-content">
+            <p class="event-title">Duis aute irure dolor in reprehenderit in</p>
+            <p class="event-date">02 January, 2020</p>
+            <p class="event-desc">
+              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum labore et dolore.
+            </p>
+          </div>
         </section>
-        <section role="tabpanel" tabindex="-1" aria-labelledby="notices-tab" hidden>
+        <section role="tabpanel" tabindex="-1" *ngIf="selectedTab === 'notice'">
           <h3>Notice</h3>
         </section>
-        <section role="tabpanel" tabindex="-1" aria-labelledby="expenses-tab" hidden>
+        <section role="tabpanel" tabindex="-1" *ngIf="selectedTab === 'expenses'">
           <h3>Expenses</h3>
         </section>
       </div>

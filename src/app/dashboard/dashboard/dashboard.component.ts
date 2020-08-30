@@ -45,6 +45,8 @@ export class DashboardComponent implements OnInit {
   private selected_section;
   private selected_month: any = 'all';
 
+  private selectedTab: string = 'tasks';
+
   private class_attendance = {
     present: '',
     absent: '',
