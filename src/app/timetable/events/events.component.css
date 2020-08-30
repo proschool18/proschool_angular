@@ -273,6 +273,10 @@ td.empty-schedule-box:hover:before {
     content: " ";
 }
 
+.current-day {
+	border: 1px solid blue !important;
+}
+
 .schedule-box:hover,
 .empty-schedule-box:hover {
     border: 1px solid blue !important;
