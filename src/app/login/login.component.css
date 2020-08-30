@@ -45,9 +45,36 @@ body, html {
   margin: 25px 0;
 }
 
-@media (min-width: 279px) and (max-width: 575px){
 
-   
+@media (max-width: 320px) {
+  .side-image {
+    visibility: hidden;
+    width: 45%;
+  }
+  .wrap-login100 {
+    padding: 55px 0px 37px 0px;
+  }
+
+  .login100-form {
+    width: 100%;
+    position: relative;
+  }
+
+  .container-login100-form-btn {
+    width: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    bottom: 130px;
+    position: absolute;
+  }
+}
+
+@media (min-width: 321px) and (max-width: 576px) {
+  
   .wrap-login100 {
     width: 320px;
     overflow: hidden;
@@ -63,30 +90,21 @@ body, html {
   
   .login100-form {
     width: 100%;
+    position: relative;
   }
 
   .container-login100-form-btn {
-    width: 100%;
+    width: 90%;
     display: -webkit-box;
     display: -webkit-flex;
     display: -moz-box;
     display: -ms-flexbox;
     display: flex;
     flex-wrap: wrap;
-    position: relative;
+    bottom: 110px;
+    position: absolute;
   }
-}
 
-@media (max-width: 320px) {
-  .side-image {
-    visibility: hidden;
-  }
-  .wrap-login100 {
-    padding: 55px 15px 37px 45px;
-  }
-}
-
-@media (min-width: 321px) and (max-width: 576px) {
   .side-image {
     visibility: hidden;
   }
@@ -113,6 +131,7 @@ body, html {
   
   .login100-form {
     width: 100%;
+    position: relative;
   }
   
   .container-login100-form-btn {
@@ -156,6 +175,7 @@ body, html {
   
   .login100-form {
     width: 100%;
+    position: relative;
   }
   
   .container-login100-form-btn {
@@ -166,7 +186,8 @@ body, html {
     display: -ms-flexbox;
     display: flex;
     flex-wrap: wrap;
-    position: relative;
+    position: absolute;
+    bottom: 70px;
   }
 }
 
@@ -187,6 +208,7 @@ body, html {
   
   .login100-form {
     width: 100%;
+    position: relative;
   }
   
   .container-login100-form-btn {
@@ -197,7 +219,8 @@ body, html {
     display: -ms-flexbox;
     display: flex;
     flex-wrap: wrap;
-    position: relative;
+    bottom: 70px;
+    position: absolute;
   }
 }
 
@@ -218,6 +241,7 @@ body, html {
   
   .login100-form {
     width: 100%;
+    position: relative;
   }
   
   .container-login100-form-btn {
@@ -228,7 +252,8 @@ body, html {
     display: -ms-flexbox;
     display: flex;
     flex-wrap: wrap;
-    position: relative;
+    position: absolute;
+    bottom: 70px;
   }
 }
 
@@ -262,15 +287,12 @@ input.login-fields:before {
 }
 
 .help-block {
-  visibility: hidden;
-}
-
-
-.help-block.visible {
-  visibility: visible;
-  display: inline-block;
-  font-size: 11px;
-  line-height: 11px;
+    visibility: visible;
+    font-size: 11px;
+    color: red;
+    opacity: 0.7;
+    display: inline-block;
+    line-height: 11px;
 }
 
 .login-btn {

@@ -26,33 +26,64 @@ export class LoginComponent implements OnInit {
   returnUrl: string;
 
   ngOnInit() {
-    this.authenticationService.logout();
+    this.logout();
   }
 
   isRememberMe: boolean = true;
+  is_email_valid: boolean = true;
+  is_password_valid: boolean = true;
+
+  get email(): any {
+    return this.loginForm.get('email');
+  }
+
+  get password(): any {
+    return this.loginForm.get('password');
+  }
     
   login() {
+    this.verifyEmailId();
+    this.varifyPassword();
+    if (this.is_email_valid && this.is_password_valid) {
     this.loading = true;
     this.authenticationService.login(this.loginForm.value)
       .subscribe(
         data => {
           if(data.token) {
             if(data.role === 'admin') {
-              this.router.navigate(['/main']);
+              this.router.navigate(['/main/main']);
             } else if(data.role === 'teacher') {
-              this.router.navigate(['/main'])
+              this.router.navigate(['/main/main/dashboard/teacherdashboard'])
             } else if(data.role === 'parent') {
-              this.router.navigate(['/main/dashboard/parentdashboard'])
+              this.router.navigate(['/main/main/dashboard/parentdashboard'])
             }
           } else {
             this.router.navigate(['/'])
           }
         }
       )
+    } else {
+      return false;
+    }
+  }
+
+  verifyEmailId() {
+    var re = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    this.is_email_valid = re.test(this.email.value);
+    return this.is_email_valid;
+  }
+
+  varifyPassword() {
+    this.is_password_valid = this.password.value === '' ? false : true;
+    return this.is_password_valid
   }
 
   RegistrationPage() {
     this.router.navigate(['/registration'])
   }
+
+  logout() {
+		this.authenticationService.logout();
+	}
 
 }
