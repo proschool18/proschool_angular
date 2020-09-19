@@ -1,102 +1,45 @@
-<main class="card mt-20 within-viewport">
-  <section class="page-actions">
-    <div class="dropdown">
-      <button class="dropbtn" (click)="showVendorList = true" (clickOutside)="showVendorList = false">
-        {{!vendor.vendor_name ? 'select vendor' : vendor.vendor_name}}
-      </button>
-      <div class="dropdown-content" [hidden]="!showVendorList">
-        <a *ngFor="let ven of vendors" (click)="vendor = ven; getVendorPayments();">{{ven.vendor_name}}</a>
+<div id="main-content1" class="new-message-wrapper">
+  <div class="header-wrapper">
+      <p>Add Payment</p>
+      <button class="btn-close" (click)="close()"></button>
+  </div>
+  <form class="form-inline" role="form" [formGroup]="paymentForm" (ngSubmit)="addPayments()">
+      <div class="row-wrapper">
+          <div class="col-full-3">
+            Total Payment:
+          </div>
+          <div class="col-full-6">
+            <input formControlName="payment_toPay" value="{{selected_payments.payment_toPay}}" type="number">
+          </div>
       </div>
-    </div>
-    <div class="dropdown">
-      <button class="dropbtn" (click)="showMaterialList = true" (clickOutside)="showMaterialList = false">
-        {{!material.material ? 'select material' : material.material}}
-      </button>
-      <div class="dropdown-content" [hidden]="!showMaterialList">
-        <a *ngFor="let mat of materials" (click)="material = mat; get_payments();">{{mat.material}}</a>
+      <div class="row-wrapper">
+          <div class="col-full-3">
+            Balance Payment:
+          </div>
+          <div class="col-full-6">
+            <input formControlName="balance_payment" value="{{selected_payments.payment_balance}}" type="number">
+          </div>
       </div>
-    </div>
-    <div class="add_div">
-      <button class="btn -cta" routerLink="/main/admin/payments">Payments</button>
-      <button class="btn -cta" routerLink="/main/admin/addpayments">Add Payments</button>
-    </div>
-  </section>
-
-  <section class="page-actions">
-    <div class="row-wrapper">
-      <div class="container-fluid dashboard-content">
-        <div class="card selectcard page-actions">
-          <form class="_select-or-search" role="form" [formGroup]="paymentForm" (ngSubmit)="addPayments()">
-  
-            <div class="form-group">
-              <!-- <label class="pull-left">Total Payment</label> -->
-              <input class="form-control" formControlName="payment_toPay" placeholder="Enter Total Payment"
-                [value]="total_payment" type="number">
-            </div>
-            <div class="form-group">
-              <!-- <label class="pull-left">Balance Payment</label> -->
-              <input class="form-control" formControlName="balance_payment" placeholder="Enter Balance Payment"
-                [value]="balance_payment" type="number" disabled>
-            </div>
-            <div class="form-group">
-              <!-- <label class="pull-left">Payment</label> -->
-              <input class="form-control" formControlName="payment" placeholder="Enter Payment" type="number">
-            </div>
-            <div class="form-group">
-              <div class="dropdown">
-                <mat-form-field>
-                  <input matInput [matDatepicker]="payment_date" [formControl]="payment_date">
-                  <mat-datepicker-toggle matSuffix [for]="payment_date"></mat-datepicker-toggle>
-                  <mat-datepicker #payment_date></mat-datepicker>
-                </mat-form-field>
-              </div>
-            </div>
-            <div class="add_div">
-              <button type="submit" class="btn -cta">Add Payment</button>
-            </div>
-          </form>
+      <div class="row-wrapper">
+        <div class="col-full-3">
+          Payment:
+        </div>
+        <div class="col-full-6">
+          <input formControlName="payment" placeholder="Enter Payment" type="number">
         </div>
       </div>
-    </div>
-  </section>
-  
-  <section class="table-and-pagination -classes-schedule">
-    <div class="table-container">
-      <table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Payment Paid</th>
-            <th>Payment Date</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let pay of payments; let i=index">
-            <td>{{ i + 1 }}</td>
-            <td>{{pay.payment}}</td>
-            <td>{{pay.payment_date}}</td>
-            <td class="_actions">
-              <button class="btn" (click)="deletePayment(i)"><img src="../../../assets/images/trash-white.svg"
-                  alt="Delete" /></button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="_pagination">
-      <a href="" class="btn -previous">Previous</a>
-      <a href="" class="btn -current">1</a>
-      <a href="" class="btn">2</a>
-      <a href="" class="btn">3</a>
-      <a href="" class="btn">4</a>
-      <a href="" class="btn">5</a>
-      <a href="" class="btn">6</a>
-      <a href="" class="btn">7</a>
-      <a href="" class="btn">8</a>
-      <a href="" class="btn">9</a>
-      <a href="" class="btn">10</a>
-      <a href="" class="btn -next">Next</a>
-    </div>
-  </section>
-</main>
+      <div class="row-wrapper">
+        <div class="col-full-3">
+          Date of Payment:
+        </div>
+        <div class="col-full-6">
+          <input formControlName="payment_date" type="date">
+        </div>
+      </div>
+      <div class="row">
+          <div class="col-md-3 pull-right">
+              <button class="btn -cta active-tab" type="submit">Submit</button>
+          </div>
+      </div>
+  </form>
+</div>

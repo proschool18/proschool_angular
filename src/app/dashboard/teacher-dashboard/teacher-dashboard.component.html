@@ -1,350 +1,217 @@
-<div id="main-content">
-
-    <div class="row">
-      <div class="container-fluid dashboard-content">
-        <!-- col 1 -->
-        <div class="leftdiv">
-          <!-- <div class="caltimediv">
-            <div class="calenderwid">
-              <div class="mnth">{{monthName}}</div>
-              <div class="daydate">{{date}}</div>
-              <div class="dayyear">{{year}}</div>
-            </div>
-            <div class="timewid">
-              <div class="timenow" id="timenow">{{time}}</div>
-            </div>
+<main>
+  <div class="main-dashboard-section-1">
+    <div class="tasks-events-notices-expenses card tabbed">
+      <div class="_tab-group" role="tablist">
+        <button role="tab" id="tasks-tab" aria-selected="true" (click)="select_tab('tasks_tab')">Tasks</button>
+        <button role="tab" id="events-tab" tabindex="-1" (click)="select_tab('events_tab')">Events</button>
+        <button role="tab" id="notices-tab" tabindex="-1" (click)="select_tab('notice_tab')">Notice</button>
+        <button role="tab" id="expenses-tab" tabindex="-1" (click)="select_tab('feedback_tab')">Expenses</button>
+      </div>
+      <div class="_tab-panel-group">
+        <section role="tabpanel" tabindex="-1" aria-labelledby="tasks-tab" class="table-container" *ngIf="tasks_tab">
+          <table cellspacing="0" class="_task-list">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th align="left">Priority</th>
+                <th align="left">Task</th>
+                <th align="left">Assigned On</th>
+                <th align="left">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let task of tasks; let i = index;">
+                <td class="_s-no"><span>{{i+1}}</span></td>
+                <td
+                  [ngStyle]="{'color': (task.priority === 'High') ? '#e56761' : (task.priority === 'Medium') ? '#77c284' : '#5e81f4'}">
+                  {{task.priority}}</td>
+                <td>{{task.task}}</td>
+                <td>{{task.assigned_on}}</td>
+                <td>
+                  <!-- <div [ngClass]="{'_progress-text -rejected':task.task_status === 'completed', '_progress-text -pending':task.task_status === 'pending'}">{{task.task_status}}</div> -->
+                  <div class="_progress-text -rejected" *ngIf="task.task_status === 'completed'">{{task.task_status}}
+                  </div>
+                  <div class="_progress-text -pending" *ngIf="task.task_status === 'pending'">{{task.task_status}}</div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+        <section role="tabpanel" tabindex="-1" aria-labelledby="events-tab" *ngIf="events_tab">
+          <h3>Events</h3>
+        </section>
+        <section role="tabpanel" tabindex="-1" aria-labelledby="notices-tab" *ngIf="notice_tab">
+          <h3>Notice</h3>
+        </section>
+        <section role="tabpanel" tabindex="-1" aria-labelledby="expenses-tab" *ngIf="feedback_tab">
+          <h3>Expenses</h3>
+        </section>
+      </div>
+    </div>
+    <div class="_attendance-and-history">
+      <div class="_attendance-box card">
+        <h3>Student Attendance</h3>
+        <button type="button" class="_date-picker">{{classTeacher.class_name}} {{classTeacher.section_name}}</button>
+        <div class="tabbed">
+          <!-- <div role="tablist">
+            <button role="tab" id="students-attendance-tab" aria-selected="true" class="attntablink" (click)="getAttendance('students')">Students</button>
+            <button role="tab" id="employees-attendance-tab" class="attntablink" tabindex="-1" (click)="getAttendance('employees')">Employees</button>
           </div> -->
-          <div class="rigdiv1 card">
-            <div class="btntabs">
-              <div class="btntab" (click)="select_tab('tasks_tab')" [ngClass]="{'btntab-active':tasks_tab === true}">Tasks
+          <section role="tabpanel" aria-labelledby="students-attendance-tab" tabindex="-1">
+            <div class="_metrics dynamic-bar-graph">
+              <div class="_metric -total">
+                <div class="_bar">
+                  <span class="_bar_progress" [ngStyle]="{'height': section_attendance.presentPercent +'%'}">
+                  </span>
+                </div>
+                <div class="_name">
+                  <span class="_legend">Present</span> {{section_attendance.present}}
+                </div>
               </div>
-              <div class="btntab" (click)="select_tab('events_tab')" [ngClass]="{'btntab-active':events_tab === true}">
-                Events</div>
-              <div class="btntab" (click)="select_tab('notice_tab')" [ngClass]="{'btntab-active':notice_tab === true}">
-                Notice</div>
-              <div class="btntab" (click)="select_tab('feedback_back')"
-                [ngClass]="{'btntab-active':feedback_back === true}">Feedback</div>
-            </div>
-            <div>
-              <div class="selctedresult scrollonhover">
-                <div class="table-responsive">
-                  <table style="width:100%;" *ngIf="tasks_tab">
-                    <thead>
-                      <tr class="tabtablehead">
-                        <th>#</th>
-                        <th>Task</th>
-                        <th>Assigned To</th>
-                        <th>Status</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let task of tasks; let i = index" class="tabtabletxt">
-                        <td>{{i+1}}</td>
-                        <td>{{task.task}}</td>
-                        <td>{{task.employee_name}}</td>
-                        <td
-                          [ngStyle]="{'background-color': (task.task_status == 'completed') ? '#5cb85c' : '#d9534f', 'color': 'white' }">
-                          {{task.task_status}}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <table style="width:100%;" *ngIf="events_tab">
-                    <thead>
-                      <tr class="tabtablehead">
-                        <th>#</th>
-                        <th>Event</th>
-                        <th>Time</th>
-                        <th>Location</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let event of events; let i = index" class="tabtabletxt">
-                        <td>{{i+1}}</td>
-                        <td>{{event.event_title}}</td>
-                        <td>{{event.time}}</td>
-                        <td>{{event.location}}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <table style="width:100%;" *ngIf="notice_tab">
-  
-  
-                  </table>
-                  <table style="width:100%;" *ngIf="feedback_back">
-                    <thead>
-                      <tr class="tabtablehead">
-                        <th>#</th>
-                        <th>subject</th>
-                        <th>Time</th>
-                        <th>Location</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let fb of Feedback; let i = index" class="tabtabletxt">
-  
-                      </tr>
-                    </tbody>
-                  </table>
+              <div class="_metric -attend">
+                <div class="_bar">
+                  <span class="_bar_progress" [ngStyle]="{'height': section_attendance.absentPercent +'%'}">
+                  </span>
+                </div>
+                <div class="_name">
+                  <span class="_legend">Absent</span> {{section_attendance.absent}}
+                </div>
+              </div>
+              <div class="_metric -due">
+                <div class="_bar">
+                  <span class="_bar_progress" [ngStyle]="{'height': section_attendance.onLeavePercent +'%'}">
+                  </span>
+                </div>
+                <div class="_name">
+                  <span class="_legend">Leave</span> {{section_attendance.onleave}}
                 </div>
               </div>
             </div>
-          </div>
-          <!-- <div class="leftbottom card">
-            <h5 class="pull-left" (click)="getData('fees')">Fees Collection</h5>
-            <div class="ngxcharts">
-              <ngx-charts-bar-vertical [view]="view" [scheme]="colorScheme" [results]="single" [gradient]="gradient"
-                [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="showLegend" [showXAxisLabel]="showXAxisLabel"
-                [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel">
-              </ngx-charts-bar-vertical>
-            </div>
+          </section>
+        </div>
+      </div>
+      <div class="_history-box card">
+        <h3>Employee Attendance</h3>
+        <button type="button" class="_date-picker">{{monthName}}</button>
+        <div class="tabbed">
+          <!-- <div role="tablist">
+            <button role="tab" id="payment-history-tab" aria-selected="true" class="attntablink" (click)="getFinance('payments')">Payments</button>
+            <button role="tab" id="expenses-history-tab" class="attntablink" tabindex="-1" (click)="getFinance('expenses')">Expenses</button>
           </div> -->
-        </div>
-        <!-- col 2 -->
-        <div class="leftdiv">
-          <!-- col1 top -->
-          <div class="lefttop">
-            <!-- col1 topleft box -->
-            <div class="leftbox card center-margin">
-              <h5 class="pull-left" (click)="getData('attendance')">Student Attendance</h5>
-              <div class="att-values">
-                <p class="att-heading">P:</p>
-                <div class="progbar">
-                  <div class="progress">
-                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0"
-                      aria-valuemax="100" [ngStyle]="{'width': studentAttendance.presentPercentage + '%'}">
-                      {{studentAttendance.present}}
-                    </div>
-                  </div>
+          <section role="tabpanel" aria-labelledby="payment-history-tab" tabindex="-1">
+            <div class="_metrics dynamic-bar-graph">
+              <div class="_metric -earned">
+                <div class="_bar">
+                  <span class="_bar_progress" [ngStyle]="{'height': employeeAttendance.presentPercent +'%'}">
+                  </span>
+                </div>
+                <div class="_name">
+                  <span class="_legend">Present</span> {{employeeAttendance.present}}
                 </div>
               </div>
-              <div class="att-values">
-                <p class="att-heading">A:</p>
-                <div class="progbar">
-                  <div class="progress">
-                    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="60" aria-valuemin="0"
-                      aria-valuemax="100" [ngStyle]="{'width': studentAttendance.absentPercent + '%'}">
-                      {{studentAttendance.absent}}
-                    </div>
-                  </div>
+              <div class="_metric -due">
+                <div class="_bar">
+                  <span class="_bar_progress" [ngStyle]="{'height': employeeAttendance.absentPercent +'%'}">
+                  </span>
+                </div>
+                <div class="_name">
+                  <span class="_legend">Absent</span> {{employeeAttendance.absent}}
                 </div>
               </div>
-              <div class="att-values">
-                <p class="att-heading">L:</p>
-                <div class="progbar">
-                  <div class="progress">
-                    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0"
-                      aria-valuemax="100" [ngStyle]="{'width': studentAttendance.onLeavePercent + '%'}">
-                      {{studentAttendance.onLeave}}
-                    </div>
-                  </div>
+              <div class="_metric -cost">
+                <div class="_bar">
+                  <span class="_bar_progress" [ngStyle]="{'height': employeeAttendance.onleavePercent +'%'}">
+                  </span>
                 </div>
-              </div>
-              <div class="studattendtxt">
-                <p>Total Students: {{studentAttendance.total_students}}</p>
-                <p>Attedance Taken: {{studentAttendance.attendanceTaken}}</p>
+                <div class="_name">
+                  <span class="_legend">On Leave</span> {{employeeAttendance.onleave}}
+                </div>
               </div>
             </div>
-            <!-- col1 topright box -->
-            <div class="leftbox card">
-              <h5 class="pull-left">Employee Attendance</h5>
-              <div class="att-values">
-                <p class="att-heading">P:</p>
-                <div class="progbar">
-                  <div class="progress">
-                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0"
-                      aria-valuemax="100" [ngStyle]="{'width': employeeAttendance.presentPercentage + '%'}">
-                      {{employeeAttendance.present}}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="att-values">
-                <p class="att-heading">A:</p>
-                <div class="progbar">
-                  <div class="progress">
-                    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="60" aria-valuemin="0"
-                      aria-valuemax="100" [ngStyle]="{'width': employeeAttendance.absentPercent + '%'}">
-                      {{employeeAttendance.absent}}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="att-values">
-                <p class="att-heading">L:</p>
-                <div class="progbar">
-                  <div class="progress">
-                    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0"
-                      aria-valuemax="100" [ngStyle]="{'width': employeeAttendance.onLeavePercent + '%'}">
-                      {{employeeAttendance.onLeave}}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="studattendtxt">
-                <p>Total Employees: {{employeeAttendance.total_employees}}</p>
-                <p>Attedance Taken: {{employeeAttendance.attendanceTaken}}</p>
-              </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="main-dashboard-section-2">
+    <div class="_fee-collection-box card">
+      <h2>Fee Collection</h2>
+      <button type="button" class="_date-picker"><i class="fa fa-calendar"></i>Year<i
+          class="fa fa-angle-down"></i></button>
+      <div class="_chart">
+        <div class="_metrics -horizontal">
+          <div class="_metric -earned" [ngStyle]="{'width': '100%'}">
+            <div class="_name">Total</div>
+            <div class="_bar">
+              <span>{{fees.totalFee | currency:'INR'}}</span>
             </div>
           </div>
-          <!-- col1 bottom box -->
-          <div class="righttop">
-            <!-- col 3 left top box-->
-            <div class="rightbox card center-margin">
-              <h5 class="pull-left">Payments</h5>
-              <div class="att-values">
-                <p class="att-heading1">Paid:</p>
-                <div class="progbar">
-                  <div class="progress">
-                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0"
-                      aria-valuemax="100" [ngStyle]="{'width': payments.paid_percentage + '%'}">
-                      {{payments.paid_percentage}} %
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="studattendtxt">
-                <p>Total Payments: {{payments.total_payment}}</p>
-                <p>Paid Payments: {{payments.paid_payment}}</p>
-              </div>
-              <!-- <div [hidden]="!chart">
-                <canvas class="canvas1" id="canvas"></canvas>
-              </div> -->
-            </div>
-            <!-- col 3 right top box-->
-            <div class="rightbox card">
-              <h5 class="pull-left">Expenses</h5>
-              <div class="att-values">
-                <p class="att-heading1">Paid:</p>
-                <div class="progbar">
-                  <div class="progress">
-                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0"
-                      aria-valuemax="100" [ngStyle]="{'width': expenses.paid_percentage + '%'}">
-                      {{expenses.paid_percentage}} %
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="studattendtxt">
-                <p>Total Expenses: {{expenses.total_payment}}</p>
-                <p>Paid Expenses: {{expenses.paid_payment}}</p>
-              </div>
+          <div class="_metric -due" [ngStyle]="{'width': fees.paidPercent + '%'}">
+            <div class="_name">Collected</div>
+            <div class="_bar" style="width: 100%">
+              <span>{{fees.paidFee | currency:'INR'}}</span>
             </div>
           </div>
-        </div>
-        <!-- col 3 -->
-        <div class="leftdiv">
-          <!-- col 3 bottom box-->
-          <div class="rightbottom card">
-            <div class="rigdiv card">
-              <div class="selcla">
-                <div class="innerselcla">
-                  <div class="leftarrow"><i class="fa fa-chevron-left"></i></div>
-                  <div class="scrollclass">
-                    <div class="form-group scrollmenu"> 
-                      <button class="button button2 buttonsect1 hvr-pop transition" id="buttonId2">class 1</button> 
-                      <button class="button button2 buttonsect1 hvr-pop transition" id="buttonId2">class 2</button> 
-                      <button class="button button2 buttonsect1 hvr-pop transition" id="buttonId2">class 3</button>
-                      <button class="button button2 buttonsect1 hvr-pop transition" id="buttonId2">class 4</button>
-                      <button class="button button2 buttonsect1 hvr-pop transition" id="buttonId2">class 5</button>
-                      <button class="button button2 buttonsect1 hvr-pop transition" id="buttonId2">class 6</button>
-                      <button class="button button2 buttonsect1 hvr-pop transition" id="buttonId2">class 7</button> 
-                      <button class="button button2 buttonsect1 hvr-pop transition" id="buttonId2">class 8</button>
-                      <button class="button button2 buttonsect1 hvr-pop transition" id="buttonId2">class 9</button>
-                      <button class="button button2 buttonsect1 hvr-pop transition" id="buttonId2">class 10</button>
-                    </div>
-                  </div>
-                  <div class="rightarrow"><i class="fa fa-chevron-right"></i></div>
-                </div>
-              </div> <!-- middle row2 -->
-              <div class="selcla">
-                <div class="innerselcla topmarginscroll">
-                  <div class="leftarrowsect"><i class="fa fa-chevron-left"></i></div>
-                  <div class="scrollclass">
-                    <div class="form-group"> 
-                      <button class="button button2 buttonsect hvr-pop transition" id="buttonId2">Section A</button> 
-                      <button class="button button2 buttonsect hvr-pop transition" id="buttonId2">Section B</button> 
-                      <button class="button button2 buttonsect hvr-pop transition" id="buttonId2">Section C</button> 
-                    </div>
-                  </div>
-                  <div class="rightarrowsect"><i class="fa fa-chevron-right"></i></div>
-                </div>
-              </div>
-              <!-- <div class="row">
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="pull-left">Class</label>
-                    <select class="form-control" [(ngModel)]="selected_class" (change)="getSections()">
-                      <option>select...</option>
-                      <option *ngFor="let cls of classes" value="{{cls.class_id}}">{{cls.name}}</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="pull-left">Section</label>
-                    <select class="form-control" [(ngModel)]="selected_section" (change)="getSchedules()">
-                      <option>select...</option>
-                      <option *ngFor="let sec of sections; let i = index" value="{{sec.section_id}}">{{sec.name}}</option>
-                    </select>
-                  </div>
-                </div>
-              </div> -->
-  
-              <!-- <div class="selcla">
-                <div class="innerselcla">
-                  <div class="leftarrow"><i class="fa fa-chevron-left"></i></div>
-                  <div class="scrollclass">
-                    <div class="form-group"> 
-                      <button class="button button2 hvr-pop transition" id="buttonId2" *ngFor="let class of classes" (click)="getSections(class.class_id)">{{class.name}}</button>
-                    </div>
-                  </div>
-                  <div class="rightarrow"><i class="fa fa-chevron-right"></i></div>
-                </div>
-              </div>  -->
-  
-              <!-- <div class="selcla">
-                <div class="innerselcla">
-                  <div class="leftarrowsect"><i class="fa fa-chevron-left"></i></div>
-                  <div class="scrollclass">
-                    <div class="form-group"> 
-                      <button class="button button2 buttonsect hvr-pop transition" id="buttonId2" *ngFor="let sec of sections">{{sec.name}}</button>
-                    </div>
-                  </div>
-                  <div class="rightarrowsect"><i class="fa fa-chevron-right"></i></div>
-                </div>
-              </div>  -->
-  
-              <div class="selctedresult scrollonhover">
-                <div class="table-responsive">
-                  <table style="width:100%;">
-                    <thead>
-                      <tr>
-                        <th class="timecolwdth">Timings</th>
-                        <th>Subject</th>
-                        <th>Teacher</th>
-                        <th>Status</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let sch of class_schedule; let i = index">
-                        <td>{{sch.start_time}}-{{sch.end_time}}</td>
-                        <td>{{sch.subject_name}}</td>
-                        <td [ngStyle]="{'background-color': (sch.employee_attendance == 'Present') ? '#5cb85c' : (sch.employee_attendance == 'Absent') ? '#d9534f' : '#f0ad4e', 'color': 'white' }">{{sch.teacher_name}}</td>
-                        <td></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+          <div class="_metric -cost" [ngStyle]="{'width': fees.balancePercent + '%'}">
+            <div class="_name">Balance</div>
+            <div class="_bar">
+              <span>{{fees.balanceFee | currency:'INR'}}</span>
             </div>
-  
-            <!-- <canvas class="basechart" baseChart [chartType]="'bar'" [datasets]="chartData" [labels]="labels"
-              [options]="chartOptions" [legend]="true" [colors]="colors" (chartClick)="onChartClick($event)">
-            </canvas> -->
-  
           </div>
         </div>
       </div>
     </div>
-  
+    <div class="_time-table-box card">
+      <!-- <div class="_filters">
+        <select name="" [(ngModel)]="selected_class" (change)="getSchedules()">
+          <option *ngFor="let cls of classes" value="{{cls.class_id}}">{{cls.name}}</option>
+        </select>
+        <select name="" [(ngModel)]="selected_section" (change)="getSectionSchedule()">
+          <option *ngFor="let sec of sections" value="{{sec.section_id}}">{{sec.name}}</option>
+        </select>
+        <div class="_teacher-name">Class Teacher : <span> {{class_teacher}}</span></div>
+      </div> -->
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th align="left">Time</th>
+              <th align="left">Class & Section</th>
+              <th align="left">Subject</th>
+              <th align="left">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let sch of employeeSchedule; let i = index;">
+              <td>{{sch.start_time}} - {{sch.end_time}}</td>
+              <td>{{sch.class_name}} {{sch.section_name}}</td>
+              <td>{{sch.subject_name}}</td>
+              <td>
+                <!-- <div class="_chip -class-running" [ngStyle]="{'background-color': sch.employee_attendance === 'Present' ? '#5cb85c' : sch.employee_attendance === 'Absent' ? '#d9534f' : sch.employee_attendance === 'On Leave' ? '#f0ad4e' : '#FFFFFF', 'color': (sch.employee_attendance === 'Present' ||  sch.employee_attendance === 'Absent' || sch.employee_attendance === 'On Leave') ? '#FFFFFF' : 'black' }">{{sch.teacher_name}}</div> -->
+              </td>
+              <td>
+                <div class="_chip -class-closed">Closed</div>
+              </td>
+            </tr>
+            <!-- <tr>
+              <td>09:45 - 10:30</td>
+              <td>English</td>
+              <td>John Smith Doe</td>
+              <td>
+                <div class="_chip -class-running">Running</div>
+              </td>
+            </tr>
+            <tr>
+              <td>10:30 - 11:15</td>
+              <td>Hindi</td>
+              <td>Davin Corcoran</td>
+              <td>
+                <div class="_chip -class-pending">Pending</div>
+              </td>
+            </tr> -->
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
+</main>

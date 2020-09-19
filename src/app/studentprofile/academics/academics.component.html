@@ -1,123 +1,157 @@
-<!-- <div id="main-content">
+<div id="main-content">
     <div class="row">
-        <div class="container-fluid" id="buttonId1">
-            <button routerLink="/main/studentprofile/profile/{{student_id}}/{{section_id}}" class="button button2 hvr-pop transition">Profile</button>
-            <button routerLink="/main/studentprofile/attendance/{{student_id}}/{{section_id}}" class="button button2 hvr-pop transition">Attendance</button>
-            <button routerLink="/main/studentprofile/academics/{{student_id}}/{{section_id}}" class="button button2 hvr-pop transition">Academics</button>
-            <button routerLink="/main/studentprofile/assessment/{{student_id}}/{{section_id}}" class="button button2 hvr-pop transition">Assessment</button>
-            <button routerLink="/main/studentprofile/fees/{{student_id}}/{{section_id}}" class="button button2 hvr-pop transition">Fee Collection</button>
+        <div class="menu-bar">
+            <button routerLink="/main/main/studentprofile/profile/{{student_id}}/{{section_id}}"
+                routerLinkActive="active">Profile</button>
+            <button routerLink="/main/main/studentprofile/attendance/{{student_id}}/{{section_id}}"
+                routerLinkActive="active">Attendance</button>
+            <button routerLink="/main/main/studentprofile/academics/{{student_id}}/{{section_id}}"
+                class="button button2 hvr-pop transition"
+                routerLinkActive="active">Academics</button>
+            <button routerLink="/main/main/studentprofile/assessment/{{student_id}}/{{section_id}}"
+                routerLinkActive="active">Assessment</button>
+            <button routerLink="/main/main/studentprofile/fees/{{student_id}}/{{section_id}}"
+                routerLinkActive="active">Fee Collection</button>
         </div>
     </div>
 
     <div class="row">
-        <div class="container-fluid dashboard-content">
-            <div class="card leftcard cardsryt scrollonhover">
-                <div class="row">
-                    <div class="col-md-4 formalign">
-                        <div class="form-group">
-                            <label>Examinations</label>
-                            <select class="form-control" [(ngModel)]="selected_exam" (change)="getExamAcademics()">
-                                <option value="All">All Examinations</option>
-                                <option *ngFor="let exam of academics; let i = index" value="{{exam.exam_title}}">
-                                    {{exam.exam_title}}
-                                </option>
-                            </select>
-                        </div>
+        <div class="page-content-wrapper">
+            <div class="student-info-wrapper">
+                <div class="student-details">
+                    <div class="student-img-wrapper">
+                        <img src="../../../assets/images/student_new.png" />
                     </div>
+                    <div class="image-upload iconF">
+                        <label for="file-input-studProfPic">
+                            <div class="pattrenI">
+                                <i class="fa fa-pencil-square" aria-hidden="true"></i>
+                            </div>
+                        </label>
+                        <input id="file-input-studProfPic" type="file" name="image"
+                            (change)="studentProfPic($event.target.files)" />
+                    </div>
+                    <p class="student-basic-info">
+                        Name: <span>{{student_details.first_name}} {{student_details.last_name}}</span>
+                        <br><br>
+                        Class: <span>{{student_details.school_classes[0].name}}</span>
+                        <br><br>
+                        Roll No: <span>{{student_details.roll_no}}</span>
+                    </p>
                 </div>
-
-                <div class="searchForm">
-                    <div class="table-responsive" *ngIf="allExams else allSubjects">
-                        <table style="width:100%;">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Examination</th>
-                                    <th>Marks</th>
-                                    <th>Percentage</th>
-                                    <th>Grade</th>
-                                    <th>GPA</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let exam of academics; let i = index">
-                                    <td>{{i+1}}</td>
-                                    <td>{{exam.exam_title}}</td>
-                                    <td>{{exam.totalAllMarks}}</td>
-                                    <td>{{exam.percentage}} %</td>
-                                    <td>{{exam.Grade}}</td>
-                                    <td>{{exam.GPA}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="_attendance-box">
-                        <section role="tabpanel" style="height: 200px;">
-                            <div class="_metrics">
-                                <div class="_metric -total">
-                                    <div class="_bar" style="--progress:96%"></div>
-                                    <div class="_name">
-                                        <span class="_legend">46</span> 
-                                        Rhymess
-                                    </div>
-                                </div>
-                                <div class="_metric -attend">
-                                    <div class="_bar" style="--progress:98%"></div>
-                                    <div class="_name">
-                                        <span class="_legend">48</span> 
-                                        English
-                                    </div>
-                                </div>
-                                <div class="_metric -due">
-                                    <div class="_bar" style="--progress:100%"></div>
-                                    <div class="_name">
-                                        <span class="_legend">50</span> 
-                                        Maths
-                                    </div>
+                <div class="student-details-tablist-wrapper">
+                    <section class="student-task-section">
+                        <section class="page-actions">
+                            <div class="dropdown">
+                                <button class="dropbtn" (click)="showExamList = true" (clickOutside)="showExamList = false">
+                                    {{!selected_exam ? 'select Examination' : selected_exam}}
+                                </button>
+                                <div class="dropdown-content" [hidden]="!showExamList">
+                                    <a (click)="selected_exam = 'All'; getExamAcademics();">All Examinations</a>
+                                    <a *ngFor="let exam of academics"
+                                        (click)="selected_exam = exam.exam_title; getExamAcademics();">{{ exam.exam_title}}</a>
                                 </div>
                             </div>
                         </section>
-                    </div>
-
-                    <ng-template #allSubjects>
-                        <div class="table-responsive">
-                            <table style="width:100%;">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Examination</th>
-                                        <th>Marks</th>
-                                        <th>Percentage</th>
-                                        <th>Grade</th>
-                                        <th>GPA</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let sub of subjectMarks; let i = index">
-                                        <td>{{i+1}}</td>
-                                        <td>{{sub.subject_name}}</td>
-                                        <td>{{sub.total_marks}}</td>
-                                        <td>{{sub.percentage}} %</td>
-                                        <td>{{sub.grade}}</td>
-                                        <td>{{sub.gpa}}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </ng-template>
+                        <section class="table-and-pagination -classes-schedule" *ngIf="allExams else allSubjects">
+                            <div class="table-container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th align="left">Examination</th>
+                                            <th align="left">Marks</th>
+                                            <th align="left">Percentage</th>
+                                            <th align="left">Grade</th>
+                                            <th align="left">GPA</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let exam of academics; let i = index">
+                                            <td class="_s-no"><span>{{ i + 1 }}</span></td>
+                                            <td>{{exam.exam_title}}</td>
+                                            <td>{{exam.totalAllMarks}}</td>
+                                            <td>{{exam.percentage}} %</td>
+                                            <td>{{exam.Grade}}</td>
+                                            <td>{{exam.GPA}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="_attendance-box dynamic-bar-graph">
+                                <section role="tabpanel">
+                                    <div class="_metrics">
+                                        <div *ngFor="let exam of academics; let i = index">
+                                            <div [ngClass] = "{'-total': exam.percentage > 80, '-due': (exam.percentage > 60 && exam.percentage < 80), '-attend': exam.percentage < 60}" class="_metric">
+                                                <div class="_bar">
+                                                    <span class="_bar_progress" [ngStyle]="{'height': exam.percentage +'%'}">
+                                                    </span>
+                                                </div>
+                                                <div class="_name">
+                                                    <span class="_legend">{{exam.exam_title}}</span>
+                                                    {{exam.totalAllMarks}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </section>
+            
+                        <ng-template #allSubjects>
+                            <section class="table-and-pagination -classes-schedule">
+                                <div class="table-container">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th align="left">Examination</th>
+                                                <th align="left">Marks</th>
+                                                <th align="left">Percentage</th>
+                                                <th align="left">Grade</th>
+                                                <th align="left">GPA</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let sub of subjectMarks; let i = index">
+                                                <td class="_s-no"><span>{{ i + 1 }}</span></td>
+                                                <td>{{sub.subject_name}}</td>
+                                                <td>{{sub.total_marks}}</td>
+                                                <td>{{sub.percentage}} %</td>
+                                                <td>{{sub.grade}}</td>
+                                                <td>{{sub.gpa}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="_attendance-box dynamic-bar-graph">
+                                    <section role="tabpanel">
+                                        <div class="_metrics">
+                                            <div *ngFor="let sub of subjectMarks; let i = index">
+                                                <div [ngClass] = "{'-total': sub.percentage > 80, '-due': (sub.percentage > 60 && sub.percentage < 80), '-attend': sub.percentage < 60}" class="_metric">
+                                                    <div class="_bar">
+                                                        <span class="_bar_progress" [ngStyle]="{'height': sub.percentage +'%'}">
+                                                        </span>
+                                                    </div>
+                                                    <div class="_name">
+                                                        <span class="_legend">{{sub.subject_name}}</span>
+                                                        {{sub.total_marks}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                            </section>
+                        </ng-template>
+                    </section>
                 </div>
-            </div>
-
-            <div class="card rightcard">
-                <canvas baseChart [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions"
-                    [legend]="chartLegend" [chartType]="chartType"></canvas>
             </div>
         </div>
     </div>
+</div>
 
-</div> -->
-
+<!-- 
 <main class="card mt-20 within-viewport" style="height: auto;">
     <div class="page-actions">
         <section class="student-intro">
@@ -246,4 +280,4 @@
             </ng-template>
         </section>
     </div>
-</main>
+</main> -->

@@ -15,6 +15,11 @@ export class SchedulesComponent implements OnInit {
 
   constructor(private service: ExamsService, private fb: FormBuilder, public dialog: MatDialog) {}
 
+  pageNo: number = 1;
+  page_start: number = 0;
+  page_counter = Array;
+  pages: number = 10;
+
   exam_schedules = [];
   assessment_patterns = [{
     assessment: []
@@ -22,11 +27,9 @@ export class SchedulesComponent implements OnInit {
     assessment: []
   }];
 
-  selected_schedule: any = '';
+  selected_schedule;
   dialog_type: string;
   alert_message: string;
-
-  showScheduleList: boolean = false;
 
   scheduleForm: FormGroup = this.fb.group({
     exam_title: ['', Validators.required],
@@ -42,6 +45,11 @@ export class SchedulesComponent implements OnInit {
     this.getExam_schedules();
   }
 
+  pageChange(x) {
+    this.pageNo = x;
+    this.page_start = (x - 1) * 10;
+  } 
+
   getassessment_patterns() {
     this.service.getassessment_patterns()
       .subscribe(
@@ -52,26 +60,11 @@ export class SchedulesComponent implements OnInit {
   getExam_schedules() {
     this.service.getExam_schedules()
       .subscribe(
-        res => { this.exam_schedules = res.exam_schedules, console.log(res) }
-      )
-  }
-
-  addExam_schedules() {
-    this.scheduleForm.value.exam_title = this.selected_schedule;
-    this.service.addExam_schedules(this.scheduleForm.value)
-    .subscribe(
-      res => { 
-        if(res == true) {
-          // this.collection.exam_schedules.push(this.scheduleForm.value)
-          this.getExam_schedules();
-          this.alert_message = "ExamSchedule Added Successfully";
-          this.openAlert(this.alert_message)
-        } else {
-          this.alert_message = "ExamSchedule Not Added";
-          this.openAlert(this.alert_message)
+        res => { this.exam_schedules = res.exam_schedules, 
+          this.pages = Math.ceil(this.exam_schedules.length / 10), 
+          console.log(res) 
         }
-      }
-    )
+      )
   }
 
   deleteSchedules(exam_sch_id) {
@@ -88,6 +81,12 @@ export class SchedulesComponent implements OnInit {
           }
         }
       )
+  }
+
+  addSchedule() {
+    this.selected_schedule = '';
+    this.dialog_type = 'add';
+    this.openDialog(this.selected_schedule, this.dialog_type)
   }
 
   editSchedules(i) {
@@ -114,9 +113,6 @@ export class SchedulesComponent implements OnInit {
       data => {
         console.log("Dialog output:", data),
         this.getExam_schedules();
-        // this.collection.exam_schedules.filter(res => res.exam_sch_id == data.exam_sch_id)[0].exam_title = data.exam_title;
-        // this.collection.exam_schedules.filter(res => res.exam_sch_id == data.exam_sch_id)[0].from_date = data.from_date;
-        // this.collection.exam_schedules.filter(res => res.exam_sch_id == data.exam_sch_id)[0].end_date = data.end_date;
       }
     );
 

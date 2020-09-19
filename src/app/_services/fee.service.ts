@@ -16,24 +16,25 @@ export class FeeService {
   private token = appConfig.token;
   empty_data = { };
 
-  // School Fee
+  // Fee Terms
   getFeeTerms(): Observable<any> {
-    return this.http.get<any>(this.url + '/fee_term/' + this.school_id);
+    return this.http.get<any>(this.url + '/fee_types/' + this.school_id);
   }
 
   addFeeTerms(data): Observable<any> {
     console.log(data)
-    return this.http.post<any>(this.url + '/fee_term/' + this.school_id, data)
+    return this.http.post<any>(this.url + '/fee_types/' + this.school_id, data)
   }
 
-  editFeeTerms(data, fee_term_id): Observable<any> {
-    return this.http.put<any>(this.url + '/edit_fee_terms/' + fee_term_id, data)
+  editFeeTerms(data, fee_types_id): Observable<any> {
+    return this.http.put<any>(this.url + '/edit_fee_types/' + fee_types_id, data)
   }
 
-  deleteFeeTerms(fee_term_id): Observable<any> {
-    return this.http.put<any>(this.url + '/delete_fee_terms/' + fee_term_id, this.empty_data)
+  deleteFeeTerms(fee_types_id): Observable<any> {
+    return this.http.put<any>(this.url + '/delete_fee_types/' + fee_types_id, this.empty_data)
   }
 
+  // Fee Types
   getFeeTypes(): Observable<any> {
     return this.http.get<any>(this.url + '/fee_types/' + this.school_id);
   }
@@ -51,23 +52,80 @@ export class FeeService {
     return this.http.put<any>(this.url + '/delete_fee_types/' + fee_types_id, this.empty_data)
   }
 
+  // Class Fee  
+  getClassFee(class_id): Observable<any> {
+    return this.http.get<any>(this.url + '/class_fee/' + class_id);
+  }
+
+  addClassFee(data): Observable<any> {
+    console.log(data)
+    return this.http.post<any>(this.url + '/class_fee/' + this.school_id, data)
+  }
+
+  editClassFee(data, class_fee_id): Observable<any> {
+    return this.http.put<any>(this.url + '/edit_class_fee/' + class_fee_id, data)
+  }
+
+  deleteClassFee(class_fee_id): Observable<any> {
+    return this.http.put<any>(this.url + '/delete_class_fee/' + class_fee_id, this.empty_data)
+  }
+
+  // Fee Structure  
+  getFeeStructure(installment_type, class_id, fee_Type): Observable<any> {
+    return this.http.get<any>(this.url + '/fee_structure/' + installment_type + '/' + class_id + '/' + fee_Type);
+  }
+
+  addFeeStructure(data): Observable<any> {
+    console.log(data)
+    return this.http.post<any>(this.url + '/fee_structure/' + this.school_id, data)
+  }
+
+  editFeeStructure(data, fee_structure_id): Observable<any> {
+    return this.http.put<any>(this.url + '/edit_fee_structure/' + fee_structure_id, data)
+  }
+
+  deleteFeeStructure(fee_structure_id): Observable<any> {
+    return this.http.put<any>(this.url + '/delete_fee_structure/' + fee_structure_id, this.empty_data)
+  }
+
+  // Fee Master  
   getFeeMaster(): Observable<any> {
-    return this.http.get<any>(this.url + '/fee_master/' + this.school_id);
+    return this.http.get<any>(this.url + '/class_fee/' + this.school_id);
   }
 
   addFeeMaster(data): Observable<any> {
     console.log(data)
-    return this.http.post<any>(this.url + '/fee_master/' + this.school_id, data)
+    return this.http.post<any>(this.url + '/class_fee/' + this.school_id, data)
   }
 
-  editFeeMaster(data, fee_master_id): Observable<any> {
-    return this.http.put<any>(this.url + '/edit_fee_master/' + fee_master_id, data)
+  editFeeMaster(data, class_fee_id): Observable<any> {
+    return this.http.put<any>(this.url + '/edit_class_fee/' + class_fee_id, data)
   }
 
-  deleteFeeMaster(fee_master_id): Observable<any> {
-    return this.http.put<any>(this.url + '/delete_fee_master/' + fee_master_id, this.empty_data)
+  deleteFeeMaster(class_fee_id): Observable<any> {
+    return this.http.put<any>(this.url + '/delete_class_fee/' + class_fee_id, this.empty_data)
   }
 
+  // Student Fee
+
+  addStudentFee(data): Observable<any> {
+    console.log(data)
+    return this.http.post<any>(this.url + '/student_fee/' + this.school_id, data)
+  }
+
+  editStudentFee(data, studentFee_id): Observable<any> {
+    return this.http.put<any>(this.url + '/edit_studentFee/' + studentFee_id, data)
+  }
+
+  deleteStudentFee(studentFee_id): Observable<any> {
+    return this.http.put<any>(this.url + '/delete_studentFee/' + studentFee_id, this.empty_data)
+  }
+
+  addPaymentMode(data, student_id): Observable<any> {
+    return this.http.put<any>(this.url + '/student_paymentMode/' + student_id, data)
+  }
+
+  // Fee Structure
   getCollectedFee(selected_student): Observable<any> {
     return this.http.get<any>(this.url + '/fee_collection/' + selected_student);
   }
@@ -75,6 +133,14 @@ export class FeeService {
   addCollectedFee(data): Observable<any> {
     console.log(data)
     return this.http.post<any>(this.url + '/fee_collection/' + this.school_id, data)
+  }
+
+  getStudent_FeeType(selected_student, fee_type): Observable<any> {
+    return this.http.get<any>(this.url + '/student_typewise_fee_details/' + selected_student + '/' + fee_type + '/' + this.school_id);
+  }
+
+  getStudent_installmentFees(selected_student, fee_type, installment): Observable<any> {
+    return this.http.get<any>(this.url + '/student_installment_fee_details/' + selected_student + '/' + fee_type + '/' + installment);
   }
 
   getStudent_term_type_fee(selected_student, fee_term, fee_type): Observable<any> {

@@ -1,23 +1,37 @@
 <main class="card mt-20 within-viewport new-events-listing">
     <div class="month-nav-wrapper">
-        <button class="previous-month-btn"><</button>
-        <h2>November 2020</h2>
-        <button class="next-month-btn">></button>
+        <button class="previous-month-btn" (click)="getPrevious()"><</button>
+        <h2>{{month}} {{year}}</h2>
+        <button class="next-month-btn" (click)="getNext()">></button>
     </div>
     <section class="table-container timetable-chart">
     <table cellspacing="0" class="_task-list">
       <thead>
-        <tr>
+        <tr>          
+          <th align="left">SUN</th>
           <th align="left">MON</th>
           <th align="left">TUE</th>
           <th align="left">WED</th>
           <th align="left">THU</th>
           <th align="left">FRI</th>
           <th align="left">SAT</th>
-          <th align="left">SUN</th>
         </tr>
       </thead>
       <tbody>
+        <tr *ngFor="let days of dayslist; let i = index">
+          <td *ngFor="let day of days; let j = index">
+            {{day}}
+            <button class="plus-btn" (click)="addEvent()" *ngIf="user.role === 'admin'">+</button>
+            <div class="row-content-detail">
+              <p><span class="heading">Title :</span><span class="value">Founder's Day</span></p>
+              <p><span class="heading">Date :</span><span class="value">Thursday 11, November</span></p>
+              <p><span class="heading">Time :</span><span class="value">8:00 AM - 12:00 PM</span></p>
+              <p><span class="heading">Description :</span><span class="value">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam hendrerit nisi sed sollicitudin pellentesque</span></p>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+      <!-- <tbody>
         <tr class="_task">
           <td>1</td>
           <td>2</td>
@@ -30,7 +44,7 @@
         <tr class="_task">
           <td>8</td>
           <td>9</td>
-          <td>10</td>
+          <td>10<button class="plus-btn">+</button></td>
           <td class="special-day schedule-box">
             11
             <button class="plus-btn">+</button>
@@ -47,7 +61,7 @@
           <td>14</td>
         </tr>
         <tr class="_task">
-          <td>15</td>
+          <td class="current-day">15<button class="plus-btn">+</button></td>
           <td>16</td>
           <td>17</td>
           <td>18</td>
@@ -68,7 +82,7 @@
         </tr>
         <tr class="_task">
           <td>29</td>
-          <td class="current-day">30</td>
+          <td>30</td>
           <td>31</td>
           <td>Dec 1</td>
           <td>Dec 2</td>
@@ -84,7 +98,7 @@
           <td>Dec 10</td>
           <td>Dec 11</td>
         </tr>
-      </tbody>
+      </tbody> -->
     </table>
   </section>
 
@@ -105,7 +119,7 @@
                 <th align="left">Date</th>
                 <th align="left">Time</th>
                 <th align="left">Description</th>
-                <th align="left">Action</th>
+                <th align="left" *ngIf="user.role === 'admin'">Action</th>
               </tr>
             </thead>
             <tbody>          
@@ -115,7 +129,7 @@
                 <td>Thursday 11, November</td>
                 <td>8:00 AM</td>
                 <td>Lorem ipsumdoram isat pem, disrotiorum</td>
-                <td class="_actions">
+                <td class="_actions" *ngIf="user.role === 'admin'">
                   <button class="btn"><img src="../../../assets/images/pencil-white-outline.svg" alt="Edit" /></button>
                   <button class="btn"><img src="../../../assets/images/trash-white.svg" alt="Delete" /></button>
                 </td>
@@ -126,7 +140,7 @@
                 <td>Thursday 11, November</td>
                 <td>8:00 AM</td>
                 <td>Lorem ipsumdoram isat pem, disrotiorum</td>
-                <td class="_actions">
+                <td class="_actions" *ngIf="user.role === 'admin'">
                   <button class="btn"><img src="../../../assets/images/pencil-white-outline.svg" alt="Edit" /></button>
                   <button class="btn"><img src="../../../assets/images/trash-white.svg" alt="Delete" /></button>
                 </td>
@@ -137,7 +151,7 @@
                 <td>Thursday 11, November</td>
                 <td>8:00 AM</td>
                 <td>Lorem ipsumdoram isat pem, disrotiorum</td>
-                <td class="_actions">
+                <td class="_actions" *ngIf="user.role === 'admin'">
                   <button class="btn"><img src="../../../assets/images/pencil-white-outline.svg" alt="Edit" /></button>
                   <button class="btn"><img src="../../../assets/images/trash-white.svg" alt="Delete" /></button>
                 </td>
@@ -148,7 +162,7 @@
                 <td>Thursday 11, November</td>
                 <td>8:00 AM</td>
                 <td>Lorem ipsumdoram isat pem, disrotiorum</td>
-                <td class="_actions">
+                <td class="_actions" *ngIf="user.role === 'admin'">
                   <button class="btn"><img src="../../../assets/images/pencil-white-outline.svg" alt="Edit" /></button>
                   <button class="btn"><img src="../../../assets/images/trash-white.svg" alt="Delete" /></button>
                 </td>
@@ -159,7 +173,7 @@
                 <td>Thursday 11, November</td>
                 <td>8:00 AM</td>
                 <td>Lorem ipsumdoram isat pem, disrotiorum</td>
-                <td class="_actions">
+                <td class="_actions" *ngIf="user.role === 'admin'">
                   <button class="btn"><img src="../../../assets/images/pencil-white-outline.svg" alt="Edit" /></button>
                   <button class="btn"><img src="../../../assets/images/trash-white.svg" alt="Delete" /></button>
                 </td>
@@ -170,7 +184,7 @@
                 <td>Thursday 11, November</td>
                 <td>8:00 AM</td>
                 <td>Lorem ipsumdoram isat pem, disrotiorum</td>
-                <td class="_actions">
+                <td class="_actions" *ngIf="user.role === 'admin'">
                   <button class="btn"><img src="../../../assets/images/pencil-white-outline.svg" alt="Edit" /></button>
                   <button class="btn"><img src="../../../assets/images/trash-white.svg" alt="Delete" /></button>
                 </td>
@@ -181,7 +195,7 @@
                 <td>Thursday 11, November</td>
                 <td>8:00 AM</td>
                 <td>Lorem ipsumdoram isat pem, disrotiorum</td>
-                <td class="_actions">
+                <td class="_actions" *ngIf="user.role === 'admin'">
                   <button class="btn"><img src="../../../assets/images/pencil-white-outline.svg" alt="Edit" /></button>
                   <button class="btn"><img src="../../../assets/images/trash-white.svg" alt="Delete" /></button>
                 </td>
@@ -192,7 +206,7 @@
                 <td>Thursday 11, November</td>
                 <td>8:00 AM</td>
                 <td>Lorem ipsumdoram isat pem, disrotiorum</td>
-                <td class="_actions">
+                <td class="_actions" *ngIf="user.role === 'admin'">
                   <button class="btn"><img src="../../../assets/images/pencil-white-outline.svg" alt="Edit" /></button>
                   <button class="btn"><img src="../../../assets/images/trash-white.svg" alt="Delete" /></button>
                 </td>
@@ -203,7 +217,7 @@
                 <td>Thursday 11, November</td>
                 <td>8:00 AM</td>
                 <td>Lorem ipsumdoram isat pem, disrotiorum</td>
-                <td class="_actions">
+                <td class="_actions" *ngIf="user.role === 'admin'">
                   <button class="btn"><img src="../../../assets/images/pencil-white-outline.svg" alt="Edit" /></button>
                   <button class="btn"><img src="../../../assets/images/trash-white.svg" alt="Delete" /></button>
                 </td>

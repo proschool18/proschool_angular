@@ -3,23 +3,24 @@
     <div class="_select-or-search">
       <div class="_select-group">
         <app-class *ngIf="user.role === 'admin'" (classEvent)="receiveClass($event)" (sectionEvent)="receiveSection($event)"></app-class>
-        <!-- <select name="subject" [(ngModel)]="status" (change)="getStudentsByStatus()">
-          <option value="active">Active</option>
-          <option value="inactive">Inactive</option>
-        </select> -->
+        <app-teacher-class *ngIf="user.role === 'teacher'" (classEvent)="receiveClass($event)" (sectionEvent)="receiveSection($event)"></app-teacher-class>
         <div class="dropdown" >
           <button class="dropbtn" (click)="showStatusList = true" (clickOutside)="showStatusList = false">
               {{status}}
           </button>
           <div class="dropdown-content" [hidden]="!showStatusList">
-            <a (click)=" status = 'active'; getStudentsByStatus();">Active</a>
+            <a (click)="status = 'active'; getStudentsByStatus();">Active</a>
             <a (click)="status = 'inactive'; getStudentsByStatus();">Inactive</a>
           </div>
         </div>
       </div>
-      <input type="search" name="" placeholder="Search">
+      <input type="search" class="search-box" [(ngModel)]="searchText" placeholder="Search for Student">
     </div>
-    <button class="btn -cta" (click)="addStudent()">Add Student</button>
+    <div class="add_div">
+    <!-- <input id="file-input" type="file" name="image" placeholder="Upload Bulk Data" (change)="profileProgress($event.target.files)"/> -->
+    <button class="btn -cta" (click)="addStudent()" *ngIf="user.role === 'admin'">Add Student</button>
+    </div>
+
   </section>
   <section class="table-and-pagination -classes-schedule">
     <div class="table-container">
@@ -37,10 +38,10 @@
           </tr>
         </thead>
         <tbody>          
-          <tr *ngFor="let std of students; let i=index">
-            <td class="_s-no"><span>{{ i + 1 }}</span></td>
-            <td><a
-                routerLink="/main/studentprofile/profile/{{std.student_id}}/{{std.section_id}}">{{std.first_name}}
+          <tr *ngFor="let std of students | search : searchText | pagination: pageNo; let i=index">
+            <td class="_s-no"><span>{{ page_start + i + 1 }}.</span></td>
+            <td align="left"><a
+                routerLink="/main/main/studentprofile/profile/{{std.student_id}}/{{std.section_id}}">{{std.first_name}}
                 {{std.last_name}}</a></td>
             <td>{{std.father_name}}</td>
             <td>{{std.school_classes[0].name}}</td>
@@ -48,9 +49,9 @@
             <td>{{std.gender}}</td>
             <td>{{std.phone}}</td>
             <td class="_actions" *ngIf="user.role === 'admin'">
-              <button class="btn" *ngIf="status === 'active'" (click)="editStudent(std.student_id)"><img src="../../../assets/images/edit-black-outline.svg" alt="Edit" /></button>
-              <button class="btn" *ngIf="status === 'active'" (click)="deleteStudent(std.student_id)"><img src="../../../assets/images/delete-black-outline.svg" alt="Delete" /></button>
-              <button class="btn" *ngIf="status === 'inactive'" (click)="restoreStudent(std.student_id)"><img src="../../../assets/images/delete-black-outline.svg" alt="Restore" /></button>
+              <button class="btn" *ngIf="status === 'active'" (click)="editStudent(std.student_id)"><img src="../../../assets/images/edit-white.svg" alt="Edit" /></button>
+              <button class="btn" *ngIf="status === 'active'" (click)="deleteStudent(std.student_id)"><img src="../../../assets/images/trash-white.svg" alt="Delete" /></button>
+              <button class="btn" *ngIf="status === 'inactive'" (click)="restoreStudent(std.student_id)"><img src="../../../assets/images/pencil-white-outline.svg" alt="Restore" /></button>
             </td>
           </tr>
 
@@ -58,18 +59,9 @@
       </table>
     </div>
     <div class="_pagination">
-      <a href="" class="btn -previous">Previous</a>
-      <a href="" class="btn -current">1</a>
-      <a href="" class="btn">2</a>
-      <a href="" class="btn">3</a>
-      <a href="" class="btn">4</a>
-      <a href="" class="btn">5</a>
-      <a href="" class="btn">6</a>
-      <a href="" class="btn">7</a>
-      <a href="" class="btn">8</a>
-      <a href="" class="btn">9</a>
-      <a href="" class="btn">10</a>
-      <a href="" class="btn -next">Next</a>
+      <a class="btn -previous">Previous</a>
+      <a class="btn" [ngClass]="{'-current': pageNo === (i+1)}" *ngFor='let page of page_counter(pages) ;let i = index' (click)="pageChange(i+1)">{{i+1}}</a>
+      <a class="btn -next">Next</a>
     </div>
   </section>
 </main>

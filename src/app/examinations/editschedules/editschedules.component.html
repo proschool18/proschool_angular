@@ -1,14 +1,16 @@
-<form role="form" [formGroup]="scheduleForm" (ngSubmit)="editExam_schedules()">
-    <div class="row">
-        <div class="col-md-12">
-            <h4 id="heading">Edit Schedule</h4>
-        </div>
+<div id="main-content1" class="new-message-wrapper">
+    <div class="header-wrapper">
+        <p *ngIf="dialog_type == 'add'">Add Examination Schedule</p>
+        <p *ngIf="dialog_type == 'edit'">Add Examination Schedule</p>
+        <button class="btn-close" (click)="close()"></button>
     </div>
-    <div class="row">
-        <div class="col-md-10">
-            <div class="form-group">
-                <label class="pull-left">Examinations</label>
-                <select class="form-control" formControlName="exam_title" [value]="schedule.exam_title">
+    <form role="form" [formGroup]="scheduleForm" (ngSubmit)="editExam_schedules()">
+        <div class="row-wrapper">
+            <div class="col-full-3">
+                Examinations:
+            </div>
+            <div class="col-full-6">
+                <select formControlName="exam_title" [value]="schedule.exam_title">
                     <option *ngFor="let assp of assessment_patterns[0].assessment" value="{{assp.code}}">{{assp.code}}
                     </option>
                     <option *ngFor="let assp of assessment_patterns[1].assessment" value="{{assp.code}}">{{assp.code}}
@@ -16,25 +18,26 @@
                 </select>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-10">
-            <div class="form-group">
-                <label class="pull-left">Start Date</label>
-                <input class="form-control" value="{{schedule.from_date}}" formControlName="from_date" placeholder="Enter..." type="date">
+        <div class="row-wrapper">
+            <div class="col-full-3">
+                Start Date:
+            </div>
+            <div class="col-full-6">
+                <input value="{{schedule.from_date}}" formControlName="from_date" placeholder="Enter..." type="date">
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-10">
-            <div class="form-group">
-                <label class="pull-left">End Date</label>
-                <input class="form-control" value="{{schedule.end_date}}" formControlName="end_date" placeholder="Enter..." type="date">
+        <div class="row-wrapper">
+            <div class="col-full-3">
+                End Date:
+            </div>
+            <div class="col-full-6">
+                <input value="{{schedule.end_date}}" formControlName="end_date" placeholder="Enter..." type="date">
             </div>
         </div>
-    </div>
-    <div class="form-group">
-        <button type="submit" class="button button1 hvr-pop transition pull-right">Submit</button>
-        <div (click)="close()" class="button button1 hvr-pop transition pull-left">Close</div>
-    </div>
-</form>
+        <div class="row">
+            <div class="col-md-3 pull-right">
+                <button class="btn -cta active-tab" type="submit">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>

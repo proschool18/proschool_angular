@@ -44,7 +44,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let fee of collection.day_fees | paginate: config; let i=index">
+                                <tr *ngFor="let fee of day_fees; let i=index">
                                     <td>{{ (config.currentPage - 1) * config.itemsPerPage + i +1 }}</td>
                                     <td>{{fee.student_Name}}</td>
                                     <td>{{fee.fee_type}}</td>
@@ -56,9 +56,6 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <div class="paginationdiv">
-                            <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
-                          </div>
                     </div>
                 </div>
             </div>

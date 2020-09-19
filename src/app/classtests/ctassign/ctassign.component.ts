@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { AssignmentsService } from '../../_services/assignments.service';
+import { AcademicsService } from '../../_services/academics.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { MatDialog, MatDialogConfig } from '@angular/material';
@@ -24,11 +25,13 @@ export class CTAssignComponent implements OnInit {
     assign_date: '',
     maxMarks: '',
   };
+  chapters = [];
   dialog_type: string;
   alert_message: string;
 
   constructor(
     private service: AssignmentsService, 
+    private academicService: AcademicsService,
     private fb: FormBuilder,
     public dialog: MatDialog,
     private dialogRef: MatDialogRef<CTAssignComponent>,
@@ -43,6 +46,7 @@ export class CTAssignComponent implements OnInit {
 
   classTestForm: FormGroup = this.fb.group({
     classTest_id: '',
+    lession_id: ['', Validators.required],
     title: ['', Validators.required],
     date: ['', Validators.required],
     maxMarks: ['', Validators.required],
@@ -55,10 +59,23 @@ export class CTAssignComponent implements OnInit {
       date: this.classtest.date,
       maxMarks: this.classtest.maxMarks,
     });
+    this.getChapters();
   }
 
   close() {
     this.dialogRef.close();
+  }
+
+  getChapters() {
+    if (this.subject == undefined || this.subject == '') {
+      this.alert_message = "Please Select Subject";
+      this.openAlert(this.alert_message)
+    } else {
+      this.academicService.getChapters(this.subject)
+        .subscribe(
+          res => { this.chapters = res.chapters, console.log(res) }
+        )
+    }
   }
 
   submitClassTest() {

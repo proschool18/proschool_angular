@@ -16,6 +16,11 @@ export class ExpensesComponent implements OnInit {
 
   constructor(private expenseService: ExpensesService, public dialog: MatDialog) {}
 
+  pageNo: number = 1;
+  page_start: number = 0;
+  page_counter = Array;
+  pages: number = 10;
+
   user: User;
 
   ngOnInit() {
@@ -27,6 +32,11 @@ export class ExpensesComponent implements OnInit {
       this.getEmployeeExpenses();
     }
   }
+
+  pageChange(x) {
+    this.pageNo = x;
+    this.page_start = (x - 1) * 10;
+  } 
 
   expenses = [];
   all_expenses = [];
@@ -40,14 +50,19 @@ export class ExpensesComponent implements OnInit {
   getExpenses() {
     this.expenseService.getExpenses()
       .subscribe(
-        res => { this.expenses = this.all_expenses = res.expenses, console.log(res) }
+        res => { this.expenses = this.all_expenses = res.expenses, 
+          this.pages = Math.ceil(this.expenses.length / 10);
+          console.log(res) 
+        }
       )
   }
 
   getEmployeeExpenses() {
     this.expenseService.getExpenses()
       .subscribe(
-        res => { this.expenses = this.all_expenses = res.expenses.filter(data => data.employee_id === this.user.employee_id), console.log(this.all_expenses) }
+        res => { this.expenses = this.all_expenses = res.expenses.filter(data => data.employee_id === this.user.employee_id), 
+          this.pages = Math.ceil(this.expenses.length / 10);
+          console.log(this.all_expenses) }
       )
   }
 

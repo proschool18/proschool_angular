@@ -8,7 +8,6 @@
           <option *ngFor="let sub of subjects" value="{{sub.subject_id}}">{{sub.name}}</option>
         </select>
       </div>
-      <input type="search" name="" placeholder="Search">
     </div>
   </section>
   <section class="table-and-pagination -classes-schedule">
@@ -24,8 +23,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let chap of chapters; let i=index">
-            <td class="_s-no"><span>{{ i + 1 }}</span></td>
+          <tr *ngFor="let chap of chapters | pagination: pageNo; let i=index">
+            <td class="_s-no"><span>{{ page_start + i + 1 }}</span></td>
             <td>{{chap.title}}</td>
             <td *ngIf="user.role === 'admin' || user.role === 'teacher'"><input [(ngModel)]="chap.start_date" type="date"></td>
             <td *ngIf="user.role === 'parent'">{{chap.start_date}}</td>
@@ -40,18 +39,9 @@
       </div>
     </div>
     <div class="_pagination">
-      <a href="" class="btn -previous">Previous</a>
-      <a href="" class="btn -current">1</a>
-      <a href="" class="btn">2</a>
-      <a href="" class="btn">3</a>
-      <a href="" class="btn">4</a>
-      <a href="" class="btn">5</a>
-      <a href="" class="btn">6</a>
-      <a href="" class="btn">7</a>
-      <a href="" class="btn">8</a>
-      <a href="" class="btn">9</a>
-      <a href="" class="btn">10</a>
-      <a href="" class="btn -next">Next</a>
+      <a class="btn -previous">Previous</a>
+      <a class="btn" [ngClass]="{'-current': pageNo === (i+1)}" *ngFor='let page of page_counter(pages) ;let i = index' (click)="pageChange(i+1)">{{i+1}}</a>
+      <a class="btn -next">Next</a>
     </div>
   </section>
 </main>

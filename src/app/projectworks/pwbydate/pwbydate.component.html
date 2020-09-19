@@ -1,4 +1,4 @@
-<main class="card mt-20 within-viewport">
+<main class="card mt-20 within-viewport new-listing">
     <section class="page-actions">
         <div class="_select-or-search">
             <div class="_select-group">
@@ -10,7 +10,7 @@
             </div>
             <input type="search" name="" placeholder="Search">
         </div>
-        <button class="btn -cta" (click)="addprojectwork()" *ngIf="user.role === 'admin'">Add ProjectWork</button>
+        <button class="btn -cta" (click)="addprojectwork()">Add ProjectWork</button>
     </section>
     <section class="table-and-pagination -classes-schedule">
         <div class="table-container">
@@ -21,15 +21,22 @@
                         <th align="left">Project Works</th>
                         <th align="left">Due Date</th>
                         <th align="left">Max Marks</th>
+                        <th></th>
                         <th align="left" *ngIf="user.role === 'admin' || user.role === 'teacher'">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let pw of projectworks; let i=index">
-                        <td class="_s-no"><span>{{ i + 1 }}</span></td>
+                    <tr *ngFor="let pw of projectworks | pagination: pageNo; let i=index">
+                        <td class="_s-no"><span>{{ page_start + i + 1 }}</span></td>
                         <td>{{pw.project_work}}</td>
                         <td>{{pw.due_date}}</td>
                         <td>{{pw.maxMarks}}</td>
+                        <td *ngIf="pw.submission === 'pending'">
+                            <button class="btn -cta" routerLink="/main/projectworks/PWMarks/add/{{pw.section_id}}/{{pw.subject_id}}/{{pw.projectwork_id}}">Add Marks</button>
+                          </td>
+                          <td *ngIf="pw.submission === 'completed'">
+                            <button class="btn -cta" routerLink="/main/projectworks/PWMarks/view/{{pw.section_id}}/{{pw.subject_id}}/{{pw.projectwork_id}}">View Marks</button>
+                          </td>
                         <td class="_actions" *ngIf="user.role === 'admin' || user.role === 'teacher'">
                             <button class="btn" (click)="editprojectwork(i)"><img
                                     src="../../../assets/images/edit-white.svg" alt="Edit" /></button>
@@ -41,18 +48,9 @@
             </table>
         </div>
         <div class="_pagination">
-            <a href="" class="btn -previous">Previous</a>
-            <a href="" class="btn -current">1</a>
-            <a href="" class="btn">2</a>
-            <a href="" class="btn">3</a>
-            <a href="" class="btn">4</a>
-            <a href="" class="btn">5</a>
-            <a href="" class="btn">6</a>
-            <a href="" class="btn">7</a>
-            <a href="" class="btn">8</a>
-            <a href="" class="btn">9</a>
-            <a href="" class="btn">10</a>
-            <a href="" class="btn -next">Next</a>
+            <a class="btn -previous">Previous</a>
+            <a class="btn" [ngClass]="{'-current': pageNo === (i+1)}" *ngFor='let page of page_counter(pages) ;let i = index' (click)="pageChange(i+1)">{{i+1}}</a>
+            <a class="btn -next">Next</a>
         </div>
     </section>
 </main>

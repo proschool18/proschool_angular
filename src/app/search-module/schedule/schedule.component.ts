@@ -15,51 +15,60 @@ export class ScheduleComponent implements OnInit {
   @Output() sectionEvent = new EventEmitter<string>();
   @Output() scheduleEvent = new EventEmitter<string>();
 
-  selected_class: any = '';
-  selected_section: any = '';
-  selected_schedule: any = '';
-
   showClassList: boolean = false;
   showSectionList: boolean = false;
   showScheduleList: boolean = false;
 
+  selected_class:any = {class_id: '', name: ''};
+  selected_section:any = {section_id: '', name: ''};
+  selected_schedule:any = {code: ''};
+  
   classes = [];
   all_sections = [];
   class_sections = [];
   assessment_patterns = [];
 
   ngOnInit() {
-    this.getassessment_patterns();
     this.getClasses();
   }
 
   getClasses() {
     this.service.getClasses()
       .subscribe(
-        res => { this.classes = res.school_classes.filter(data => data.status === 1), console.log(res) }
+        res => { this.classes = res.school_classes.filter(data => data.status === 1), 
+          this.selected_class = this.classes[0], 
+          this.getSections(),
+          console.log(res)
+        }
       )
   }
 
   getSections() {
-    // this.classEvent.emit(this.classForm.value.selected_class)
+    this.classEvent.emit(this.selected_class.class_id)
     this.service.getSections(this.selected_class.class_id)
       .subscribe(
-        res => { this.class_sections = res.class_sections, console.log(res) }
+        res => { this.class_sections = res.class_sections, 
+          this.selected_section = this.class_sections[0], 
+          this.getassessment_patterns(),
+          console.log(res)
+        }
       )
   }
 
   getassessment_patterns() {
-    // this.sectionEvent.emit(this.classForm.value.selected_section);
     this.service.getassessment_patterns()
       .subscribe(
-        res => { this.assessment_patterns = res.assessment, console.log(res) }
+        res => { this.assessment_patterns = res.assessment, 
+          this.selected_schedule = this.assessment_patterns[0].assessment[0],
+          this.get_sch(),
+          console.log(res) }
       )
   }
 
   get_sch() {
     this.classEvent.emit(this.selected_class.class_id);
     this.sectionEvent.emit(this.selected_section.section_id);
-    this.scheduleEvent.emit(this.selected_schedule);
+    this.scheduleEvent.emit(this.selected_schedule.code);
   }
 
 }

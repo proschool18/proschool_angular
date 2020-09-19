@@ -17,6 +17,7 @@ export class EventsComponent implements OnInit {
         
   user: User;
   Months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  selected_event;
 
   currentDate = new Date();
   currentMonth = this.currentDate.getMonth();
@@ -32,7 +33,8 @@ export class EventsComponent implements OnInit {
   i;j;
   getdate;
   daylist = [];
-  dummy_daylist = [];
+  chunked_data = [];
+  dayslist = [];
   events = [];
 
   ngOnInit() {
@@ -56,26 +58,21 @@ export class EventsComponent implements OnInit {
      for(this.i = 1; this.i <= this.days; this.i++) {
      this.daylist.push(this.i)
     }
-    this.dummy_daylist = [];
     for(this.j = 0; this.j < this.dummy_days; this.j++) {
-      this.dummy_daylist.push('')
+      this.daylist.unshift('')
     }
-    console.log('Dummy Days: ' + this.dummy_daylist)
+    console.log('Days: ' + this.daylist)
+    this.chunk(this.daylist, 7)
   }
 
-  addEvents() {
-    this.service.addEvents(this.eventForm.value)
-    .subscribe(
-      res => { 
-        if(res == true) {
-          this.alert_message = "Event Added Successfully";
-          this.openAlert(this.alert_message)
-        } else {
-          this.alert_message = "Event Not Added";
-          this.openAlert(this.alert_message)
-        }
-      }
-    ) 
+  
+  chunk(array, size) {
+    this.dayslist = [];
+    for (let i = 0; i < array.length; i += size) {
+      this.chunked_data = array.slice(i, i+size);
+      this.dayslist.push(this.chunked_data);
+    }
+    console.log(this.dayslist)
   }
 
   getEvents(day) {
@@ -89,7 +86,7 @@ export class EventsComponent implements OnInit {
     this.getdate = this.year + '-' + this.monthNumber + '-' + day;
     this.service.getEvents(this.getdate)
     .subscribe(
-      res => { this.events = res.school_events, this.openEvents(res.school_events) }
+      res => { this.events = res.school_events }
     )
   }
 
@@ -126,14 +123,24 @@ export class EventsComponent implements OnInit {
     this.getMonth_days();
   }
 
-  openEvents(events) {
+  addEvent() {
+    this.opendialog('', 'add');
+  }
+
+  editEvent(event_id) {
+    this.selected_event = this.events.filter(data => data.event_id === event_id)
+    this.opendialog(this.selected_event, 'edit');
+  }
+
+  opendialog(selected_event, dialog_type) {
     const eventConfig = new MatDialogConfig();
 
     eventConfig.autoFocus = true;
     eventConfig.width = '60%';
 
     eventConfig.data = {
-      eventslist: events,
+      selected_event: selected_event,
+      dialog_type: dialog_type,
     };
 
     const eventRef = this.dialog.open(EventlistsComponent, eventConfig);

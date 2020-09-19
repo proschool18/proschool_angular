@@ -37,4 +37,9 @@ export class MessageService {
     return this.http.get<any>(this.url + '/parentInbox_messages/' + sent_to + '/' + this.role + '/' + class_id + '/' + section_id + '/' + this.school_id);
   }
 
+  messageStatus(message_id): Observable<any> {
+    console.log(message_id)
+    return this.http.put<any>(this.url + '/message_status/' + message_id, this.empty_data)
+  }
+
 }

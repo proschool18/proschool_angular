@@ -7,6 +7,8 @@ import { AlertComponent } from '../../_alert/alert/alert.component';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { appConfig } from '../../app.config';
 
+import { User } from '../../_models/user';
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -16,7 +18,10 @@ export class ProfileComponent implements OnInit {
 
   constructor(private service: StudentsService, public dialog: MatDialog, private route: ActivatedRoute, private services: ServicesService) { }
 
+  user: User;
+
   ngOnInit() {
+    this.user = JSON.parse(localStorage.getItem('currentUser'));
     this.getStudentDetails();
   }
 

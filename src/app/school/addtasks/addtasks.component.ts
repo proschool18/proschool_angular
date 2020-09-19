@@ -35,6 +35,7 @@ export class AddtasksComponent implements OnInit {
     employee_id: '',
     posted_by: '',
     assigned_on: '',
+    due_date: '',
   };
   dialog_type: string;
   alert_message: string;
@@ -51,7 +52,7 @@ export class AddtasksComponent implements OnInit {
     employee_id: '',
     employee_name: '',
     posted_by: ['', Validators.required],
-    assigned_on: ['', Validators.required],
+    due_date: ['', Validators.required],
   });
 
   ngOnInit() {
@@ -67,6 +68,7 @@ export class AddtasksComponent implements OnInit {
         employee_id: this.tasks.employee_id,
         posted_by: this.tasks.posted_by,
         assigned_on: this.tasks.assigned_on,
+        due_date: this.tasks.due_date,
       })
     }
   }

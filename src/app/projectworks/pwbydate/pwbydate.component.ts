@@ -13,12 +13,22 @@ import { User } from '../../_models/user';
 export class PwbydateComponent implements OnInit {
 
   constructor(private service: AssignmentsService, public dialog: MatDialog) {}
+
+  pageNo: number = 1;
+  page_start: number = 0;
+  page_counter = Array;
+  pages: number = 10;
     
   user: User;
 
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('currentUser'));
   }
+
+  pageChange(x) {
+    this.pageNo = x;
+    this.page_start = (x - 1) * 10;
+  } 
 
   projectworks = [];
   all_projectworks = [];
@@ -54,7 +64,10 @@ export class PwbydateComponent implements OnInit {
     } else {
       this.service.getProjectworks(this.selected_section, this.selected_subject)
       .subscribe(
-        res => { this.all_projectworks = this.projectworks = res.projectworks, console.log(res) }
+        res => { this.all_projectworks = this.projectworks = res.projectworks, 
+          this.pages = Math.ceil(this.projectworks.length / 10);
+          console.log(res) 
+        }
       )
     }
   }

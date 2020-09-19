@@ -1,99 +1,160 @@
-<form role="form" [formGroup]="feetermForm" (ngSubmit)="editFeeTerms()" *ngIf="dialog_type == 'feeTerm'">
-    <div class="row">
-        <div class="col-md-12">
-            <h4 id="heading">Edit FeeTerm</h4>
-        </div>
+<div id="main-content1" class="new-message-wrapper" *ngIf="dialog_type == 'feeType'">
+    <div class="header-wrapper">
+        <p *ngIf="submit_type == 'add'">Add FeeType</p>
+        <p *ngIf="submit_type == 'edit'">Edit FeeType</p>
+        <button class="btn-close" (click)="close_feeType()"></button>
     </div>
-    <div class="row">
-        <div class="col-md-10">
-            <div class="form-group">
-                <label class="pull-left">Fee Term</label>
-                <input class="form-control" value="{{fee_terms.fee_term}}" formControlName="fee_term"
-                    placeholder="Enter..." type="text">
+    <form role="form" [formGroup]="feetypeForm" (ngSubmit)="submitFeeType()">
+        <div class="row-wrapper">
+            <div class="col-full-3">
+                Fee Type:
             </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <button type="submit" class="button button1 hvr-pop transition pull-right">Submit</button>
-        <div (click)="close_feeTerm()" class="button button1 hvr-pop transition pull-left">Close</div>
-    </div>
-</form>
-
-<form role="form" [formGroup]="feetypeForm" (ngSubmit)="editFeeTypes()" *ngIf="dialog_type == 'feeType'">
-    <div class="row">
-        <div class="col-md-12">
-            <h4 id="heading">Edit FeeType</h4>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-10">
-            <div class="form-group">
-                <label class="pull-left">Fee Type</label>
+            <div class="col-full-6">
                 <input class="form-control" value="{{fee_types.fee_type}}" formControlName="fee_type"
-                    placeholder="Enter..." type="text">
+                placeholder="Enter..." type="text">
             </div>
         </div>
-    </div>
-    <div class="form-group">
-        <button type="submit" class="button button1 hvr-pop transition pull-right">Submit</button>
-        <div (click)="close_feeType()" class="button button1 hvr-pop transition pull-left">Close</div>
-    </div>
-</form>
+        <div class="row">
+            <div class="col-md-3 pull-right">
+                <button class="btn -cta active-tab" type="submit">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>
 
-<form role="form" [formGroup]="feemasterForm" (ngSubmit)="editFeeMaster()" *ngIf="dialog_type == 'feeMaster'">
-    <div class="row">
-        <div class="col-md-12">
-            <h4 id="heading">Edit FeeMaster</h4>
-        </div>
+<div id="main-content1" class="new-message-wrapper" *ngIf="dialog_type == 'ClassFee'">
+    <div class="header-wrapper">
+        <p *ngIf="submit_type == 'add'">Add ClassFee</p>
+        <p *ngIf="submit_type == 'edit'">Edit ClassFee</p>
+        <button class="btn-close" (click)="close()"></button>
     </div>
-    <div class="row">
-        <div class="col-md-10">
-            <div class="form-group">
-                <label class="pull-left">Class</label>
-                <select class="form-control" formControlName="class_id" [value]="fee_master.class_id">
-                    <option *ngFor="let cl of classes" value="{{cl.class_id}}">{{cl.name}}
-                    </option>
+    <form role="form" [formGroup]="ClassFeeForm" (ngSubmit)="submitClassFee()">
+        <div class="row-wrapper">
+            <div class="col-full-3">
+                Fee Type:
+            </div>
+            <div class="col-full-6">
+                <select class="form-control" formControlName="fee_types_id" [value]="class_fee.fee_types_id">
+                    <option *ngFor="let fee of feeTypes" value="{{fee.fee_types_id}}">{{fee.fee_type}}</option>
                 </select>
             </div>
         </div>
+        <div class="row-wrapper">
+            <div class="col-full-3">
+                Total ClassFee:
+            </div>
+            <div class="col-full-6">
+                <input class="form-control" value="{{class_fee.total_fee}}" formControlName="total_fee"
+                placeholder="Enter..." type="text">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 pull-right">
+                <button class="btn -cta active-tab" type="submit">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div id="main-content1" class="new-message-wrapper" *ngIf="dialog_type == 'FeeStructure'">
+    <div class="header-wrapper">
+        <p *ngIf="submit_type == 'add'">Add FeeStructure</p>
+        <p *ngIf="submit_type == 'edit'">Edit FeeStructure</p>
+        <button class="btn-close" (click)="close()"></button>
     </div>
-    <div class="row">
-        <div class="col-md-5">
-            <div class="form-group">
-                <label class="pull-left">Fee Term</label>
-                <select class="form-control" formControlName="fee_term_id" [value]="fee_master.fee_term_id">
-                    <option *ngFor="let term of feeTerms" value="{{term.fee_term_id}}">{{term.fee_term}}
-                    </option>
+    <form role="form" [formGroup]="feeStructureForm" (ngSubmit)="submitFeeStructure()">
+        <div class="row-wrapper">
+            <div class="col-full-3">
+                Installment:
+            </div>
+            <div class="col-full-6" *ngIf="submit_type == 'add'">
+                <select class="form-control" formControlName="payment_instalment" [value]="fee_structure.payment_instalment">
+                    <option *ngFor="let term of terms" value="{{term}}">{{term}}</option>
+                </select>
+            </div>
+            <div class="col-full-6" *ngIf="submit_type == 'edit'">
+                {{fee_structure.payment_instalment}}
+            </div>
+        </div>
+        <div class="row-wrapper">
+            <div class="col-full-3">
+                Installment Fee:
+            </div>
+            <div class="col-full-6">
+                <input class="form-control" value="{{fee_structure.fee_amount}}" formControlName="fee_amount"
+                placeholder="Enter..." type="number">
+            </div>
+        </div>
+        <div class="row-wrapper">
+            <div class="col-full-3">
+                Discount:
+            </div>
+            <div class="col-full-6">
+                <input class="form-control" value="{{fee_structure.discount}}" formControlName="discount"
+                placeholder="Enter..." type="number">
+            </div>
+        </div>
+        <div class="row-wrapper">
+            <div class="col-full-3">
+                Due Date:
+            </div>
+            <div class="col-full-6">
+                <input class="form-control" value="{{fee_structure.due_date}}" formControlName="due_date" placeholder="Enter..." type="date">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 pull-right">
+                <button class="btn -cta active-tab" type="submit">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div id="main-content1" class="new-message-wrapper" *ngIf="dialog_type == 'StudentFee'">
+    <div class="header-wrapper">
+        <p *ngIf="submit_type == 'add'">Add StudentFee</p>
+        <p *ngIf="submit_type == 'edit'">Edit StudentFee</p>
+        <button class="btn-close" (click)="close()"></button>
+    </div>
+    <form role="form" [formGroup]="StudentFeeForm" (ngSubmit)="submitStudentFee()">
+        <div class="row-wrapper" *ngIf="submit_type == 'add'">
+            <div class="col-full-3">
+                Fee Type:
+            </div>
+            <div class="col-full-6">
+                <select class="form-control" formControlName="fee_types_id" [value]="student_fee.fee_types_id">
+                    <option *ngFor="let fee of feeTypes" value="{{fee.fee_types_id}}">{{fee.fee_type}}</option>
                 </select>
             </div>
         </div>
-        <div class="col-md-5">
-            <div class="form-group">
-                <label class="pull-left">Class</label>
-                <select class="form-control" formControlName="fee_types_id" [value]="fee_master.fee_types_id">
-                    <option *ngFor="let type of feeTypes" value="{{type.fee_types_id}}">{{type.fee_type}}
-                    </option>
+        <div class="row-wrapper">
+            <div class="col-full-3">
+                Total StudentFee:
+            </div>
+            <div class="col-full-6">
+                <input class="form-control" value="{{student_fee.total_fee}}" formControlName="total_fee"
+                placeholder="Enter..." type="text">
+            </div>
+        </div>
+        <!-- <div class="row-wrapper">
+            <div class="col-full-3">
+                Installment Type:
+            </div>
+            <div class="col-full-6">
+                <select class="form-control" formControlName="installment_type" [value]="student_fee.installment_type">
+                    <option value="termwise">Termwise</option>
+                    <option value="monthly">Monthly</option>
+                    <option value="quarterly">Quarterly</option>
+                    <option value="halfyearly">Halfyearly</option>
+                    <option value="annually">Annually</option>
                 </select>
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-5">
-            <div class="form-group">
-                <label class="pull-left">Fee Amount</label>
-                <input class="form-control" value="{{fee_master.fee_amount}}" formControlName="fee_amount"
-                    placeholder="Enter..." type="number">
+        </div> -->
+        <div class="row">
+            <div class="col-md-3 pull-right">
+                <button class="btn -cta active-tab" type="submit">Submit</button>
             </div>
         </div>
-        <div class="col-md-5">
-            <div class="form-group">
-                <label class="pull-left">Due Date</label>
-                <input class="form-control" value="{{fee_master.due_date}}" formControlName="due_date" placeholder="Enter..." type="date">
-            </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <button type="submit" class="button button1 hvr-pop transition pull-right">Submit</button>
-        <div (click)="close_feeMaster()" class="button button1 hvr-pop transition pull-left">Close</div>
-    </div>
-</form>
+    </form>
+</div>
+

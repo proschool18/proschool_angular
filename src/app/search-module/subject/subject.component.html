@@ -24,6 +24,6 @@
 	</button>
 	<div class="dropdown-content" [hidden]="!showSubjectList">
 		<a *ngFor="let sub of subjects; let i = index"
-		(click)="selected_subject = sub; get_sub();">{{sub.name}}</a>
+		(click)="selected_subject = sub; get_sub()">{{sub.name}}</a>
 	</div>
 </div>

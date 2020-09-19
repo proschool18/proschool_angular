@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SearchModuleModule } from '../search-module/search-module.module';
 import { MatDialogModule } from '@angular/material/dialog';
-import { NgxPaginationModule } from 'ngx-pagination';
+import { PipesModule } from '../_pipes/_pipes.module';
 import { DirectivesModule } from '../_directives/_directives.module';
 
 import { SchoolRoutingModule } from './school-routing.module';
@@ -33,9 +33,11 @@ import { CommunicationsComponent } from './communications/communications.compone
 import { AddMessageComponent } from './add-message/add-message.component';
 import { OpenMessageComponent } from './open-message/open-message.component';
 import { MatDatepickerModule, MatInputModule, MatNativeDateModule } from '@angular/material';
+import { PaymentsListComponent } from './payments-list/payments-list.component';
+import { AddSectionComponent } from './add-section/add-section.component';
 
 @NgModule({
-  declarations: [ProfileComponent, AddClassComponent, TimingsComponent, PatternsComponent, ParentinfoComponent, EmployeeinfoComponent, TasksComponent, AddtasksComponent, VendorsComponent, MaterialComponent, MaterialInComponent, MaterialOutComponent, ExpensesComponent, PaymentsComponent, AddpaymentsComponent, ClaimsComponent, EditclassComponent, EditstoreComponent, EditpaymentsComponent, EditexpensesComponent, PendingTasksComponent, EditschoolprofileComponent, CommunicationsComponent, AddMessageComponent, OpenMessageComponent],
+  declarations: [ProfileComponent, AddClassComponent, TimingsComponent, PatternsComponent, ParentinfoComponent, EmployeeinfoComponent, TasksComponent, AddtasksComponent, VendorsComponent, MaterialComponent, MaterialInComponent, MaterialOutComponent, ExpensesComponent, PaymentsComponent, AddpaymentsComponent, ClaimsComponent, EditclassComponent, EditstoreComponent, EditpaymentsComponent, EditexpensesComponent, PendingTasksComponent, EditschoolprofileComponent, CommunicationsComponent, AddMessageComponent, OpenMessageComponent, PaymentsListComponent, AddSectionComponent],
   imports: [
     CommonModule,
     SchoolRoutingModule,
@@ -43,10 +45,10 @@ import { MatDatepickerModule, MatInputModule, MatNativeDateModule } from '@angul
     ReactiveFormsModule,
     SearchModuleModule,
     MatDialogModule,
-    NgxPaginationModule,
+    PipesModule,
     DirectivesModule,
     MatDatepickerModule, MatInputModule, MatNativeDateModule
   ],
-  entryComponents: [EditclassComponent, EditstoreComponent, EditpaymentsComponent, EditexpensesComponent, AddtasksComponent, EditschoolprofileComponent, AddMessageComponent, OpenMessageComponent]
+  entryComponents: [EditclassComponent, EditstoreComponent, EditpaymentsComponent, EditexpensesComponent, AddtasksComponent, EditschoolprofileComponent, AddMessageComponent, OpenMessageComponent, PaymentsListComponent]
 })
 export class SchoolModule { }

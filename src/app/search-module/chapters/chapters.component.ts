@@ -16,15 +16,15 @@ export class ChapterComponent implements OnInit {
   @Output() subjectEvent = new EventEmitter<string>();
   @Output() chapterEvent = new EventEmitter<string>();
 
-  selected_class: any = '';
-  selected_section: any = '';
-  selected_subject: any = '';
-  selected_chapter: any = '';
-
   showClassList: boolean = false;
   showSectionList: boolean = false;
   showSubjectList: boolean = false;
   showChapterList: boolean = false;
+
+  selected_class:any = {class_id: '', name: ''};
+  selected_section:any = {section_id: '', name: ''};
+  selected_subject:any = {subject_id: '', name: ''};
+  selected_chapter:any = {lession_id: '', title: ''};
 
   classes = [];
   all_sections = [];
@@ -39,7 +39,11 @@ export class ChapterComponent implements OnInit {
   getClasses() {
     this.service.getClasses()
       .subscribe(
-        res => { this.classes = res.school_classes.filter(data => data.status === 1), console.log(res) }
+        res => { this.classes = res.school_classes.filter(data => data.status === 1), 
+          this.selected_class = this.classes[0], 
+          this.getSections(),
+          console.log(res)
+        }
       )
   }
 
@@ -47,21 +51,33 @@ export class ChapterComponent implements OnInit {
     this.classEvent.emit(this.selected_class.class_id)
     this.service.getSections(this.selected_class.class_id)
       .subscribe(
-        res => { this.class_sections = res.class_sections, console.log(res) }
+        res => { this.class_sections = res.class_sections, 
+          this.selected_section = this.class_sections[0], 
+          this.getSubjects(),
+          console.log(res)
+        }
       )
   }
   
   getSubjects() {
     this.service.getSubjects(this.selected_section.section_id)
       .subscribe(
-        res => { this.subjects = res.subjects, console.log(res) }
+        res => { this.subjects = res.subjects, 
+          this.selected_subject = this.subjects[0],
+          this.getChapters(),
+          console.log(res) 
+        }
       )
   }
 
   getChapters() {
     this.service.getChapters(this.selected_subject.subject_id)
       .subscribe(
-        res => { this.chapters = res.chapters, console.log(res) }
+        res => { this.chapters = res.chapters, 
+          this.selected_chapter = this.chapters[0],
+          this.get_sub(),
+          console.log(res) 
+        }
       )
   }
 

@@ -13,12 +13,23 @@ export class EmployeeinfoComponent implements OnInit {
 
   constructor(private service: ServicesService, private fb: FormBuilder, public dialog: MatDialog) {}
 
+  pageNo: number = 1;
+  page_start: number = 0;
+  page_counter = Array;
+  pages: number = 10;
+  
   ngOnInit() {
+    this.getEmployeesInfo();
   }
+
+  pageChange(x) {
+    this.pageNo = x;
+    this.page_start = (x - 1) * 10;
+  } 
 
   employees = [];
   alert_message: string;
-  employee_type;
+  employee_type = 'teaching';
   showEmployeeList: boolean = true;
 
   employeeForm: FormGroup = this.fb.group({
@@ -33,7 +44,9 @@ export class EmployeeinfoComponent implements OnInit {
       this.service.getEmployeesInfo(this.employee_type)
       .subscribe(
         res => { 
-          this.employees = res.employees, console.log(res)
+          this.employees = res.employees, 
+          this.pages = Math.ceil(this.employees.length / 10);
+          console.log(res)
         },
       )
     }

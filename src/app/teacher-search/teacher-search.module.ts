@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { DirectivesModule } from '../_directives/_directives.module';
 
 import { TeacherSearchRoutingModule } from './teacher-search-routing.module';
 import { TeacherClassComponent } from './teacher-class/teacher-class.component';
@@ -16,7 +16,8 @@ import { TeacherScheduleComponent } from './teacher-schedule/teacher-schedule.co
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    TeacherSearchRoutingModule
+    TeacherSearchRoutingModule,
+    DirectivesModule
   ],
   exports: [
     TeacherClassComponent,

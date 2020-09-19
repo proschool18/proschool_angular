@@ -16,6 +16,11 @@ export class ClaimsComponent implements OnInit {
 
   constructor(private service: ServicesService, private expenseService: ExpensesService, private fb: FormBuilder, public dialog: MatDialog) {}
 
+  pageNo: number = 1;
+  page_start: number = 0;
+  page_counter = Array;
+  pages: number = 10;
+  
   user: User;
 
   ngOnInit() {
@@ -27,8 +32,12 @@ export class ClaimsComponent implements OnInit {
     } else if(this.user.role === 'teacher') { 
       this.getEmployeeClaims();
     }
-
   }
+
+  pageChange(x) {
+    this.pageNo = x;
+    this.page_start = (x - 1) * 10;
+  } 
 
   claims = [];
   merchants = [];
@@ -61,14 +70,20 @@ export class ClaimsComponent implements OnInit {
   getClaims() {
     this.expenseService.getClaims()
       .subscribe(
-        res => { this.claims = res.claims, console.log(res) }
+        res => { this.claims = res.claims, 
+          this.pages = Math.ceil(this.claims.length / 10);
+          console.log(res) 
+        }
       )
   }
 
   getEmployeeClaims() {
     this.expenseService.getClaims()
       .subscribe(
-        res => { this.claims = res.claims.filter(data => data.employee_id === this.user.employee_id), console.log(this.claims) }
+        res => { this.claims = res.claims.filter(data => data.employee_id === this.user.employee_id), 
+          this.pages = Math.ceil(this.claims.length / 10);
+          console.log(this.claims) 
+        }
       )
   }
 
@@ -130,9 +145,15 @@ export class ClaimsComponent implements OnInit {
       )
   }
 
+  addClaim() {
+    this.selected_claim = {};
+    this.dialog_type = 'add';
+    this.openDialog(this.dialog_type)
+  }
+
   editClaim(i) {
     this.selected_claim = this.claims[i];
-    this.dialog_type = 'claims';
+    this.dialog_type = 'edit';
     this.openDialog(this.dialog_type)
   }
 
@@ -157,12 +178,6 @@ export class ClaimsComponent implements OnInit {
         } else if(this.user.role === 'teacher') {
           this.getEmployeeClaims();
         }
-        // this.collection.claims.filter( res => res.claim_id == data.claim_id)[0].employee_type = data.employee_type,
-        // this.collection.claims.filter( res => res.claim_id == data.claim_id)[0].employee_id = data.employee_id,
-        // this.collection.claims.filter( res => res.claim_id == data.claim_id)[0].first_name = this.all_employees.filter(res => res.employee_id === data.employee_id)[0].first_name,
-        // this.collection.claims.filter( res => res.claim_id == data.claim_id)[0].amount = data.amount,
-        // this.collection.claims.filter( res => res.claim_id == data.claim_id)[0].date = data.date,
-        // this.collection.claims.filter( res => res.claim_id == data.claim_id)[0].category = data.category,
         console.log("Dialog output:", data)
       }
     );

@@ -68,20 +68,36 @@ export class EditschedulesComponent implements OnInit {
   }
 
   editExam_schedules() {
-    this.scheduleForm.value.exam_sch_id = this.schedule.exam_sch_id;
-    this.dialogRef.close(this.scheduleForm.value);
-    this.service.editExam_schedules(this.scheduleForm.value, this.schedule.exam_sch_id)
-    .subscribe(
-      res => { 
-        if(res == true) {
-          this.alert_message = "Exam Schedule Edited Successfully";
-          this.openAlert(this.alert_message)
-        } else {
-          this.alert_message = "Exam Schedule Not Edited";
-          this.openAlert(this.alert_message)
+    if(this.dialog_type === 'add') {
+      this.dialogRef.close();
+      this.service.addExam_schedules(this.scheduleForm.value)
+      .subscribe(
+        res => { 
+          if(res == true) {
+            this.alert_message = "ExamSchedule Added Successfully";
+            this.openAlert(this.alert_message)
+          } else {
+            this.alert_message = "ExamSchedule Not Added";
+            this.openAlert(this.alert_message)
+          }
         }
-      }
-    )
+      )
+    } else if(this.dialog_type === 'edit') {
+      this.scheduleForm.value.exam_sch_id = this.schedule.exam_sch_id;
+      this.dialogRef.close();
+      this.service.editExam_schedules(this.scheduleForm.value, this.schedule.exam_sch_id)
+      .subscribe(
+        res => { 
+          if(res == true) {
+            this.alert_message = "Exam Schedule Edited Successfully";
+            this.openAlert(this.alert_message)
+          } else {
+            this.alert_message = "Exam Schedule Not Edited";
+            this.openAlert(this.alert_message)
+          }
+        }
+      )
+    }
   }
 
   openAlert(alert_message) {

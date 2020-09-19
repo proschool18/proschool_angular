@@ -14,10 +14,19 @@ export class AddMarksComponent implements OnInit {
 
   constructor(private service: ServicesService, private fb: FormBuilder, public dialog: MatDialog) {}
 
+  pageNo: number = 1;
+  page_start: number = 0;
+  page_counter = Array;
+  pages: number = 10;
+
+  showSubjectList: boolean = false;
+
   subjects = [];
   inner_assessments = [];
+  students: any = [];
   studentMarks = [];
-  student_marks =
+  exams: any = [];
+  student_marks: any =
     {
       student_id: '',
       assessment_id: '',
@@ -28,7 +37,7 @@ export class AddMarksComponent implements OnInit {
         maxMarks: '',
       }]
     }
-  selected_subject;
+  selected_subject = {subject_id: '', name: ''};
   totalMarks = 0;
   totalinnermarks = [];
   totalmarks = [];
@@ -36,15 +45,21 @@ export class AddMarksComponent implements OnInit {
   assMarks = [{'Assessment': '', 'marks': '', 'maxMarks': ''}, {'Assessment': '', 'marks': '', 'maxMarks': ''}, {'Assessment': '', 'marks': '', 'maxMarks': ''}, {'Assessment': '', 'marks': '', 'maxMarks': ''}];
   marks = 0;
   counter = 0;
+  marks_status: string;
+  add_marks: boolean = true;
+  edit_marks: boolean = false;
     
   user: User;
-  i; k;
+  i;
 
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('currentUser'));
   }
 
-  students = [];
+  pageChange(x) {
+    this.pageNo = x;
+    this.page_start = (x - 1) * 10;
+  } 
 
   selected_class:string;
   selected_section:string;
@@ -70,17 +85,21 @@ export class AddMarksComponent implements OnInit {
     this.counter = 0;
   }
 
-  getStudents() {
-    if(this.selected_section == undefined || this.selected_section == '') {
-      this.alert_message = "Please Select Class and Section";
-      this.openAlert(this.alert_message)
-    } else {
-      this.service.getStudents(this.selected_section)
-      .subscribe(
-        res => { this.students = res.students.filter(data => data.status === 1), console.log(this.students) }
-      )
-    }    
-  }
+  // getStudents() {
+  //   if(this.selected_section == undefined || this.selected_section == '') {
+  //     this.alert_message = "Please Select Class and Section";
+  //     this.openAlert(this.alert_message)
+  //   } else {
+  //     this.totalmarks = [];
+  //     this.service.getStudents(this.selected_section)
+  //     .subscribe(
+  //       res => { this.students = res.students.filter(data => data.status === 1), 
+  //         this.pages = Math.ceil(this.students.length / 10),
+  //         console.log(this.students) 
+  //       }
+  //     )
+  //   }    
+  // }
 
   getSubjects() {
     if(this.selected_section == undefined || this.selected_section == '') {
@@ -89,21 +108,73 @@ export class AddMarksComponent implements OnInit {
     } else {
       this.service.getSubjects(this.selected_section)
       .subscribe(
-        res => { this.subjects = res.subjects, console.log(res) }
+        res => { this.subjects = res.subjects, 
+          this.selected_subject = this.subjects[0],
+          this.getExamSchedule(),
+          this.add_marks = true;
+          this.edit_marks = false;
+          console.log(res) }
       )
     }
   }
 
-  getEvaluations() {
-    if(this.selected_subject == undefined || this.selected_schedule == undefined ||
-      this.selected_subject == '' || this.selected_schedule == '') {
+  getExamSchedule() {
+    if(this.selected_subject.subject_id == undefined || this.selected_schedule == undefined ||
+      this.selected_subject.subject_id == '' || this.selected_schedule == '') {
       this.alert_message = "Please Select Subject and Exam Schedule";
       this.openAlert(this.alert_message)
     } else {
-      this.service.getSubjectEvaluations(this.selected_schedule, this.selected_section, this.selected_subject)
+      this.totalmarks = [];
+      this.service.getExamSchedule(this.selected_schedule, this.selected_section, this.selected_subject.subject_id)
       .subscribe(
-        res => { this.students = res.students, console.log(res) }
+        res => { this.exams = res, 
+          this.getEvaluations(),
+          console.log(res) 
+        }
       )
+    }
+
+  }
+
+  getEvaluations() {
+    if(this.selected_subject.subject_id == undefined || this.selected_schedule == undefined ||
+      this.selected_subject.subject_id == '' || this.selected_schedule == '') {
+      this.alert_message = "Please Select Subject and Exam Schedule";
+      this.openAlert(this.alert_message);
+      this.add_marks = false;
+      this.edit_marks = false;
+    } else if(this.exams.length === 0) {
+      this.alert_message = "Exam is not yet Schedule for the Selected Subject";
+      this.openAlert(this.alert_message);
+      this.add_marks = false;
+      this.edit_marks = false;
+    } else if(this.exams[0].exam_status === "Pending") {
+      this.alert_message = "Exam is not yet Conducted";
+      this.openAlert(this.alert_message);
+      this.add_marks = false;
+      this.edit_marks = false;
+    } else {
+      console.log(this.exams)
+      this.totalmarks = [];
+      this.service.getSubjectEvaluations(this.selected_schedule, this.selected_section, this.selected_subject.subject_id)
+      .subscribe(
+        res => { this.students = res.students, 
+          this.marks_status = res.marks_status,
+          this.getMarks_status(),
+          this.pages = Math.ceil(this.students.length / 10),
+          console.log(res) 
+        }
+      )
+    }
+  }
+
+  getMarks_status() {
+    if(this.marks_status === 'Pending') {
+      this.add_marks = true;
+      this.edit_marks = false;
+    } else if(this.marks_status === 'Evaluated') {
+      this.add_marks = false;
+      this.edit_marks = true;
     }
   }
 
@@ -134,41 +205,19 @@ export class AddMarksComponent implements OnInit {
     console.log(i);
     console.log(j);
     console.log(event.target.value)
-    console.log(this.students)
-    if(this.selected_subject == '' || this.selected_subject == undefined) {
-      this.alert_message = "Please Select Subject";
-      this.openAlert(this.alert_message)
-      this.totalmarks.splice(i, 1);
-    } else {
-      this.assMarks[j].Assessment= this.inner_assessments[j].Assessment;
-      this.assMarks[j].maxMarks = this.inner_assessments[j].marks;
-      this.assMarks[j].marks = event.target.value;
-      this.totalinnermarks[j] = parseInt(event.target.value);
-      if(j == (this.inner_assessments.length - 1)) {
-        console.log(this.students[i].student_id)
-        this.student_marks = {
-          student_id: '',
-          assessment_id: '',
-          section_id: '',
-          assMarks: [{
-            Assessment: '',
-            marks: '',
-            maxMarks: '',
-          }]
-        }
-        this.student_marks.student_id = this.students[i].student_id;
-        this.student_marks.assessment_id = this.selected_schedule;
-        this.student_marks.section_id = this.students[i].section_id;
-        this.student_marks.assMarks = this.assMarks;
-        this.studentMarks[i] = this.student_marks;
-        this.assMarks = [{'Assessment': '', 'marks': '', 'maxMarks': ''}, {'Assessment': '', 'marks': '', 'maxMarks': ''}, {'Assessment': '', 'marks': '', 'maxMarks': ''}, {'Assessment': '', 'marks': '', 'maxMarks': ''}];
-        for(this.k = 0; this.k < this.totalinnermarks.length; this.k++) {
-          this.totalMarks += this.totalinnermarks[this.k];
-        }
-        this.totalmarks[i] = this.totalMarks;
-        this.counter++;
-        this.totalMarks = 0;
-      }
+    this.totalinnermarks[j] = parseInt(event.target.value);
+    this.totalMarks += parseInt(event.target.value);
+    if(j == (this.students[i].subjects.assMarks.length - 1)) {
+      this.totalmarks[i] = this.totalMarks;
+      this.student_marks.student_id = this.students[i].student_id;
+      this.student_marks.assessment_id = this.students[i].subjects.assessment_id;
+      this.student_marks.exam_title = this.students[i].subjects.exam_title;
+      this.student_marks.section_id = this.students[i].section_id;
+      this.student_marks.assMarks = this.students[i].subjects.assMarks;
+      this.studentMarks[i] = this.student_marks;
+      console.log(this.studentMarks)
+      this.student_marks = {};
+      this.totalMarks = 0;
     }
   }
 
@@ -187,14 +236,17 @@ export class AddMarksComponent implements OnInit {
       this.alert_message = 'No Students Found';
       this.openAlert(this.alert_message)
       this.totalmarks = [];
-    } else if(this.selected_section == undefined || this.selected_schedule == undefined || this.selected_subject == undefined ||
-      this.selected_section == '' || this.selected_schedule == '' || this.selected_subject == '') {
+    } else if(this.selected_section == undefined || this.selected_schedule == undefined || this.selected_subject.subject_id == undefined ||
+      this.selected_section == '' || this.selected_schedule == '' || this.selected_subject.subject_id == '') {
       this.alert_message = "Please Select Class, Section, Schedule and Subject";
       this.openAlert(this.alert_message)
       this.totalmarks = [];
+    // } else if(this.add_marks === false){
+    //   this.alert_message = "Unable to Add Marks";
+    //   this.openAlert(this.alert_message)
     } else {
-      console.log(this.studentMarks);
-      this.service.addEvaluations(this.studentMarks, this.selected_schedule, this.selected_section, this.selected_subject)
+      console.log(this.students);
+      this.service.addEvaluations(this.studentMarks, this.selected_schedule, this.selected_section, this.selected_subject.subject_id)
       .subscribe(
         res => { 
           if(res == true) {
@@ -207,6 +259,22 @@ export class AddMarksComponent implements OnInit {
         }
       )
     }
+  }
+
+  EditMarks(i) {
+    this.student_marks.subject_id = this.students[i].subjects.subjectId;
+    this.service.editEvaluations(this.studentMarks[i], this.students[i].subjects.subjectId)
+    .subscribe(
+      res => { 
+        if(res == true) {
+          this.alert_message = "Marks Added Successfully";
+          this.openAlert(this.alert_message)
+        } else {
+          this.alert_message = "Marks Not Added";
+          this.openAlert(this.alert_message)
+        }
+      }
+    )
   }
 
   openAlert(alert_message) {

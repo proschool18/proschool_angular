@@ -1,35 +1,47 @@
-<div class="popup">
-    <div class="pop_header">
-        <h3>Add Subject</h3>
+<div id="main-content1" class="new-message-wrapper">
+    <div class="header-wrapper">
+        <p *ngIf="dialog_type == 'add'">Add Subject</p>
+        <p *ngIf="dialog_type == 'edit'">Add Subject</p>
+        <button class="btn-close" (click)="close()"></button>
     </div>
     <form class="form-inline" role="form" [formGroup]="subjectForm" (ngSubmit)="submitSubject()">
-        <div class="pop_content">
-            <div class="row_content">
-                <div class="column_content column_content_left">
-                    <h4>Subject Name: </h4>
-                    <input class="form-control" value="{{subject.name}}" formControlName="name" type="text">
-                </div>
-                <div class="column_content">
-                    <h4>TextBook: </h4>
-                    <input class="form-control" value="{{subject.textbook}}" formControlName="textbook" type="text">
-                </div>
+        <div class="row-wrapper">
+            <div class="col-full-3">
+                Subject Name:
             </div>
-            <div class="row_content">
-                <div class="column_content column_content_left">
-                    <h4>Author Name: </h4>
-                    <input class="form-control" value="{{subject.author}}" formControlName="author" type="text">
-                </div>
-                <div class="column_content">
-                    <h4>Publisher: </h4>
-                    <input class="form-control" value="{{subject.publisher}}" formControlName="publisher" type="text">
-                </div>
+            <div class="col-full-6">
+                <input class="form-control" value="{{subject.name}}" formControlName="name" type="text">
             </div>
-            <div class="row_content">
-                <div class="button_left">
-                    <button type="submit" class="btn -cta">Submit</button>
-                </div>
-                <div (click)="close()" class="btn -cancel">Cancel</div>
+        </div>
+        <div class="row-wrapper">
+            <div class="col-full-3">
+                TextBook:
+            </div>
+            <div class="col-full-6">
+                <input class="form-control" value="{{subject.textbook}}" formControlName="textbook" type="text">
+            </div>
+        </div>
+        <div class="row-wrapper">
+            <div class="col-full-3">
+                Author Name:
+            </div>
+            <div class="col-full-6">
+                <input class="form-control" value="{{subject.author}}" formControlName="author" type="text">
+            </div>
+        </div>
+        <div class="row-wrapper">
+            <div class="col-full-3">
+                Publisher:
+            </div>
+            <div class="col-full-6">
+                <input class="form-control" value="{{subject.publisher}}" formControlName="publisher" type="text">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 pull-right">
+                <button class="btn -cta active-tab" type="submit">Submit</button>
             </div>
         </div>
     </form>
 </div>
+

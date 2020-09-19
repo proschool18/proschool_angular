@@ -1,30 +1,43 @@
-<main class="card mt-20 within-viewport">
+<main class="card mt-20 within-viewport new-listing">
   <section class="page-actions">
     <div class="_select-or-search">
       <div class="_select-group">
+        <!-- <select class="form-control" [(ngModel)]="employee_type" (change)="get_selectedemployees()">
+          <option value="all">All</option>
+          <option value="teaching">Teaching</option>
+          <option value="non-teaching">Non-Teaching</option>
+          <option value="administrative">Administrative</option>
+        </select> -->
         <div class="dropdown">
-          <button class="dropbtn" (click)="showEmployeeTypeList = true" (clickOutside)="showEmployeeTypeList = false">
-              {{!employee_type ? 'employee type' : employee_type}}
+          <button class="dropbtn" (click)="showEmployeeTypeList = true" 
+          (clickOutside)="showEmployeeTypeList = false">
+              {{!employee_type ? 'employee type' : employee_type.name}}
           </button>
           <div class="dropdown-content" [hidden]="!showEmployeeTypeList">
-            <a (click)="employee_type = 'teaching'; get_selectedemployees();">Teaching</a>
-            <a (click)="employee_type = 'non-teaching'; get_selectedemployees();">Non-Teaching</a>
-            <a (click)="employee_type = 'administrative'; get_selectedemployees();">Administrative</a>
+            <a *ngFor="let e_type of employee_types"
+              (click)="employee_type = e_type; get_selectedemployees();">{{e_type.name}}</a>
           </div>
         </div>
         <div class="dropdown">
-          <button class="dropbtn" (click)="showStatusList = true" (clickOutside)="showStatusList = false">
-              {{status}}
+          <button class="dropbtn" (click)="showStatusList = true" 
+          (clickOutside)="showStatusList = false">
+              {{!status ? 'select status' : status}}
           </button>
           <div class="dropdown-content" [hidden]="!showStatusList">
+            <a (click)="status = ''; getEmployeesByStatus();">select...</a>
             <a (click)="status = 'active'; getEmployeesByStatus();">Active</a>
             <a (click)="status = 'inactive'; getEmployeesByStatus();">Inactive</a>
           </div>
         </div>
+        <!-- <select class="form-control" [(ngModel)]="status" (change)="getEmployeesByStatus()">
+          <option>select...</option>
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+        </select> -->
       </div>
-      <input type="search" name="" placeholder="Search">
+      <input type="search" class="search-box" [(ngModel)]="searchText" placeholder="Search for Employee">
     </div>
-    <button class="btn -cta" (click)="addEmployee()">Add Employee</button>
+    <button class="btn -cta" (click)="addEmployee()" *ngIf="user.role === 'admin'">Add Employee</button>
   </section>
   <section class="table-and-pagination -classes-schedule">
     <div class="table-container">
@@ -40,9 +53,9 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let emp of employees; let i=index">
-            <td class="_s-no"><span>{{ i + 1 }}</span></td>
-            <td><a routerLink="/main/employeeprofile/profile/{{emp.employee_id}}">{{emp.first_name}} {{emp.last_name}}</a></td>
+          <tr *ngFor="let emp of employees | search : searchText | pagination: pageNo; let i=index">
+            <td class="_s-no"><span>{{ page_start + i + 1 }}</span></td>
+            <td><a routerLink="/main/main/employeeprofile/profile/{{emp.employee_id}}">{{emp.first_name}} {{emp.last_name}}</a></td>
             <td>{{emp.employee_code}}</td>
             <td>{{emp.designation}}</td>
             <td>{{emp.phone}}</td>
@@ -56,18 +69,9 @@
       </table>
     </div>
     <div class="_pagination">
-      <a href="" class="btn -previous">Previous</a>
-      <a href="" class="btn -current">1</a>
-      <a href="" class="btn">2</a>
-      <a href="" class="btn">3</a>
-      <a href="" class="btn">4</a>
-      <a href="" class="btn">5</a>
-      <a href="" class="btn">6</a>
-      <a href="" class="btn">7</a>
-      <a href="" class="btn">8</a>
-      <a href="" class="btn">9</a>
-      <a href="" class="btn">10</a>
-      <a href="" class="btn -next">Next</a>
+      <a class="btn -previous">Previous</a>
+      <a class="btn" [ngClass]="{'-current': pageNo === (i+1)}" *ngFor='let page of page_counter(pages) ;let i = index' (click)="pageChange(i+1)">{{i+1}}</a>
+      <a class="btn -next">Next</a>
     </div>
   </section>
 </main>

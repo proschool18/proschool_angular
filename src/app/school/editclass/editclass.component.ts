@@ -12,24 +12,17 @@ import { AlertComponent } from '../../_alert/alert/alert.component';
 })
 export class EditclassComponent implements OnInit {
 
-  // classes = {
-  //   class_id: '',
-  //   name: '',
-  // };
-  // sections = {
-  //   section_id: '',
-  //   class_id: '',
-  //   name: '',
-  //   // pattern: '',
-  //   employee_id: '',
-  //   teacher_name: '',
-  // };
-  classes = [];
-  sections = [];
+  class: any = {};
+  section: any = {};
   teachers = [];
   class_id;
   section_id;
   dialog_type: string;
+  submit_type: string;
+  alert_message: string;
+
+  showTeacherList: boolean = false;
+  selected_teacher:any = {employee_id: '', first_name: '', last_name: ''}
 
   classForm: FormGroup = this.fb.group({
     class_id: '',
@@ -40,11 +33,9 @@ export class EditclassComponent implements OnInit {
     section_id: '',
     selected_class: ['', Validators.required],
     name: ['', Validators.required],
-    // pattern: [''],
     employee_id: [''],
     teacher_name: [''],
   });
-  alert_message: string;
 
   constructor(
     private service: ClasessService,
@@ -54,6 +45,7 @@ export class EditclassComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) data) {
 
     this.dialog_type = data.dialog_type;
+    this.submit_type = data.submit_type;
     
     if(this.dialog_type === 'class') {
       this.classForm.patchValue({
@@ -70,61 +62,88 @@ export class EditclassComponent implements OnInit {
       })
     }
 
-    this.classes = data.selected_class;
-
-    this.sections = data.selected_section;
+    this.class = data.selected_class;
+    this.section = data.selected_section;
     this.teachers = data.teachers;
 
   }
 
   ngOnInit() {
-    // console.log(this.sections)
+    console.log(this.section)
   }
 
-  close_class() {
+  close() {
     this.dialogRef.close();
   }
 
-  close_section() {
-    this.dialogRef.close();
+  submitClass() {
+    if(this.submit_type === 'add') {
+      this.service.addClass(this.classForm.value)
+      .subscribe(
+        res => { 
+          if(res == true) {
+            this.alert_message = "Class Added Successfully";
+            this.openAlert(this.alert_message)
+            this.close();
+          } else {
+            this.alert_message = "Class Not Added";
+            this.openAlert(this.alert_message);
+            this.sectionForm.reset();
+          }
+        }
+      )
+    } else if(this.submit_type === 'edit') {
+      this.service.editClass(this.classForm.value, this.class.class_id)
+      .subscribe(
+        res => { 
+          if(res == true) {
+            this.alert_message = "Class Edited Successfully";
+            this.openAlert(this.alert_message);
+            this.close();
+          } else {
+            this.alert_message = "Class Not Edited";
+            this.openAlert(this.alert_message);
+            this.sectionForm.reset();
+          }
+        }
+      )
+    }
   }
 
-  editClass() {    
-    // this.classForm.value.class_id = this.classes.class_id;
-    // this.class_id = this.classes.class_id;
-    this.class_id = this.classForm.value.class_id;
-    this.dialogRef.close(this.classForm.value);
-    this.service.editClass(this.classForm.value, this.class_id)
-    .subscribe(
-      res => { 
-        if(res == true) {
-          this.alert_message = "Class Edited Successfully";
-          this.openAlert(this.alert_message)
-        } else {
-          this.alert_message = "Class Not Edited";
-          this.openAlert(this.alert_message)
+  submitSection() {
+    if(this.submit_type === 'add') {
+      this.service.addSection(this.sectionForm.value, this.section.class_id)
+      .subscribe(
+        res => { 
+          if(res == true) {
+            // this.getSections();
+            this.alert_message = "Section Added Successfully";
+            this.openAlert(this.alert_message);
+            this.dialogRef.close(this.sectionForm.value);
+          } else {
+            this.alert_message = "Section Not Added";
+            this.openAlert(this.alert_message)
+            this.sectionForm.reset();
+          }
         }
-      }
-    )
-  }
-
-  editSection() {
-    // this.sectionForm.value.section_id = this.sections.section_id;
-    this.dialogRef.close(this.sectionForm.value);
-    // this.section_id = this.sections.section_id;    
-    this.section_id = this.sectionForm.value.section_id; 
-    this.service.editSection(this.sectionForm.value, this.section_id)
-    .subscribe(
-      res => { 
-        if(res == true) {
-          this.alert_message = "Section Edited Successfully";
-          this.openAlert(this.alert_message)
-        } else {
-          this.alert_message = "Section Not Edited";
-          this.openAlert(this.alert_message)
+      )
+      this.dialogRef.close(this.sectionForm.value);
+    } else if(this.submit_type === 'edit') {
+      this.service.editSection(this.sectionForm.value, this.section.section_id)
+      .subscribe(
+        res => { 
+          if(res == true) {
+            this.alert_message = "Section Edited Successfully";
+            this.openAlert(this.alert_message);
+            this.dialogRef.close(this.sectionForm.value);
+          } else {
+            this.alert_message = "Section Not Edited";
+            this.openAlert(this.alert_message);
+            this.sectionForm.reset();
+          }
         }
-      }
-    )
+      )
+    }
   }
   
   openAlert(alert_message) {

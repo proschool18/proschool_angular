@@ -30,6 +30,10 @@ export class TimingsService {
     console.log(data)
     return this.http.post<any>(this.url + '/session_timings/' + this.school_id, data)
   }
+
+  editTimings(data, session_id): Observable<any> {
+    return this.http.put<any>(this.url + '/edit_session/' + session_id, data)
+  }
   
   deleteTimings(session_id): Observable<any> {
     return this.http.put<any>(this.url + '/delete_session/' + session_id, this.empty_data)

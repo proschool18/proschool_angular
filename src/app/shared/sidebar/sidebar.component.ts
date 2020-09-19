@@ -27,17 +27,17 @@ export class SidebarComponent implements OnInit {
 
   get_click() {
     this.menu_click == true;
-    this.router.navigate(['/main/dashboard']);
+    this.router.navigate(['/main/main/dashboard']);
     console.log(this.menu_click)
   }
 
   isAnySubMenuActive(mainLink) {
     switch (mainLink) {
       case "Admin":
-        if (this.router.url == "/main/admin/profile" || this.router.url == "/main/admin/messages" ||
-        this.router.url == "/main/admin/parentinfo" || this.router.url == "/main/admin/pendingTasks" ||
-        this.router.url == "/main/admin/materials" || this.router.url == "/main/admin/payments" ||
-        this.router.url == "/main/admin/expenses") {
+        if (this.router.url == "/main/main/admin/profile" || this.router.url == "/main/main/admin/messages" ||
+        this.router.url == "/main/main/admin/parentinfo" || this.router.url == "/main/main/admin/pendingTasks" ||
+        this.router.url == "/main/main/admin/materials" || this.router.url == "/main/main/admin/payments" ||
+        this.router.url == "/main/main/admin/expenses" || this.router.url == "/main/main/admin/addClass") {
           return true;
         } else {
           return false;
@@ -45,10 +45,10 @@ export class SidebarComponent implements OnInit {
        break;
 
       case "School":
-        if (this.router.url == "/main/admin/profile" || this.router.url == "/main/admin/messages" ||
-          this.router.url == "/main/admin/parentinfo" || this.router.url == "/main/admin/pendingTasks" ||
-          this.router.url == "/main/admin/materials" || this.router.url == "/main/admin/payments" ||
-          this.router.url == "/main/admin/expenses") {
+        if (this.router.url == "/main/main/admin/profile" || this.router.url == "/main/main/admin/messages" ||
+          this.router.url == "/main/main/admin/parentinfo" || this.router.url == "/main/main/admin/pendingTasks" ||
+          this.router.url == "/main/main/admin/materials" || this.router.url == "/main/main/admin/payments" ||
+          this.router.url == "/main/main/admin/expenses") {
           return true;
         } else {
           return false;
@@ -56,8 +56,8 @@ export class SidebarComponent implements OnInit {
         break;
 
       case "Attendance":
-        if (this.router.url == "/main/attendance/studentattendance" || this.router.url == "/main/attendance/employeeattendance" ||
-            this.router.url == "/main/attendance/reports" || this.router.url == "/main/attendance/empreports") {
+        if (this.router.url == "/main/main/attendance/studentattendance" || this.router.url == "/main/main/attendance/employeeattendance" ||
+            this.router.url == "/main/main/attendance/reports" || this.router.url == "/main/main/attendance/empreports") {
           return true;
         } else {
           return false;
@@ -65,9 +65,9 @@ export class SidebarComponent implements OnInit {
         break;
 
       case "Academics":
-        if (this.router.url == "/main/academics/subjects" || this.router.url == "/main/academics/chapters" ||
-            this.router.url == "/main/academics/topics" || this.router.url == "/main/academics/assignsubjects" ||
-            this.router.url == "/main/academics/planner") {
+        if (this.router.url == "/main/main/academics/subjects" || this.router.url == "/main/main/academics/chapters" ||
+            this.router.url == "/main/main/academics/topics" || this.router.url == "/main/main/academics/assignsubjects" ||
+            this.router.url == "/main/main/academics/planner") {
           return true;
         } else {
           return false;
@@ -75,8 +75,8 @@ export class SidebarComponent implements OnInit {
         break;
 
       case "Assessments":
-        if (this.router.url == "/main/assignments/assignmentsByDate" || this.router.url == "/main/classtests/CTByDate" ||
-          this.router.url == "/main/projectworks/PWByDate" || this.router.url == "/main/reports/assignmentreports") {
+      if (this.router.url == "/main/main/assignments/assignmentsByDate" || this.router.url == "/main/main/classtests/CTByDate" ||
+      this.router.url == "/main/main/projectworks/PWByDate" || this.router.url == "/main/main/reports/assignmentreports") {
           return true;
         } else {
           return false;
@@ -84,8 +84,8 @@ export class SidebarComponent implements OnInit {
         break;
 
       case "Examinations":
-        if (this.router.url == "/main/examinations/schedules" || this.router.url == "/main/examinations/listPapers" ||
-            this.router.url == "/main/evaluations/marksList" || this.router.url == "/main/reports/evaluationreports") {
+        if (this.router.url == "/main/main/examinations/schedules" || this.router.url == "/main/main/examinations/listPapers" ||
+            this.router.url == "/main/main/evaluations/addMarks" || this.router.url == "/main/main/evaluations" || this.router.url == "/main/main/reports/evaluationreports") {
           return true;
         } else {
           return false;
@@ -93,8 +93,8 @@ export class SidebarComponent implements OnInit {
         break;
 
       case "Timetable":
-        if (this.router.url == "/main/timetable/classwise" || this.router.url == "/main/timetable/events" ||
-            this.router.url == "/main/timetable/noticeboard") {
+        if (this.router.url == "/main/main/timetable/classwise" || this.router.url == "/main/main/timetable/events" ||
+            this.router.url == "/main/main/timetable/noticeboard") {
         return true;
       } else {
         return false;
@@ -102,19 +102,18 @@ export class SidebarComponent implements OnInit {
       break;
 
       case "Fee":
-        if (this.router.url == "/main/fee/collectfee" || this.router.url == "/main/fee/feeterm" ||
-            this.router.url == "/main/fee/feetype" || this.router.url == "/main/fee/feemaster" ||
-            this.router.url == "/main/fee/studentfee") {
-          return true;
-        } else {
-          return false;
+        if (this.router.url == "/main/main/fee/studentfee" || this.router.url == "/main/main/fee/feetype" ||
+            this.router.url == "/main/main/fee/classfee" || this.router.url == "/main/main/fee/feestructure") {
+        return true;
+      } else {
+        return false;
       }
       break;
 
       case "Transport":
-        if (this.router.url == "/main/transportation/stations" || this.router.url == "/main/transportation/vehicles" ||
-            this.router.url == "/main/transportation/routes" || this.router.url == "/main/transportation/addroute" ||
-            this.router.url == "/main/transportation/navigation") {
+        if (this.router.url == "/main/main/transportation/stations" || this.router.url == "/main/main/transportation/vehicles" ||
+            this.router.url == "/main/main/transportation/routes" || this.router.url == "/main/main/transportation/addroute" ||
+            this.router.url == "/main/main/transportation/navigation") {
           return true;
         } else {
           return false;

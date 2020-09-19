@@ -14,11 +14,21 @@ export class MaterialInComponent implements OnInit {
 
   constructor(private service: StoreService, private fb: FormBuilder, public dialog: MatDialog) {}
 
+  pageNo: number = 1;
+  page_start: number = 0;
+  page_counter = Array;
+  pages: number = 10;
+
   ngOnInit() {
     this.getVendors();
     this.getMaterials();
     this.getMaterialsIn();
   }
+
+  pageChange(x) {
+    this.pageNo = x;
+    this.page_start = (x - 1) * 10;
+  } 
 
   vendors = [];
   materials = [];
@@ -26,6 +36,7 @@ export class MaterialInComponent implements OnInit {
   selected_materialIn;
   dialog_type: string;
   alert_message: string;
+  submit_type: string;
 
   materialInForm: FormGroup = this.fb.group({
     vendor: ['', Validators.required],
@@ -39,7 +50,10 @@ export class MaterialInComponent implements OnInit {
   getMaterialsIn() {
     this.service.getMaterialsIn()
       .subscribe(
-        res => { this.materialsIn = res.material_in, console.log(res) }
+        res => { this.materialsIn = res.material_in, 
+          this.pages = Math.ceil(this.materialsIn.length / 10),
+          console.log(res) 
+        }
       )
   }
 
@@ -58,28 +72,10 @@ export class MaterialInComponent implements OnInit {
   }
 
   addMaterialsIn() {
-    this.service.addMaterialsIn(this.materialInForm.value)
-      .subscribe(
-        res => { 
-          if(res == true) {
-            this.getMaterialsIn();
-            // this.collection.materialsIn.push({
-            //   vendor: this.vendors.filter(res => res.vendor_id === this.materialInForm.value.vendor)[0].vendor_name,
-            //   material: this.materials.filter(res => res.material_id === this.materialInForm.value.material)[0].material,
-            //   price: this.materialInForm.value.price,
-            //   no_of_units: this.materialInForm.value.no_of_units,
-            //   purchased_date: this.materialInForm.value.purchased_date,
-            // })
-            console.log(this.materialsIn)
-            this.alert_message = "Material-In Added Successfully";
-            this.openAlert(this.alert_message)
-          } else {
-            this.alert_message = "Material-In Added Successfully";
-            this.openAlert(this.alert_message)
-          }
-          this.materialInForm.reset();
-        }
-      )
+    this.selected_materialIn = '';
+    this.dialog_type = 'material-in';
+    this.submit_type = 'add';
+    this.openDialog(this.dialog_type, this.submit_type)
   }
 
   deleteMaterialIn(material_in_id) {
@@ -101,10 +97,11 @@ export class MaterialInComponent implements OnInit {
   editMaterialIn(i) {
     this.selected_materialIn = this.materialsIn[i];
     this.dialog_type = 'material-in';
-    this.openDialog(this.dialog_type)
+    this.submit_type = 'edit';
+    this.openDialog(this.dialog_type, this.submit_type)
   }
 
-  openDialog(dialog_type): void {
+  openDialog(dialog_type, submit_type): void {
 
     const dialogConfig = new MatDialogConfig();
 
@@ -114,6 +111,7 @@ export class MaterialInComponent implements OnInit {
     dialogConfig.data = {
       selected_materialIn: this.selected_materialIn,
       dialog_type: dialog_type,
+      submit_type: submit_type,
     };
 
     const dialogRef = this.dialog.open(EditstoreComponent, dialogConfig);

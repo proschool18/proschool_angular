@@ -24,112 +24,18 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="_task -high-priority">
-                <td class="_s-no"><span>1</span></td>
-                <td class="_priority-text">High</td>
-                <td>Task 01</td>
-                <td>John Smith</td>
+              <tr *ngFor="let task of tasks; let i = index;">
+                <td class="_s-no"><span>{{i+1}}</span></td>
+                <td
+                  [ngStyle]="{'color': (task.priority === 'High') ? '#e56761' : (task.priority === 'Medium') ? '#77c284' : '#5e81f4'}">
+                  {{task.priority}}</td>
+                <td>{{task.task}}</td>
+                <td>{{task.employee_name}}</td>
                 <td>
-                  <div class="_progress-text -pending">Pending</div>
-                </td>
-              </tr>
-              <tr class="_task -medium-priority">
-                <td class="_s-no"><span>2</span></td>
-                <td class="_priority-text">Medium</td>
-                <td>Task 02</td>
-                <td>Lawrence</td>
-                <td>
-                  <div class="_progress-text -rejected">Rejected</div>
-                </td>
-              </tr>
-              <tr class="_task -low-priority">
-                <td class="_s-no"><span>3</span></td>
-                <td class="_priority-text">Low</td>
-                <td>Task 03</td>
-                <td>Smith John</td>
-                <td>
-                  <div class="_progress-text -approved">Approved</div>
-                </td>
-              </tr>
-              <tr class="_task -medium-priority">
-                <td class="_s-no"><span>4</span></td>
-                <td class="_priority-text">Medium</td>
-                <td>Task 04</td>
-                <td>John Smith</td>
-                <td>
-                  <div class="_progress-text -pending">Pending</div>
-                </td>
-              </tr>
-              <tr class="_task -high-priority">
-                <td class="_s-no"><span>5</span></td>
-                <td class="_priority-text">High</td>
-                <td>Task 01</td>
-                <td>John Smith</td>
-                <td>
-                  <div class="_progress-text -pending">Pending</div>
-                </td>
-              </tr>
-              <tr class="_task -medium-priority">
-                <td class="_s-no"><span>6</span></td>
-                <td class="_priority-text">Medium</td>
-                <td>Task 02</td>
-                <td>Lawrence</td>
-                <td>
-                  <div class="_progress-text -rejected">Rejected</div>
-                </td>
-              </tr>
-              <tr class="_task -low-priority">
-                <td class="_s-no"><span>7</span></td>
-                <td class="_priority-text">Low</td>
-                <td>Task 03</td>
-                <td>Smith John</td>
-                <td>
-                  <div class="_progress-text -approved">Approved</div>
-                </td>
-              </tr>
-              <tr class="_task -medium-priority">
-                <td class="_s-no"><span>8</span></td>
-                <td class="_priority-text">Medium</td>
-                <td>Task 04</td>
-                <td>John Smith</td>
-                <td>
-                  <div class="_progress-text -pending">Pending</div>
-                </td>
-              </tr>
-              <tr class="_task -low-priority">
-                <td class="_s-no"><span>9</span></td>
-                <td class="_priority-text">Low</td>
-                <td>Task 03</td>
-                <td>Smith John</td>
-                <td>
-                  <div class="_progress-text -approved">Approved</div>
-                </td>
-              </tr>
-              <tr class="_task -medium-priority">
-                <td class="_s-no"><span>10</span></td>
-                <td class="_priority-text">Medium</td>
-                <td>Task 04</td>
-                <td>John Smith</td>
-                <td>
-                  <div class="_progress-text -pending">Pending</div>
-                </td>
-              </tr>
-              <tr class="_task -low-priority">
-                <td class="_s-no"><span>11</span></td>
-                <td class="_priority-text">Low</td>
-                <td>Task 03</td>
-                <td>Smith John</td>
-                <td>
-                  <div class="_progress-text -approved">Approved</div>
-                </td>
-              </tr>
-              <tr class="_task -medium-priority">
-                <td class="_s-no"><span>12</span></td>
-                <td class="_priority-text">Medium</td>
-                <td>Task 04</td>
-                <td>John Smith</td>
-                <td>
-                  <div class="_progress-text -pending">Pending</div>
+                  <!-- <div [ngClass]="{'_progress-text -rejected':task.task_status === 'completed', '_progress-text -pending':task.task_status === 'pending'}">{{task.task_status}}</div> -->
+                  <div class="_progress-text -rejected" *ngIf="task.task_status === 'completed'">{{task.task_status}}
+                  </div>
+                  <div class="_progress-text -pending" *ngIf="task.task_status === 'pending'">{{task.task_status}}</div>
                 </td>
               </tr>
             </tbody>
@@ -172,49 +78,36 @@
         <button type="button" class="_date-picker">Year<i class="fa fa-angle-down"></i></button>
         <div class="tabbed">
           <div role="tablist">
-            <button role="tab" id="students-attendance-tab" aria-selected="true" class="attntablink">Students</button>
-            <button role="tab" id="employees-attendance-tab" class="attntablink" tabindex="-1">Employees</button>
+            <button role="tab" id="students-attendance-tab" aria-selected="true" class="attntablink" (click)="getAttendance('students')">Students</button>
+            <button role="tab" id="employees-attendance-tab" class="attntablink" tabindex="-1" (click)="getAttendance('employees')">Employees</button>
           </div>
           <section role="tabpanel" aria-labelledby="students-attendance-tab" tabindex="-1">
-            <div class="_metrics">
+            <div class="_metrics dynamic-bar-graph">
               <div class="_metric -total">
-                <div class="_bar" style="--progress:90%"></div>
+                <div class="_bar">
+                  <span class="_bar_progress" [ngStyle]="{'height': attendance_data.presentPercentage +'%'}">
+                  </span>
+                </div>
                 <div class="_name">
-                  <span class="_legend">Total</span> 22 days
+                  <span class="_legend">Present</span> {{attendance_data.present}}
                 </div>
               </div>
               <div class="_metric -attend">
-                <div class="_bar" style="--progress:20%"></div>
+                <div class="_bar">
+                  <span class="_bar_progress" [ngStyle]="{'height': attendance_data.absentPercent +'%'}">
+                  </span>
+                </div>
                 <div class="_name">
-                  <span class="_legend">Attend</span> 13 days
+                  <span class="_legend">Absent</span> {{attendance_data.absent}}
                 </div>
               </div>
               <div class="_metric -due">
-                <div class="_bar" style="--progress:10%"></div>
-                <div class="_name">
-                  <span class="_legend">Due</span> 9 days
+                <div class="_bar">
+                  <span class="_bar_progress" [ngStyle]="{'height': attendance_data.onLeavePercent +'%'}">
+                  </span>
                 </div>
-              </div>
-            </div>
-          </section>
-          <section role="tabpanel" aria-labelledby="employees-attendance-tab" tabindex="-1" hidden>
-            <div class="_metrics">
-              <div class="_metric -total">
-                <div class="_bar" style="--progress:50%"></div>
                 <div class="_name">
-                  <span class="_legend">Total</span> 22 days
-                </div>
-              </div>
-              <div class="_metric -attend">
-                <div class="_bar" style="--progress:90%"></div>
-                <div class="_name">
-                  <span class="_legend">Attend</span> 13 days
-                </div>
-              </div>
-              <div class="_metric -due">
-                <div class="_bar" style="--progress:30%"></div>
-                <div class="_name">
-                  <span class="_legend">Due</span> 9 days
+                  <span class="_legend">Leave</span> {{attendance_data.onLeave}}
                 </div>
               </div>
             </div>
@@ -222,53 +115,40 @@
         </div>
       </div>
       <div class="_history-box card">
-        <h2>History</h2>
+        <h2>Finances</h2>
         <button type="button" class="_date-picker">Month<i class="fa fa-angle-down"></i></button>
         <div class="tabbed">
           <div role="tablist">
-            <button role="tab" id="payment-history-tab" aria-selected="true" class="attntablink">Payments</button>
-            <button role="tab" id="expenses-history-tab" class="attntablink" tabindex="-1">Expenses</button>
+            <button role="tab" id="payment-history-tab" aria-selected="true" class="attntablink" (click)="getFinance('payments')">Payments</button>
+            <button role="tab" id="expenses-history-tab" class="attntablink" tabindex="-1" (click)="getFinance('expenses')">Expenses</button>
           </div>
           <section role="tabpanel" aria-labelledby="payment-history-tab" tabindex="-1">
-            <div class="_metrics">
+            <div class="_metrics dynamic-bar-graph">
               <div class="_metric -earned">
-                <div class="_bar" style="--progress:30%"></div>
-                <div class="_name">
-                  <span class="_legend">Earned</span> $458.00
+                <div class="_bar">
+                  <span class="_bar_progress" style="height: 100%">
+                  </span>
                 </div>
-              </div>
-              <div class="_metric -cost">
-                <div class="_bar" style="--progress:80%"></div>
                 <div class="_name">
-                  <span class="_legend">Cost</span> $358.00
+                  <span class="_legend">Total</span> {{finances.total_payment}}
                 </div>
               </div>
               <div class="_metric -due">
-                <div class="_bar" style="--progress:45%"></div>
-                <div class="_name">
-                  <span class="_legend">Due</span> $100.00
+                <div class="_bar">
+                  <span class="_bar_progress" [ngStyle]="{'height': finances.paid_percentage +'%'}">
+                  </span>
                 </div>
-              </div>
-            </div>
-          </section>
-          <section role="tabpanel" aria-labelledby="expenses-history-tab" tabindex="-1" hidden>
-            <div class="_metrics">
-              <div class="_metric -earned">
-                <div class="_bar" style="--progress:70%"></div>
                 <div class="_name">
-                  <span class="_legend">Earned</span> $458.00
+                  <span class="_legend">Paid</span> {{finances.paid_payment}}
                 </div>
               </div>
               <div class="_metric -cost">
-                <div class="_bar" style="--progress:20%"></div>
-                <div class="_name">
-                  <span class="_legend">Cost</span> $358.00
+                <div class="_bar">
+                  <span class="_bar_progress" [ngStyle]="{'height': finances.balance_percentage +'%'}">
+                  </span>
                 </div>
-              </div>
-              <div class="_metric -due">
-                <div class="_bar" style="--progress:65%"></div>
                 <div class="_name">
-                  <span class="_legend">Due</span> $100.00
+                  <span class="_legend">Balance</span> {{finances.total_payment - finances.paid_payment}}
                 </div>
               </div>
             </div>
@@ -283,30 +163,23 @@
       <button type="button" class="_date-picker"><i class="fa fa-calendar"></i>Year<i
           class="fa fa-angle-down"></i></button>
       <div class="_chart">
-        <div class="_x-axis">
-          <div class="">20K</div>
-          <div class="">40K</div>
-          <div class="">60K</div>
-          <div class="">80K</div>
-          <div class="">100K</div>
-        </div>
         <div class="_metrics -horizontal">
-          <div class="_metric -earned">
+          <div class="_metric -earned" [ngStyle]="{'width': '100%'}">
             <div class="_name">Total</div>
-            <div class="_bar" style="--progress:70%">
-              <span>70,000</span>
+            <div class="_bar">
+              <span>{{fees.totalFees | currency:'INR'}}</span>
             </div>
           </div>
-          <div class="_metric -cost">
+          <div class="_metric -due" [ngStyle]="{'width': fees.paidpercentage + '%'}">
             <div class="_name">Collected</div>
-            <div class="_bar" style="--progress:30%">
-              <span>30,000</span>
+            <div class="_bar" style="width: 100%">
+              <span>{{fees.paidFees | currency:'INR'}}</span>
             </div>
           </div>
-          <div class="_metric -due">
+          <div class="_metric -cost" [ngStyle]="{'width': fees.balancepercentage + '%'}">
             <div class="_name">Balance</div>
-            <div class="_bar" style="--progress:40%">
-              <span>40,000</span>
+            <div class="_bar">
+              <span>{{fees.balanceFees | currency:'INR'}}</span>
             </div>
           </div>
         </div>
@@ -314,17 +187,13 @@
     </div>
     <div class="_time-table-box card">
       <div class="_filters">
-        <select name="" id="">
-          <option value="Nursery">Nursery</option>
-          <option value="UKG">UKG</option>
-          <option value="LKG">LKG</option>
-          <option value="Class 1">Class 1</option>
+        <select name="" [(ngModel)]="selected_class" (change)="getSchedules()">
+          <option *ngFor="let cls of classes" value="{{cls.class_id}}">{{cls.name}}</option>
         </select>
-        <select name="" id="">
-          <option value="Nursery">Section A</option>
-          <option value="UKG">Section B</option>
+        <select name="" [(ngModel)]="selected_section" (change)="getSectionSchedule()">
+          <option *ngFor="let sec of sections" value="{{sec.section_id}}">{{sec.name}}</option>
         </select>
-        <div class="_teacher-name">Class Teacher: <span>John Smith</span></div>
+        <div class="_teacher-name">Class Teacher : <span> {{class_teacher}}</span></div>
       </div>
       <div class="table-container">
         <table>
@@ -337,15 +206,17 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>09:00 - 9:45</td>
-              <td>Telugu</td>
-              <td>John Smith</td>
+            <tr *ngFor="let sch of section_schedule; let i = index;">
+              <td>{{sch.start_time}} - {{sch.end_time}}</td>
+              <td>{{sch.subject_name}}</td>
+              <td>
+                <div class="_chip -class-running" [ngStyle]="{'background-color': sch.employee_attendance === 'Present' ? '#5cb85c' : sch.employee_attendance === 'Absent' ? '#d9534f' : sch.employee_attendance === 'On Leave' ? '#f0ad4e' : '#FFFFFF', 'color': (sch.employee_attendance === 'Present' ||  sch.employee_attendance === 'Absent' || sch.employee_attendance === 'On Leave') ? '#FFFFFF' : 'black' }">{{sch.teacher_name}}</div>
+              </td>
               <td>
                 <div class="_chip -class-closed">Closed</div>
               </td>
             </tr>
-            <tr>
+            <!-- <tr>
               <td>09:45 - 10:30</td>
               <td>English</td>
               <td>John Smith Doe</td>
@@ -360,95 +231,7 @@
               <td>
                 <div class="_chip -class-pending">Pending</div>
               </td>
-            </tr>
-            <tr>
-              <td>11:15 - 12:00</td>
-              <td>Physics</td>
-              <td>Benny Smith</td>
-              <td>
-                <div class="_chip -class-closed">Closed</div>
-              </td>
-            </tr>
-            <tr>
-              <td>09:00 - 9:45</td>
-              <td>Telugu</td>
-              <td>John Smith</td>
-              <td>
-                <div class="_chip -class-closed">Closed</div>
-              </td>
-            </tr>
-            <tr>
-              <td>09:45 - 10:30</td>
-              <td>English</td>
-              <td>John Smith Doe</td>
-              <td>
-                <div class="_chip -class-running">Running</div>
-              </td>
-            </tr>
-            <tr>
-              <td>10:30 - 11:15</td>
-              <td>Hindi</td>
-              <td>Davin Corcoran</td>
-              <td>
-                <div class="_chip -class-pending">Pending</div>
-              </td>
-            </tr>
-            <tr>
-              <td>11:15 - 12:00</td>
-              <td>Physics</td>
-              <td>Benny Smith</td>
-              <td>
-                <div class="_chip -class-closed">Closed</div>
-              </td>
-            </tr>
-            <tr>
-              <td>09:45 - 10:30</td>
-              <td>English</td>
-              <td>John Smith Doe</td>
-              <td>
-                <div class="_chip -class-running">Running</div>
-              </td>
-            </tr>
-            <tr>
-              <td>10:30 - 11:15</td>
-              <td>Hindi</td>
-              <td>Davin Corcoran</td>
-              <td>
-                <div class="_chip -class-pending">Pending</div>
-              </td>
-            </tr>
-            <tr>
-              <td>11:15 - 12:00</td>
-              <td>Physics</td>
-              <td>Benny Smith</td>
-              <td>
-                <div class="_chip -class-closed">Closed</div>
-              </td>
-            </tr>
-            <tr>
-              <td>09:45 - 10:30</td>
-              <td>English</td>
-              <td>John Smith Doe</td>
-              <td>
-                <div class="_chip -class-running">Running</div>
-              </td>
-            </tr>
-            <tr>
-              <td>10:30 - 11:15</td>
-              <td>Hindi</td>
-              <td>Davin Corcoran</td>
-              <td>
-                <div class="_chip -class-pending">Pending</div>
-              </td>
-            </tr>
-            <tr>
-              <td>11:15 - 12:00</td>
-              <td>Physics</td>
-              <td>Benny Smith</td>
-              <td>
-                <div class="_chip -class-closed">Closed</div>
-              </td>
-            </tr>
+            </tr> -->
           </tbody>
         </table>
       </div>

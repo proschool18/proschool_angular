@@ -11,16 +11,13 @@ import { User } from '../../_models/user';
   styleUrls: ['./topics.component.css']
 })
 export class TopicsComponent implements OnInit {
-  config: any;
-  collection = { count: '', topics: [] };
 
-  constructor(private service: AcademicsService, public dialog: MatDialog) { 
-    this.config = {
-      itemsPerPage: 5,
-      currentPage: 1,
-      totalItems: this.collection.count
-    };
-  }
+  constructor(private service: AcademicsService, public dialog: MatDialog) {}
+
+  pageNo: number = 1;
+  page_start: number = 0;
+  page_counter = Array;
+  pages: number = 10;
 
   user: User;
 
@@ -33,19 +30,21 @@ export class TopicsComponent implements OnInit {
     }
   }
 
-  pageChanged(event){
-    this.config.currentPage = event;
-  }
+  pageChange(x) {
+    this.pageNo = x;
+    this.page_start = (x - 1) * 10;
+  } 
 
   subjects = [];
   chapters = [];
-  //topics = [];
+  topics = [];
   topic_name;
 
   selected_class:string;
   selected_section:string;
   selected_subject:string;
   selected_chapter:string;
+  selected_topic_status: string;
 
   selected_topic;
   alert_message: string;
@@ -92,40 +91,40 @@ export class TopicsComponent implements OnInit {
     } else {
       this.service.getTopics(this.selected_chapter)
       .subscribe(
-        res => { this.collection.topics = res.topics, console.log(res) }
+        res => { this.topics = res.topics, console.log(res) }
       )
     }
+    this.pages = Math.ceil(this.topics.length / 10);
   }
 
-  addTopics() {
-    if(this.selected_chapter == undefined || this.selected_chapter == ''){
-      this.alert_message = "Please Select Subject and the Chapter";
-      this.openAlert(this.alert_message)
-    } else {      
-      this.service.addTopics(this.topic_name, this.selected_chapter, this.selected_subject)
-      .subscribe(
-        res => { 
-          if(res == true) {
-            // this.collection.topics.push({topic_name: this.topic_name, topic_status: "pending"})
-            this.getTopics();
-            this.alert_message = "Topic Added Successfully";
-            this.openAlert(this.alert_message)
-          } else {
-            this.alert_message = "Topic Not added";
-            this.openAlert(this.alert_message)
-          }
-        }
-      )
-    }  
-  }
+  // addTopics() {
+  //   if(this.selected_chapter == undefined || this.selected_chapter == ''){
+  //     this.alert_message = "Please Select Subject and the Chapter";
+  //     this.openAlert(this.alert_message)
+  //   } else {      
+  //     this.service.addTopics(this.topic_name, this.selected_chapter, this.selected_subject)
+  //     .subscribe(
+  //       res => { 
+  //         if(res == true) {
+  //           this.getTopics();
+  //           this.alert_message = "Topic Added Successfully";
+  //           this.openAlert(this.alert_message)
+  //         } else {
+  //           this.alert_message = "Topic Not added";
+  //           this.openAlert(this.alert_message)
+  //         }
+  //       }
+  //     )
+  //   }  
+  // }
 
   update_status(status, i) {    
     if(status == "pending") {     
-      this.collection.topics[i].topic_status = "completed";
+      this.topics[i].topic_status = "completed";
     } else {
-      this.collection.topics[i].topic_status = "pending";
+      this.topics[i].topic_status = "pending";
     }
-    this.service.updateStatus(this.collection.topics[i].topic_status, this.selected_chapter, this.collection.topics[i].topic_id)
+    this.service.updateStatus(this.topics[i].topic_status, this.selected_chapter, this.topics[i].topic_id)
     .subscribe(
       res => { 
         if(res == true) {
@@ -140,11 +139,12 @@ export class TopicsComponent implements OnInit {
   }
 
   deleteTopic(topic_id) {
-    this.service.deleteTopic( this.selected_chapter, topic_id)
+    this.selected_topic_status = this.topics.filter(topic => topic.topic_id === topic_id)[0].topic_status;
+    this.service.deleteTopic( this.selected_chapter, topic_id, this.selected_topic_status)
       .subscribe(
         res => { 
           if(res == true) {
-            this.collection.topics = this.collection.topics.filter(res => res.topic_id !== topic_id)
+            this.topics = this.topics.filter(res => res.topic_id !== topic_id)
             this.alert_message = "Topic Deleted Successfully";
             this.openAlert(this.alert_message)
           } else {
@@ -155,12 +155,17 @@ export class TopicsComponent implements OnInit {
       )
   }
 
-  editTopic(i) {
-    this.selected_topic = this.collection.topics[i];
-    this.openDialog(this.selected_topic)
+  addTopic() {
+    this.selected_topic = '';
+    this.openDialog(this.selected_topic, 'add')
   }
 
-  openDialog(selected_topic): void {
+  editTopic(i) {
+    this.selected_topic = this.topics[i];
+    this.openDialog(this.selected_topic, 'edit')
+  }
+
+  openDialog(selected_topic, dialog_type): void {
 
     const dialogConfig = new MatDialogConfig();
 
@@ -173,6 +178,7 @@ export class TopicsComponent implements OnInit {
       subject: this.selected_subject,
       chapter: this.selected_chapter,
       topic: selected_topic,
+      dialog_type: dialog_type,
     };
 
     const dialogRef = this.dialog.open(EdittopicComponent, dialogConfig);

@@ -69,11 +69,14 @@ export class AddMessageComponent implements OnInit {
     receiver: ['', Validators.required],
     sender: ['', Validators.required],
     sender_name: ['', Validators.required],
+    role: ['', Validators.required],
   })
 
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('currentUser'));
-
+    if(this.user.role === 'teacher') {
+      this.getEmployees();
+    }
   }
 
   getCategory() {
@@ -210,11 +213,10 @@ export class AddMessageComponent implements OnInit {
           this.messageForm.value.receiver = 'All Non-Teaching Staff'
         } else if(this.Selected_employeeType === 'administrative') {
           this.messageForm.value.receiver = 'All Administrative Staff'
-        }
-        
-      } else {
+        } 
+      } else if(this.allEmployees === false && this.allEmployeeTypes === false){
         this.messageForm.value.sent_to = this.Selected_employee;
-        this.messageForm.value.receiver = this.employees.filter(data => data.employee_id === this.Selected_employee)[0].first_name + ' ' + this.employees.filter(data => data.employee_id === this.Selected_employee)[0].last_name
+        this.messageForm.value.receiver = this.all_employees.filter(data => data.employee_id === this.Selected_employee)[0].first_name + ' ' + this.all_employees.filter(data => data.employee_id === this.Selected_employee)[0].last_name;
       }
     }
 
@@ -223,6 +225,11 @@ export class AddMessageComponent implements OnInit {
       this.messageForm.value.sender = this.user.users[0].student_id;
       this.messageForm.value.sender_name = this.user.users[0].first_name + ' ' + this.user.users[0].last_name;
     } else if(this.user.role === 'teacher') {
+      if(this.Selected_Category === 'Admin'){
+        console.log(this.Selected_Category)
+        this.messageForm.value.sent_to = 'admin';
+        this.messageForm.value.receiver = 'admin';
+      }
       this.messageForm.value.sender = this.user.employee_id;
       this.messageForm.value.sender_name = this.all_employees.filter(data => data.employee_id === this.user.employee_id)[0].first_name + ' ' + this.all_employees.filter(data => data.employee_id === this.user.employee_id)[0].last_name;
     } else {
@@ -237,7 +244,7 @@ export class AddMessageComponent implements OnInit {
     }
 
     console.log(this.messageForm.value)
-
+    this.messageForm.value.role = this.user.role;
     this.service.sendMessage(this.messageForm.value) 
       .subscribe(
         res => { 

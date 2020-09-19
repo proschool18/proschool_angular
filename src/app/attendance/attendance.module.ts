@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SearchModuleModule } from '../search-module/search-module.module';
 import { ChartsModule } from 'ng2-charts';
-import { NgxPaginationModule } from 'ngx-pagination';
+import { PipesModule } from '../_pipes/_pipes.module';
 import { DirectivesModule } from '../_directives/_directives.module';
 
 import { AttendanceRoutingModule } from './attendance-routing.module';
@@ -25,7 +25,7 @@ import { MatDatepickerModule, MatInputModule, MatNativeDateModule } from '@angul
     FormsModule,
     ReactiveFormsModule,
     SearchModuleModule,
-    NgxPaginationModule,
+    PipesModule,
     ChartsModule,
     DirectivesModule
   ]

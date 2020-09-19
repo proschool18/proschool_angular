@@ -107,7 +107,7 @@ export class AssignsubjectsComponent implements OnInit {
       this.alert_message = 'Please Select the Subject and the Teacher';
       this.openAlert(this.alert_message)
     } else {
-      this.teacher_name = this.teachers.filter( tch => tch.employee_id === this.teachersForm.value.teacher_id)[0].first_name;
+      // this.teacher_name = this.teachers.filter( tch => tch.employee_id === this.teachersForm.value.teacher_id)[0].first_name;
       this.academicservice.assignTeachers(this.teachersForm.value, this.selected_section)
         .subscribe(
           res => { 

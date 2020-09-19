@@ -1,8 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ServicesService } from '../../services.service';
+import { FeeService } from '../../_services/fee.service';
+import { StudentsService } from '../../_services/students.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { AlertComponent } from '../../_alert/alert/alert.component';
+import { AddfeeComponent } from '../addfee/addfee.component';
+import { EditfeeComponent } from '../editfee/editfee.component';
+import { ListPaymentsComponent } from '../list-payments/list-payments.component';
 import { User } from '../../_models/user';
 
 @Component({
@@ -12,104 +18,94 @@ import { User } from '../../_models/user';
 })
 export class CollectfeeComponent implements OnInit {
 
-  constructor(private service: ServicesService, private fb: FormBuilder, public dialog: MatDialog) {}
+  constructor(private service: ServicesService, private feeservice: FeeService, private studentservice: StudentsService, private route: ActivatedRoute, private fb: FormBuilder, public dialog: MatDialog) {}
+
+  pageNo: number = 1;
+  page_start: number = 0;
+  page_counter = Array;
+  pages: number = 10;
 
   collect:boolean;        
   user: User;
+  showStudentList: boolean = false;
+
+  student_id = this.route.snapshot.paramMap.get('student_id');
 
   selected_class:string;
   selected_section:string;
-  selected_student:string;
+  selected_student: any = {};
+  dialog_type: string;
   alert_message: string;
+
+  pageChange(x) {
+    this.pageNo = x;
+    this.page_start = (x - 1) * 10;
+  } 
+
+  students = [];
+  collected_fee:any = [];
+  studentFee:any = {};
+  fee_types = [];
+  selected_payments = [];
+
+  // receiveClass($event) {
+  //   this.selected_class = $event;
+  //   console.log(this.selected_class)
+  // }
+
+  // receiveSection($event) {
+  //   this.selected_section = $event
+  //   console.log(this.selected_section)
+  //   this.getStudents();
+  // }
+
+  // getStudents() {
+  //   if(this.selected_section == undefined || this.selected_section == '') {
+  //     this.alert_message = "Please Select Class and Section";
+  //     this.openAlert(this.alert_message)
+  //   } else {
+  //     this.service.getStudents(this.selected_section)
+  //     .subscribe(
+  //       res => { 
+  //         this.students = res.students.filter(data => data.status === 1), 
+
+  //         this.getCollectedFee()
+  //       }
+  //     )
+  //   }
+  // }
 
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('currentUser'));
-    this.getFeeTerms();
     this.getFeeTypes();
-    if(this.user.role === 'admin') {
-      this.collect = true;
-    } else if(this.user.role === 'teacher' || this.user.role === 'parent') {
-      this.collect = false;
-    }
-    if(this.user.role === 'parent') {
-      this.selected_student = this.user.users[0].student_id;
-      this.getCollectedFee();
-    }
+    this.selected_student.student_id = this.student_id;
+    console.log(this.selected_student);
+    this.getCollectedFee();
   }
 
-  students = [];
-  collected_fee = [];
-  fee_terms = [];
-  fee_types = [];
-  student_fee = [
-    {
-      totalFee: '',
-      totalStudentFee: '',
-      totalBalanceFee: '',
-    }
-  ];
-
-  collectfeeForm: FormGroup = this.fb.group({
-    class_id: ['', Validators.required],
-    fee_term_id: ['', Validators.required],
-    fee_types_id: ['', Validators.required],
-    total_fee: ['', Validators.required],
-    fee_paid: ['', Validators.required],
-    payment_mode: ['', Validators.required],
-    discount: ['', Validators.required],
-    fine: ['', Validators.required],
-    phone: ['', Validators.required],
-  });
-
-  receiveClass($event) {
-    this.selected_class = $event;
-    this.collectfeeForm.value.class_id = this.selected_class;
-    console.log(this.selected_class)
-  }
-
-  receiveSection($event) {
-    this.selected_section = $event
-    console.log(this.selected_section)
-    this.getStudents();
-  }
-
-  getcollected_list(i) {
-    if(i == 1) {
-      this.collect = true 
-    } else {
-      this.collect = false
-    }
-  }
-
-  getStudents() {
-    if(this.selected_section == undefined || this.selected_section == '') {
-      this.alert_message = "Please Select Class and Section";
+  getStudentDetails() {
+    if(this.student_id == undefined || this.student_id == '') {
+      this.alert_message = "Please Select Student";
       this.openAlert(this.alert_message)
     } else {
-      this.service.getStudents(this.selected_section)
+      this.studentservice.getStudentDetails(this.student_id)
       .subscribe(
-        res => { this.students = res.students, console.log(res) }
+        res => { 
+          this.selected_student = res.students[0],
+          this.getCollectedFee()
+        }
       )
     }
   }
 
   getCollectedFee() {
-    if(this.selected_student == undefined || this.selected_student == '') {
-      this.alert_message = "Please Select Student";
-      this.openAlert(this.alert_message)
-    } else {
-      this.service.getCollectedFee(this.selected_student)
-      .subscribe(
-        res => { this.collected_fee = res.student_fee_details, console.log(this.collected_fee) }
-      )
-    }
-  }
-
-  getFeeTerms() {
-    this.service.getFeeTerms()
-      .subscribe(
-        res => { this.fee_terms = res.fee_term, console.log(res) }
-      )
+    this.service.getCollectedFee(this.selected_student.student_id)
+    .subscribe(
+      res => { this.collected_fee = res.StudentFeeDetails, 
+        this.pages = Math.ceil(this.collected_fee.length / 10);
+        console.log(this.collected_fee) 
+      }
+    )
   }
 
   getFeeTypes() {
@@ -119,21 +115,126 @@ export class CollectfeeComponent implements OnInit {
       )
   }
 
-  getStudent_term_type_fee() {
-    if(this.collectfeeForm.value.fee_term_id == undefined || this.collectfeeForm.value.fee_types_id == undefined ||
-      this.collectfeeForm.value.fee_term_id == '' || this.collectfeeForm.value.fee_types_id == '') {
-      this.alert_message = "Please Select Fee-Term & Fee-Type";
+  addCollectedFee(i, fee_types_id, fee) {
+    if (this.selected_student.student_id == undefined || this.selected_student.student_id == '') {
+      this.alert_message = "Please Select Class, Section and Student";
       this.openAlert(this.alert_message)
-    } else {
-      this.service.getStudent_term_type_fee(this.selected_student, this.collectfeeForm.value.fee_term_id, this.collectfeeForm.value.fee_types_id)
-      .subscribe(
-        res => { this.student_fee = res.StudentFeeDetails, console.log(res) }
-      )
+    } else { 
+      this.dialog_type = 'add';
+      this.studentFee = this.collected_fee[i];
+      this.openDialog(this.studentFee, fee, fee_types_id, this.dialog_type)
     }
   }
 
-  addCollectedFee() {
+  addStudentFee() {
+    if (this.selected_student.student_id == undefined || this.selected_student.student_id == '') {
+      this.alert_message = "Please Select Class, Section and Student";
+      this.openAlert(this.alert_message)
+    } else { 
+      this.dialog_type = 'add';
+      this.studentFee = {class_id: this.collected_fee[0].class_id, student_id: this.collected_fee[0].student_id, installment_type: this.collected_fee[0].installment_type}
+      this.studentFee_dialog(this.studentFee, this.dialog_type)
+    }
+  }
 
+  editStudentFee(studentFee_id) {
+    if (this.selected_student.student_id == undefined || this.selected_student.student_id == '') {
+      this.alert_message = "Please Select Class, Section and Student";
+      this.openAlert(this.alert_message)
+    } else { 
+      this.dialog_type = 'edit';
+      this.studentFee = this.collected_fee.filter(data => data.studentFee_id === studentFee_id)[0]
+      this.studentFee_dialog(this.studentFee, this.dialog_type)
+    }
+  }
+
+  deleteStudentFee(studentFee_id) {
+    this.feeservice.deleteStudentFee(studentFee_id)
+    .subscribe(
+      res => { 
+        if(res == true) {
+          this.alert_message = "StudentFee Deleted Successfully";
+          this.openAlert(this.alert_message);
+          this.getCollectedFee();
+        } else {
+          this.alert_message = "StudentFee Not Deleted";
+          this.openAlert(this.alert_message)
+        }
+      }
+    )
+  }
+
+  openDialog(studentFee, fee, fee_types_id, dialog_type): void {
+
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '40%';
+
+    dialogConfig.data = {
+      student_fee: studentFee,
+      fee: fee,
+      fee_types_id: fee_types_id,
+      dialog_type: dialog_type,
+    };
+
+    const dialogRef = this.dialog.open(AddfeeComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(
+      data => {
+        console.log("Dialog output:", data)
+        this.getCollectedFee();
+      }
+    );
+
+  }
+
+  studentFee_dialog(studentFee, submit_type): void {
+
+    const std_dialogConfig = new MatDialogConfig();
+
+    std_dialogConfig.autoFocus = true;
+    std_dialogConfig.width = '40%';
+
+    std_dialogConfig.data = {
+      student_fee: studentFee,
+      dialog_type: 'StudentFee',
+      submit_type: submit_type,
+    };
+
+    const dialogRef = this.dialog.open(EditfeeComponent, std_dialogConfig);
+
+    dialogRef.afterClosed().subscribe(
+      data => {
+        console.log("Dialog output:", data)
+        this.getCollectedFee();
+      }
+    );
+
+  }
+
+  viewPayments(fee_types_id) {
+    this.selected_payments = this.collected_fee.filter(data => data.fee_types_id === fee_types_id)[0];
+    this.openPayments(this.selected_payments)
+  }
+
+  openPayments(FeePayments): void {
+
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '50%';
+
+    dialogConfig.data = {
+      FeePayments: FeePayments,
+    };
+
+    const dialogRef = this.dialog.open(ListPaymentsComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(
+      data => {}
+    );
+    
   }
 
   openAlert(alert_message) {

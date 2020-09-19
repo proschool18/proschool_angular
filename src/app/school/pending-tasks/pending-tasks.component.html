@@ -1,11 +1,11 @@
-<main class="card mt-20 within-viewport">
+<main class="card mt-20 within-viewport new-listing">
     <section class="page-actions">
         <div class="_select_div">
-            <button class="btn -cta" routerLink="/main/admin/pendingTasks">Pending Tasks</button>
-            <button class="btn -cta" routerLink="/main/admin/completedTasks">Completed Info</button>
+            <button class="btn -cta" routerLink="/main/main/admin/pendingTasks">Pending Tasks</button>
+            <button class="btn -cta" routerLink="/main/main/admin/completedTasks">Completed Info</button>
         </div>
         <div class="add_div">
-            <button class="btn -cta" (click)="addTask()">Add Task</button>
+            <button class="btn -cta" (click)="addTask()" *ngIf="user.role === 'admin'">Add Task</button>
         </div>
     </section>
     <section class="table-and-pagination -classes-schedule">
@@ -24,19 +24,19 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let task of tasks; let i=index">
-                        <td>{{ i + 1 }}</td>
+                    <tr *ngFor="let task of tasks | pagination: pageNo; let i=index">
+                        <td class="_s-no"><span>{{ page_start + i + 1 }}</span></td>
                         <td>{{task.task}}</td>
                         <td *ngIf="user.role === 'admin'">{{task.department}}</td>
                         <td *ngIf="user.role === 'admin'">{{task.employee_name}}</td>
-                        <td>{{task.priority}}</td>
-                        <td>{{task.assigned_on}}</td>
-                        <td *ngIf="user.role === 'admin'"><span class="_chip -class-running"
+                        <td><span class="_chip -class-running"
+                            [ngStyle]="{'background-color': (task.priority === 'High') ? '#e56761' : (task.priority === 'Medium') ? '#77c284' : '#5e81f4', 'color': 'white' }">
+                            {{task.priority}}</span>
+                        </td>
+                        <td>{{task.due_date}}</td>
+                        <td><span class="_chip -class-running"
                                 [ngStyle]="{'background-color': (task.task_status == 'pending') ? '#d9534f' : '#5cb85c', 'color': 'white' }"
                                 (click)="update_status(task.task_status, i)">{{task.task_status}}</span></td>
-                        <td *ngIf="user.role === 'teacher'"><span class="_chip -class-running"
-                                [ngStyle]="{'background-color': (task.task_status == 'pending') ? '#d9534f' : '#5cb85c', 'color': 'white' }">{{task.task_status}}</span>
-                        </td>
                         <td class="_actions" *ngIf="user.role === 'admin'">
                             <button class="btn" (click)="editTask(i)"><img src="../../../assets/images/edit-white.svg" alt="Edit" /></button>
                             <button class="btn" (click)="deleteTask(task.task_id)"><img src="../../../assets/images/trash-white.svg" alt="Delete" /></button>
@@ -46,18 +46,9 @@
             </table>
         </div>
         <div class="_pagination">
-            <a href="" class="btn -previous">Previous</a>
-            <a href="" class="btn -current">1</a>
-            <a href="" class="btn">2</a>
-            <a href="" class="btn">3</a>
-            <a href="" class="btn">4</a>
-            <a href="" class="btn">5</a>
-            <a href="" class="btn">6</a>
-            <a href="" class="btn">7</a>
-            <a href="" class="btn">8</a>
-            <a href="" class="btn">9</a>
-            <a href="" class="btn">10</a>
-            <a href="" class="btn -next">Next</a>
-        </div>
+            <a class="btn -previous">Previous</a>
+            <a class="btn" [ngClass]="{'-current': pageNo === (i+1)}" *ngFor='let page of page_counter(pages) ;let i = index' (click)="pageChange(i+1)">{{i+1}}</a>
+            <a class="btn -next">Next</a>
+          </div>
     </section>
 </main>

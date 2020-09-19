@@ -10,11 +10,20 @@ import { AlertComponent } from '../../_alert/alert/alert.component';
 })
 export class ParentinfoComponent implements OnInit {
 
-
   constructor(private service: ServicesService, public dialog: MatDialog) {}
+
+  pageNo: number = 1;
+  page_start: number = 0;
+  page_counter = Array;
+  pages: number = 10;
 
   ngOnInit() {
   }
+
+  pageChange(x) {
+    this.pageNo = x;
+    this.page_start = (x - 1) * 10;
+  } 
 
   parents = [];
   selected_class:string;
@@ -39,7 +48,9 @@ export class ParentinfoComponent implements OnInit {
     } else {
       this.service.getParentsInfo(this.selected_section)
       .subscribe(
-        res => { this.parents = res.parents, console.log(res)
+        res => { this.parents = res.parents, 
+          this.pages = Math.ceil(this.parents.length / 10),
+          console.log(res)
         }
       )
     }

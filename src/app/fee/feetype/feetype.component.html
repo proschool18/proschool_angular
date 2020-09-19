@@ -1,11 +1,12 @@
-<main class="card mt-20 within-viewport">
+<main class="card mt-20 within-viewport new-listing">
   <section class="page-actions">
     <div class="_select-or-search">
-      <form role="form" [formGroup]="feetypeForm" (ngSubmit)="addFeeTypes()">
+      <!-- <form role="form" [formGroup]="feetypeForm" (ngSubmit)="addFeeTypes()">
         <input class="standard" formControlName="fee_type" placeholder="Enter..." type="text">
         <button type="submit" class="btn -cta">Add Type</button>
-      </form>
+      </form> -->
     </div>
+    <button class="btn -cta" (click)="addFeeType()">Add FeeType</button>
   </section>
   <section class="table-and-pagination -classes-schedule">
 
@@ -13,14 +14,14 @@
       <table>
         <thead>
           <tr>
-            <th>#</th>
+            <th align="left">#</th>
             <th align="left">Type</th>
             <th align="left">Action</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let fee of fee_types; let i=index">
-            <td class="_s-no"><span>{{ i + 1 }}</span></td>
+          <tr *ngFor="let fee of fee_types | pagination: pageNo; let i=index">
+            <td class="_s-no"><span>{{ page_start + i + 1 }}</span></td>
             <td>{{fee.fee_type}}</td>
             <td class="_actions">
               <button class="btn" (click)="editFeeType(i)"><img src="../../../assets/images/edit-white.svg" alt="Edit" /></button>
@@ -32,18 +33,9 @@
     </div>
     
     <div class="_pagination">
-      <a href="" class="btn -previous">Previous</a>
-      <a href="" class="btn -current">1</a>
-      <a href="" class="btn">2</a>
-      <a href="" class="btn">3</a>
-      <a href="" class="btn">4</a>
-      <a href="" class="btn">5</a>
-      <a href="" class="btn">6</a>
-      <a href="" class="btn">7</a>
-      <a href="" class="btn">8</a>
-      <a href="" class="btn">9</a>
-      <a href="" class="btn">10</a>
-      <a href="" class="btn -next">Next</a>
+      <a class="btn -previous">Previous</a>
+      <a class="btn" [ngClass]="{'-current': pageNo === (i+1)}" *ngFor='let page of page_counter(pages) ;let i = index' (click)="pageChange(i+1)">{{i+1}}</a>
+      <a class="btn -next">Next</a>
     </div>
   </section>
 </main>

@@ -9,26 +9,13 @@ import { AlertComponent } from '../../_alert/alert/alert.component';
   styleUrls: ['./fee-reportsby-day.component.css']
 })
 export class FeeReportsbyDayComponent implements OnInit {
-  config: any;
-  collection = { count: '', day_fees: [] };
 
-  constructor(private service: ServicesService, public dialog: MatDialog) {
-    this.config = {
-      itemsPerPage: 5,
-      currentPage: 1,
-      totalItems: this.collection.count
-    };
-   }
+  constructor(private service: ServicesService, public dialog: MatDialog) {}
 
   ngOnInit() {
   }
-
-  pageChanged(event){
-    this.config.currentPage = event;
-  }
-
-
-  //day_fees = [];
+  
+  day_fees = [];
   select_date:string;
   alert_message: string;
 
@@ -40,7 +27,7 @@ export class FeeReportsbyDayComponent implements OnInit {
       this.service.getDay_fee(this.select_date)
         .subscribe(
           res => { 
-            this.collection.day_fees = res.fee, 
+            this.day_fees = res.fee, 
             console.log(res)
           }
         )

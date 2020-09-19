@@ -44,14 +44,15 @@ export class AssignmentsService {
   }
 
   // Assignment Marks
-  getAssignment_marks(section_id, subject_id, lession_id, assignment_id): Observable<any> {
-    return this.http.get<any>(this.url + '/assignment_marksbulk_eval/' + section_id + '/' + subject_id + '/' + lession_id + '/' + assignment_id)
+  getAssignment_marks(assignment_id): Observable<any> {
+    return this.http.get<any>(this.url + '/assignment_marksbulk_eval/' + assignment_id)
   }
 
-  addAssignment_marks(data, section_id, subject_id, lession_id, assignment_id): Observable<any> {
+  addAssignment_marks(data, max_marks, section_id, subject_id, lession_id, assignment_id): Observable<any> {
     console.log(data) 
     var test = {
       "students": data,
+      "max_marks": max_marks
     };
     return this.http.post<any>(this.url + '/assignment_marksbulk_eval/' + section_id + '/' + subject_id + '/' + lession_id + '/' + assignment_id, test)
   }
@@ -87,8 +88,8 @@ export class AssignmentsService {
   }
 
   // ClassTest Marks
-  getClassTest_marks(section_id, subject_id, classTest_id): Observable<any> {
-    return this.http.get<any>(this.url + '/classTests_marksbulk_eval/' + section_id + '/' + subject_id + '/' + classTest_id)
+  getClassTest_marks(classTest_id): Observable<any> {
+    return this.http.get<any>(this.url + '/classTests_marksbulk_eval/' + classTest_id)
   }
 
   addClassTest_marks(data, section_id, subject_id, classTest_id): Observable<any> {
@@ -125,9 +126,8 @@ export class AssignmentsService {
   }
 
   // Projectwork Marks
-  getProjectwork_marks(section_id, subject_id, projectwork_id): Observable<any> {
-    console.log(projectwork_id)
-    return this.http.get<any>(this.url + '/projectworks_marksbulk_eval/' + section_id + '/' + subject_id + '/' + projectwork_id)
+  getProjectwork_marks(projectwork_id): Observable<any> {
+    return this.http.get<any>(this.url + '/projectworks_marksbulk_eval/' + projectwork_id)
   }
 
   addProjectwork_marks(data, section_id, subject_id, projectwork_id): Observable<any> {

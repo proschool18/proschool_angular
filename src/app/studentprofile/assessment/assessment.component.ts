@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ServicesService } from '../../services.service';
+import { StudentsService } from '../../_services/students.service';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { AlertComponent } from '../../_alert/alert/alert.component';
+import { appConfig } from '../../app.config';
 
 @Component({
   selector: 'app-assessment',
@@ -11,10 +13,16 @@ import { AlertComponent } from '../../_alert/alert/alert.component';
 })
 export class AssessmentComponent implements OnInit {
 
-  constructor(private service: ServicesService, private route: ActivatedRoute, public dialog: MatDialog) { }
+  constructor(private service: ServicesService, private studentservice: StudentsService, private route: ActivatedRoute, public dialog: MatDialog) { }
+
+  student_details: any = {};
+  profileImage;
+
+  private url = appConfig.apiUrl;
 
   ngOnInit() {
     this.getStudentAssessments();
+    this.getStudentDetails();
   }
 
   student_id = this.route.snapshot.paramMap.get('id');
@@ -85,6 +93,18 @@ export class AssessmentComponent implements OnInit {
     responsive: true
   };
   public chartLegend: true;
+
+  getStudentDetails() {    
+    this.studentservice.getStudentDetails(this.student_id)      
+    .subscribe(        
+      res => { this.student_details = res.students[0], this.getStudentImage(), console.log(res) 
+      }      
+    )  
+  }
+
+  getStudentImage() {
+    this.profileImage = this.url + '/image/' + this.student_details.studentImage[0].filename;
+  }
 
   getStudentAssessments() {
     if (this.student_id == undefined || this.student_id == '') {

@@ -13,6 +13,8 @@ export class TimetableService {
   private url = appConfig.apiUrl;
   private school_id = appConfig.school_id;
 
+  empty_data = {}
+
   // Timetable
   getTimetable(selected_section): Observable<any> {
     return this.http.get<any>(this.url + '/class_timetables/' + selected_section);
@@ -42,5 +44,24 @@ export class TimetableService {
     return this.http.post<any>(this.url + '/schoolevents/' + this.school_id, data)
   }
 
+  // NoticeBoard
+
+  getNotice(): Observable<any> {
+    return this.http.get<any>(this.url + '/noticeboard/' + this.school_id);
+  }
+
+  addNotice(data): Observable<any> {
+    console.log(data)
+    return this.http.post<any>(this.url + '/noticeboard/' + this.school_id, data)
+  }
+
+  editNotice(data, notice_id): Observable<any> {
+    console.log(data)
+    return this.http.put<any>(this.url + '/edit_noticeboard/' + notice_id, data)
+  }
+
+  deleteNotice(notice_id): Observable<any> {
+    return this.http.put<any>(this.url + '/delete_noticeboard/' + notice_id, this.empty_data)
+  }
   
 }

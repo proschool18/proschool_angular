@@ -21,10 +21,20 @@ export class ServicesService {
     return this.http.post<any>(this.url + '/schools', data)
   }
 
-  editSchoolProfile(data, school_id): Observable<any> {  
+  editSchoolDetails(data, school_id): Observable<any> {  
     console.log(school_id)  
     return this.http.put<any>(this.url + '/edit_school_details/' + school_id, data)  
   }  
+
+  editSchool_managementDetails(data, school_id): Observable<any> {  
+    console.log(school_id)  
+    return this.http.put<any>(this.url + '/edit_schoolManagement_details/' + school_id, data)  
+  } 
+
+  editSchool_contactDetails(data, school_id): Observable<any> {  
+    console.log(school_id)  
+    return this.http.put<any>(this.url + '/edit_schoolContact_details/' + school_id, data)  
+  } 
   
   getSchools() : Observable<any> {    
     return this.http.get<any>(this.url + '/school_details/' + this.school_id)  
@@ -225,6 +235,11 @@ export class ServicesService {
     return this.http.get<any>(this.url + '/attendancechartbydate/' + date + '/' + class_id + '/' + section_id);
   }
 
+  getRangeAttendance(class_id, section_id, start_date, end_date): Observable<any> {
+    console.log(section_id)
+    return this.http.get<any>(this.url + '/attendanceByRange/' + class_id + '/' + section_id + '/' + start_date + '/' + end_date);
+  }
+
   addAttendance(data, date, class_id, section_id): Observable<any> {
     var test = {
       "students": data,
@@ -242,6 +257,11 @@ export class ServicesService {
    getEmployeeAttendance(category, date): Observable<any> {
     console.log(category)
     return this.http.get<any>(this.url + '/employee_Attendance_by_category/' + category + '/' + date + '/' + this.school_id);
+  }
+
+  getEmployeeRangeAttendance(category, start_date, end_date): Observable<any> {
+    console.log(category)
+    return this.http.get<any>(this.url + '/employee_attendanceByRange/' +  this.school_id + '/' + category + '/' + start_date + '/' + end_date);
   }
 
   addEmployeeAttendance(data, date): Observable<any> {
@@ -396,9 +416,9 @@ export class ServicesService {
   }
 
   // Projectwork Marks
-  getProjectwork_marks(section_id, subject_id, projectwork_id): Observable<any> {
+  getProjectwork_marks(projectwork_id): Observable<any> {
     console.log(projectwork_id)
-    return this.http.get<any>(this.url + '/projectworks_marksbulk_eval/' + section_id + '/' + subject_id + '/' + projectwork_id)
+    return this.http.get<any>(this.url + '/projectworks_marksbulk_eval/' + projectwork_id)
   }
 
   addProjectwork_marks(data, section_id, subject_id, projectwork_id): Observable<any> {
@@ -467,12 +487,21 @@ export class ServicesService {
     return this.http.get<any>(this.url + '/all_assessment_marks_by_section_id/' + selected_section);
   }
 
+  getExamSchedule(selected_schedule, selected_section, selected_subject): Observable<any> {
+    return this.http.get<any>(this.url + '/exams/' + selected_schedule + '/' + selected_section + '/' + selected_subject);
+  }
+
   addEvaluations(data, selected_schedule, selected_section, selected_subject): Observable<any> {
     console.log(data);
     var test = {
       "studentsMarks": data,
     };
-    return this.http.post<any>(this.url + '/assessment_marksbulk_eval/' + selected_schedule + '/' + selected_section + '/' + selected_subject, test)
+    return this.http.post<any>(this.url + '/assessment_marksbulk_eval_mobile/' + selected_schedule + '/' + selected_section + '/' + selected_subject, test)
+  }
+
+  editEvaluations(data, selected_subject): Observable<any> {
+    console.log(data);
+    return this.http.put<any>(this.url + '/assessment_edit_eval/' + selected_subject, data)
   }
 
   getEvaluationChart(selected_section): Observable<any> {
@@ -487,7 +516,7 @@ export class ServicesService {
 
   // Timetable
   getTimetable(selected_section): Observable<any> {
-    return this.http.get<any>(this.url + '/class_timetables/' + selected_section);
+    return this.http.get<any>(this.url + '/class_timetable_by_week/' + selected_section);
   }
 
   addTimetable(data, selected_section): Observable<any> {
@@ -541,9 +570,9 @@ export class ServicesService {
     return this.http.get<any>(this.url + '/fee_collection/' + selected_student);
   }
 
-  addCollectedFee(data): Observable<any> {
+  addCollectedFee(data, selected_student): Observable<any> {
     console.log(data)
-    return this.http.post<any>(this.url + '/fee_collection/' + this.school_id, data)
+    return this.http.post<any>(this.url + '/fee_collection/' + selected_student, data)
   }
 
   getStudent_term_type_fee(selected_student, fee_term, fee_type): Observable<any> {
@@ -552,6 +581,10 @@ export class ServicesService {
 
   getStudent_fee(selected_student): Observable<any> {
     return this.http.get<any>(this.url + '/student_termwise_fee_details/' + selected_student + '/' + this.school_id);
+  }
+
+  getStudent_TermFee(selected_student, fee_term_id): Observable<any> {
+    return this.http.get<any>(this.url + '/student_term_fee_details/' + selected_student + '/' + fee_term_id + '/' + this.school_id);
   }
 
   getClass_fee(selected_section, fee_type, fee_term): Observable<any> {

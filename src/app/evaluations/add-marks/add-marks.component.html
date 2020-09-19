@@ -4,18 +4,23 @@
       <div class="_select-group">
         <app-schedule *ngIf="user.role === 'admin'" (classEvent)="receiveClass($event)" (sectionEvent)="receiveSection($event)" (scheduleEvent)="receiveSchedule($event)"></app-schedule>
         <app-teacher-schedule *ngIf="user.role === 'teacher'" (classEvent)="receiveClass($event)" (sectionEvent)="receiveSection($event)" (scheduleEvent)="receiveSchedule($event)"></app-teacher-schedule>
-        <select name="section" [(ngModel)]="selected_subject" (change)="getEvaluations()">
-          <option *ngFor="let sub of subjects; let i = index" value="{{sub.subject_id}}">{{sub.name}}</option>
-        </select>
+        <div class="dropdown">
+          <button class="dropbtn" (click)="showSubjectList = true" (clickOutside)="showSubjectList = false">
+            {{!selected_subject.name ? 'select subject' : selected_subject.name}}
+          </button>
+          <div class="dropdown-content" [hidden]="!showSubjectList">
+            <a *ngFor="let sub of subjects" (click)="selected_subject = sub; getExamSchedule();">{{sub.name}}</a>
+          </div>
+        </div>
       </div>
       <input type="search" name="" placeholder="Search">
     </div>
-    <button class="btn -cta" routerLink="/main/evaluations/marksList">Marks List</button>
-    <button class="btn -cta" routerLink="/main/evaluations/cumulativeMarks">Cumulative Marks</button>
-    <button class="btn -cta" routerLink="/main/evaluations/addMarks" *ngIf="user.role === 'admin' || user.role === 'teacher'">Add Marks</button>
+    <div class="add_div" *ngIf="user.role === 'admin' || user.role === 'teacher'">
+      <button class="btn -cta" (click)="addEvaluations()" *ngIf="add_marks">Add Marks</button>
+    </div>
   </section>
   <section class="table-and-pagination -classes-schedule">
-    <div class="table-container">
+    <div class="table-container" *ngIf="add_marks || edit_marks">
       <table>
         <thead>
           <tr>
@@ -23,31 +28,33 @@
             <th align="left">Student</th>
             <th align="left" *ngFor="let ass of inner_assessments;">{{ass.Assessment}}</th>
             <th align="left">Total Marks</th>
+            <th align="left" *ngIf="edit_marks">Edit Marks</th>
+            <th align="left" *ngIf="!edit_marks"></th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let stu of students; let i=index">
-            <td class="_s-no"><span>{{ i + 1 }}</span></td>
+          <tr *ngFor="let stu of students | pagination: pageNo; let i=index">
+            <td class="_s-no"><span>{{ page_start + i + 1 }}</span></td>
             <td>{{stu.first_name}}</td>
-            <td *ngFor="let ass of stu.assessments[0].assMarks; let j = index"><input class="form-control" type="number" [(ngModel)]="ass.marks" (change)="add_toStudent(i, j, $event)"></td>
-            <td>{{totalmarks[i]}}</td>
+            <!-- <td *ngFor="let ass of inner_assessments; let j = index"><input type="number" (change)="add_toStudent(page_start + i, j, $event)"></td> -->
+            <td *ngFor="let ass of stu.subjects.assMarks; let j = index">
+              <input type="number" [(ngModel)]="ass.marks" (change)="add_toStudent(page_start + i, j, $event)">
+            </td>
+            <td *ngIf="!edit_marks">{{totalmarks[page_start + i]}}</td>
+            <td *ngIf="edit_marks" >{{stu.subjects.Total_marks}}</td>
+            <td>
+              <button class="btn -cta" (click)="EditMarks(page_start + i)" *ngIf="edit_marks">Edit Marks</button>
+            </td>
+            <td *ngIf="!edit_marks"></td>
           </tr>               
         </tbody>
       </table>
     </div>
-    <div class="_pagination">
-      <a href="" class="btn -previous">Previous</a>
-      <a href="" class="btn -current">1</a>
-      <a href="" class="btn">2</a>
-      <a href="" class="btn">3</a>
-      <a href="" class="btn">4</a>
-      <a href="" class="btn">5</a>
-      <a href="" class="btn">6</a>
-      <a href="" class="btn">7</a>
-      <a href="" class="btn">8</a>
-      <a href="" class="btn">9</a>
-      <a href="" class="btn">10</a>
-      <a href="" class="btn -next">Next</a>
+    <h1 class="schedule_status" *ngIf="!add_marks && !edit_marks">Unable to Take Marks</h1>
+    <div class="_pagination" *ngIf="add_marks || edit_marks">
+      <a class="btn -previous">Previous</a>
+      <a class="btn" [ngClass]="{'-current': pageNo === (i+1)}" *ngFor='let page of page_counter(pages) ;let i = index' (click)="pageChange(i+1)">{{i+1}}</a>
+      <a class="btn -next">Next</a>
     </div>
   </section>
 </main>

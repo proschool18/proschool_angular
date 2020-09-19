@@ -1,4 +1,4 @@
-<main class="card mt-20 within-viewport">
+<main class="card mt-20 within-viewport new-listing">
   <section class="page-actions">
     <div class="_select_div">
       <button class="btn -cta" routerLink="/main/admin/expenses">Expenses</button>
@@ -11,26 +11,33 @@
         <thead>
           <tr>
             <th>#</th>
-            <th *ngIf="user.role === 'admin'"></th>
-            <th align="left">Expense</th>
+            <th align="left" *ngIf="user.role === 'admin'">Name</th>
             <th align="left">Amount</th>
             <th align="left">Category</th>
             <th align="left">Approved Date</th>
             <th align="left">Payment Date</th>
             <th align="left">Payment Status</th>
             <th align="left" *ngIf="user.role === 'admin'"></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let exp of expenses; let i=index">
-            <td>{{ i + 1 }}</td>
-            <td>{{exp.first_name}}</td>
+          <tr *ngFor="let exp of expenses | pagination: pageNo; let i=index">
+            <td class="_s-no"><span>{{ page_start + i + 1 }}</span></td>
+            <td *ngIf="user.role === 'admin'">{{exp.first_name}}</td>
             <td>Rs. {{exp.amount}}</td>
             <td>{{exp.category}}</td>
             <td>{{exp.approved_date}}</td>
             <td *ngIf="exp.payment_date !== ''">{{exp.payment_date}}</td>
-            <td *ngIf="exp.payment_date === ''" [ngStyle]="{'background-color': '#d9534f', 'color': 'white' }">No Payment</td>
-            <td>{{exp.payment_status}}</td>
+            <td *ngIf="exp.payment_date === ''">
+              <span class="_chip -class-running" [ngStyle]="{'background-color': '#d9534f', 'color': 'white' }">No Payment</span>
+            </td>
+            <td *ngIf="user.role === 'admin'">{{exp.payment_status}}</td>
+            <td *ngIf="user.role === 'teacher'">
+              <span class="_chip -class-running"
+                [ngStyle]="{'background-color': (exp.payment_status === 'completed') ? '#77c284' : '#d9534f', 'color': 'white' }">
+                {{exp.payment_status}}</span>
+            </td>
             <td *ngIf="user.role === 'admin' && exp.payment_status == 'pending'">   
               <span class="_chip -class-running" [ngStyle]="{'background-color': '#5cb85c', 'color': 'white' }" (click)="update_expense(exp.payment_status, i)">Paid</span>                 
             </td>
@@ -42,18 +49,9 @@
       </table>
     </div>
     <div class="_pagination">
-      <a href="" class="btn -previous">Previous</a>
-      <a href="" class="btn -current">1</a>
-      <a href="" class="btn">2</a>
-      <a href="" class="btn">3</a>
-      <a href="" class="btn">4</a>
-      <a href="" class="btn">5</a>
-      <a href="" class="btn">6</a>
-      <a href="" class="btn">7</a>
-      <a href="" class="btn">8</a>
-      <a href="" class="btn">9</a>
-      <a href="" class="btn">10</a>
-      <a href="" class="btn -next">Next</a>
+      <a class="btn -previous">Previous</a>
+      <a class="btn" [ngClass]="{'-current': pageNo === (i+1)}" *ngFor='let page of page_counter(pages) ;let i = index' (click)="pageChange(i+1)">{{i+1}}</a>
+      <a class="btn -next">Next</a>
     </div>
   </section>
 </main>

@@ -3,11 +3,12 @@
     <div class="_select-or-search">
       <div class="_select-group">
         <app-class *ngIf="user.role === 'admin'" (classEvent)="receiveClass($event)" (sectionEvent)="receiveSection($event)"></app-class>
+        <app-teacher-class *ngIf="user.role === 'teacher'" (classEvent)="receiveClass($event)" (sectionEvent)="receiveSection($event)"></app-teacher-class>
       </div>
     </div>
     <div class="add_div">
-      <form role="form" [formGroup]="timetableForm" (ngSubmit)="addTimetable()" *ngIf="user.role === 'admin'">
-        <!-- <div class="dropdown">
+
+      <!-- <div class="dropdown">
           <button class="dropbtn" (click)="showSubjectList = true" (clickOutside)="showSubjectList = false">
             {{!selected_subject ? 'select subject' : selected_subject}}
           </button>
@@ -15,7 +16,7 @@
             <a *ngFor="let sub of subjects;" (click)="timetableForm.value.subject_id = sub.subject_id;">{{sub.name}}</a>
           </div>
         </div> -->
-        <!-- <div class="dropdown">
+      <!-- <div class="dropdown">
           <button class="dropbtn" (click)="showTeacherList = true" (clickOutside)="showTeacherList = false">
             {{!selected_teacher ? 'select teacher' : selected_teacher}}
           </button>
@@ -23,7 +24,7 @@
             <a *ngFor="let tch of teachers;" (click)="timetableForm.value.teacher_id = tch.teacher_id;">{{tch.teacher_name}}</a>
           </div>
         </div> -->
-        <!-- <div class="dropdown">
+      <!-- <div class="dropdown">
           <button class="dropbtn" (click)="showDayList = true" (clickOutside)="showDayList = false">
             {{!selected_day ? 'select day' : selected_day}}
           </button>
@@ -31,7 +32,7 @@
             <a *ngFor="let tch of teachers;" (click)="timetableForm.value.teacher_id = tch.teacher_id;">{{tch.teacher_name}}</a>
           </div>
         </div> -->
-       <!--  <div class="dropdown">
+      <!--  <div class="dropdown">
           <button class="dropbtn" (click)="showDayList = true" (clickOutside)="showDayList = false">
             {{!selected_day ? 'select day' : selected_day}}
           </button>
@@ -39,13 +40,13 @@
             <a *ngFor="let tch of teachers;" (click)="timetableForm.value.teacher_id = tch.teacher_id;">{{tch.teacher_name}}</a>
           </div>
         </div> -->
-        <!-- <select name="section" formControlName="subject_id" (change)="getSubject_teachers()">
+      <!-- <select name="section" formControlName="subject_id" (change)="getSubject_teachers()">
           <option *ngFor="let sub of subjects" value="{{sub.subject_id}}">{{sub.name}}</option>
         </select> -->
-        <!-- <select name="section" formControlName="teacher_id">
+      <!-- <select name="section" formControlName="teacher_id">
           <option *ngFor="let tch of teachers" value="{{tch.teacher_id}}">{{tch.teacher_name}}</option>
         </select> -->
-        <!-- <select name="section" formControlName="day">
+      <!-- <select name="section" formControlName="day">
           <option value="monday">Monday</option>
           <option value="tuesday">Tuesday</option>
           <option value="wednesday">Wednesday</option>
@@ -54,13 +55,12 @@
           <option value="saturday">Saturday</option>
           <option value="sunday">Sunday</option>
         </select> -->
-       <!--  <select name="section" formControlName="session_id" (change)="getTime()">
+      <!--  <select name="section" formControlName="session_id" (change)="getTime()">
           <option *ngFor="let tim of timings; let j = index" value="{{tim.session_id}}">{{tim.session}}</option>
         </select> -->
-        <div class="form-group pull-right">
+      <!-- <div class="form-group pull-right">
           <button type="submit" class="btn -cta">Add Timetable</button>
-        </div>
-      </form>
+        </div> -->
     </div>
   </section>
 
@@ -80,305 +80,57 @@
         </tr>
       </thead>
       <tbody>
-        <tr class="_task">
+        <tr class="_task" *ngFor="let schedule of timetable; let i = index">
           <td class="time-specifiation">
-            <span>8:00 - 9:00</span> <button class="edit-time-row-btn">Edit</button></td>
-          <td class="schedule-box">
-            <p class="subject-spec">
-              <span class="row-content-title">Subject</span>
-              <span class="row-content-value">Maths</span>
-            </p>
-            <p class="class-section-spec">
-              <span class="row-content-title">Class Section</span>
-              <span class="row-content-value">Class 10 A</span>
-            </p>
-
-            <div class="row-content-detail">
-              <p class="row-content-detail-title">More details</p>
-              <p>
-                <span class="row-content-title">Subject</span>
-                <span class="row-content-value">Maths</span>
+            <span>{{schedule.start_time}} - {{schedule.end_time}}</span>
+            <button class="edit-time-row-btn" (click)="editTimeslot(i)" *ngIf="user.role === 'admin'">Edit</button>
+          </td>
+          <td *ngFor="let tim of schedule.schedule; let j = index">
+            <div class="schedule-box" *ngIf="tim.name !== 'No Data'">
+              <p class="subject-spec">
+                <span class="row-content-value">{{tim.name}}</span>
               </p>
-              <p>
-                <span class="row-content-title">Class Section</span>
-                <span class="row-content-value">Class 10 A</span>
+              <p class="class-section-spec">
+                <span class="row-content-value">{{tim.teacher_name}}</span>
               </p>
 
-              <div class="teacher-spec">
-                <span class="teacher-img-wrapper"><img src="../../../assets/images/man2.jpg"></span>
-                <p class="teacher-spec-text">
-                  <span class="row-content-title">Class Teacher</span>
-                  <span class="row-content-value">Ravi Raj Kumar</span>
+              <div class="row-content-detail">
+                <p class="row-content-detail-title">More details</p>
+                <p>
+                  <span class="row-content-title">Subject</span>
+                  <span class="row-content-value">{{tim.name}}</span>
                 </p>
+
+                <div class="teacher-spec">
+                  <span class="teacher-img-wrapper"><img src="../../../assets/images/man2.jpg"></span>
+                  <p class="teacher-spec-text">
+                    <span class="row-content-title">Teacher</span>
+                    <span class="row-content-value">{{tim.teacher_name}}</span>
+                  </p>
+                </div>
+
+                <button class="delete-schedule-btn" *ngIf="user.role === 'admin'">Delete Schedule</button>
               </div>
-
-              <button class="delete-schedule-btn">Delete Schedule</button>
             </div>
-          </td>
-          <td></td>
-          <td></td>
-          <td class="schedule-box">
-            <p class="subject-spec">
-              <span class="row-content-title">Subject</span>
-              <span class="row-content-value">Maths</span>
-            </p>
-            <p class="class-section-spec">
-              <span class="row-content-title">Class Section</span>
-              <span class="row-content-value">Class 10 A</span>
-            </p>
-
-            <div class="row-content-detail">
-              <p class="row-content-detail-title">More details</p>
-              <p>
-                <span class="row-content-title">Subject</span>
-                <span class="row-content-value">Maths</span>
-              </p>
-              <p>
-                <span class="row-content-title">Class Section</span>
-                <span class="row-content-value">Class 10 A</span>
-              </p>
-
-              <div class="teacher-spec">
-                <span class="teacher-img-wrapper"><img src="../../../assets/images/man2.jpg"></span>
-                <p class="teacher-spec-text">
-                  <span class="row-content-title">Class Teacher</span>
-                  <span class="row-content-value">Ravi Raj Kumar</span>
-                </p>
+            <div class="empty-schedule-box" *ngIf="tim.name !== 'No Data' && tim.room_no === 'Holiday'">
+              <div class="holiday-schedule-wrapper">
+                <button>Holiday</button>
               </div>
-
-              <button class="delete-schedule-btn">Delete Schedule</button>
             </div>
-          </td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr class="_task">
-          <td class="time-specifiation">
-            <span>9:00 - 10:00</span> <button class="edit-time-row-btn">Edit</button></td>
-          <td class="empty-schedule-box">
-            <div class="add-in-empty-schedule-wrapper">
-              <button>Add Subject</button>
-              <button>Add Class & Section</button>
-            </div>
-          </td>
-          <td class="empty-schedule-box">
-            <div class="add-in-empty-schedule-wrapper">
-              <button>Add Subject</button>
-              <button>Add Class & Section</button>
-            </div>
-          </td>
-          <td class="empty-schedule-box">
-            <div class="add-in-empty-schedule-wrapper">
-              <button>Add Subject</button>
-              <button>Add Class & Section</button>
-            </div>
-          </td>
-          <td class="empty-schedule-box">
-            <div class="add-in-empty-schedule-wrapper">
-              <button>Add Subject</button>
-              <button>Add Class & Section</button>
-            </div>
-          </td>
-          <td class="empty-schedule-box">
-            <div class="add-in-empty-schedule-wrapper">
-              <button>Add Subject</button>
-              <button>Add Class & Section</button>
-            </div>
-          </td>
-          <td class="empty-schedule-box">
-            <div class="add-in-empty-schedule-wrapper">
-              <button>Add Subject</button>
-              <button>Add Class & Section</button>
-            </div>
-          </td>
-          <td class="empty-schedule-box">
-            <div class="add-in-empty-schedule-wrapper">
-              <button>Add Subject</button>
-              <button>Add Class & Section</button>
-            </div>
-          </td>
-        </tr>
-        <tr class="_task">
-          <td class="time-specifiation">
-            <span>10:00 - 11:00</span> <button class="edit-time-row-btn">Edit</button></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr class="_task">
-          <td class="time-specifiation">
-            <span>11:00 - 12:00</span> <button class="edit-time-row-btn">Edit</button></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr class="_task">
-          <td class="time-specifiation">
-            <span>12:00 - 1:00</span> <button class="edit-time-row-btn">Edit</button></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr class="_task">
-          <td class="time-specifiation">
-            <span>1:00 - 2:00</span> <button class="edit-time-row-btn">Edit</button></td>
-          <td></td>
-          <td class="schedule-box">
-            <p class="subject-spec">
-              <span class="row-content-title">Subject</span>
-              <span class="row-content-value">Maths</span>
-            </p>
-            <p class="class-section-spec">
-              <span class="row-content-title">Class Section</span>
-              <span class="row-content-value">Class 10 A</span>
-            </p>
-
-            <div class="row-content-detail">
-              <p class="row-content-detail-title">More details</p>
-              <p>
-                <span class="row-content-title">Subject</span>
-                <span class="row-content-value">Maths</span>
-              </p>
-              <p>
-                <span class="row-content-title">Class Section</span>
-                <span class="row-content-value">Class 10 A</span>
-              </p>
-
-              <div class="teacher-spec">
-                <span class="teacher-img-wrapper"><img src="../../../assets/images/man2.jpg"></span>
-                <p class="teacher-spec-text">
-                  <span class="row-content-title">Class Teacher</span>
-                  <span class="row-content-value">Ravi Raj Kumar</span>
-                </p>
+            <div class="empty-schedule-box" *ngIf="tim.name === 'No Data'">
+              <div class="add-in-empty-schedule-wrapper">
+                <button (click)="addSchedule(i, j)" *ngIf="user.role === 'admin'">Add Subject</button>
+                <button (click)="markHoliday(i, j)" *ngIf="user.role === 'admin'">Mark Holiday</button>
               </div>
-
-              <button class="delete-schedule-btn">Delete Schedule</button>
             </div>
           </td>
-          <td></td>
-          <td class="schedule-box">
-            <p class="subject-spec">
-              <span class="row-content-title">Subject</span>
-              <span class="row-content-value">Maths</span>
-            </p>
-            <p class="class-section-spec">
-              <span class="row-content-title">Class Section</span>
-              <span class="row-content-value">Class 10 A</span>
-            </p>
-
-            <div class="row-content-detail">
-              <p class="row-content-detail-title">More details</p>
-              <p>
-                <span class="row-content-title">Subject</span>
-                <span class="row-content-value">Maths</span>
-              </p>
-              <p>
-                <span class="row-content-title">Class Section</span>
-                <span class="row-content-value">Class 10 A</span>
-              </p>
-
-              <div class="teacher-spec">
-                <span class="teacher-img-wrapper"><img src="../../../assets/images/man2.jpg"></span>
-                <p class="teacher-spec-text">
-                  <span class="row-content-title">Class Teacher</span>
-                  <span class="row-content-value">Ravi Raj Kumar</span>
-                </p>
-              </div>
-
-              <button class="delete-schedule-btn">Delete Schedule</button>
-            </div>
-          </td>
-          <td></td>
-          <td></td>
-          <td></td>
         </tr>
-        <tr class="_task">
-          <td class="time-specifiation">
-            <span>2:00 - 3:00</span> <button class="edit-time-row-btn">Edit</button></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr class="_task">
-          <td class="time-specifiation">
-            <span>4:00 - 5:00</span> <button class="edit-time-row-btn">Edit</button></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td class="schedule-box">
-            <p class="subject-spec">
-              <span class="row-content-title">Subject</span>
-              <span class="row-content-value">Maths</span>
-            </p>
-            <p class="class-section-spec">
-              <span class="row-content-title">Class Section</span>
-              <span class="row-content-value">Class 10 A</span>
-            </p>
-
-            <div class="row-content-detail">
-              <p class="row-content-detail-title">More details</p>
-              <p>
-                <span class="row-content-title">Subject</span>
-                <span class="row-content-value">Maths</span>
-              </p>
-              <p>
-                <span class="row-content-title">Class Section</span>
-                <span class="row-content-value">Class 10 A</span>
-              </p>
-
-              <div class="teacher-spec">
-                <span class="teacher-img-wrapper"><img src="../../../assets/images/man2.jpg"></span>
-                <p class="teacher-spec-text">
-                  <span class="row-content-title">Class Teacher</span>
-                  <span class="row-content-value">Ravi Raj Kumar</span>
-                </p>
-              </div>
-
-              <button class="delete-schedule-btn">Delete Schedule</button>
-            </div>
-          </td>
-          <td></td>
-        </tr>
-        <tr class="_task">
-          <td class="last-row-time-specifiation">
-            <p><span class="last-row-timestamp">4:00</span><span class="blue-arrow"><</span><span> pm </span><span class="blue-arrow">></span></p>
-            <p><span class="last-row-timestamp">12:00</span><span class="blue-arrow"><</span><span> pm </span><span class="blue-arrow">></span></p>
-            <button class="last-row-save-btn">Save</button>
-          </td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        
       </tbody>
     </table>
   </section>
   <div class="btn-row">
-    <button class="hollow-btn pull-left btn-plus-icon">Add time slot</button>
-    <div class="pull-right">
+    <button class="hollow-btn pull-left btn-plus-icon" (click)="addtimeslot()" *ngIf="user.role === 'admin'">Add time slot</button>
+    <div class="pull-right" *ngIf="user.role === 'admin'">
       <button class="hollow-btn"><b>Apply for all week</b></button>
       <button class="solid-btn">Save</button>
     </div>

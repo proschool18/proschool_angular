@@ -1,91 +1,69 @@
-<div id="main-content">
-
-    <div class="row">
-        <div class="container-fluid" id="buttonId1">
-            <button routerLink="/main/reports/studentfee" class="button button2 hvr-pop transition">Student Reports</button>
-            <button routerLink="/main/reports/classfee" class="button button2 hvr-pop transition">Class Reports</button>
-            <button *ngIf="user.role === 'admin'" routerLink="/main/reports/reportsbyday" class="button button2 hvr-pop transition">Day Reports</button>
-            <button *ngIf="user.role === 'admin'" routerLink="/main/reports/reportsbymonth" class="button button2 hvr-pop transition">Month
-                Reports</button>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="container-fluid dashboard-content">
-            <div class="card selectcard">
+<main class="card mt-20 within-viewport new-listing">
+    <section class="page-actions">
+        <div class="_select-or-search">
+            <div class="_select-group">
                 <app-class *ngIf="user.role === 'admin'" (classEvent)="receiveClass($event)" (sectionEvent)="receiveSection($event)"></app-class>
                 <app-teacher-class *ngIf="user.role === 'teacher'" (classEvent)="receiveClass($event)" (sectionEvent)="receiveSection($event)"></app-teacher-class>
-                <div class="searchForm">
-                    <div class="form-group">
-                        <label class="pull-left">Fee Term</label>
-                        <select class="form-control" [(ngModel)]="fee_term">
-                            <option>select...</option>
-                            <option *ngFor="let fee of fee_terms; let i = index" value="{{fee.fee_term_id}}">
-                                {{fee.fee_term}}</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="pull-left">Fee Type</label>
-                        <select class="form-control" [(ngModel)]="fee_type">
-                            <option>select...</option>
-                            <option *ngFor="let fee of fee_types; let i = index" value="{{fee.fee_types_id}}">
-                                {{fee.fee_type}}</option>
-                        </select>
-                    </div>
-                    <div class="form-group pull-right">
-                        <button type="submit" class="button button1 hvr-pop transition" (click)="getClass_fee()">Search</button>
+                <div class="dropdown">
+                    <button class="dropbtn" (click)="showTermList = true" (clickOutside)="showTermList = false">
+                        {{!selected_term.fee_term ? 'select FeeTerm' : selected_term.fee_term}}
+                    </button>
+                    <div class="dropdown-content" [hidden]="!showTermList">
+                        <a *ngFor="let fee of fee_terms"
+                            (click)="selected_term = fee;">{{fee.fee_term}}</a>
                     </div>
                 </div>
-            </div>
-            <div class="card listcard">
-                <div class="pull-left">
-                    <h4>Class Reports</h4>
-                </div>
-                <div class="pull-right">
-                    <button class="button button1 btnalign" (click)="View('list')">List</button>
-                    <button class="button button1 btnalign" (click)="View('visualize')">Visualize</button>
-                </div>
-                <div class="searchForm" *ngIf="list else visualize">
-                    <div class="table-responsive">
-                        <table style="width:100%;">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Student Name</th>
-                                    <th>Total Fee</th>
-                                    <th>Paid Fee</th>
-                                    <th>Discount</th>
-                                    <th>Fine</th>
-                                    <th>Balance</th>
-                                    <th>Due Date</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let fee of collection.students_fee | paginate: config; let i=index">
-                                    <td>{{ (config.currentPage - 1) * config.itemsPerPage + i +1 }}</td>
-                                    <td>{{fee.studentName}}</td>
-                                    <td>{{fee.totalFee}}</td>
-                                    <td>{{fee.paidAmount}}</td>
-                                    <td>{{fee.Discount}}</td>
-                                    <td>{{fee.fine}}</td>
-                                    <td>{{fee.Balance}}</td>
-                                    <td></td>
-                                    <!-- <td [ngStyle]="{'background-color': (att.status == 'Present') ? '#1caf9a' : (att.status == 'Present') ? '#1caf9a' : '#e04b4a', 'color': 'white', 'margin-botton': '2px' }">{{att.status}}</td> -->
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="paginationdiv">
-                            <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
-                          </div>
+                <div class="dropdown">
+                    <button class="dropbtn" (click)="showTypeList = true" (clickOutside)="showTypeList = false">
+                        {{!selected_type.fee_type ? 'select FeeType' : selected_type.fee_type}}
+                    </button>
+                    <div class="dropdown-content" [hidden]="!showTypeList">
+                        <a *ngFor="let fee of fee_types"
+                            (click)="selected_type = fee; getClass_fee()">{{fee.fee_type}}</a>
                     </div>
                 </div>
-                <ng-template #visualize>
-                    <div class="searchForm">
-                        <canvas baseChart [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions"
-                            [legend]="chartLegend" [chartType]="chartType"></canvas>
-                    </div>
-                </ng-template>
             </div>
         </div>
-    </div>
-</div>
+        <div class="add_div">
+            <button class="btn -cta" routerLink="/main/reports/studentfee">StudentFee</button>
+            <button class="btn -cta" routerLink="/main/reports/classfee">ClassFee</button>
+        </div>
+    </section>
+    <section class="table-and-pagination -classes-schedule">
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th align="left">Student Name</th>
+                        <th align="left">Total Fee</th>
+                        <th align="left">Paid Fee</th>
+                        <th align="left">Discount</th>
+                        <th align="left">Fine</th>
+                        <th align="left">Balance</th>
+                        <th align="left">Due Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let fee of students_fee | pagination: pageNo; let i=index">
+                        <td class="_s-no"><span>{{ page_start + i + 1 }}</span></td>
+                        <td>{{fee.studentName}}</td>
+                        <td>{{fee.totalFee}}</td>
+                        <td>{{fee.paidAmount}}</td>
+                        <td>{{fee.Discount}}</td>
+                        <td>{{fee.fine}}</td>
+                        <td>{{fee.Balance}}</td>
+                        <td></td>
+                        <!-- <td [ngStyle]="{'background-color': (att.status == 'Present') ? '#1caf9a' : (att.status == 'Present') ? '#1caf9a' : '#e04b4a', 'color': 'white', 'margin-botton': '2px' }">{{att.status}}</td> -->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="_pagination">
+            <a class="btn -previous">Previous</a>
+            <a class="btn" [ngClass]="{'-current': pageNo === (i+1)}"
+                *ngFor='let page of page_counter(pages) ;let i = index' (click)="pageChange(i+1)">{{i+1}}</a>
+            <a class="btn -next">Next</a>
+        </div>
+    </section>
+</main>

@@ -4,17 +4,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SearchModuleModule } from '../search-module/search-module.module';
 import { TeacherSearchModule } from '../teacher-search/teacher-search.module';
 import { MatDialogModule } from '@angular/material/dialog';
-import { NgxPaginationModule } from 'ngx-pagination';
+import { PipesModule } from '../_pipes/_pipes.module';
 
 import { ProjectworksRoutingModule } from './projectworks-routing.module';
 import { PwassignComponent } from './pwassign/pwassign.component';
 import { PwbydateComponent } from './pwbydate/pwbydate.component';
-import { PwlistmarksComponent } from './pwlistmarks/pwlistmarks.component';
 import { PwaddmarksComponent } from './pwaddmarks/pwaddmarks.component';
 
 
 @NgModule({
-  declarations: [PwassignComponent, PwbydateComponent, PwlistmarksComponent, PwaddmarksComponent],
+  declarations: [PwassignComponent, PwbydateComponent, PwaddmarksComponent],
   imports: [
     CommonModule,
     ProjectworksRoutingModule,
@@ -22,7 +21,7 @@ import { PwaddmarksComponent } from './pwaddmarks/pwaddmarks.component';
     ReactiveFormsModule,
     SearchModuleModule,
     TeacherSearchModule,
-    NgxPaginationModule,
+    PipesModule,
     MatDialogModule
   ]
 })

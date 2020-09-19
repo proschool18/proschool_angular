@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ServicesService } from '../../services.service';
+import { StudentsService } from '../../_services/students.service';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { AlertComponent } from '../../_alert/alert/alert.component';
+import { appConfig } from '../../app.config';
+
+import { User } from '../../_models/user';
 
 @Component({
   selector: 'app-attendance',
@@ -11,9 +15,30 @@ import { AlertComponent } from '../../_alert/alert/alert.component';
 })
 export class AttendanceComponent implements OnInit {
 
-  constructor(private service: ServicesService, private route: ActivatedRoute, public dialog: MatDialog) { }
+  constructor(private service: ServicesService, private studentservice: StudentsService, private route: ActivatedRoute, public dialog: MatDialog) { }
+
+  user: User;
+  student_details: any = {};
+  profileImage;
+
+  private url = appConfig.apiUrl;
 
   ngOnInit() {
+    this.user = JSON.parse(localStorage.getItem('currentUser'));
+    this.selected_month = this.months[new Date().getMonth()]
+    this.getStudentDetails();
+  }
+
+  getStudentDetails() {    
+    this.studentservice.getStudentDetails(this.student_id)      
+    .subscribe(        
+      res => { this.student_details = res.students[0], this.getStudentImage(), console.log(res) 
+      }      
+    )  
+  }
+
+  getStudentImage() {
+    this.profileImage = this.url + '/image/' + this.student_details.studentImage[0].filename;
   }
 
   selectedRowNum: number;
@@ -21,13 +46,13 @@ export class AttendanceComponent implements OnInit {
   section_id = this.route.snapshot.paramMap.get('sec_id');
 
   attendance = {
-    donutchart: [],
+    attendance: [],
     present: '',
     absent: '',
     onleave: '',
   };
   selected_month: any = {month: '', value: ''};
-  months = [{ 'month': 'January', 'value': '01' }, { 'month': 'February', 'value': '02' }, { 'month': 'March', 'value': '03' }, { 'month': 'April', 'value': '04' }, { 'month': 'May', 'value': '05' }, { 'month': 'June', 'value': '06' }, { 'month': 'July', 'value': '07' }, { 'month': 'August', 'value': '08' }, { 'month': 'September', 'value': '09' }, { 'month': 'October', 'value': '10' }, { 'month': 'November', 'value': '11' }, { 'month': 'December', 'value': '12' }]
+  months = [{ 'month': 'January', 'value': '1' }, { 'month': 'February', 'value': '2' }, { 'month': 'March', 'value': '3' }, { 'month': 'April', 'value': '4' }, { 'month': 'May', 'value': '5' }, { 'month': 'June', 'value': '6' }, { 'month': 'July', 'value': '7' }, { 'month': 'August', 'value': '8' }, { 'month': 'September', 'value': '9' }, { 'month': 'October', 'value': '10' }, { 'month': 'November', 'value': '11' }, { 'month': 'December', 'value': '12' }]
   showMonthList: boolean = false;
 
   chartData = [];

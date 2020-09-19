@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ServicesService } from '../../services.service';
+import { FeeService } from '../../_services/fee.service';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { AlertComponent } from '../../_alert/alert/alert.component';
 import { User } from '../../_models/user';
@@ -11,7 +12,12 @@ import { User } from '../../_models/user';
 })
 export class StudentfeeReportsComponent implements OnInit {
 
-  constructor(private service: ServicesService, public dialog: MatDialog) { }
+  constructor(private service: ServicesService, private feeservice: FeeService, public dialog: MatDialog) { }
+
+  pageNo: number = 1;
+  page_start: number = 0;
+  page_counter = Array;
+  pages: number = 10;
 
   user: User;
 
@@ -24,25 +30,29 @@ export class StudentfeeReportsComponent implements OnInit {
     }
   }
 
+  pageChange(x) {
+    this.pageNo = x;
+    this.page_start = (x - 1) * 10;
+  } 
+
   students = [];
   student_fee = [{
     'TermwiseFee': []
   }];
+  fee_terms = [];
+  student_TermFee: any = [];
+  showStudentList: boolean = false;
+  showTermList: boolean = false;
+  getTermFilter: boolean = false;
+  getTypeFee: boolean = false;
   i; j;
-  chartData = [];
-  chartType = 'horizontalBar';
-  chartLabels = [];
-  public chartOptions: any = {
-    scaleShowVerticalLines: false,
-    responsive: true
-  };
-  public chartLegend: true;
 
   list: boolean = true;
 
   selected_class:string;
   selected_section:string;
-  selected_student:string;
+  selected_student:any = {student_id: '', first_name: '', last_name: ''};
+  selected_feeterm:any = {fee_term_id: '', fee_term: ''};
   alert_message: string;
 
   receiveClass($event) {
@@ -63,7 +73,11 @@ export class StudentfeeReportsComponent implements OnInit {
     } else {
       this.service.getStudents(this.selected_section)
       .subscribe(
-        res => { this.students = res.students, console.log(res) }
+        res => { 
+          this.students = res.students, 
+          this.selected_student = this.students[0],
+          console.log(res) 
+        }
       )
     }
   }
@@ -73,33 +87,41 @@ export class StudentfeeReportsComponent implements OnInit {
       this.alert_message = "Please Select Class and Section";
       this.openAlert(this.alert_message)
     } else {
-      this.service.getStudent_fee(this.selected_student)
+      this.service.getStudent_fee(this.selected_student.student_id)
       .subscribe(
-        res => { this.student_fee = res.TermFeeDetails, console.log(res) }
+        res => { 
+          this.student_fee = res.TermFeeDetails, 
+          this.getTermFilter = true;
+          this.getTypeFee = false;
+          this.pages = Math.ceil(this.student_fee.length / 10),
+          this.getFeeTerms(),
+          console.log(res) 
+        }
       )
     }
   }
 
-  View(select) {
-    if(select == 'list') {
-      this.list = true;
-    } else {
-      console.log(this.student_fee)
-      this.list = false;
-      this.chartData = [
-        { data: [], label: 'Total Fee' },
-        { data: [], label: 'Paid Fee' },
-        { data: [], label: 'Balance Fee' }
-      ];
-      this.chartLabels = [];
+  getFeeTerms() {
+    this.feeservice.getFeeTerms()
+      .subscribe(
+        res => { this.fee_terms = res.fee_term, console.log(res) }
+      )
+  }
 
-      for(this.i = 0; this.i < this.student_fee[0].TermwiseFee.length; this.i++) {        
-        this.chartData[0].data.push(this.student_fee[0].TermwiseFee[this.i].TotalTermFees);
-        this.chartData[1].data.push(this.student_fee[0].TermwiseFee[this.i].PaidTermFees);
-        this.chartData[2].data.push(this.student_fee[0].TermwiseFee[this.i].BalanceTermFee);
-        console.log(this.chartData)
-        this.chartLabels.push(this.student_fee[0].TermwiseFee[this.i].FeeTerm);
-      }
+  getTerm_fee(fee_term_id) {
+    if(this.selected_section == undefined || this.selected_section == '') {
+      this.alert_message = "Please Select Class and Section";
+      this.openAlert(this.alert_message)
+    } else {
+      this.service.getStudent_TermFee(this.selected_student.student_id, fee_term_id)
+      .subscribe(
+        res => { 
+          this.student_TermFee = res.TermFeeDetails[0].studentFeeDetails, 
+          this.getTypeFee = true;
+          this.pages = Math.ceil(this.student_fee.length / 10),
+          console.log(this.student_TermFee) 
+        }
+      )
     }
   }
 

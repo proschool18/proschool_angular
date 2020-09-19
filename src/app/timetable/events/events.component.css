@@ -92,6 +92,20 @@ td.special-day {
 	display: none;
 }
 
+td:hover .plus-btn {
+	height: 20px;
+	width: 20px;
+	border-radius: 50%;
+	color: #FFFFFF;
+	background: #6381ED;
+	padding: 0;
+	margin: 0;
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	display: block;
+}
+
 td.special-day .day-special-info {
     position: absolute;
     color: #fff;
@@ -260,6 +274,10 @@ td.time-specifiation {
     width: 130px;
 }
 
+td:hover {
+    border: 2px solid #5E81F4 !important;
+}
+
 td.schedule-box:hover:before,
 td.empty-schedule-box:hover:before {
     position: absolute;
@@ -271,10 +289,6 @@ td.empty-schedule-box:hover:before {
     top: 0;
     left: 0;
     content: " ";
-}
-
-.current-day {
-	border: 1px solid blue !important;
 }
 
 .schedule-box:hover,

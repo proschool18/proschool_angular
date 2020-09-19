@@ -4,6 +4,8 @@ import { MatDialog, MatDialogConfig } from '@angular/material';
 import { AdmissionComponent } from '../admission/admission.component';
 import { AlertComponent } from '../../_alert/alert/alert.component';
 
+import { User } from '../../_models/user';
+
 @Component({
   selector: 'app-information',
   templateUrl: './information.component.html',
@@ -13,11 +15,18 @@ export class InformationComponent implements OnInit {
 
   constructor(private service: EmployeesService, public dialog: MatDialog) {}
 
-  //employees = [];
-  all_employees = [];
+  user: User;
+  pageNo: number = 1;
+  page_start: number = 0;
+  page_counter = Array;
+  pages: number = 10;
+
   alert_message: string;
-  employee_type;
+  employee_type: any;
   status = 'active';
+
+  all_employees = [];
+  select_employees = [];
   employees = [];
   showStatusList: boolean = false;
   showEmployeeTypeList : boolean = false;
@@ -30,29 +39,38 @@ export class InformationComponent implements OnInit {
   dialog_type;
 
   ngOnInit() {
+    this.user = JSON.parse(localStorage.getItem('currentUser'));
     this.getEmployees();
   }
+
+  pageChange(x) {
+    this.pageNo = x;
+    this.page_start = (x - 1) * 10;
+  } 
 
   getEmployees() {
     this.service.getEmployees()
       .subscribe(
-        res => { this.all_employees = this.employees = res.employee, console.log(res) }
+        res => { this.all_employees = this.employees = res.employee, 
+          this.pages = Math.ceil(this.employees.length / 10),
+          console.log(res) 
+        }
       )
   }
 
   get_selectedemployees() {   
-    if(this.employee_type == undefined || this.employee_type == '') {
+    if(this.employee_type.value == undefined || this.employee_type.value == '') {
       this.alert_message = "Please Select Employee Type";
       this.openAlert(this.alert_message)
     } else {
-      if(this.employee_type === "teaching") {
-        this.employees = this.all_employees.filter(emp => emp.job_category === "teaching")
-      } else if(this.employee_type === "non-teaching") {
-        this.employees = this.all_employees.filter(emp => emp.job_category === "non-teaching")
-      } else if(this.employee_type === "administrative") {
-        this.employees = this.all_employees.filter(emp => emp.job_category === "administrative")
+      if(this.employee_type.value === "teaching") {
+        this.select_employees = this.all_employees.filter(emp => emp.job_category === "teaching")
+      } else if(this.employee_type.value === "non-teaching") {
+        this.select_employees = this.all_employees.filter(emp => emp.job_category === "non-teaching")
+      } else if(this.employee_type.value === "administrative") {
+        this.select_employees = this.all_employees.filter(emp => emp.job_category === "administrative")
       } else {
-        this.employees = this.all_employees
+        this.select_employees = this.all_employees
       }
       this.getEmployeesByStatus();
     }
@@ -60,11 +78,11 @@ export class InformationComponent implements OnInit {
 
   getEmployeesByStatus() {
     if(this.status === 'active') {
-      this.employees = this.all_employees.filter(data => data.status === 1 && data.job_category === this.employee_type);
-      console.log(this.employees)
+      this.employees = this.select_employees.filter(data => data.status === 1)
     } else if(this.status === 'inactive') {
-      this.employees = this.all_employees.filter(data => data.status === 0 && data.job_category === this.employee_type)
+      this.employees = this.select_employees.filter(data => data.status === 0)
     }   
+    this.pages = Math.ceil(this.employees.length / 10)
   }
 
   deleteEmployee(employee_id) {

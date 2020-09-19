@@ -3,15 +3,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { PwassignComponent } from './pwassign/pwassign.component';
 import { PwbydateComponent } from './pwbydate/pwbydate.component';
-import { PwlistmarksComponent } from './pwlistmarks/pwlistmarks.component';
 import { PwaddmarksComponent } from './pwaddmarks/pwaddmarks.component';
 
 const routes: Routes = [
   {path:'',redirectTo:'PWByDate',pathMatch:'full'},
   {path:"PWByDate",component:PwbydateComponent},
   {path:"PWassign",component:PwassignComponent},
-  {path:"PWListMarks",component:PwlistmarksComponent},
-  {path:"PWAddMarks",component:PwaddmarksComponent}
+  {path:"PWMarks/:data_type/:sec_id/:sub_id/:pw_id",component:PwaddmarksComponent}
 ];
 
 @NgModule({

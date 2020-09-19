@@ -15,6 +15,11 @@ export class SubjectsComponent implements OnInit {
 
   constructor(private service: AcademicsService, private teacherService: TeacherService, public dialog: MatDialog) {}
 
+  pageNo: number = 1;
+  page_start: number = 0;
+  page_counter = Array;
+  pages: number = 10;
+
   user: User;
   employee_id;
   confirm_msg;
@@ -29,6 +34,11 @@ export class SubjectsComponent implements OnInit {
       this.employee_id = this.user.employee_id;
     }
   }
+
+  pageChange(x) {
+    this.pageNo = x;
+    this.page_start = (x - 1) * 10;
+  } 
 
   subjects = [];
 
@@ -66,6 +76,7 @@ export class SubjectsComponent implements OnInit {
           res => { this.subjects = res.subjects, console.log(res) }
         )
       }
+      this.pages = Math.ceil(this.subjects.length / 10);
     }
   }
 
@@ -145,7 +156,7 @@ export class SubjectsComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.autoFocus = true;
-    dialogConfig.width = '50%';
+    dialogConfig.width = '40%';
 
     dialogConfig.data = {
       class: this.selected_class,

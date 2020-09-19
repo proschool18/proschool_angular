@@ -31,7 +31,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let chap of collection.chapters | paginate: config; let i=index">
+                <tr *ngFor="let chap of chapters; let i=index">
                   <td>{{ (config.currentPage - 1) * config.itemsPerPage + i +1 }}</td>
                   <td>{{chap.title}}</td>
                   <td>
@@ -46,9 +46,6 @@
                 </tr>
               </tbody>
             </table>
-            <div class="paginationdiv">
-              <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
-            </div>
           </div>
         </div>
       </div>

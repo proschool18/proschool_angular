@@ -1,4 +1,4 @@
-<main class="card mt-20 within-viewport">
+<main class="card mt-20 within-viewport new-listing">
   <section class="page-actions">
     <div class="_select-or-search">
       <div class="_select-group">
@@ -6,12 +6,12 @@
       </div>      
     </div>
     <div class="add_div">
-      <form *ngIf="user.role === 'admin'" class="searchForm" role="form" [formGroup]="teachersForm" (ngSubmit)="assignTeachers(teachersForm)">
+      <form *ngIf="user.role === 'admin'" [formGroup]="teachersForm" (ngSubmit)="assignTeachers(teachersForm)">
         <select name="standard" formControlName="subject_id">
           <option *ngFor="let sub of subjects" value="{{sub.subject_id}}">{{sub.name}}</option>
         </select>
         <select name="standard" formControlName="teacher_id">
-          <option *ngFor="let tch of teachers" value="{{tch.employee_id}}}">{{tch.first_name}}</option>
+          <option *ngFor="let tch of teachers" value="{{tch.employee_id}}">{{tch.first_name}}</option>
         </select>
         <button class="btn -cta" type="submit">Assign</button>
       </form>

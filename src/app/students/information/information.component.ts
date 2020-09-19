@@ -16,6 +16,12 @@ export class InformationComponent implements OnInit {
   constructor(private service: StudentsService, public dialog: MatDialog) {}
     
   user: User;
+
+  pageNo: number = 1;
+  page_start: number = 0;
+  page_counter = Array;
+  pages: number = 10;
+
   selected_student;
   dialog_type;
   
@@ -35,6 +41,11 @@ export class InformationComponent implements OnInit {
       this.getStudents();
     }
   }
+
+  pageChange(x) {
+    this.pageNo = x;
+    this.page_start = (x - 1) * 10;
+  } 
 
   //students = [];
   alert_message: string;
@@ -57,19 +68,18 @@ export class InformationComponent implements OnInit {
     } else {
       this.service.getStudents(this.selected_section)
         .subscribe(
-          res => { this.all_students = this.students = res.students, this.getStudentsByStatus(), console.log(res) }
+          res => { this.all_students = res.students, this.students = res.students, this.getStudentsByStatus(), console.log(res) }
         )
     }
   }
 
   getStudentsByStatus() {
     if(this.status === 'active') {
-      this.students = this.all_students.filter(data => data.status === 1)
-      console.log(this.students)
+      this.students = this.all_students.filter(data => data.status === 1);
     } else if(this.status === 'inactive') {
       this.students = this.all_students.filter(data => data.status === 0)
-      console.log(this.students)
     }   
+    this.pages = Math.ceil(this.students.length / 10)
   }
 
   deleteStudent(student_id) {
@@ -156,14 +166,6 @@ export class InformationComponent implements OnInit {
     dialogRef.afterClosed().subscribe(        
       data => {
         console.log("Dialog output:", data)
-        // if (this.dialog_type == 'add') {
-        //   this.collection.subjects.push(data);
-        // } else if (this.dialog_type == 'edit') {
-        //   this.collection.subjects.filter(res => res.subject_id == data.subject_id)[0].name = data.name;
-        //   this.collection.subjects.filter(res => res.subject_id == data.subject_id)[0].textbook = data.textbook;
-        //   this.collection.subjects.filter(res => res.subject_id == data.subject_id)[0].author = data.author;
-        //   this.collection.subjects.filter(res => res.subject_id == data.subject_id)[0].publisher = data.publisher;
-        // }
       }
     );    
 

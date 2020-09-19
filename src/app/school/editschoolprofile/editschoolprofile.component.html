@@ -1,4 +1,4 @@
-<form role="form" [formGroup]="schoolprofileForm" (ngSubmit)="editSchool()">
+<!-- <form role="form" [formGroup]="schoolprofileForm" (ngSubmit)="editSchool()">
     <div *ngIf="schoolDetails">
         <div class="row">
             <div class="col-md-12">
@@ -210,4 +210,182 @@
         </div>
     </div>
 
-</form>
+</form> -->
+
+<div id="main-content1" class="new-message-wrapper" *ngIf="dialog_type === 'schoolDetails'">
+    <div class="header-wrapper">
+        <p>Edit School Details</p>
+        <button class="btn-close" (click)="close()"></button>
+    </div>
+    <form class="form-inline" role="form" [formGroup]="schooldetailsForm" (ngSubmit)="schoolSubmit()">
+        <div class="row-wrapper">
+            <div class="col-full-3">
+                School Name:
+            </div>
+            <div class="col-full-6">
+                <input class="form-control" value="{{schoolprofile.name}}" formControlName="name" type="text">
+            </div>
+        </div>
+        <div class="row-wrapper">
+            <div class="col-full-3">
+                Medium:
+            </div>
+            <div class="col-full-6">
+                <input class="form-control" value="{{schoolprofile.medium}}" formControlName="medium" type="text">
+            </div>
+        </div>
+        <div class="row-wrapper">
+            <div class="col-full-3">
+                Timings:
+            </div>
+            <div class="col-full-6">
+                <input class="form-control" value="{{schoolprofile.timings}}" formControlName="timings" type="text">
+            </div>
+        </div>
+        <div class="row-wrapper">
+            <div class="col-full-3">
+                Class From:
+            </div>
+            <div class="col-full-6">
+                <input class="form-control" value="{{schoolprofile.class_from}}" formControlName="class_from" type="text">
+            </div>
+        </div>
+        <div class="row-wrapper">
+            <div class="col-full-3">
+                Affiliation:
+            </div>
+            <div class="col-full-6">
+                <input class="form-control" value="{{schoolprofile.affiliation}}" formControlName="affiliation" type="text">
+            </div>
+        </div>
+        <div class="row-wrapper">
+            <div class="col-full-3">
+                Extra Curricular Activities:
+            </div>
+            <div class="col-full-6">
+                <input class="form-control" value="{{schoolprofile.extra_curricular_activites}}" formControlName="extra_curricular_activites" type="text">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 pull-right">
+                <button class="btn -cta active-tab" type="submit">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div id="main-content1" class="new-message-wrapper" *ngIf="dialog_type === 'managementDetails'">
+    <div class="header-wrapper">
+        <p>Edit Management Details</p>
+        <button class="btn-close" (click)="close()"></button>
+    </div>
+    <form class="form-inline" role="form" [formGroup]="managementdetailsForm" (ngSubmit)="managementSubmit()">
+        <div class="row-wrapper">
+            <div class="col-full-3">
+                Founder:
+            </div>
+            <div class="col-full-6">
+                <input class="form-control" value="{{schoolprofile.founder}}" formControlName="founder" type="text">
+            </div>
+        </div>
+        <div class="row-wrapper">
+            <div class="col-full-3">
+                Chairman:
+            </div>
+            <div class="col-full-6">
+                <input class="form-control" value="{{schoolprofile.chairman}}" formControlName="chairman" type="text">
+            </div>
+        </div>
+        <div class="row-wrapper">
+            <div class="col-full-3">
+                Principal:
+            </div>
+            <div class="col-full-6">
+                <input class="form-control" value="{{schoolprofile.principal}}" formControlName="principal" type="text">
+            </div>
+        </div>
+        <div class="row-wrapper">
+            <div class="col-full-3">
+                Vice Principal:
+            </div>
+            <div class="col-full-6">
+                <input class="form-control" value="{{schoolprofile.vice_principal}}" formControlName="vice_principal" type="text">
+            </div>
+        </div>
+        <div class="row-wrapper">
+            <div class="col-full-3">
+                Coordinator:
+            </div>
+            <div class="col-full-6">
+                <input class="form-control" value="{{schoolprofile.coordinator}}" formControlName="coordinator" type="text">
+            </div>
+        </div>
+        <div class="row-wrapper">
+            <div class="col-full-3">
+                Established:
+            </div>
+            <div class="col-full-6">
+                <input class="form-control" value="{{schoolprofile.est_on}}" formControlName="est_on" type="text">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 pull-right">
+                <button class="btn -cta active-tab" type="submit">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div id="main-content1" class="new-message-wrapper" *ngIf="dialog_type === 'contactDetails'">
+    <div class="header-wrapper">
+        <p *ngIf="dialog_type === 'edit'">Edit Contact Details</p>
+        <button class="btn-close" (click)="close()"></button>
+    </div>
+    <form class="form-inline" role="form" [formGroup]="contactdetailsForm" (ngSubmit)="contactSubmit()">
+        <div class="row-wrapper">
+            <div class="col-full-3">
+                Address:
+            </div>
+            <div class="col-full-6">
+                <textarea name="" id="" cols="30" rows="10" value="{{schoolprofile.address}}" formControlName="address"></textarea>
+            </div>
+        </div>
+        <div class="row-wrapper">
+            <div class="col-full-3">
+                Contact No:
+            </div>
+            <div class="col-full-6">
+                <input class="form-control" value="{{schoolprofile.phone}}" formControlName="phone" type="text">
+            </div>
+        </div>
+        <div class="row-wrapper">
+            <div class="col-full-3">
+                Alternate Phone:
+            </div>
+            <div class="col-full-6">
+                <input class="form-control" value="{{schoolprofile.alternate_phone}}" formControlName="alternate_phone" type="text">
+            </div>
+        </div>
+        <div class="row-wrapper">
+            <div class="col-full-3">
+                Email:
+            </div>
+            <div class="col-full-6">
+                <input class="form-control" value="{{schoolprofile.email}}" formControlName="email" type="text">
+            </div>
+        </div>
+        <div class="row-wrapper">
+            <div class="col-full-3">
+                Website:
+            </div>
+            <div class="col-full-6">
+                <input class="form-control" value="{{schoolprofile.website}}" formControlName="website" type="text">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 pull-right">
+                <button class="btn -cta active-tab" type="submit">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>

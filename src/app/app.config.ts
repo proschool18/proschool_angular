@@ -6,7 +6,8 @@ export const appConfig = {
 
     token: JSON.parse(localStorage.getItem('currentUser')).token,
 
-    school_id: JSON.parse(localStorage.getItem('currentUser')).uniqueId,
+    school_id: JSON.parse(localStorage.getItem('currentUser')).school_id,
 
     employee_id: JSON.parse(localStorage.getItem('currentUser')).employee_id,
+
 };

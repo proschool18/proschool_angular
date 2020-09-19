@@ -18,7 +18,7 @@ export class TasksService {
   private token = appConfig.token;
 
   private employee_id = appConfig.employee_id;
-  empty_data = {}
+  empty_data;
 
   // School Timings
   getTasks(): Observable<any> {
@@ -31,7 +31,13 @@ export class TasksService {
   }
 
   updateStatus(status, task_id): Observable<any> {
-    return this.http.put<any>(this.url + '/update_task/' + status + '/' + task_id, this.empty_data)
+    console.log(this.role)
+    if(this.role === 'admin') {
+      this.empty_data = {'updated_by': this.role, 'role': this.role}
+    } else {
+      this.empty_data = {'updated_by': this.employee_id, 'role': this.role}
+    }
+    return this.http.put<any>(this.url + '/update_task/' + status + '/' + task_id + '/' + this.school_id, this.empty_data)
   }
 
   editTask(data, task_id): Observable<any> {
@@ -41,4 +47,5 @@ export class TasksService {
   deleteTask(task_id): Observable<any> {
     return this.http.put<any>(this.url + '/delete_task/' + task_id, this.empty_data)
   }
+  
 }

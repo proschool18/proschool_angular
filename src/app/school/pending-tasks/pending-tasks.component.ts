@@ -13,6 +13,11 @@ import { User } from '../../_models/user';
 })
 export class PendingTasksComponent implements OnInit {
 
+  pageNo: number = 1;
+  page_start: number = 0;
+  page_counter = Array;
+  pages: number = 10;
+
   user: User;
   selected_task = {
     task: '',
@@ -39,6 +44,11 @@ export class PendingTasksComponent implements OnInit {
     this.getTasks();
   }
 
+  pageChange(x) {
+    this.pageNo = x;
+    this.page_start = (x - 1) * 10;
+  }
+
   tasks = [];
   all_tasks = [];
 
@@ -56,6 +66,7 @@ export class PendingTasksComponent implements OnInit {
     } else if(this.user.role === 'teacher') {
       this.tasks = this.all_tasks.filter(task => task.employee_id === this.user.employee_id && task.task_status === 'pending');
     }
+    this.pages = Math.ceil(this.tasks.length / 10);
   }
 
   addTask() {
@@ -111,7 +122,7 @@ export class PendingTasksComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.autoFocus = true;
-    dialogConfig.width = '60%';
+    dialogConfig.width = '40%';
 
     dialogConfig.data = {
       selected_task: this.selected_task,

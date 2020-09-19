@@ -32,6 +32,7 @@ export class LoginComponent implements OnInit {
   isRememberMe: boolean = true;
   is_email_valid: boolean = true;
   is_password_valid: boolean = true;
+  is_login_valid: boolean = true;
 
   get email(): any {
     return this.loginForm.get('email');
@@ -44,9 +45,9 @@ export class LoginComponent implements OnInit {
   login() {
     this.verifyEmailId();
     this.varifyPassword();
-    if (this.is_email_valid && this.is_password_valid) {
-    this.loading = true;
-    this.authenticationService.login(this.loginForm.value)
+    if (this.is_email_valid && this.is_password_valid) { 
+      this.loading = true;
+      this.authenticationService.login(this.loginForm.value)
       .subscribe(
         data => {
           if(data.token) {
@@ -57,8 +58,10 @@ export class LoginComponent implements OnInit {
             } else if(data.role === 'parent') {
               this.router.navigate(['/main/main/dashboard/parentdashboard'])
             }
+            this.is_login_valid = true;
           } else {
-            this.router.navigate(['/'])
+            this.router.navigate(['/']);
+            this.is_login_valid = false;
           }
         }
       )
@@ -68,8 +71,9 @@ export class LoginComponent implements OnInit {
   }
 
   verifyEmailId() {
-    var re = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    this.is_email_valid = re.test(this.email.value);
+    // var re = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    // this.is_email_valid = re.test(this.email.value);
+    this.is_email_valid = this.email.value === '' ? false : true;
     return this.is_email_valid;
   }
 

@@ -6,6 +6,7 @@ import { ServicesService } from '../../services.service';
 import { EditschoolprofileComponent } from '../editschoolprofile/editschoolprofile.component';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { appConfig } from '../../app.config';
+import { User } from '../../_models/user';
 
 @Component({
   selector: 'app-profile',
@@ -24,8 +25,9 @@ export class ProfileComponent implements OnInit {
 
   private url = appConfig.apiUrl;
   alert_message;
+  user: User;
 
-  schoolprofile = {
+  schoolprofile: any = {
     academic_year: '',
     address: '',
     affiliation: '',
@@ -59,6 +61,7 @@ export class ProfileComponent implements OnInit {
       filename: '',
       originalname: '',
       imagePath: '',
+      imageSrc: '',
       mimetype: '',
     }],
   };
@@ -66,14 +69,14 @@ export class ProfileComponent implements OnInit {
   constructor(private service : ServicesService, public dialog: MatDialog, private fb: FormBuilder, private http: HttpClient) { }
 
   ngOnInit() { 
+    this.user = JSON.parse(localStorage.getItem('currentUser'));
     this.getSchools();
-    console.log(this.schoolprofile)
    }
 
   getSchools() {
     this.service.getSchools()
       .subscribe(
-        res => { this.schoolprofile = res.schools[0], this.getSchoolImage(), this.getSchoolLogo(), console.log(res) }
+        res => { this.schoolprofile = res.schools[0], this.getSchoolImage(), this.getSchoolLogo(), console.log(this.schoolprofile) }
       )
   }
 
@@ -85,8 +88,16 @@ export class ProfileComponent implements OnInit {
     this.schoolLogo = this.url + '/image/' + this.schoolprofile.SchoolLogo[0].filename;
   }
 
-  editSchool() {
-    this.openDialog()
+  editSchoolDetails() {
+    this.openDialog('schoolDetails')
+  }
+
+  editManagementDetails() {
+    this.openDialog('managementDetails')
+  }
+
+  editContactDetails() {
+    this.openDialog('contactDetails')
   }
 
   profileProgress(file: File){
@@ -139,23 +150,24 @@ export class ProfileComponent implements OnInit {
     )
   }
 
-  openDialog(): void {
+  openDialog(dialog_type): void {
 
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.autoFocus = true;
-    dialogConfig.width = '60%';
+    dialogConfig.width = '40%';
 
     dialogConfig.data = {
       schoolprofile: this.schoolprofile,
+      dialog_type: dialog_type,
     };
 
     const dialogRef = this.dialog.open(EditschoolprofileComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(
       data => {
-        this.schoolprofile = data,
-        console.log("Dialog output:", data)
+        console.log("Dialog output:", data);
+        this.getSchools();
       }
     )
   }

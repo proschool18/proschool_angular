@@ -13,6 +13,11 @@ import { User } from '../../_models/user';
 export class TasksComponent implements OnInit {
 
   constructor(private taskservice: TasksService, private fb: FormBuilder, public dialog: MatDialog) {}
+
+  pageNo: number = 1;
+  page_start: number = 0;
+  page_counter = Array;
+  pages: number = 10;
   
   user: User;
   alert_message: string;
@@ -23,6 +28,11 @@ export class TasksComponent implements OnInit {
     console.log(this.user.role)
     this.getTasks();
   }
+
+  pageChange(x) {
+    this.pageNo = x;
+    this.page_start = (x - 1) * 10;
+  } 
 
   tasks = [];
   all_tasks = [];
@@ -40,6 +50,7 @@ export class TasksComponent implements OnInit {
     } else if(this.user.role === 'teacher') {
       this.tasks = this.all_tasks.filter(task => task.employee_id === this.user.employee_id && task.task_status === 'completed');
     }
+    this.pages = Math.ceil(this.tasks.length / 10);
   }
 
   deleteTask(task_id) {

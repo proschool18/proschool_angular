@@ -13,11 +13,17 @@ import { User } from '../../_models/user';
 export class MarksListComponent implements OnInit {
 
   constructor(private service: ServicesService, private fb: FormBuilder, public dialog: MatDialog) {}
+
+  pageNo: number = 1;
+  page_start: number = 0;
+  page_counter = Array;
+  pages: number = 10;
       
   user: User;
+  showScheduleList: boolean = false;
 
   ngOnInit() {
-    this.getassessment_patterns();
+    // this.getassessment_patterns();
     this.user = JSON.parse(localStorage.getItem('currentUser'));
     if (this.user.role === 'parent') {
       console.log(this.user.users[0].section_id)
@@ -25,11 +31,18 @@ export class MarksListComponent implements OnInit {
     }
   }
 
+  pageChange(x) {
+    this.pageNo = x;
+    this.page_start = (x - 1) * 10;
+  } 
+
   selected_class:string;
   selected_section:string;
   selected_schedule:string;
+  parent_schedule: any = {code: ''}
   alert_message: string;
 
+  subjects = [];
   assessment_patterns = [];
 
   marks = [
@@ -56,13 +69,6 @@ export class MarksListComponent implements OnInit {
     this.getEvaluations();
   }
 
-  getassessment_patterns() {
-    this.service.getassessment_patterns()
-      .subscribe(
-        res => { this.assessment_patterns = res.assessment, console.log(res) }
-      )
-  }
-
   getEvaluations() {
     if(this.selected_section == undefined || this.selected_schedule == undefined ||
       this.selected_section == '' || this.selected_schedule == '') {
@@ -71,7 +77,10 @@ export class MarksListComponent implements OnInit {
     } else {
       this.service.getEvaluations(this.selected_schedule, this.selected_section)
       .subscribe(
-        res => { this.marks = res.students, console.log(res) }
+        res => { this.marks = res.students, 
+          this.pages = Math.ceil(this.marks.length / 10),
+          console.log(res) 
+        }
       )
     }
   }

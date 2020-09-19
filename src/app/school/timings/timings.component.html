@@ -51,8 +51,8 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let tim of collection.timings | paginate: config; let i=index">
-                  <td>{{ (config.currentPage - 1) * config.itemsPerPage + i +1 }}</td>
+                <tr *ngFor="let tim of timings; let i=index">
+                  <td>{{ i +1 }}</td>
                   <td style="padding-right: 20px !important;">{{tim.session}}</td>
                   <td>{{tim.class_name}}</td>
                   <td>{{tim.section_name}}</td>
@@ -66,9 +66,6 @@
                 </tr>
               </tbody>
             </table>
-            <div class="paginationdiv">
-              <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
-            </div>
           </div>
         </div>
       </div>

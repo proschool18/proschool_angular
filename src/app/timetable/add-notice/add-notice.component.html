@@ -1,0 +1,107 @@
+<div class="noticeboard-view" *ngIf="dialog_type === 'view'">
+    <div class="pull-right">
+        <button class="close-btn"><img src="../../../assets/images/x.svg" /></button>
+    </div>
+    <h3 class="school-name">Dyal Singh School</h3>
+    <h2 class="heading">Notice</h2>
+    <p class="notice-date">Date of issue: &nbsp;&nbsp; 9/12/2019</p>
+    <h4 class="notice-subject">Annual Day</h4>
+    <p class="notice-text">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+        ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+        fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+        deserunt mollit anim id est laborum.
+        <br>
+        At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum
+        deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non
+        provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.
+        Et harum quidem rerum facilis est et expedita distinctio.
+        <br>
+        Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime
+        placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem
+        quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae
+        sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis
+        voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.
+    </p>
+    <div class="pull-left signature-box ">
+        <p class="sign-auth-title">Authorised Signatory Name:</p>
+        <p class="sign-name-designation">Akash Dubey<br>
+            Principal</p>
+    </div>
+</div>
+
+<div class="noticeboard-add" *ngIf="dialog_type === 'add' || dialog_type === 'edit'">
+    <div class="header-wrapper">
+        <!-- <p *ngIf="dialog_type == 'add'">Add Timeslot</p>
+        <p *ngIf="dialog_type == 'edit'">Edit Timeslot</p> -->
+        <button class="btn-close" (click)="close()"></button>
+    </div>
+    <!-- <div class="pull-right">
+        <button class="btn-close" (click)="close()"></button>
+    </div> -->
+    <h3 class="heading" *ngIf="dialog_type === 'add'">Add New Notice</h3>
+    <h3 class="heading" *ngIf="dialog_type === 'edit'">Edit Notice</h3>
+    <form class="form-inline" role="form" [formGroup]="noticeForm" (ngSubmit)="submitNotice()">
+        <div class="two-input-box-wrapper">
+            <div>
+                <label for="school-name-input">Name of the issuing Authority/Committee:</label>
+                <input type="text" id="school-name-input" formControlName="issuing_Authority" value="{{selected_notice.issuing_Authority}}">
+            </div>
+            <div>
+                <label for="notice-title-input">Title:</label>
+                <input type="text" id="notice-title-input" formControlName="title" value="{{selected_notice.title}}">
+            </div>
+        </div>
+        <div class="one-input-box-wrapper">
+            <label for="notice-text-input">Body:</label>
+            <textarea rows="10" cols="100" id="notice-text-input" formControlName="body" value="{{selected_notice.body}}"></textarea>
+        </div>
+        <div class="two-input-box-wrapper">
+            <div>
+                <label for="signatory-name-input">Authorised Signatory Name:</label>
+                <input type="text" id="signatory-name-input" formControlName="signatory_name" value="{{selected_notice.signatory_name}}">
+            </div>
+            <div>
+                <label for="date-input">Date of Issue:</label>
+                <input type="text" id="date-input" formControlName="date_of_issue" value="{{selected_notice.date_of_issue}}">
+            </div>
+        </div>
+        <div class="pull-right">
+            <button class="btn -cta confirm-btn" type="submit">Publish</button>
+        </div>
+    </form>
+</div>
+
+<!-- <div class="noticeboard-edit">
+    <div class="pull-right">
+        <button class="close-btn"><img src="../../../assets/images/x.svg" /></button>
+    </div>
+    <h3 class="heading">Edit Notice</h3>
+    <div class="two-input-box-wrapper">
+        <div>
+            <label for="school-name-input">Name of the issuing Authority/Committee:</label>
+            <input type="text" id="school-name-input">
+        </div>
+        <div>
+            <label for="notice-title-input">Title:</label>
+            <input type="text" id="notice-title-input">
+        </div>
+    </div>
+    <div class="one-input-box-wrapper">
+        <label for="notice-text-input">Body:</label>
+        <textarea rows="10" cols="100" id="notice-text-input"></textarea>
+    </div>
+    <div class="two-input-box-wrapper">
+        <div>
+            <label for="signatory-name-input">Authorised Signatory Name:</label>
+            <input type="text" id="signatory-name-input">
+        </div>
+        <div>
+            <label for="date-input">Date of Issue:</label>
+            <input type="text" id="date-input">
+        </div>
+    </div>
+    <button class="pull-left btn -cta cancel-btn">Cancel</button>
+    <button class="pull-right btn -cta confirm-btn">Save Changes</button>
+</div> -->

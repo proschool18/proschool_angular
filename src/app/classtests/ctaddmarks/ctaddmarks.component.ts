@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ServicesService } from '../../services.service';
 import { AssignmentsService } from '../../_services/assignments.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -12,116 +13,91 @@ import { User } from '../../_models/user';
   styleUrls: ['./ctaddmarks.component.css']
 })
 export class CTaddmarksComponent implements OnInit {
-  config: any;
-  collection = { count: '', students: [] };
 
-  constructor(private service: ServicesService, private assignmentservice: AssignmentsService, private fb: FormBuilder, public dialog: MatDialog) {
-    this.config = {
-      itemsPerPage: 5,
-      currentPage: 1,
-      totalItems: this.collection.count
-    };
-  }
+  constructor(private service: ServicesService, private assignmentservice: AssignmentsService, private fb: FormBuilder, private route: ActivatedRoute, public dialog: MatDialog) {}
 
+  pageNo: number = 1;
+  page_start: number = 0;
+  page_counter = Array;
+  pages: number = 10;
+  
   user: User;
-  marks_add;
+
+  section_id = this.route.snapshot.paramMap.get('sec_id');
+  subject_id = this.route.snapshot.paramMap.get('sub_id');
+  classtest_id = this.route.snapshot.paramMap.get('ct_id');
+  data_type = this.route.snapshot.paramMap.get('data_type');
+
+  pageChange(x) {
+    this.pageNo = x;
+    this.page_start = (x - 1) * 10;
+  } 
 
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('currentUser'));
-  }
-
-  pageChanged(event) {
-    this.config.currentPage = event;
+    if(this.data_type === 'add') {
+      this.getStudents();
+    } else if(this.data_type === 'view') {
+      this.ctMarks();
+    }
   }
 
   classTests = [];
   ct_marks = [];
-  //students = [];
+  students = [];
 
   selected_ct: string;
-
-  selected_class: string;
-  selected_section: string;
-  selected_subject: string;
   alert_message: string;
 
-  receiveClass($event) {
-    this.selected_class = $event
-    console.log(this.selected_class)
-  }
-
-  receiveSection($event) {
-    this.selected_section = $event
-    console.log(this.selected_section)
-  }
-
-  receiveSubject($event) {
-    this.selected_subject = $event
-    console.log(this.selected_subject)
-    this.getClassTests_byDate();
-  }
-
   getStudents() {
-    this.service.getStudents(this.selected_section)
+    this.service.getStudents(this.section_id)
       .subscribe(
-        res => { this.collection.students = res.students, console.log(this.collection.students) }
+        res => { this.students = res.students.filter(std => std.status === 1), 
+          this.pages = Math.ceil(this.students.length / 10),
+          console.log(this.students) 
+        }
       )
   }
 
   getClassTests_byDate() {
-    console.log(this.selected_subject);
-    if (this.selected_subject == undefined || this.selected_subject == '') {
+    console.log(this.subject_id);
+    if (this.subject_id == undefined || this.subject_id == '') {
       this.alert_message = "Please Select Class, Section and Subject";
       this.openAlert(this.alert_message)
     } else {
-      this.assignmentservice.getClassTests_byDate(this.selected_section, this.selected_subject)
+      this.assignmentservice.getClassTests_byDate(this.section_id, this.subject_id)
         .subscribe(
-          res => { this.classTests = res.classTests, console.log(res) }
+          res => { this.classTests = res.classTests, 
+            console.log(res) 
+          }
         )
     }
   }
 
   ctMarks() {
-    if (this.classTests.length == 0) {
-      this.alert_message = "No Class Tests Found";
-      this.openAlert(this.alert_message)
-    } else if (this.selected_ct == undefined || this.selected_ct == '') {
+    if (this.classtest_id == undefined || this.classtest_id == '') {
       this.alert_message = "Please Select Class Test";
       this.openAlert(this.alert_message)
     } else {
-      this.assignmentservice.getClassTest_marks(this.selected_section, this.selected_subject, this.selected_ct)
+      this.assignmentservice.getClassTest_marks(this.classtest_id)
         .subscribe(
-          res => { this.ct_marks = res.CT_marks, console.log(res), this.getStudent_marks(); }
+          res => { this.students = res.CT_marks, 
+            this.pages = Math.ceil(this.students.length / 10),
+            console.log(res) 
+          }
         )
     }
   }
 
-  getStudent_marks() {
-    if (this.ct_marks.length > 0) {
-      this.marks_add = false;
-      this.collection.students = this.ct_marks;
-      this.config.currentPage = 1;
-    } else {
-      this.marks_add = true;
-      this.getStudents();
-      this.config.currentPage = 1;
-    }
-    console.log(this.collection.students)
-  }
-
   addClassTest_marks() {
-    if (this.classTests.length == 0) {
-      this.alert_message = "No Class Tests Found";
-      this.openAlert(this.alert_message)
-    } else if (this.selected_ct == undefined || this.selected_ct == '') {
+    if (this.classtest_id == undefined || this.classtest_id == '') {
       this.alert_message = "Please Select Class Test";
       this.openAlert(this.alert_message)
     } else {
-      this.assignmentservice.addClassTest_marks(this.collection.students, this.selected_section, this.selected_subject, this.selected_ct)
+      this.assignmentservice.addClassTest_marks(this.students, this.section_id, this.subject_id, this.classtest_id)
         .subscribe(
           res => {
             if (res == true) {
-              this.ctMarks();
               this.alert_message = 'Student Marks Added Successfully';
               this.openAlert(this.alert_message)
             } else {

@@ -25,6 +25,16 @@ export class TeacherService {
     // }
   }
 
+  getClassTeacher(employee_id): Observable<any> {
+    console.log(employee_id)
+    return this.http.get<any>(this.url + '/ClassteacherClassesList/' + employee_id);
+  }  
+
+  getTeacherTasks(employee_id): Observable<any> {
+    console.log(employee_id)
+    return this.http.get<any>(this.url + '/tasks_employee/' + employee_id);
+  }  
+
   getTeacherClasses(employee_id): Observable<any> {
     console.log(employee_id)
     return this.http.get<any>(this.url + '/teacherClassesList/' + employee_id);
@@ -37,6 +47,22 @@ export class TeacherService {
   getTeacherSubjects(employee_id, selected_section): Observable<any> {
     return this.http.get<any>(this.url + '/teacherSubjectsList/' + employee_id + '/' + selected_section);
   }
+
+  getSectionAttendance(date, section_id): Observable<any> {
+    return this.http.get<any>(this.url + '/attendance_section/' + date + '/' + section_id);
+  }  
+
+  getEmployee_Attendance(month, employee_id): Observable<any> {
+    return this.http.get<any>(this.url + '/attendance_employee_byMonth/' + month + '/' + employee_id);
+  }  
+
+  getEmployee_Schedule(day, employee_id): Observable<any> {
+    return this.http.get<any>(this.url + '/teacher_schedule_day/' + day + '/' + employee_id);
+  } 
+  
+  getsectionFees(section_id): Observable<any> {
+    return this.http.get<any>(this.url + '/sectionFee_collection/' + section_id);
+  }  
 
   getAcademicEvaluation(selected_subject, selected_section): Observable<any> {
     return this.http.get<any>(this.url + '/all_assessment_marks_by_section_subject/' + selected_subject + '/' + selected_section)

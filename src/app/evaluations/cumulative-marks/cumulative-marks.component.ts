@@ -13,12 +13,26 @@ import { User } from '../../_models/user';
 export class CumulativeMarksComponent implements OnInit {
 
   constructor(private service: ServicesService, private fb: FormBuilder, public dialog: MatDialog) {}
+
+  pageNo: number = 1;
+  page_start: number = 0;
+  page_counter = Array;
+  pages: number = 10;
     
   user: User;
 
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('currentUser'));
+    if (this.user.role === 'parent') {
+      console.log(this.user.users[0].section_id)
+      this.selected_section = this.user.users[0].section_id;
+    }
   }
+
+  pageChange(x) {
+    this.pageNo = x;
+    this.page_start = (x - 1) * 10;
+  } 
 
   marks = [
     {
@@ -50,7 +64,10 @@ export class CumulativeMarksComponent implements OnInit {
     } else {
       this.service.getcum_Evaluations(this.selected_section)
       .subscribe(
-        res => { this.marks = res.students, console.log(res) }
+        res => { this.marks = res.students, 
+          this.pages = Math.ceil(this.marks.length / 10),
+          console.log(res) 
+        }
       )
     }
   }

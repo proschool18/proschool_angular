@@ -17,6 +17,8 @@ export class EdittopicComponent implements OnInit {
     topic_name: '',
   };
   chapter;
+  subject;
+  dialog_type: string;
   alert_message: string;
 
   constructor(
@@ -26,8 +28,10 @@ export class EdittopicComponent implements OnInit {
     private dialogRef: MatDialogRef<EdittopicComponent>,
     @Inject(MAT_DIALOG_DATA) data) {
 
+    this.subject = data.subject;
     this.chapter = data.chapter;
     this.topic = data.topic;
+    this.dialog_type = data.dialog_type;
   }
 
   topicForm: FormGroup = this.fb.group({
@@ -47,24 +51,44 @@ export class EdittopicComponent implements OnInit {
   }
 
   submitTopic() {
-    this.topicForm.value.topic_id = this.topic.topic_id;
-    if (this.chapter == undefined) {
-      this.alert_message = "Please Select Class, Section, Subject and Chapter";
-      this.openAlert(this.alert_message)
-    } else {
-      this.service.editTopic(this.topicForm.value, this.topic.topic_id)
+    if(this.dialog_type === 'add') {
+      if(this.chapter == undefined || this.chapter == ''){
+        this.alert_message = "Please Select Subject and the Chapter";
+        this.openAlert(this.alert_message)
+      } else {      
+        this.service.addTopics(this.topicForm.value.topic_name, this.chapter, this.subject)
         .subscribe(
-          res => {
-            if (res == true) {
-              this.dialogRef.close(this.topicForm.value);
-              this.alert_message = "Topic Edited Successfully";
+          res => { 
+            if(res == true) {
+              this.alert_message = "Topic Added Successfully";
               this.openAlert(this.alert_message)
             } else {
-              this.alert_message = "Topic Not Edited";
+              this.alert_message = "Topic Not added";
               this.openAlert(this.alert_message)
             }
           }
         )
+      }  
+    } else if(this.dialog_type === 'add') {
+      this.topicForm.value.topic_id = this.topic.topic_id;
+      if (this.chapter == undefined) {
+        this.alert_message = "Please Select Class, Section, Subject and Chapter";
+        this.openAlert(this.alert_message)
+      } else {
+        this.service.editTopic(this.topicForm.value, this.topic.topic_id)
+          .subscribe(
+            res => {
+              if (res == true) {
+                this.dialogRef.close(this.topicForm.value);
+                this.alert_message = "Topic Edited Successfully";
+                this.openAlert(this.alert_message)
+              } else {
+                this.alert_message = "Topic Not Edited";
+                this.openAlert(this.alert_message)
+              }
+            }
+          )
+      }
     }
   }
 

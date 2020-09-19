@@ -15,11 +15,21 @@ export class MaterialOutComponent implements OnInit {
 
   constructor(private service: StoreService, private employeeservice: EmployeesService, private fb: FormBuilder, public dialog: MatDialog) {}
 
+  pageNo: number = 1;
+  page_start: number = 0;
+  page_counter = Array;
+  pages: number = 10;
+  
   ngOnInit() {    
     this.getMaterialsOut();
     this.getEmployees();
     this.getMaterials();
   }
+  
+  pageChange(x) {
+    this.pageNo = x;
+    this.page_start = (x - 1) * 10;
+  } 
 
   employees = [];
   all_employees = [];
@@ -28,6 +38,7 @@ export class MaterialOutComponent implements OnInit {
   selected_materialOut;
   dialog_type: string;
   alert_message: string;
+  submit_type: string;
 
   materialOutForm: FormGroup = this.fb.group({
     material: ['', Validators.required],
@@ -40,7 +51,10 @@ export class MaterialOutComponent implements OnInit {
   getMaterialsOut() {
     this.service.getMaterialsOut()
       .subscribe(
-        res => { this.materialsOut = res.material_out, console.log(res) }
+        res => { this.materialsOut = res.material_out, 
+          this.pages = Math.ceil(this.materialsOut.length / 10),
+          console.log(res) 
+        }
       )
   }
 
@@ -71,28 +85,10 @@ export class MaterialOutComponent implements OnInit {
   }
 
   addMaterialsOut() {
-    // this.collection.materialsOut.push({
-    //   material: this.materials.filter(res => res.material_id === this.materialOutForm.value.material)[0].material,
-    //   first_name: this.employees.filter(res => res.employee_id === this.materialOutForm.value.receiver)[0].first_name,
-    //   no_of_units: this.materialOutForm.value.no_of_units,
-    //   received_date: this.materialOutForm.value.received_date,
-    // })
-    this.service.addMaterialsOut(this.materialOutForm.value)
-      .subscribe(
-        res => { 
-          if(res == true) {
-            this.getMaterialsOut();
-            this.alert_message = "Material-Out Added Successfully";
-            this.openAlert(this.alert_message)
-          } else if(res == null) {
-            this.alert_message = "Added Quantity is More than the Quantity Available";
-            this.openAlert(this.alert_message)
-          } else {
-            this.alert_message = "Material-Out Not Added";
-            this.openAlert(this.alert_message)
-          }
-        }
-      )
+    this.selected_materialOut = '';
+    this.dialog_type = 'material-out';
+    this.submit_type = 'add';
+    this.openDialog(this.dialog_type, this.submit_type)
   }
 
   deleteMaterialOut(material_out_id) {
@@ -114,10 +110,11 @@ export class MaterialOutComponent implements OnInit {
   editMaterialOut(i) {
     this.selected_materialOut = this.materialsOut[i];
     this.dialog_type = 'material-out';
-    this.openDialog(this.dialog_type)
+    this.submit_type = 'edit';
+    this.openDialog(this.dialog_type, this.submit_type)
   }
 
-  openDialog(dialog_type): void {
+  openDialog(dialog_type, submit_type): void {
 
     const dialogConfig = new MatDialogConfig();
 
@@ -127,6 +124,7 @@ export class MaterialOutComponent implements OnInit {
     dialogConfig.data = {
       selected_materialOut: this.selected_materialOut,
       dialog_type: dialog_type,
+      submit_type: submit_type,
     };
 
     const dialogRef = this.dialog.open(EditstoreComponent, dialogConfig);

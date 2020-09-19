@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { ProfileComponent } from './profile/profile.component';
 import { AddClassComponent } from './add-class/add-class.component';
+import { AddSectionComponent } from './add-section/add-section.component';
 import { TimingsComponent } from './timings/timings.component';
 import { PatternsComponent } from './patterns/patterns.component';
 import { ParentinfoComponent } from './parentinfo/parentinfo.component';
@@ -23,7 +24,8 @@ import { CommunicationsComponent } from './communications/communications.compone
 const routes: Routes = [
   {path:'',redirectTo:'profile',pathMatch:'full'},
   {path:"profile",component:ProfileComponent},
-  {path:"addclass",component:AddClassComponent},
+  {path:"addClass",component:AddClassComponent},
+  {path:"addSection",component:AddSectionComponent},
   {path:"timings",component:TimingsComponent},
   {path:"patterns",component:PatternsComponent},
   {path:"messages",component:CommunicationsComponent},

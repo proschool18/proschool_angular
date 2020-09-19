@@ -152,7 +152,8 @@
 }
 
 ._item {
-	position: relative;
+    position: relative;
+    cursor: pointer;
 }
 
 .message-count-bubble,

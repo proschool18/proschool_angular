@@ -1,16 +1,16 @@
 <div id="main-content">
     <div class="row">
         <div class="menu-bar">
-            <button routerLink="/main/studentprofile/profile/{{student_id}}/{{section_id}}"
+            <button routerLink="/main/main/studentprofile/profile/{{student_id}}/{{section_id}}"
                 routerLinkActive="active">Profile</button>
-            <button routerLink="/main/studentprofile/attendance/{{student_id}}/{{section_id}}"
+            <button routerLink="/main/main/studentprofile/attendance/{{student_id}}/{{section_id}}"
                 routerLinkActive="active">Attendance</button>
-            <button routerLink="/main/studentprofile/academics/{{student_id}}/{{section_id}}"
+            <button routerLink="/main/main/studentprofile/academics/{{student_id}}/{{section_id}}"
                 class="button button2 hvr-pop transition"
                 routerLinkActive="active">Academics</button>
-            <button routerLink="/main/studentprofile/assessment/{{student_id}}/{{section_id}}"
+            <button routerLink="/main/main/studentprofile/assessment/{{student_id}}/{{section_id}}"
                 routerLinkActive="active">Assessment</button>
-            <button routerLink="/main/studentprofile/fees/{{student_id}}/{{section_id}}"
+            <button routerLink="/main/main/studentprofile/fees/{{student_id}}/{{section_id}}"
                 routerLinkActive="active">Fee Collection</button>
         </div>
     </div>
@@ -22,7 +22,7 @@
                     <div class="student-img-wrapper">
                         <img src="../../../assets/images/student_new.png" />
                     </div>
-                    <div class="image-upload iconF">
+                    <div class="image-upload iconF" *ngIf="user.role === 'admin'">
                         <label for="file-input-studProfPic">
                             <div class="pattrenI">
                                 <i class="fa fa-pencil-square" aria-hidden="true"></i>
@@ -91,7 +91,7 @@
                                 <td>{{student_details.bus_route_id}}</td>
                             </tr>
                         </table>
-                        <button class="edit-info-btn" (click)=editStudent()>Edit</button>
+                        <button class="edit-info-btn" (click)="editStudent()" *ngIf="user.role === 'admin'">Edit</button>
                     </div>
 
                     <div *ngIf="pgPannel" class="student-profile">
@@ -129,7 +129,7 @@
                                 <td>&nbsp;</td>
                             </tr>
                         </table>
-                        <button class="edit-info-btn">Edit</button>
+                        <button class="edit-info-btn" *ngIf="user.role === 'admin'">Edit</button>
                     </div>
 
                     <div *ngIf="addrPannel" class="student-profile">
@@ -145,7 +145,7 @@
                                 
                             </tr>
                         </table>
-                        <button class="edit-info-btn">Edit</button>
+                        <button class="edit-info-btn" *ngIf="user.role === 'admin'">Edit</button>
                     </div>
                 </div>
             </div>

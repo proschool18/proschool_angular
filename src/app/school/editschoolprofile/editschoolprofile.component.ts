@@ -13,9 +13,6 @@ import { from } from 'rxjs';
 })
 export class EditschoolprofileComponent implements OnInit {
 
-  schoolDetails: boolean = true;
-  managementDetails: boolean = false;
-  contactDetails: boolean = false;
   about: boolean = false;
   chairman_note: boolean = false;
 
@@ -23,60 +20,37 @@ export class EditschoolprofileComponent implements OnInit {
   dialog_type: string;
   alert_message: string;
 
-  schoolprofile = {
-    academic_year: '',
-    address: '',
-    affiliation: '',
-    alternate_email: '',
-    alternate_phone: '',
-    chairman: '',
-    class_from: '',
-    coordinator: '',
-    description: '',
-    email: '',
-    est_on: '',
-    extra_curricular_activites: '',
-    facilities_available: '',
-    founder: '',
-    medium: '',
-    name: '',
-    phone: '',
-    principal: '',
-    school_id: '',
-    timings: '',
-    status: '',
-    vice_principal: '',
-    website: '',
-    about: '',
-    chairman_note: '',
-  };
+  schooldetails: any;
+  managementdetails: any;
+  contactdetails: any;
 
-  schoolprofileForm: FormGroup = this.fb.group({
-    academic_year: '',
-    address: '',
-    affiliation: '',
-    alternate_email: '',
-    alternate_phone: '',
-    chairman: '',
-    class_from: '',
-    coordinator: '',
-    description: '',
-    email: '',
-    est_on: '',
-    extra_curricular_activites: '',
-    facilities_available: '',
-    founder: '',
-    medium: '',
+  schoolprofile: any;
+
+  schooldetailsForm: FormGroup = this.fb.group({
     name: '',
-    phone: '',
-    principal: '',
-    school_id: '',
+    medium: '',
     timings: '',
+    class_from: '',
+    affiliation: '',
+    extra_curricular_activites: '',
+  })
+
+  managementdetailsForm: FormGroup = this.fb.group({
+    founder: '',
+    chairman: '',
+    principal: '',
     vice_principal: '',
+    coordinator: '',
+    est_on: '',
+  })
+
+  contactdetailsForm: FormGroup = this.fb.group({
+    address: '',
+    phone: '',
+    alternate_phone: '',
+    email: '',
     website: '',
-    about: '',
-    chairman_note: '',
-  });
+  })
 
   constructor(
     private service: ServicesService,
@@ -86,81 +60,82 @@ export class EditschoolprofileComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) data
   ) {
     this.schoolprofile = data.schoolprofile;
+    this.dialog_type = data.dialog_type;
   }
 
   ngOnInit() {
-    this.schoolprofileForm.patchValue({
-      academic_year: this.schoolprofile.academic_year,
-      address: this.schoolprofile.address,
-      affiliation: this.schoolprofile.affiliation,
-      alternate_email: this.schoolprofile.alternate_email,
-      alternate_phone: this.schoolprofile.alternate_phone,
-      chairman: this.schoolprofile.chairman,
-      class_from: this.schoolprofile.class_from,
-      coordinator: this.schoolprofile.coordinator,
-      description: this.schoolprofile.description,
-      email: this.schoolprofile.email,
-      est_on: this.schoolprofile.est_on,
-      extra_curricular_activites: this.schoolprofile.extra_curricular_activites,
-      facilities_available: this.schoolprofile.facilities_available,
-      founder: this.schoolprofile.founder,
-      medium: this.schoolprofile.medium,
-      name: this.schoolprofile.name,
-      phone: this.schoolprofile.phone,
-      principal: this.schoolprofile.principal,
-      school_id: this.schoolprofile.school_id,
-      timings: this.schoolprofile.timings,
-      vice_principal: this.schoolprofile.vice_principal,
-      website: this.schoolprofile.website,
-      about: this.schoolprofile.about,
-      chairman_note: this.schoolprofile.chairman_note,
-    });
-  }
-
-  showForm(select) {
-    if(select === 'schoolDetails') {
-      this.schoolDetails = true;
-      this.managementDetails = false;
-      this.contactDetails = false;
-      this.about = false;
-      this.chairman_note = false;
-    } else if(select === 'managementDetails') {
-      this.schoolDetails = false;
-      this.managementDetails = true;
-      this.contactDetails = false;
-      this.about = false;
-      this.chairman_note = false;
-    } else if(select === 'contactDetails') {
-      this.schoolDetails = false;
-      this.managementDetails = false;
-      this.contactDetails = true;
-      this.about = false;
-      this.chairman_note = false;
-    } else if(select === 'about') {
-      this.schoolDetails = false;
-      this.managementDetails = false;
-      this.contactDetails = false;
-      this.about = true;
-      this.chairman_note = false;
-    } else if(select === 'chairman_note') {
-      this.schoolDetails = false;
-      this.managementDetails = false;
-      this.contactDetails = false;
-      this.about = false;
-      this.chairman_note = true;
+    console.log(this.dialog_type)
+    if(this.dialog_type === 'schoolDetails') {
+      this.schooldetailsForm.patchValue({
+        name: this.schoolprofile.name,
+        medium: this.schoolprofile.medium,
+        timings: this.schoolprofile.timings,
+        class_from: this.schoolprofile.class_from,
+        affiliation: this.schoolprofile.affiliation,
+        extra_curricular_activites: this.schoolprofile.extra_curricular_activites,
+      })
+    } else if(this.dialog_type === 'managementDetails') {
+      this.managementdetailsForm.patchValue({
+        founder: this.schoolprofile.founder,
+        chairman: this.schoolprofile.chairman,
+        principal: this.schoolprofile.principal,
+        vice_principal: this.schoolprofile.vice_principal,
+        coordinator: this.schoolprofile.coordinator,
+        est_on: this.schoolprofile.est_on,
+      })
+    } else if(this.dialog_type === 'contactDetails') {
+      this.contactdetailsForm.patchValue({
+        address: this.schoolprofile.address,
+        phone: this.schoolprofile.phone,
+        alternate_phone: this.schoolprofile.alternate_phone,
+        email: this.schoolprofile.email,
+        website: this.schoolprofile.website,
+      })
     }
   }
 
-  editSchool() {
-    this.service.editSchoolProfile(this.schoolprofileForm.value, this.schoolprofile.school_id)
+  schoolSubmit() {
+    this.service.editSchoolDetails(this.schooldetailsForm.value, this.schoolprofile.school_id)
       .subscribe(
         res => {
           if (res == true) {
-            this.dialogRef.close(this.schoolprofileForm.value);
-            this.alert_message = "School Edited Successfully";
+            this.dialogRef.close(this.schooldetailsForm.value);
+            this.alert_message = "School Details Edited Successfully";
             this.openAlert(this.alert_message)
           } else {
-            this.alert_message = "School Not Edited";
+            this.alert_message = "School Details Not Edited";
+            this.openAlert(this.alert_message)
+          }
+        }
+      )
+  }
+  
+  managementSubmit() {
+    this.service.editSchool_managementDetails(this.managementdetailsForm.value, this.schoolprofile.school_id)
+      .subscribe(
+        res => {
+          if (res == true) {
+            this.dialogRef.close(this.managementdetailsForm.value);
+            this.alert_message = "School Management Details Edited Successfully";
+            this.openAlert(this.alert_message)
+          } else {
+            this.alert_message = "School Management Details Not Edited";
+            this.openAlert(this.alert_message)
+          }
+        }
+      )
+  }
+
+  contactSubmit() {
+    this.service.editSchool_contactDetails(this.contactdetailsForm.value, this.schoolprofile.school_id)
+      .subscribe(
+        res => {
+          if (res == true) {
+            this.dialogRef.close(this.contactdetailsForm.value);
+            this.alert_message = "School Contact Details Edited Successfully";
+            this.openAlert(this.alert_message)
+          } else {
+            this.alert_message = "School Contact Details Not Edited";
             this.openAlert(this.alert_message)
           }
         }

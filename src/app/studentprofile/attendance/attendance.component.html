@@ -1,92 +1,121 @@
-<!-- <div id="main-content">
+<div id="main-content">
     <div class="row">
-        <div class="container-fluid" id="buttonId1">
-            <button routerLink="/main/studentprofile/profile/{{student_id}}/{{section_id}}" class="button button2 hvr-pop transition">Profile</button>
-            <button routerLink="/main/studentprofile/attendance/{{student_id}}/{{section_id}}" class="button button2 hvr-pop transition">Attendance</button>
-            <button routerLink="/main/studentprofile/academics/{{student_id}}/{{section_id}}" class="button button2 hvr-pop transition">Academics</button>
-            <button routerLink="/main/studentprofile/assessment/{{student_id}}/{{section_id}}" class="button button2 hvr-pop transition">Assessment</button>
-            <button routerLink="/main/studentprofile/fees/{{student_id}}/{{section_id}}" class="button button2 hvr-pop transition">Fee Collection</button>
+        <div class="menu-bar">
+            <button routerLink="/main/main/studentprofile/profile/{{student_id}}/{{section_id}}"
+                routerLinkActive="active">Profile</button>
+            <button routerLink="/main/main/studentprofile/attendance/{{student_id}}/{{section_id}}"
+                routerLinkActive="active">Attendance</button>
+            <button routerLink="/main/main/studentprofile/academics/{{student_id}}/{{section_id}}"
+                class="button button2 hvr-pop transition"
+                routerLinkActive="active">Academics</button>
+            <button routerLink="/main/main/studentprofile/assessment/{{student_id}}/{{section_id}}"
+                routerLinkActive="active">Assessment</button>
+            <button routerLink="/main/main/studentprofile/fees/{{student_id}}/{{section_id}}"
+                routerLinkActive="active">Fee Collection</button>
         </div>
     </div>
 
     <div class="row">
-        <div class="container-fluid dashboard-content">
-            <div class="card leftcard cardsryt scrollonhover">
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="form-group formalign">
-                            <label>Select Month</label>
-                            <select class="form-control" [(ngModel)]="month" (change)="getstudentMonthAttendance()">
-                                <option>select...</option>
-                                <option *ngFor="let mon of months; let i = index" value="{{mon.value}}">{{mon.month}}
-                                </option>
-                            </select>
-                        </div>
+        <div class="page-content-wrapper">
+            <div class="student-info-wrapper">
+                <div class="student-details">
+                    <div class="student-img-wrapper">
+                        <img src="../../../assets/images/student_new.png" />
                     </div>
-                    <div class="col-md-3">
-                        <div class="progress">
-                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60"
-                                aria-valuemin="0" aria-valuemax="100"
-                                [ngStyle]="{'width': (attendance.presentpercent) + '%'}">
-                                Present: {{attendance.present}}
+                    <div class="image-upload iconF" *ngIf="user.role === 'admin'">
+                        <label for="file-input-studProfPic">
+                            <div class="pattrenI">
+                                <i class="fa fa-pencil-square" aria-hidden="true"></i>
                             </div>
-                            <b>{{attendance.present}}</b>
-                        </div>
+                        </label>
+                        <input id="file-input-studProfPic" type="file" name="image"
+                            (change)="studentProfPic($event.target.files)" />
                     </div>
-                    <div class="col-md-3">
-                        <div class="progress">
-                            <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="60"
-                                aria-valuemin="0" aria-valuemax="100"
-                                [ngStyle]="{'width': (attendance.absentpercent) + '%'}">
-                                Absent: {{attendance.absent}}
-                            </div>
-                            <b>{{attendance.absent}}</b>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="progress">
-                            <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60"
-                                aria-valuemin="0" aria-valuemax="100"
-                                [ngStyle]="{'width': (attendance.leavepercent) + '%'}">
-                                OnLeave: {{attendance.onleave}}
-                            </div>
-                            <b>{{attendance.onleave}}</b>
-                        </div>
-                    </div>
+                    <p class="student-basic-info">
+                        Name: <span>{{student_details.first_name}} {{student_details.last_name}}</span>
+                        <br><br>
+                        Class: <span>{{student_details.school_classes[0].name}}</span>
+                        <br><br>
+                        Roll No: <span>{{student_details.roll_no}}</span>
+                    </p>
                 </div>
-
-                <div class="searchForm">
-                    <div class="table-responsive">
-                        <table style="width:100%;">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Date</th>
-                                    <th>Attendance Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let att of attendance.donutchart; let i = index">
-                                    <td>{{i+1}}</td>
-                                    <td>{{att.date}}</td>
-                                    <td>{{att.status}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="student-details-tablist-wrapper">
+                    <section class="student-task-section">
+                        <section class="page-actions">
+                            <div class="dropdown">
+                                <button class="dropbtn" (click)="showMonthList = true" (clickOutside)="showMonthList = false">
+                                    {{!selected_month.month ? 'select month' : selected_month.month}}
+                                </button>
+                                <div class="dropdown-content" [hidden]="!showMonthList">
+                                    <a *ngFor="let mon of months"
+                                        (click)="selected_month = mon; getstudentMonthAttendance();">{{mon.month}}</a>
+                                </div>
+                            </div>
+                        </section>
+                        <section class="table-and-pagination -classes-schedule">
+                            <div class="table-container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th align="left">Date</th>
+                                            <th align="left">Attendance Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let att of attendance.attendance; let i = index">
+                                            <td class="_s-no"><span>{{ i + 1 }}</span></td>
+                                            <td>{{att.date}}</td>
+                                            <td>
+                                                <button [ngClass]="{'status-btn approved-btn': att.status === 'Present', 'status-btn rejected-btn': att.status === 'Absent', 'status-btn pending-btn': att.status === 'OnLeave'}" >{{att.status}}</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+                        <!-- <div class="_attendance-box dynamic-bar-graph">
+                            <section role="tabpanel">
+                                <div class="bar-3-group" *ngFor="let fee of termwiseFee[0].studentFeeDetails; let i = index">
+                                    <div class="_metric -total">
+                                        <div class="_bar">
+                                            <span class="_bar_progress" [ngStyle]="{'height': '100%'}">
+                                            </span>
+                                        </div>
+                                        <div class="_name">
+                                            <span class="_legend">{{fee.TotalTypeFees}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="_metric -due">
+                                        <div class="_bar">
+                                            <span class="_bar_progress" [ngStyle]="{'height': (fee.PaidTermFees / fee.TotalTypeFees * 100) +'%'}">
+                                            </span>
+                                        </div>
+                                        <div class="_name">
+                                            <span class="_legend">{{fee.PaidTermFees}}</span>
+                                            {{fee.FeeType}}
+                                        </div>
+                                    </div>
+                                    <div class="_metric -attend">
+                                        <div class="_bar">
+                                            <span class="_bar_progress" [ngStyle]="{'height': (fee.BalanceFee / fee.TotalTypeFees * 100) +'%'}">
+                                            </span>
+                                        </div>
+                                        <div class="_name">
+                                            <span class="_legend">{{fee.BalanceFee}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div> -->
+                    </section>
                 </div>
-            </div>
-
-            <div class="card rightcard">
-                <canvas baseChart [data]="chartData" [labels]="chartLabels" [options]="chartOptions"
-                    [legend]="chartLegend" [chartType]="chartType"></canvas>
             </div>
         </div>
     </div>
+</div>
 
-</div> -->
-
-<main class="card mt-20 within-viewport" style="height: auto;">
+<!-- <main class="card mt-20 within-viewport" style="height: auto;">
     <div class="page-actions">
         <section class="student-intro">
             <img src="/assets/images/student.png">
@@ -142,41 +171,7 @@
                     </table>
                 </div>
             </section>
-            <!-- <div class="_attendance-box dynamic-bar-graph">
-                <section role="tabpanel">
-                    <div class="bar-3-group" *ngFor="let fee of termwiseFee[0].studentFeeDetails; let i = index">
-                        <div class="_metric -total">
-                            <div class="_bar">
-                                <span class="_bar_progress" [ngStyle]="{'height': '100%'}">
-                                </span>
-                            </div>
-                            <div class="_name">
-                                <span class="_legend">{{fee.TotalTypeFees}}</span>
-                            </div>
-                        </div>
-                        <div class="_metric -due">
-                            <div class="_bar">
-                                <span class="_bar_progress" [ngStyle]="{'height': (fee.PaidTermFees / fee.TotalTypeFees * 100) +'%'}">
-                                </span>
-                            </div>
-                            <div class="_name">
-                                <span class="_legend">{{fee.PaidTermFees}}</span>
-                                {{fee.FeeType}}
-                            </div>
-                        </div>
-                        <div class="_metric -attend">
-                            <div class="_bar">
-                                <span class="_bar_progress" [ngStyle]="{'height': (fee.BalanceFee / fee.TotalTypeFees * 100) +'%'}">
-                                </span>
-                            </div>
-                            <div class="_name">
-                                <span class="_legend">{{fee.BalanceFee}}</span>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </div> -->
         </section>
 
     </div>
-</main>
+</main> -->

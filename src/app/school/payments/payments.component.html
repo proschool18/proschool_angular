@@ -1,4 +1,4 @@
-<main class="card mt-20 within-viewport">
+<main class="card mt-20 within-viewport new-listing">
   <section class="page-actions">
     <div class="dropdown" >
       <button class="dropbtn" (click)="showVendorList = true" (clickOutside)="showVendorList = false">
@@ -16,17 +16,17 @@
         <a *ngFor="let mat of materials" (click)="material = mat; getMaterial_payments();">{{mat.material}}</a>
       </div>
     </div>
-    <div class="add_div">
+    <!-- <div class="add_div">
       <button class="btn -cta" routerLink="/main/admin/payments">Payments</button>
       <button class="btn -cta" routerLink="/main/admin/addpayments">Add Payments</button>
-    </div>
+    </div> -->
   </section>
   <section class="table-and-pagination -classes-schedule">
     <div class="table-container">
       <table>
         <thead>
           <tr>
-            <th>#</th>
+            <th align="left">#</th>
             <th align="left">Vendor</th>
             <th align="left">Material</th>
             <th align="left">Payment to Pay</th>
@@ -34,11 +34,14 @@
             <th align="left">Balance</th>
             <th align="left">Payment Status</th>
             <th align="left">Due Date</th>
+            <!-- <th align="left">Payment List</th> -->
+            <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let pay of payments; let i=index">
-            <td>{{ i + 1 }}</td>
+          <tr *ngFor="let pay of payments | pagination: pageNo; let i=index">
+            <td class="_s-no"><span>{{ page_start + i + 1 }}</span></td>
             <td>{{pay.vendor_name}}</td>
             <td>{{pay.material}}</td>
             <td>{{pay.payment_toPay}}</td>
@@ -46,23 +49,16 @@
             <td>{{pay.payment_balance}}</td>
             <td>{{pay.payment_status}}</td>
             <td>{{pay.payment_dueDate}}</td>
+            <td><button class="btn -cta" (click)="view_payments(pay.payment_id)">View</button></td>
+            <td><button class="btn -cta" (click)="add_payments(pay.payment_id)">Add Payment</button></td>
           </tr>
         </tbody>
       </table>
     </div>
     <div class="_pagination">
-      <a href="" class="btn -previous">Previous</a>
-      <a href="" class="btn -current">1</a>
-      <a href="" class="btn">2</a>
-      <a href="" class="btn">3</a>
-      <a href="" class="btn">4</a>
-      <a href="" class="btn">5</a>
-      <a href="" class="btn">6</a>
-      <a href="" class="btn">7</a>
-      <a href="" class="btn">8</a>
-      <a href="" class="btn">9</a>
-      <a href="" class="btn">10</a>
-      <a href="" class="btn -next">Next</a>
+      <a class="btn -previous">Previous</a>
+      <a class="btn" [ngClass]="{'-current': pageNo === (i+1)}" *ngFor='let page of page_counter(pages) ;let i = index' (click)="pageChange(i+1)">{{i+1}}</a>
+      <a class="btn -next">Next</a>
     </div>
   </section>
 </main>

@@ -14,7 +14,7 @@
 	</button>
 	<div class="dropdown-content" [hidden]="!showSectionList">
 		<a *ngFor="let sec of class_sections; let i = index"
-		(click)="selected_section = sec; getSubjects();">{{sec.name}}</a>
+		(click)="selected_section = sec; getSubjects()">{{sec.name}}</a>
 	</div>
 </div>
 

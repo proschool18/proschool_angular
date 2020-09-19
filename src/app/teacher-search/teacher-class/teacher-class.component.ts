@@ -17,8 +17,11 @@ export class TeacherClassComponent implements OnInit {
 
   employee_id = JSON.parse(localStorage.getItem('currentUser')).employee_id;
 
-  selected_class;
-  selected_section;
+  selected_class:any = {class_id: '', name: ''};
+  selected_section:any;
+
+  showClassList: boolean = false;
+  showSectionList: boolean = false;
 
   classes = [];
   class_sections = [];
@@ -31,15 +34,27 @@ export class TeacherClassComponent implements OnInit {
   getTeacherClasses() {
     this.service.getTeacherClasses(this.employee_id)
       .subscribe(
-        res => { this.classes = res.school_classes, console.log(res)}
+        res => { 
+          this.classes = res.school_classes, 
+          this.selected_class = this.classes[0], 
+          this.getTeacherSections(),
+          console.log(res)
+        }
       )
   }
 
   getTeacherSections() {
-    this.classEvent.emit(this.selected_class)
-    this.service.getTeacherSections(this.employee_id, this.selected_class)
+    this.classEvent.emit(this.selected_class.class_id)
+    this.service.getTeacherSections(this.employee_id, this.selected_class.class_id)
       .subscribe(
-        res => { this.class_sections = res.class_sections, console.log(res)}
+        res => { 
+          if(res.class_sections !== []) {
+            this.selected_section = res.class_sections[0]; 
+          }
+          this.class_sections = res.class_sections, 
+          this.get_clsec(),
+          console.log(res)
+        }
       )
   }
 
@@ -49,8 +64,8 @@ export class TeacherClassComponent implements OnInit {
   }
 
   get_clsec() {
-    this.classEvent.emit(this.selected_class);
-    this.sectionEvent.emit(this.selected_section);
+    this.classEvent.emit(this.selected_class.class_id);
+    this.sectionEvent.emit(this.selected_section.section_id);
     this.subjectEvent.emit(this.selected_subject);
   }
 

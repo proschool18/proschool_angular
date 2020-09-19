@@ -15,9 +15,19 @@ export class AssignmentreportsComponent implements OnInit {
     
   user: User;
 
+  pageNo: number = 1;
+  page_start: number = 0;
+  page_counter = Array;
+  pages: number = 10;
+
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('currentUser'));
   }
+
+  pageChange(x) {
+    this.pageNo = x;
+    this.page_start = (x - 1) * 10;
+  } 
 
   academics = [{
     student_id: "",
@@ -50,6 +60,7 @@ export class AssignmentreportsComponent implements OnInit {
   }
 
   getAssignmentreports() {
+    this.pageChange(1);
     if(this.selected_section == undefined || this.selected_section == '') {
       this.alert_message = "Please Select Class and Section";
       this.openAlert(this.alert_message)
@@ -57,21 +68,30 @@ export class AssignmentreportsComponent implements OnInit {
       if (this.selected_assessment == 'Assignments') {
         this.service.getdashboard_assignments(this.selected_section)
           .subscribe(
-            res => { this.academics = res.students, console.log(res) }
+            res => { this.academics = res.students, 
+              this.pages = Math.ceil(this.academics.length / 10) ,
+              console.log(res) 
+            }
           )
       } else if (this.selected_assessment == 'Class Tests') {
         this.service.getdashboard_classtests(this.selected_section)
           .subscribe(
-            res => { this.academics = res.students, console.log(res) }
+            res => { this.academics = res.students, 
+              this.pages = Math.ceil(this.academics.length / 10) ,
+              console.log(res) 
+            }
           )
       } else if (this.selected_assessment == 'Project Works') {
         this.service.getdashboard_projectworks(this.selected_section)
           .subscribe(
-            res => { this.academics = res.students, console.log(res) }
+            res => { this.academics = res.students, 
+              this.pages = Math.ceil(this.academics.length / 10), 
+              console.log(res) 
+            }
           )
       }
     }
-      
+    // this.pages = Math.ceil(this.academics.length / 10) 
   }
 
   openAlert(alert_message) {

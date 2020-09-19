@@ -51,7 +51,7 @@
         <div class="mails-list-wrapper">
             <input type="text" class="search-box" name="mailSearchCriteria" placeholder="Search message">
             <div class="mail-list">
-                <div *ngFor="let mail of messages" (click)="selectedMail = mail" 
+                <div *ngFor="let mail of messages" (click)="selectedMail = mail; messageStatus(mail.message_id)" 
                 class="mail-short-detail-wrapper"
                 [ngClass]="selectedMail._id === mail._id ? 'selected-mail' : ''">
                     <p class="mail-from">{{mail.sender_name}}</p>
@@ -60,13 +60,10 @@
                     <p class="mail-day">Tuesday</p>
                     <p class="mail-date-time">{{mail.posted_on}}</p>
                     <span class="mail-read-flag" *ngIf="isInbox"
-                    [ngClass]="mail.status === 1 ? 'mail-read' : 'mail-unread'"></span>
+                    [ngClass]="mail.message_status === 'read' ? 'mail-read' : 'mail-unread'"></span>
                     <span class="mail-read-flag" *ngIf="!isInbox"
-                    [ngClass]="mail.status === 1 ? 'mail-sent' : 'mail-unsent'"></span>
+                    [ngClass]="mail.message_status === 'read' ? 'mail-sent' : 'mail-unsent'"></span>
                 </div>
-            </div>
-            <div class="blank-wrapper">
-                
             </div>
         </div>
 
@@ -93,7 +90,7 @@
                     <span class="mail-body-from-name">{{selectedMail.sender_name}}</span>
                     <p class="mail-body-day">Tuesday</p>
                     <p class="mail-body-date-time">{{selectedMail.posted_on}}</p>
-                    <p class="mail-to-desc">To : {{selectedMail.sent_to}}</p>
+                    <p class="mail-to-desc">To : {{selectedMail.receiver}}</p>
                     <p class="mail-body-subject">{{selectedMail.subject}}</p>
                     <p class="mail-body">{{selectedMail.message}}</p>
                     <span class="mail-body-read-flag" *ngIf="!isInbox"

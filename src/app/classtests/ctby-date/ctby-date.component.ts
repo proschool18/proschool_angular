@@ -14,11 +14,21 @@ export class CTbyDateComponent implements OnInit {
 
   constructor(private service: AssignmentsService, public dialog: MatDialog) {}
 
+  pageNo: number = 1;
+  page_start: number = 0;
+  page_counter = Array;
+  pages: number = 10;
+
   user: User;
 
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('currentUser'));
   }
+
+  pageChange(x) {
+    this.pageNo = x;
+    this.page_start = (x - 1) * 10;
+  } 
 
   classTests = [];
   all_classTests = [];
@@ -58,11 +68,13 @@ export class CTbyDateComponent implements OnInit {
           res => { this.all_classTests = this.classTests = res.classTests, console.log(res) }
         )
     }
+    this.pages = Math.ceil(this.classTests.length / 10);
   }
 
   CT_filterByDate() {
     console.log(this.selected_date)
-    this.classTests = this.all_classTests.filter(ct => ct.date === this.selected_date)
+    this.classTests = this.all_classTests.filter(ct => ct.date === this.selected_date);
+    this.pages = Math.ceil(this.classTests.length / 10);
   }
 
   deleteClasstest(classTest_id) {

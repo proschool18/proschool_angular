@@ -80,7 +80,10 @@ export class AcademicsService {
     return this.http.put<any>(this.url + '/edit_topic/' + topic_id, data)
   }
 
-  deleteTopic(chapter_id, topic_id): Observable<any> {
+  deleteTopic(chapter_id, topic_id, topic_status): Observable<any> {
+    this.empty_data = {
+      topic_status: topic_status
+    }
     return this.http.put<any>(this.url + '/delete_topic/' + chapter_id + '/' + topic_id, this.empty_data)
   }
 

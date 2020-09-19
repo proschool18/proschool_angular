@@ -60,9 +60,7 @@ export class CommunicationsComponent implements OnInit {
     this.service.getParentsInbox(this.sent_to, this.selected_class, this.selected_section)
     .subscribe(
     res => { this.messages = res.messages, console.log(res), this.selectedMail = this.messages[0] }
-    )
-
-    
+    )    
   }
 
   getOutbox() {
@@ -71,7 +69,6 @@ export class CommunicationsComponent implements OnInit {
     .subscribe(
     res => { this.messages = res.messages, console.log(res), this.selectedMail = this.messages[0] }
     )
-    
   }
 
   addMessage() {
@@ -94,6 +91,14 @@ export class CommunicationsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(); 
   }
 
+  messageStatus(message_id) {
+    this.messages.filter(msg => msg.message_id === message_id)[0].message_status = 'read';
+    this.service.messageStatus(message_id)
+      .subscribe(
+      res => { console.log(res) }
+      )
+  }
+
   openDialog(): void {
 
     const dialogConfig = new MatDialogConfig();
@@ -110,7 +115,5 @@ export class CommunicationsComponent implements OnInit {
     dialogRef.afterClosed().subscribe();    
 
   }
-
-
 
 }

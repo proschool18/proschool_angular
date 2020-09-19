@@ -1,0 +1,33 @@
+<div id="main-content1" class="new-message-wrapper">
+    <div class="header-wrapper">
+        <p *ngIf="dialog_type == 'add'">Add Event</p>
+        <p *ngIf="dialog_type == 'edit'">Edit Event</p>
+        <button class="btn-close" (click)="close()"></button>
+    </div>
+    <form class="form-inline" role="form" [formGroup]="timetableForm" (ngSubmit)="submitTimetable()">
+        <div class="row-wrapper">
+            <div class="col-full-3">
+                Event Title:
+            </div>
+            <div class="col-full-6">
+                <input type="text" id="signatory-name-input" formControlName="event_title" value="{{selected_notice.event_title}}">
+            </div>
+        </div>
+        <div class="row-wrapper">
+            <div class="col-full-3">
+                Class Teacher:
+            </div>
+            <div class="col-full-6">
+                <select formControlName="teacher_id" [value]="selected_schedule.teacher_id">
+                    <option>select...</option>
+                    <option *ngFor="let tch of teachers" value="{{tch.teacher_id}}">{{tch.teacher_name}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 pull-right">
+                <button class="btn -cta active-tab" type="submit">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>

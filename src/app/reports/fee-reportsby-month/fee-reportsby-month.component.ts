@@ -9,22 +9,10 @@ import { AlertComponent } from '../../_alert/alert/alert.component';
   styleUrls: ['./fee-reportsby-month.component.css']
 })
 export class FeeReportsbyMonthComponent implements OnInit {
-  config: any;
-  collection = { count: '', day_fees: [] };
 
-  constructor(private service: ServicesService, public dialog: MatDialog) {
-    this.config = {
-      itemsPerPage: 5,
-      currentPage: 1,
-      totalItems: this.collection.count
-    };
-  }
+  constructor(private service: ServicesService, public dialog: MatDialog) {}
 
   ngOnInit() {
-  }
-
-  pageChanged(event){
-    this.config.currentPage = event;
   }
   
   month_fees = [];

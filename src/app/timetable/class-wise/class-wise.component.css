@@ -106,7 +106,7 @@ td{
 td.time-specifiation span {
     font-weight: 600;
     display: inline-block;
-    width: 90px;
+    width: 100px;
 }
 
 .edit-time-row-btn {
@@ -138,6 +138,7 @@ td.time-specifiation span {
     font-size: 14px;
     font-weight: 600;
     display: block;
+    text-align: center;
 }
 
 .row-content-detail {
@@ -224,38 +225,39 @@ td.empty-schedule-box:hover:before {
     content: " ";
 }
 
-.schedule-box:hover,
-.empty-schedule-box:hover {
-    border: 1px solid blue !important;
-    background: rgba(94, 129, 244, 0.2)
-}
-
 .schedule-box:hover .row-content-detail {
     visibility: visible;
-}
-
-.add-in-empty-schedule-wrapper {
-    visibility: hidden;
 }
 
 .empty-schedule-box {
     text-align: center;
 }
 
-.empty-schedule-box:hover .add-in-empty-schedule-wrapper {
-    visibility: visible;
-}
-
 .empty-schedule-box button {
     border: 1px solid #5E81F4;
-    font-size: 12px;
+    font-size: 15px;
     border-radius: 5px;
     color: #5E81F4;
     background-color: #fff;
 }
 
+.empty-schedule-box button:hover {
+    color: #FFFFFF;
+    background-color: #5E81F4;
+}
+
 .empty-schedule-box button:first-child {
     margin-bottom: 5px;
+}
+
+.empty-schedule-box button:nth-child(2) {
+    border: 1px solid #e56761;
+    color: #e56761;
+}
+
+.empty-schedule-box button:nth-child(2):hover {
+    color: #FFFFFF;
+    background-color: #e56761;
 }
 
 main.card.mt-20.within-viewport {

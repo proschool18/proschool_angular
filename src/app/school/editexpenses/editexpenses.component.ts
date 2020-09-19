@@ -96,21 +96,36 @@ export class EditexpensesComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  editClaim() {
+  submit() {
     console.log(this.claimForm.value)
     this.dialogRef.close(this.claimForm.value);
-    this.service.editClaims(this.claimForm.value, this.claims.claim_id)
-    .subscribe(
-      res => { 
-        if(res == true) {
-          this.alert_message = "Claim Edited Successfully";
-          this.openAlert(this.alert_message)
-        } else {
-          this.alert_message = "Claim Not Edited";
-          this.openAlert(this.alert_message)
+    if(this.dialog_type === 'add') {
+      this.service.addClaims(this.claimForm.value)
+      .subscribe(
+        res => { 
+          if(res == true) {
+            this.alert_message = "Claim Added Successfully";
+            this.openAlert(this.alert_message)
+          } else {
+            this.alert_message = "Claim Not Added";
+            this.openAlert(this.alert_message)
+          }
         }
-      }
-    )
+      )
+    } else {
+      this.service.editClaims(this.claimForm.value, this.claims.claim_id)
+      .subscribe(
+        res => { 
+          if(res == true) {
+            this.alert_message = "Claim Edited Successfully";
+            this.openAlert(this.alert_message)
+          } else {
+            this.alert_message = "Claim Not Edited";
+            this.openAlert(this.alert_message)
+          }
+        }
+      )
+    }
   }
 
   openAlert(alert_message) {

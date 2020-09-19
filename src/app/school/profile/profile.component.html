@@ -6,34 +6,32 @@
       <img scr="../../../assets/images/school.png" />
     </div>
     <div class="school-details-wrapper">
-      <button class="school-details-edit-btn" (click)="editSchool()">Edit</button>
+      <button class="school-details-edit-btn" (click)="editSchoolDetails()" *ngIf="user.role === 'admin'">Edit</button>
       <h3>School Details</h3>
       <table class="school-details-table" border="0" cellpadding="0" cellspacing="0">
         <tr>
           <td class="school-detail-heading">Name:</td>
-          <td class="school-detail-value">Newton English Medium</td>
-          <td class="school-detail-heading">Class Form:</td>
-          <td class="school-detail-value">Newton English Medium</td>
+          <td class="school-detail-value">{{schoolprofile.name}}</td>
+          <td class="school-detail-heading">Classes:</td>
+          <td class="school-detail-value">{{schoolprofile.class_from}}</td>
         </tr>
          <tr>
           <td class="school-detail-heading">Medium:</td>
-          <td class="school-detail-value">Newton English Medium</td>
+          <td class="school-detail-value">{{schoolprofile.medium}}</td>
           <td class="school-detail-heading">Affiliation:</td>
-          <td class="school-detail-value">Newton English Medium</td>
+          <td class="school-detail-value">{{schoolprofile.affiliation}}</td>
         </tr>
          <tr>
           <td class="school-detail-heading">Timings:</td>
-          <td class="school-detail-value">Newton English Medium</td>
+          <td class="school-detail-value">{{schoolprofile.timings}}</td>
           <td class="school-detail-heading">Extra Curricular Activities:</td>
-          <td class="school-detail-value">Newton English Medium</td>
+          <td class="school-detail-value">{{schoolprofile.extra_curricular_activites}}</td>
         </tr>
       </table>
     </div>
   </div>
   <p class="school-desc">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br>
-      At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi.<br>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam. 
+      {{schoolprofile.about}}
     </p>
 </main>
 
@@ -43,56 +41,56 @@
     <table class="school-details-table" border="0" cellpadding="0" cellspacing="0">
         <tr>
           <td class="school-detail-heading">Founder:</td>
-          <td class="school-detail-value">Newton English Medium</td>
+          <td class="school-detail-value">{{schoolprofile.founder}}</td>
         </tr>
          <tr>
           <td class="school-detail-heading">Chairman:</td>
-          <td class="school-detail-value">Prabhu</td>
+          <td class="school-detail-value">{{schoolprofile.chairman}}</td>
         </tr>
          <tr>
           <td class="school-detail-heading">Coordinator:</td>
-          <td class="school-detail-value">Shankar</td>
+          <td class="school-detail-value">{{schoolprofile.coordinator}}</td>
         </tr>
         <tr>
           <td class="school-detail-heading">Principal:</td>
-          <td class="school-detail-value">Gopal</td>
+          <td class="school-detail-value">{{schoolprofile.principal}}</td>
         </tr>
          <tr>
           <td class="school-detail-heading">Vice Principal:</td>
-          <td class="school-detail-value">Top</td>
+          <td class="school-detail-value">{{schoolprofile.vice_principal}}</td>
         </tr>
          <tr>
           <td class="school-detail-heading">Established:</td>
-          <td class="school-detail-value">1900</td>
+          <td class="school-detail-value">{{schoolprofile.est_on}}</td>
         </tr>
       </table>
-      <button class="mgmt-contact-edit-btn">Edit</button>
+      <button class="mgmt-contact-edit-btn" (click)="editManagementDetails()" *ngIf="user.role === 'admin'">Edit</button>
   </div>
   <div class="contact-wrapper">
     <h3>Contact Details</h3>
     <table class="school-details-table" border="0" cellpadding="0" cellspacing="0">
         <tr>
           <td class="school-detail-heading">Address:</td>
-          <td class="school-detail-value">Newton English Medium</td>
+          <td class="school-detail-value">{{schoolprofile.address}}</td>
         </tr>
          <tr>
           <td class="school-detail-heading">Contact No:</td>
-          <td class="school-detail-value">+91 9999999999</td>
+          <td class="school-detail-value">{{schoolprofile.phone}}</td>
         </tr>
          <tr>
           <td class="school-detail-heading">Alternate <br>Phone No:</td>
-          <td class="school-detail-value">+91 9999999999</td>
+          <td class="school-detail-value">{{schoolprofile.alternate_phone}}</td>
         </tr>
         <tr>
           <td class="school-detail-heading">Website:</td>
-          <td class="school-detail-value">www.proschool.com</td>
+          <td class="school-detail-value">{{schoolprofile.website}}</td>
         </tr>
          <tr>
           <td class="school-detail-heading">Email:</td>
-          <td class="school-detail-value">proschool@gmail.com</td>
+          <td class="school-detail-value">{{schoolprofile.email}}</td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
       </table>
-      <button class="mgmt-contact-edit-btn">Edit</button>
+      <button class="mgmt-contact-edit-btn" (click)="editContactDetails()" *ngIf="user.role === 'admin'">Edit</button>
   </div>
 </div>

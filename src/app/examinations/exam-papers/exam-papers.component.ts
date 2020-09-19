@@ -52,13 +52,16 @@ export class ExamPapersComponent implements OnInit {
     this.selected_schedule = $event
     console.log(this.selected_schedule);
     this.getExam_papers();
-    this.getinner_assessments();
+    // this.getinner_assessments();
   }
 
   getassessment_patterns() {
     this.service.getassessment_patterns()
       .subscribe(
-        res => { this.assessment_patterns = res.assessment, console.log(res) }
+        res => { 
+          this.assessment_patterns = res.assessment, 
+          console.log(res) 
+        }
       )
   }
 
@@ -69,7 +72,10 @@ export class ExamPapersComponent implements OnInit {
     } else {
       this.service.getinner_assessments(this.selected_schedule)
       .subscribe(
-        res => { this.inner_assessments = res.assessment[0].assMarks, console.log(this.inner_assessments) }
+        res => { 
+          this.inner_assessments = res.assessment[0].assMarks, 
+          console.log(this.inner_assessments) 
+        }
       )
     }
   }
@@ -77,7 +83,9 @@ export class ExamPapersComponent implements OnInit {
   getExam_papers() {
     if(this.selected_schedule == undefined || this.selected_section == undefined ||
       this.selected_schedule == '' || this.selected_section == '') {
-      this.alert_message = "Please Select Class, Section, Subject and Schedule";
+      this.alert_message = "Please Select Class, Section and Schedule";
+      console.log(this.selected_schedule)
+      console.log(this.selected_section)
       this.openAlert(this.alert_message)
     } else {
       this.service.getExam_papers(this.selected_schedule, this.selected_section)
@@ -112,6 +120,10 @@ export class ExamPapersComponent implements OnInit {
       this.openDialog(this.selected_exam, this.selected_subject, this.selected_exam_id, 'edit')
     }
   }
+
+  // deleteExamPaper(exam_paper_id) {
+
+  // }
 
   openDialog(selected_exam, selected_subject, selected_exam_id, dialog_type): void {
 

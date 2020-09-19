@@ -4,8 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SearchModuleModule } from '../search-module/search-module.module';
 import { TeacherSearchModule } from '../teacher-search/teacher-search.module';
 import { ChartsModule } from 'ng2-charts';
-import { NgxPaginationModule } from 'ngx-pagination';
-
+import { DirectivesModule } from '../_directives/_directives.module';
+import { PipesModule } from '../_pipes/_pipes.module';
 
 import { ReportsRoutingModule } from './reports-routing.module';
 import { AssignmentreportsComponent } from './assignmentreports/assignmentreports.component';
@@ -25,7 +25,8 @@ import { FeeReportsbyMonthComponent } from './fee-reportsby-month/fee-reportsby-
     ReactiveFormsModule,
     SearchModuleModule,
     TeacherSearchModule,
-    NgxPaginationModule,
+    PipesModule,
+    DirectivesModule,
     ChartsModule
   ]
 })

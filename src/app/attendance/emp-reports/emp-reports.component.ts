@@ -12,19 +12,33 @@ export class EmpReportsComponent implements OnInit {
 
   constructor(private service: ServicesService, public dialog: MatDialog) { }
 
+  pageNo: number = 1;
+  page_start: number = 0;
+  page_counter = Array;
+  pages: number = 10;
+
   ngOnInit() {
   }
+
+  pageChange(x) {
+    this.pageNo = x;
+    this.page_start = (x - 1) * 10;
+  } 
 
   attendance = {
     present: '',
     absent: '',
     onleave: '',
-    donutchart: ''
+    employeeAttendence: '',
+    count: '',
   };
+  attendanceRange = [];
   showEmployeeTypeList: boolean = false;
   chart = [];
   category;
   date;
+  end_date;
+  attenBy_date: boolean;
   alert_message: string;
 
   chartData = [];
@@ -42,11 +56,27 @@ export class EmpReportsComponent implements OnInit {
       this.alert_message = "Please Select the Category and Date";
       this.openAlert(this.alert_message)
     } else {
+      this.attenBy_date = true;
       this.service.getEmployeeAttendance(this.category ,this.date)
       .subscribe(
         res => { this.attendance = res, console.log(res) }
       )
     }
+    this.pages = Math.ceil(this.attendance.employeeAttendence.length / 10);
+  }
+
+  getRangeAttendance() {
+    if(this.category == undefined || this.category == '') {
+      this.alert_message = "Please Select the Employee";
+      this.openAlert(this.alert_message)
+    } else {
+      this.attenBy_date = false;
+      this.service.getEmployeeRangeAttendance(this.category, this.date, this.end_date)
+      .subscribe(
+        res => { this.attendanceRange = res, console.log(res) }
+      )
+    }
+    this.pages = Math.ceil(this.attendanceRange.length / 10);
   }
 
   View(select) {

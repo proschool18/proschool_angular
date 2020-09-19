@@ -14,6 +14,11 @@ export class VendorsComponent implements OnInit {
 
   constructor(private service: StoreService, private fb: FormBuilder, public dialog: MatDialog) {}
 
+  pageNo: number = 1;
+  page_start: number = 0;
+  page_counter = Array;
+  pages: number = 10;
+
   showMaterialList: boolean = false;
 
   ngOnInit() {
@@ -21,11 +26,17 @@ export class VendorsComponent implements OnInit {
     this.getMaterials();
   }
 
+  pageChange(x) {
+    this.pageNo = x;
+    this.page_start = (x - 1) * 10;
+  } 
+
   vendors = [];
   materials = [];
   selected_vendor;
   dialog_type: string;
   alert_message: string;
+  submit_type: string;
 
   vendorForm: FormGroup = this.fb.group({
     vendor_name: ['', Validators.required],
@@ -39,7 +50,10 @@ export class VendorsComponent implements OnInit {
   getVendors() {
     this.service.getVendors()
       .subscribe(
-        res => { this.vendors = res.vendor, console.log(res) }
+        res => { this.vendors = res.vendor, 
+          this.pages = Math.ceil(this.vendors.length / 10),
+          console.log(res) 
+        }
       )
   }
 
@@ -50,28 +64,18 @@ export class VendorsComponent implements OnInit {
       )
   }
 
-  addVendor() {
-    this.service.addVendor(this.vendorForm.value)
-    .subscribe(
-      res => { 
-        if(res == true) {
-          this.vendors.push({
-            vendor_name: this.vendorForm.value.vendor_name,
-            material: this.materials.filter(res => res.material_id === this.vendorForm.value.material)[0].material,
-            material_id: this.vendorForm.value.material,
-            contact_no: this.vendorForm.value.contact_no,
-            email: this.vendorForm.value.email,
-            address: this.vendorForm.value.address,
-            location: this.vendorForm.value.location,
-          })
-          this.alert_message = "Vendor Added Successfully";
-          this.openAlert(this.alert_message)
-        } else {
-          this.alert_message = "Vendor Not Added";
-          this.openAlert(this.alert_message)
-        }
-      }
-    )
+  addVendor(i) {
+    this.selected_vendor = '';
+    this.dialog_type = 'vendor';
+    this.submit_type = 'add';
+    this.openDialog(this.dialog_type, this.submit_type)
+  }
+
+  editVendor(i) {
+    this.selected_vendor = this.vendors[i];
+    this.dialog_type = 'vendor';
+    this.submit_type = 'edit';
+    this.openDialog(this.dialog_type, this.submit_type)
   }
 
   deleteVendor(vendor_id) {
@@ -90,13 +94,7 @@ export class VendorsComponent implements OnInit {
       )
   }
 
-  editVendor(i) {
-    this.selected_vendor = this.vendors[i];
-    this.dialog_type = 'vendor';
-    this.openDialog(this.dialog_type)
-  }
-
-  openDialog(dialog_type): void {
+  openDialog(dialog_type, submit_type): void {
 
     const dialogConfig = new MatDialogConfig();
 
@@ -106,6 +104,7 @@ export class VendorsComponent implements OnInit {
     dialogConfig.data = {
       selected_vendor: this.selected_vendor,
       dialog_type: dialog_type,
+      submit_type: submit_type,
     };
 
     const dialogRef = this.dialog.open(EditstoreComponent, dialogConfig);
@@ -113,11 +112,7 @@ export class VendorsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(
       data => {
         if(data) {
-          this.vendors.filter( res => res.vendor_id == data.vendor_id)[0].vendor_name = data.vendor_name,
-          this.vendors.filter( res => res.vendor_id == data.vendor_id)[0].material = this.materials.filter(res => res.material_id === data.material)[0].material,
-          this.vendors.filter( res => res.vendor_id == data.vendor_id)[0].contact_no = data.contact_no,
-          this.vendors.filter( res => res.vendor_id == data.vendor_id)[0].email = data.email,
-          this.vendors.filter( res => res.vendor_id == data.vendor_id)[0].location = data.location,
+          this.getVendors();
           console.log("Dialog output:", data)
         }
       }

@@ -13,6 +13,11 @@ export class LessonplannerComponent implements OnInit {
 
   constructor(private service: ServicesService, public dialog: MatDialog) {}
 
+  pageNo: number = 1;
+  page_start: number = 0;
+  page_counter = Array;
+  pages: number = 10;
+
   user: User;
 
   ngOnInit() { 
@@ -23,6 +28,11 @@ export class LessonplannerComponent implements OnInit {
       this.getSubjects();
     }
   }
+
+  pageChange(x) {
+    this.pageNo = x;
+    this.page_start = (x - 1) * 10;
+  } 
 
   subjects = [];
   chapters = [];
@@ -67,6 +77,7 @@ export class LessonplannerComponent implements OnInit {
         res => { this.chapters = res.chapters, console.log(res) }
       )
     }
+    this.pages = Math.ceil(this.chapters.length / 10);
   }
 
   getDays(i) {

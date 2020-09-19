@@ -1,130 +1,56 @@
-<div id="main-content">
-
-  <div class="row">
-    <div class="container-fluid" id="buttonId1">
-      <button routerLink="/main/admin/addclass" class="button button2 hvr-pop transition">Class & Section</button>
-      <button routerLink="/main/admin/timings" class="button button2 hvr-pop transition">School Timings</button>
-      <button routerLink="/main/admin/patterns" class="button button2 hvr-pop transition"
-        *ngIf="user.role === 'admin'">Assessment Patterns</button>
-      <!-- <button routerLink="/main/admin/quote" class="button button2 hvr-pop transition">Quotes</button> -->
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="container-fluid dashboard-content">
-      <div class="card card1">
-        <form class="searchForm" role="form" [formGroup]="classForm" (ngSubmit)="addClass()"
-          *ngIf="user.role === 'admin'">
-          <div class="form-group">
-            <label class="pull-left">Class</label>
-            <input class="form-control" formControlName="name" placeholder="Add Class" type="text">
-          </div>
-          <div class="form-group pull-left">
-            <button type="submit" class="button button1 hvr-pop transition">Add Class</button>
-          </div>
-          <div class="form-group pull-right">
-            <select class="form-control" formControlName="status" (change)="getClassesByStatus()">
-              <option>select...</option>
-              <option value="active">Active</option>
-              <option value="inactive">Inactive</option>
-            </select>
-          </div>
-        </form>
-        <div *ngIf="user.role === 'teacher' || user.role === 'parent'">
-          <h4 class="pull-left">School Classes</h4>
-        </div>
-        <div class="searchForm">
-          <div class="table-responsive pull-left">
-            <table style="width:100%;">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Class</th>
-                  <th *ngIf="user.role === 'admin'" class="pull-right">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let cls of collection.classes  | paginate: config; let i=index">
-                  <td>{{ (config.currentPage - 1) * config.itemsPerPage + i +1 }}</td>
-                  <td>{{cls.name}}</td>
-                  <td *ngIf="user.role === 'admin'" class="pull-right">
-                    <div class="pattrenED pull-left" *ngIf="classForm.value.status !== 'inactive'">
-                      <div><i class="fa fa-pencil-square" aria-hidden="true" (click)="editClass((config.currentPage - 1) * config.itemsPerPage + i)"></i></div>
-                      <div><i class="fa fa-trash" aria-hidden="true" (click)="deleteClasses(cls.class_id)"></i></div>
-                    </div>
-                    <div class="pattrenED" *ngIf="classForm.value.status === 'inactive'">
-                      <div><i class="fa fa-undo" aria-hidden="true" (click)="restoreClass(cls.class_id)"></i></div>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <div class="paginationdiv">
-              <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card card2">
-        <form class="searchForm" role="form" [formGroup]="sectionForm" (ngSubmit)="addSection()">
-          <div class="col-md-4">
-            <div class="form-group">
-              <label class="pull-left">Class</label>
-              <select class="form-control" formControlName="selected_class" (change)="getSections(selected_class)">
-                <option>select...</option>
-                <option *ngFor="let cls of collection.classes" value="{{cls.class_id}}">{{cls.name}}</option>
-              </select>
-            </div>
-          </div>
-          <div class="col-md-4" *ngIf="user.role === 'admin'">
-            <div class="form-group">
-              <label class="pull-left">Section</label>
-              <input class="form-control" formControlName="name" placeholder="Add Section" type="text">
-            </div>
-          </div>
-          <div class="col-md-4" *ngIf="user.role === 'admin'">
-            <div class="form-group">
-              <label class="pull-left">Class Teacher</label>
-              <select class="form-control" formControlName="teacher_name">
-                <option>select...</option>
-                <option *ngFor="let tch of teachers" value="{{tch.employee_id}}">{{tch.first_name}}</option>
-              </select>
-            </div>
-          </div>
-          <div class="pull-right" *ngIf="user.role === 'admin'">
-            <button type="submit" class="button button1 hvr-pop transition">Add Section</button>
-          </div>
-        </form>
-        <div class="scrollonhover1">
-          <div class="table-responsive" id="section-table">
-            <table style="width:100%;">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Class</th>
-                  <th>Section</th>
-                  <th>Class Teacher</th>
-                  <th *ngIf="user.role === 'admin'">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let sec of class_sections; let j = index;">
-                  <td>{{j+1}}</td>
-                  <td>{{sec.class_name}}</td>
-                  <td>{{sec.name}}</td>
-                  <td>{{sec.teacher_name}}</td>
-                  <td *ngIf="user.role === 'admin'">
-                    <div class="pattrenED">
-                      <div><i class="fa fa-pencil-square" aria-hidden="true" (click)="editSection(j)"></i></div>
-                      <div><i class="fa fa-trash" aria-hidden="true" (click)="deleteSection(sec.section_id)"></i></div>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+<main class="card mt-20 within-viewport new-listing">
+  <section class="page-actions">
+    <div class="_select_div">
+      <button class="btn -cta" routerLink="/main/admin/addClass">Class</button>
+      <button class="btn -cta" routerLink="/main/admin/addSection">Section</button>
+      <div class="dropdown" >
+        <button class="dropbtn" (click)="showStatusList = true" (clickOutside)="showStatusList = false">
+            {{status}}
+        </button>
+        <div class="dropdown-content" [hidden]="!showStatusList">
+          <a (click)="status = 'active'; getClassesByStatus()">Active</a>
+          <a (click)=" status = 'inactive';getClassesByStatus()">Inactive</a>
         </div>
       </div>
     </div>
-  </div>
-</div>
+    <div class="add_div">
+      <button class="btn -cta" (click)="addClass()">Add Class</button>
+    </div>
+  </section>
+  <section class="table-and-pagination -classes-schedule">
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th align="left">#</th>
+            <th align="left">Class Name</th>
+            <th align="left">No.of Sections</th>
+            <th align="left" *ngIf="user.role === 'admin'">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let class of classes | pagination: pageNo; let i = index">
+            <td class="_s-no"><span>{{ page_start + i + 1 }}.</span></td>
+            <td>{{class.name}}</td>
+            <td>{{class.sections.length}}</td>
+            <td class="_actions" *ngIf="user.role === 'admin' && class.status === 1">
+              <button class="btn" (click)="editClass(page_start + i)"><img src="../../../assets/images/edit-white.svg"
+                  alt="Edit" /></button>
+              <button class="btn" (click)="deleteClasses(class.class_id)"><img
+                  src="../../../assets/images/trash-white.svg" alt="Delete" /></button>
+            </td>
+            <td class="_actions" *ngIf="user.role === 'admin' && class.status === 0">
+              <button class="btn" (click)="restoreClass(class.class_id)"><img
+                  src="../../../assets/images/trash-white.svg" alt="Restore" /></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="_pagination">
+      <a class="btn -previous">Previous</a>
+      <a class="btn" [ngClass]="{'-current': pageNo === (i+1)}" *ngFor='let page of page_counter(pages) ;let i = index' (click)="pageChange(i+1)">{{i+1}}</a>
+      <a class="btn -next">Next</a>
+    </div>
+  </section>
+</main>

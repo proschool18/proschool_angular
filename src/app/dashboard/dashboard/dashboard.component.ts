@@ -3,9 +3,6 @@ import { DashboardService } from '../../_services/dashboard.service';
 import { ClasessService } from '../../_services/clasess.service';
 import { ServicesService } from '../../services.service';
 import { MatDialog, MatDialogConfig } from '@angular/material';
-import { AttendanceComponent } from '../attendance/attendance.component';
-import { AcademicsComponent } from '../academics/academics.component';
-import { FeesComponent } from '../fees/fees.component';
 import { User } from '../../_models/user';
 
 @Component({
@@ -26,12 +23,13 @@ export class DashboardComponent implements OnInit {
   private year;
   private time;
   private current_date;
+  private selectedTab: string = 'tasks';
   i;
 
   private tasks_tab = true;
   private events_tab = false;
   private notice_tab = false;
-  private feedback_back = false;
+  private feedback_tab = false;
 
   private tab_view = [];
   private tasks = [];
@@ -43,9 +41,8 @@ export class DashboardComponent implements OnInit {
   private sections = [];
   private selected_class;
   private selected_section;
+  private class_teacher;
   private selected_month: any = 'all';
-
-  private selectedTab: string = 'tasks';
 
   private class_attendance = {
     present: '',
@@ -93,9 +90,14 @@ export class DashboardComponent implements OnInit {
 
   private studentAttendance = {};
   private employeeAttendance = {};
+  private attendance_data = {}
+
+  std_attendance: boolean = true;
+  payments_data: boolean = true;
 
   private payments = {};
   private expenses = {};
+  private finances = {}
   private fees = {
     "totalFees": '',
     "paidFees": '',
@@ -107,22 +109,7 @@ export class DashboardComponent implements OnInit {
 
   view_fee = [400, 180];
   view_classAttendance = [220, 150]
-  showXAxis = true;
-  showYAxis = true;
-  gradient = false;
-  showLegend = false;
-  showXAxisLabel = true;
-  xAxisLabel: any;
-  showYAxisLabel = true;
-  yAxisLabel: any;
-  timeline = true;
-  colorScheme = {
-    domain: ['#5cb85c', '#d9534f', '#f0ad4e']
-  };
-  AcademicsColorScheme = {
-    domain: ['#5e81f4']
-  }
-  showLabels = true;
+
   public fee_data: any;
   public classAtt_data: any;
   public empAtt_data: any;
@@ -132,6 +119,7 @@ export class DashboardComponent implements OnInit {
   private months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
   ngOnInit() {
+    console.log(history.state)
     this.user = JSON.parse(localStorage.getItem('currentUser'));
     console.log(this.user);
     this.today_date();
@@ -141,6 +129,7 @@ export class DashboardComponent implements OnInit {
       this.getClasses();
       this.getStudentAttendance();
       this.getEmployeeAttedance();
+      console.log({'attendance': this.attendance_data})
       this.getPayments();
       this.getExpenses();
       this.getFeeCollection();
@@ -167,54 +156,38 @@ export class DashboardComponent implements OnInit {
     this.current_date = this.year + '-' + this.month + '-' + this.date;
   }
 
-  // checkTime(i) {
-  //   if (i < 10) { i = "0" + i };  // add zero in front of numbers < 10
-  //   return i;
-  // }
-
-  // getTime() {
-  //   var today = new Date();
-  //   var h = today.getHours();
-  //   var m = today.getMinutes();
-  //   var s = today.getSeconds();
-  //   m = this.checkTime(m);
-  //   s = this.checkTime(s);
-  //   this.time = h + ":" + m + ":" + s;
-  //   var t = setTimeout(this.getTime, 500);
-  // }
-
   select_tab(select) {
     if (select == 'tasks_tab') {
       this.getTasks();
       this.tasks_tab = true;
       this.events_tab = false;
       this.notice_tab = false;
-      this.feedback_back = false;
+      this.feedback_tab = false;
     } else if (select == 'events_tab') {
       this.getEvents();
       this.tasks_tab = false;
       this.events_tab = true;
       this.notice_tab = false;
-      this.feedback_back = false;
+      this.feedback_tab = false;
     } else if (select == 'notice_tab') {
       this.getNoticeBoard();
       this.tasks_tab = false;
       this.events_tab = false;
       this.notice_tab = true;
-      this.feedback_back = false;
-    } else if (select == 'feedback_back') {
+      this.feedback_tab = false;
+    } else if (select == 'feedback_tab') {
       this.getTasks();
       this.tasks_tab = false;
       this.events_tab = false;
       this.notice_tab = false;
-      this.feedback_back = true;
+      this.feedback_tab = true;
     }
   }
 
   getClassTeacher_class() {
     this.service.getClassTeacher_class()
       .subscribe(
-        res => { this.classes = res.school_classes, this.getClassTeacher_section(res.school_classes[0].class_id), console.log(this.classes) }
+        res => { this.classes = res.school_classes.filter(res => res.status === 1), this.getClassTeacher_section(this.classes[0].class_id), console.log(this.classes) }
       )
   }
 
@@ -222,7 +195,7 @@ export class DashboardComponent implements OnInit {
     this.selected_class = class_id;
     this.service.getClassTeacher_section(this.selected_class)
       .subscribe(
-        res => { this.sections = res.class_sections, this.selected_section = res.class_sections[0].section_id, this.getClassAttendance(), this.getClassAcademics(), console.log(res) }
+        res => { this.sections = res.class_sections.filter(res => res.status === 1), this.selected_section = this.sections[0].section_id, this.getClassAttendance(), this.getClassAcademics(), console.log(res) }
       )
   }
 
@@ -243,6 +216,17 @@ export class DashboardComponent implements OnInit {
             this.viewEmployeeAttendance(), 
             console.log(this.all_employee_attendance) }
       )
+  }
+
+  getAttendance(select) {
+    if(select == 'students') {
+      this.attendance_data = this.studentAttendance;
+      this.std_attendance = true;
+    } else if(select == 'employees') {
+      this.attendance_data = this.employeeAttendance;
+      this.std_attendance = false;
+    }
+    console.log(this.attendance_data)
   }
 
   getmonthlyEmployeeAttendance() {
@@ -272,7 +256,7 @@ export class DashboardComponent implements OnInit {
   getClassAcademics() {
     this.service.getClassAcademics(this.selected_section)
     .subscribe(
-      res => { this.classEvaluation = res.students, this.viewAcademics(), console.log(this.classEvaluation) }
+      res => { this.classEvaluation = res.students, console.log(this.classEvaluation) }
     )
   }
 
@@ -300,21 +284,21 @@ export class DashboardComponent implements OnInit {
   getStudentAttendance() {
     this.service.getStudentAttendance(this.current_date)
       .subscribe(
-        res => { this.studentAttendance = res.school_attendance }
+        res => { this.studentAttendance = this.attendance_data = res.school_attendance }
       )
   }
 
   getEmployeeAttedance() {
     this.service.getEmployeeAttedance(this.current_date)
       .subscribe(
-        res => { this.employeeAttendance = res.Employee_attendance }
+        res => { this.employeeAttendance = res.Employee_attendance, console.log(this.employeeAttendance) }
       )
   }
 
   getPayments() {
     this.service.getPayments(this.current_date)
       .subscribe(
-        res => { this.payments = res, console.log(res) }
+        res => { this.payments = this.finances = res, console.log(res) }
       )
   }
 
@@ -323,6 +307,17 @@ export class DashboardComponent implements OnInit {
       .subscribe(
         res => { this.expenses = res, console.log(res) }
       )
+  }
+
+  getFinance(select) {
+    if(select === 'payments') {
+      this.finances = this.payments;
+      this.payments_data = true;
+    } else if(select === 'expenses') {
+      this.finances = this.expenses;
+      this.payments_data = false;
+    }
+    console.log(this.finances)
   }
 
   getFeeCollection() {
@@ -335,39 +330,36 @@ export class DashboardComponent implements OnInit {
   getClasses() {
     this.classService.getClasses()
       .subscribe(
-        res => { this.classes = res.school_classes, this.getSchedules(res.school_classes[0].class_id), console.log(res) }
+        res => { this.classes = res.school_classes, this.selected_class = res.school_classes[0].class_id, this.getSchedules(), console.log(res) }
       )
   }
 
-  getSchedules(class_id) {
-    this.selected_class = class_id;
+  getSchedules() {
+    console.log(this.selected_class)
     this.service.getSchedules(this.day, this.current_date, this.selected_class)
       .subscribe(
-        res => { this.class_schedule = res.timetable, this.getSections(this.selected_class), console.log(res) }
+        res => { this.class_schedule = res.timetable, this.getSections(), console.log(res) }
       )
   }
 
-  getSections(class_id) {
-    this.selected_class = class_id;
+  getSections() {
     this.classService.getSections(this.selected_class)
       .subscribe(
-        res => { this.sections = res.class_sections, this.getSectionSchedule(res.class_sections[0].section_id), console.log(res) }
+        res => { this.sections = res.class_sections, this.selected_section = res.class_sections[0].section_id, this.getSectionSchedule(), console.log(res) }
       )
   }
 
-  getSectionSchedule(section_id) {
-    this.selected_section = section_id;
+  getSectionSchedule() {
     this.section_schedule = this.class_schedule.filter(data => data.section_id === this.selected_section)
+    this.getClassTeacher();
+    console.log(this.section_schedule)
+  }
+
+  getClassTeacher() {
+    this.class_teacher = this.sections.filter(data => data.section_id === this.selected_section)[0].teacher_name;
   }
 
   viewFees() {
-    this.yAxisLabel = 'Fees Amount';
-    this.colorScheme = {
-      domain: ['#5cb85c', '#d9534f', '#f0ad4e']
-    };
-
-    // this.single = [this.fees.totalFees, this.fees.paidFees, this.fees.balanceFees];
-
     this.fee_data = [
       { "name": "Total", "value": this.fees.totalFees },
       { "name": "Collected", "value": this.fees.paidFees },
@@ -375,72 +367,19 @@ export class DashboardComponent implements OnInit {
     ];
   }
 
-  viewAcademics() {
-    this.yAxisLabel = 'Students';
-
-    for(this.i = 0; this.i < this.classEvaluation.length; this.i++) {
-      // this.AcademicsColorScheme.domain.push('#5e81f4');      
-      this.classAcademics.push({name: this.classEvaluation[this.i].grade, value: this.classEvaluation[this.i].count})
-    }
-    this.classAca_data = this.classAcademics;
-    console.log(this.classAca_data)
-  }
-
   viewClassAttendance() {
-    const isDoughnut: boolean = false;
-    const legendPosition: string = 'below';
-    this.showLegend = false;
-    this.colorScheme = {
-      domain: ['#5cb85c', '#d9534f', '#f0ad4e']
-    };
-
     this.classAtt_data = [
       { "name": "Present", "value": this.class_attendance.present },
       { "name": "Absent", "value": this.class_attendance.absent },
       { "name": "Leave", "value": this.class_attendance.onleave }
     ];
-
   }
 
   viewEmployeeAttendance() {
-    const isDoughnut: boolean = false;
-    const legendPosition: string = 'below';
-    this.showLegend = false;
-    this.colorScheme = {
-      domain: ['#5cb85c', '#d9534f', '#f0ad4e']
-    };
-
     this.empAtt_data = [
       { "name": "Present", "value": this.employee_attendance.present },
       { "name": "Absent", "value": this.employee_attendance.absent },
       { "name": "Leave", "value": this.employee_attendance.onleave }
     ];
-
-  }
-
-  getData(select) {
-    this.openData(select)
-  }
-
-  openData(data_type) {
-    const dataConfig = new MatDialogConfig();
-
-    dataConfig.autoFocus = true;
-    dataConfig.width = '80%';
-
-    dataConfig.data = {
-      data_type: data_type,
-    };
-
-    if (data_type == 'attendance') {
-      const dataRef = this.dialog.open(AttendanceComponent, dataConfig);
-      dataRef.afterClosed().subscribe()
-    } else if (data_type == 'academics') {
-      const dataRef = this.dialog.open(AcademicsComponent, dataConfig);
-      dataRef.afterClosed().subscribe()
-    } else if (data_type == 'fees') {
-      const dataRef = this.dialog.open(FeesComponent, dataConfig);
-      dataRef.afterClosed().subscribe()
-    }
   }
 }

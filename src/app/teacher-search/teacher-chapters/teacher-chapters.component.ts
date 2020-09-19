@@ -17,12 +17,17 @@ export class TeacherChaptersComponent implements OnInit {
   @Output() subjectEvent = new EventEmitter<string>();
   @Output() chapterEvent = new EventEmitter<string>();
 
+  showClassList: boolean = false;
+  showSectionList: boolean = false;
+  showSubjectList: boolean = false;
+  showChapterList: boolean = false;
+
   employee_id = JSON.parse(localStorage.getItem('currentUser')).employee_id;
 
-  selected_class;
-  selected_section;
-  selected_subject;
-  selected_chapter;
+  selected_class:any = {class_id: '', name: ''};
+  selected_section:any = {section_id: '', name: ''};
+  selected_subject:any = {subject_id: '', name: ''};
+  selected_chapter:any = {lession_id: '', title: ''};
 
   classes = [];
   all_sections = [];
@@ -37,37 +42,57 @@ export class TeacherChaptersComponent implements OnInit {
   getTeacherClasses() {
     this.service.getTeacherClasses(this.employee_id)
       .subscribe(
-        res => { this.classes = res.school_classes, console.log(res) }
+        res => { 
+          this.classes = res.school_classes, 
+          this.selected_class = this.classes[0], 
+          this.getTeacherSections(),
+          console.log(res) 
+        }
       )
   }
 
   getTeacherSections() {
     this.classEvent.emit(this.selected_class)
-    this.service.getTeacherSections(this.employee_id, this.selected_class)
+    this.service.getTeacherSections(this.employee_id, this.selected_class.class_id)
       .subscribe(
-        res => { this.class_sections = res.class_sections, console.log(res) }
+        res => { 
+          this.class_sections = res.class_sections, 
+          this.selected_section = this.class_sections[0], 
+          this.getTeacherSubjects(),
+          console.log(res) 
+        }
       )
   }
   
   getTeacherSubjects() {
-    this.service.getTeacherSubjects(this.employee_id, this.selected_section)
+    this.service.getTeacherSubjects(this.employee_id, this.selected_section.section_id)
       .subscribe(
-        res => { this.subjects = res.subjects, console.log(res) }
+        res => { 
+          this.subjects = res.subjects, 
+          this.selected_subject = this.subjects[0],
+          this.getChapters(),
+          console.log(res) 
+        }
       )
   }
 
   getChapters() {
-    this.academics.getChapters(this.selected_subject)
+    this.academics.getChapters(this.selected_subject.subject_id)
       .subscribe(
-        res => { this.chapters = res.chapters, console.log(res) }
+        res => { 
+          this.chapters = res.chapters, 
+          this.selected_chapter = this.chapters[0],
+          this.get_sub(),
+          console.log(res) 
+        }
       )
   }
 
   get_sub() {
-    this.classEvent.emit(this.selected_class);
-    this.sectionEvent.emit(this.selected_section);
-    this.subjectEvent.emit(this.selected_subject);
-    this.chapterEvent.emit(this.selected_chapter);
+    this.classEvent.emit(this.selected_class.class_id);
+    this.sectionEvent.emit(this.selected_section.section_id);
+    this.subjectEvent.emit(this.selected_subject.subject_id);
+    this.chapterEvent.emit(this.selected_chapter.lession_id);
   }
 
 }

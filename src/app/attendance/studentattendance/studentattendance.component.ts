@@ -9,8 +9,6 @@ import { FormControl } from '@angular/forms';
 // import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 // import * as _moment from 'moment';
 
-
-
 @Component({
   selector: 'app-studentattendance',
   templateUrl: './studentattendance.component.html',
@@ -21,19 +19,33 @@ export class StudentattendanceComponent implements OnInit {
   constructor(private service: ServicesService, private fb: FormBuilder, public dialog: MatDialog) { }
 
   user: User;
-  date = new FormControl(new Date);
+  // date = new FormControl(new Date);
+
+  current_date;
+  current_day;
+  current_month;
+  current_year;
 
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('currentUser'));    
+    var d = new Date();
+    this.current_month = d.getMonth() + 1;
+    if(this.current_month < 10) {
+      this.current_month = '0' + this.current_month;
+    }
+    this.current_day = d.getDate();
+    if(this.current_day < 10) {
+      this.current_day = '0' + this.current_day;
+    }
+    this.current_year = d.getFullYear();
+    this.current_date = this.current_year + '-' + this.current_month + '-' + this.current_day;
+    console.log(this.current_date)
   }
 
   attendance = [];
   students = [];
   dateValue:boolean = false;
-  // date;
-  current_date;
-  current_month;
-  current_year;
+  date;
   i;
 
   selected_class:string;
@@ -51,18 +63,19 @@ export class StudentattendanceComponent implements OnInit {
     this.getStudents();
   }
 
-  att_date(i) {
-    if(i == 1) {
-      this.dateValue = true;
-    } else {
-      this.dateValue = false;
-      var d = new Date();
-      var month = d.getMonth() + 1;
-      var day = d.getDate()
-      var year = d.getFullYear();
-      var current_date = year + '-' + month + '-' + day;
-      // this.date = current_date;
+  getDate() {
+    this.current_date = new Date(this.date);
+    this.current_month = this.current_date.getMonth() + 1;
+    if(this.current_month < 10) {
+      this.current_month = '0' + this.current_month;
     }
+    this.current_day = this.current_date.getDate();
+    if(this.current_day < 10) {
+      this.current_day = '0' + this.current_day;
+    }
+    this.current_year = this.current_date.getFullYear();
+    this.current_date = this.current_year + '-' + this.current_month + '-' + this.current_day;
+    console.log(this.current_date)
   }
 
   getStudents() {
@@ -72,7 +85,7 @@ export class StudentattendanceComponent implements OnInit {
     } else {
       this.service.getStudents(this.selected_section)
       .subscribe(
-        res => { this.students = res.students, console.log(res)}
+        res => { this.students = res.students.filter(std => std.status === 1), console.log(res)}
       )
     }
   }
@@ -100,33 +113,39 @@ export class StudentattendanceComponent implements OnInit {
     } else if(this.students[0].status == 1) {
       this.alert_message = "Please Select Attendance Status";
       this.openAlert(this.alert_message)
-    } else if(this.dateValue == false) {
-      this.current_date = new Date().getDate();
-      if (this.current_date <= 9) {
-        this.current_date = '0' + this.current_date;
-      }
-      this.current_month = new Date().getMonth() + 1;
-      this.current_year = new Date().getFullYear();
-      if(this.current_month < 10) {
-        this.current_month = '0' + this.current_month;
-      }
-      // this.date = this.current_year + '-' + this.current_month + '-' + this.current_date;
-      console.log(this.date)
-      this.service.addAttendance(this.students, this.date, this.selected_class, this.selected_section)
-      .subscribe(
-        res => { 
-          console.log(res), 
-          this.alert_message = "Attendance Submitted";
-          this.openAlert(this.alert_message)
-        }
-      )
+    // } else if(this.dateValue == false) {
+    //   this.current_date = new Date().getDate();
+    //   if (this.current_date <= 9) {
+    //     this.current_date = '0' + this.current_date;
+    //   }
+    //   this.current_month = new Date().getMonth() + 1;
+    //   this.current_year = new Date().getFullYear();
+                                                                                                                                                                                                                                                                                                                                                                                                    
+    //   // this.date = this.current_year + '-' + this.current_month + '-' + this.current_date;
+    //   console.log(this.date)
+    //   this.service.addAttendance(this.students, this.date, this.selected_class, this.selected_section)
+    //   .subscribe(
+    //     res => { 
+    //       console.log(res), 
+    //       this.alert_message = "Attendance Submitted";
+    //       this.openAlert(this.alert_message)
+    //     }
+    //   )
     } else {
-      this.service.addAttendance(this.students, this.date, this.selected_class, this.selected_section)
+      console.log(this.current_date)
+      this.service.addAttendance(this.students, this.current_date, this.selected_class, this.selected_section)
       .subscribe(
-        res => { 
-          console.log(res), 
-          this.alert_message = "Attendance Submitted";
-          this.openAlert(this.alert_message)
+        res => {
+          if (res == true) {
+            this.alert_message = "Attendance Submitted";
+            this.openAlert(this.alert_message)
+          } else if(res == null) {
+            this.alert_message = "Attendance Already taken";
+            this.openAlert(this.alert_message)
+          } else {
+            this.alert_message = "Attendance Not Submitted";
+            this.openAlert(this.alert_message)
+          }
         }
       )
     }

@@ -14,9 +14,19 @@ export class FeetypeComponent implements OnInit {
 
   constructor(private service: FeeService, private fb: FormBuilder, public dialog: MatDialog) {}
 
+  pageNo: number = 1;
+  page_start: number = 0;
+  page_counter = Array;
+  pages: number = 10;
+
   ngOnInit() {
     this.getFeeTypes();
   }
+
+  pageChange(x) {
+    this.pageNo = x;
+    this.page_start = (x - 1) * 10;
+  } 
 
   fee_types = [];
   selected_feeType;
@@ -30,7 +40,10 @@ export class FeetypeComponent implements OnInit {
   getFeeTypes() {
     this.service.getFeeTypes()
       .subscribe(
-        res => { this.fee_types = res.fee_type, console.log(res) }
+        res => { this.fee_types = res.fee_type, 
+          this.pages = Math.ceil(this.fee_types.length / 10),
+          console.log(res) 
+        }
       )
   }
 
@@ -39,7 +52,7 @@ export class FeetypeComponent implements OnInit {
     .subscribe(
       res => { 
         if(res == true) {
-          this.fee_types.push(this.feetypeForm.value)
+          this.getFeeTypes();
           this.alert_message = "FeeType Added Successfully";
           this.openAlert(this.alert_message)
         } else {
@@ -48,6 +61,11 @@ export class FeetypeComponent implements OnInit {
         }
       }
     ) 
+  }
+
+  addFeeType() {
+    this.selected_feeType = '';
+    this.openDialog(this.selected_feeType, 'add')
   }
 
   deleteFeeType(fee_types_id) {
@@ -68,10 +86,10 @@ export class FeetypeComponent implements OnInit {
 
   editFeeType(i) {
     this.selected_feeType = this.fee_types[i];
-    this.openDialog(this.selected_feeType, this.dialog_type)
+    this.openDialog(this.selected_feeType, 'edit')
   }
 
-  openDialog(selected_feeType, dialog_type): void {
+  openDialog(selected_feeType, submit_type): void {
 
     const dialogConfig = new MatDialogConfig();
 
@@ -81,6 +99,7 @@ export class FeetypeComponent implements OnInit {
     dialogConfig.data = {
       feeType: selected_feeType,
       dialog_type: 'feeType',
+      submit_type: submit_type,
     };
 
     const dialogRef = this.dialog.open(EditfeeComponent, dialogConfig);

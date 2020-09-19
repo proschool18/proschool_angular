@@ -1,27 +1,12 @@
-<main class="card mt-20 within-viewport">
+<main class="card mt-20 within-viewport new-listing">
   <section class="page-actions">
     <div class="_select-or-search">
       <div class="_select-group">
-        <div class="dropdown">
-          <button class="dropbtn" (click)="showScheduleList = true" (clickOutside)="showScheduleList = false">
-            {{!selected_schedule ? 'select schedule' : selected_schedule}}
-          </button>
-          <div class="dropdown-content" [hidden]="!showScheduleList">
-            <a *ngFor="let assp of assessment_patterns[0].assessment;"
-              (click)="selected_schedule = assp.code;">{{assp.code}}</a>
-            <a *ngFor="let assp of assessment_patterns[1].assessment;"
-              (click)="selected_schedule = assp.code;">{{assp.code}}</a>
-          </div>
-        </div>
+
       </div>
     </div>
     <div class="add_div">
-      <form role="form" class="searchForm" [formGroup]="scheduleForm" (ngSubmit)="addExam_schedules()"
-        *ngIf="user.role === 'admin'">
-        <input class="form-control" formControlName="from_date" placeholder="Enter..." type="date">
-        <input class="form-control" formControlName="end_date" placeholder="Enter..." type="date">
-        <button class="btn -cta" type="submit">Add Schedule</button>
-      </form>
+      <button class="btn -cta" (click)="addSchedule()" *ngIf="user.role === 'admin'">Add Schedule</button>
     </div>
   </section>
   <section class="table-and-pagination -classes-schedule">
@@ -37,8 +22,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let exam of exam_schedules; let i=index">
-            <td class="_s-no"><span>{{ i + 1 }}</span></td>
+          <tr *ngFor="let exam of exam_schedules | pagination: pageNo; let i=index">
+            <td class="_s-no"><span>{{ page_start + i + 1 }}</span></td>
             <td>{{exam.exam_title}}</td>
             <td>{{exam.from_date}}</td>
             <td>{{exam.end_date}}</td>
@@ -53,18 +38,9 @@
       </table>
     </div>
     <div class="_pagination">
-      <a href="" class="btn -previous">Previous</a>
-      <a href="" class="btn -current">1</a>
-      <a href="" class="btn">2</a>
-      <a href="" class="btn">3</a>
-      <a href="" class="btn">4</a>
-      <a href="" class="btn">5</a>
-      <a href="" class="btn">6</a>
-      <a href="" class="btn">7</a>
-      <a href="" class="btn">8</a>
-      <a href="" class="btn">9</a>
-      <a href="" class="btn">10</a>
-      <a href="" class="btn -next">Next</a>
+      <a class="btn -previous">Previous</a>
+      <a class="btn" [ngClass]="{'-current': pageNo === (i+1)}" *ngFor='let page of page_counter(pages) ;let i = index' (click)="pageChange(i+1)">{{i+1}}</a>
+      <a class="btn -next">Next</a>
     </div>
   </section>
 </main>

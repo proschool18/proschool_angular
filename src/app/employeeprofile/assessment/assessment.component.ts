@@ -87,14 +87,14 @@ export class AssessmentComponent implements OnInit {
   getTeacherClasses() {
     this.teacherService.getTeacherClasses(this.employee_id)
     .subscribe(
-      res => { this.classes = res.school_classes, this.selected_class.class_id = res.school_classes[0].class_id, this.getTeacherSections(), console.log(res) }
+      res => { this.classes = res.school_classes, this.selected_class = res.school_classes[0], this.getTeacherSections(), console.log(res) }
     )
   }
 
   getTeacherSections() {
     this.teacherService.getTeacherSections(this.employee_id, this.selected_class.class_id)
     .subscribe(
-      res => { this.sections = res.class_sections, this.selected_section.section_id = res.class_sections[0].section_id, this.getTeachingAssessment(), this.getCourseAssessment(), console.log(res) }
+      res => { this.sections = res.class_sections, this.selected_section = res.class_sections[0], this.getTeachingAssessment(), this.getCourseAssessment(), console.log(res) }
     )
   }
 

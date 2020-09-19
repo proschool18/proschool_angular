@@ -1,4 +1,4 @@
-<main class="card mt-20 within-viewport">
+<main class="card mt-20 within-viewport new-listing">
   <section class="page-actions">
     <div class="_select-or-search">
       <div class="_select-group">
@@ -13,7 +13,7 @@
           </div>
         </div>
       </div>
-      <input type="search" name="" placeholder="Search">
+      <input type="search" class="search-box" name="" placeholder="Search">
     </div>
     <div class="add_div">
       <button class="btn -cta" routerLink="/main/admin/parentinfo">Parent Info</button>
@@ -32,8 +32,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let emp of employees; let i=index">
-            <td>{{ i + 1 }}</td>
+          <tr *ngFor="let emp of employees | pagination: pageNo; let i=index">
+            <td class="_s-no"><span>{{ page_start + i + 1 }}</span></td>
             <td>{{emp.employee_details[0].first_name}} {{emp.employee_details[0].last_name}}</td>
             <td>{{emp.email}}</td>
             <td>{{emp.email}}</td>
@@ -42,18 +42,9 @@
       </table>
     </div>
     <div class="_pagination">
-      <a href="" class="btn -previous">Previous</a>
-      <a href="" class="btn -current">1</a>
-      <a href="" class="btn">2</a>
-      <a href="" class="btn">3</a>
-      <a href="" class="btn">4</a>
-      <a href="" class="btn">5</a>
-      <a href="" class="btn">6</a>
-      <a href="" class="btn">7</a>
-      <a href="" class="btn">8</a>
-      <a href="" class="btn">9</a>
-      <a href="" class="btn">10</a>
-      <a href="" class="btn -next">Next</a>
+      <a class="btn -previous">Previous</a>
+      <a class="btn" [ngClass]="{'-current': pageNo === (i+1)}" *ngFor='let page of page_counter(pages) ;let i = index' (click)="pageChange(i+1)">{{i+1}}</a>
+      <a class="btn -next">Next</a>
     </div>
   </section>
 </main>

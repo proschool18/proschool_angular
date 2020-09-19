@@ -10,16 +10,13 @@ import { User } from '../../_models/user';
   styleUrls: ['./classfee-reports.component.css']
 })
 export class ClassfeeReportsComponent implements OnInit {
-  config: any;
-  collection = { count: '', students_fee: [] };
 
-  constructor(private service: ServicesService, public dialog: MatDialog) {
-    this.config = {
-      itemsPerPage: 5,
-      currentPage: 1,
-      totalItems: this.collection.count
-    };
-   }
+  constructor(private service: ServicesService, public dialog: MatDialog) {}
+
+  pageNo: number = 1;
+  page_start: number = 0;
+  page_counter = Array;
+  pages: number = 10;
   
   user: User;
 
@@ -29,11 +26,12 @@ export class ClassfeeReportsComponent implements OnInit {
     this.getFeeTypes();
   }
 
-  pageChanged(event){
-    this.config.currentPage = event;
-  }
+  pageChange(x) {
+    this.pageNo = x;
+    this.page_start = (x - 1) * 10;
+  } 
 
-  //students_fee = [];
+  students_fee = [];
   fee_terms = [];
   fee_types = [];
   i;
@@ -41,22 +39,13 @@ export class ClassfeeReportsComponent implements OnInit {
   partialpaid = 0;
   nilpaid = 0;
 
-  chartData = [];
-  chartType = 'bar';
-  chartLabels = [];
-  public chartOptions: any = {
-    scaleShowVerticalLines: false,
-    responsive: true
-  };
-  public chartLegend: true;
-
   list: boolean = true;
 
   selected_class:string;
   selected_section:string;
   alert_message: string;
-  fee_term = null;
-  fee_type = null;
+  selected_term: any;
+  selected_type: any;
 
   receiveClass($event) {
     this.selected_class = $event
@@ -66,19 +55,28 @@ export class ClassfeeReportsComponent implements OnInit {
   receiveSection($event) {
     this.selected_section = $event
     console.log(this.selected_section)
+    this.getClass_fee();
   }
 
   getFeeTerms() {
     this.service.getFeeTerms()
       .subscribe(
-        res => { this.fee_terms = res.fee_term, console.log(res) }
+        res => { 
+          this.fee_terms = res.fee_term, 
+          this.selected_term = this.fee_terms[0],
+          console.log(res) 
+        }
       )
   }
 
   getFeeTypes() {
     this.service.getFeeTypes()
       .subscribe(
-        res => { this.fee_types = res.fee_type, console.log(res) }
+        res => { 
+          this.fee_types = res.fee_type, 
+          this.selected_type = this.fee_types[0],
+          console.log(res) 
+        }
       )
   }
 
@@ -87,38 +85,14 @@ export class ClassfeeReportsComponent implements OnInit {
       this.alert_message = "Please Select Class and Section";
       this.openAlert(this.alert_message)
     } else {
-      console.log(this.fee_term);
-      console.log(this.fee_type)
-      this.service.getClass_fee(this.selected_section, this.fee_type, this.fee_term)
+      this.service.getClass_fee(this.selected_section, this.selected_type.fee_types_id, this.selected_term.fee_term_id)
       .subscribe(
-        res => { this.collection.students_fee = res.studentFee, console.log(res) }
-      )
-    }
-  }
-
-  View(select) {
-    if(select == 'list') {
-      this.list = true;
-    } else {
-      this.list = false;
-      this.chartData = [{ data: [], label: 'Students Fee Paid' }];
-      this.chartLabels = ['Total Paid', 'Partially Paid', 'Nil Paid'];
-      this.totalpaid = 0;
-      this.partialpaid = 0;
-      this.nilpaid = 0;
-
-      for(this.i = 0; this.i < this.collection.students_fee.length; this.i++) {    
-        if(this.collection.students_fee[this.i].totalFee == this.collection.students_fee[this.i].paidAmount) {
-          this.totalpaid++;
-        } else if(this.collection.students_fee[this.i].totalFee == this.collection.students_fee[this.i].Balance) {
-          this.nilpaid++;
-        } else {
-          this.partialpaid++;
+        res => { 
+          this.students_fee = res.studentFee, 
+          this.pages = Math.ceil(this.students_fee.length / 10),
+          console.log(res) 
         }
-      }
-      this.chartData[0].data.push(this.totalpaid);
-      this.chartData[0].data.push(this.partialpaid);
-      this.chartData[0].data.push(this.nilpaid);
+      )
     }
   }
 

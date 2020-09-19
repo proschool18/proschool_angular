@@ -14,47 +14,64 @@ export class EmployeeattendanceComponent implements OnInit {
 
   constructor(private service: ServicesService, private fb: FormBuilder, public dialog: MatDialog) { }
 
+  current_date;
+  current_day;
+  current_month;
+  current_year;
+
   ngOnInit() {
     this.getEmployees();
+    var d = new Date();
+    this.current_month = d.getMonth() + 1;
+    if(this.current_month < 10) {
+      this.current_month = '0' + this.current_month;
+    }
+    this.current_day = d.getDate();
+    if(this.current_day < 10) {
+      this.current_day = '0' + this.current_day;
+    }
+    this.current_year = d.getFullYear();
+    this.current_date = this.current_year + '-' + this.current_month + '-' + this.current_day;
+    console.log(this.current_date)
   }
 
   attendance = [];
   employees = [];
   all_employees = [];
   dateValue:boolean = false;
-  current_date;
-  current_month;
-  current_year;
+
   alert_message: string;
   i;
 
   showEmployeeTypeList: boolean = false;
   employee_type;
-  date = new FormControl(new Date);
+  // date = new FormControl(new Date);
+  date;
 
   employeeForm: FormGroup = this.fb.group({
     employee_type: ['', Validators.required],
     date: [''],
   });
 
-  att_date(i) {
-    if(i == 1) {
-      this.dateValue = true;
-    } else {
-      this.dateValue = false;
-      var d = new Date();
-      var month = d.getMonth() + 1;
-      var day = d.getDate()
-      var year = d.getFullYear();
-      var date = year + '-' + month + '-' + day;
-      this.employeeForm.value.date = date;
+  getDate() {
+    this.current_date = new Date(this.date);
+    this.current_month = this.current_date.getMonth() + 1;
+    if(this.current_month < 10) {
+      this.current_month = '0' + this.current_month;
     }
+    this.current_day = this.current_date.getDate();
+    if(this.current_day < 10) {
+      this.current_day = '0' + this.current_day;
+    }
+    this.current_year = this.current_date.getFullYear();
+    this.current_date = this.current_year + '-' + this.current_month + '-' + this.current_day;
+    console.log(this.current_date)
   }
 
   getEmployees() {
     this.service.getEmployees()
       .subscribe(
-        res => { this.all_employees = res.employee, console.log(this.employees) }
+        res => { this.all_employees = res.employee, console.log(this.all_employees) }
       )
   }
 
@@ -98,36 +115,25 @@ export class EmployeeattendanceComponent implements OnInit {
     } else if(this.employees[0].status == 1) {
       this.alert_message = "Please Select Attendance Status";
       this.openAlert(this.alert_message)
-    } else if(this.dateValue == false) {
-      this.current_date = new Date().getDate();
-      if (this.current_date <= 9) {
-        this.current_date = '0' + this.current_date;
-      }
-      console.log(this.current_date)
-      this.current_month = new Date().getMonth() + 1;
-      if(this.current_month <= 9) {
-        this.current_month = '0' + this.current_month;
-      }
-      this.current_year = new Date().getFullYear();
-      this.employeeForm.value.date = this.current_year + '-' + this.current_month + '-' + this.current_date;
-      this.service.addEmployeeAttendance(this.employees, this.date)
-      .subscribe(
-        res => { 
-          console.log(res),
-          this.alert_message = "Attendance Submitted";
-          this.openAlert(this.alert_message)
-        }
-      )
     } else {
-      this.service.addEmployeeAttendance(this.employees, this.date)
+      console.log(this.current_date)
+      this.service.addEmployeeAttendance(this.employees, this.current_date)
       .subscribe(
         res => {
-          console.log(res), 
-          this.alert_message = "Attendance Submitted";
-          this.openAlert(this.alert_message)
+          if (res == true) {
+            this.alert_message = "Attendance Submitted";
+            this.openAlert(this.alert_message)
+          } else if(res == null) {
+            this.alert_message = "Attendance Already taken";
+            this.openAlert(this.alert_message)
+          } else {
+            this.alert_message = "Attendance Not Submitted";
+            this.openAlert(this.alert_message)
+          }
         }
       )
     }
+
   }
 
   openAlert(alert_message) {

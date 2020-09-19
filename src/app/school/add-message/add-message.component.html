@@ -1,5 +1,5 @@
 <div id="main-content1" class="new-message-wrapper">
-   <div class="header-wrapper">
+    <div class="header-wrapper">
         <p>New Message</p>
         <button class="btn-close" (click)="close()"></button>
     </div>
@@ -15,6 +15,7 @@
                 </button>
                 <div class="dropdown-content" [hidden]="!showCategoryList">
                     <a (click)="Selected_Category = '';">--Select--</a>
+                    <a (click)="Selected_Category = 'Admin'" *ngIf="user.role === 'teacher'">Admin</a>
                     <a (click)="Selected_Category = 'Employees'; getCategory();">Employees</a>
                     <a (click)="Selected_Category = 'Parents'; getCategory();">Parents</a>
                 </div>
@@ -86,7 +87,7 @@
                 </button>
                 <div class="dropdown-content" [hidden]="!showEmployeeTypeList">
                     <a (click)="Selected_employeeType = '';">--Select--</a>
-                    <a (click)="Selected_employeeType = 'all'; get_selectedemployees();">All Students</a>
+                    <a (click)="Selected_employeeType = 'all'; get_selectedemployees();">All Employees</a>
                     <a (click)="Selected_employeeType = 'teacher'; get_selectedemployees();">Teaching</a>
                     <a (click)="Selected_employeeType = 'non-teacher'; get_selectedemployees();">Non-Teaching</a>
                     <a (click)="Selected_employeeType = 'administrative'; get_selectedemployees();">Administrative</a>
@@ -127,13 +128,14 @@
                 Message :
             </div>
             <div class="col-full-6">
-                <textarea class="inpbox" formControlName="message" placeholder="Type your message here" cols="30" rows="5"></textarea>
+                <textarea class="inpbox" formControlName="message" placeholder="Type your message here" cols="30"
+                    rows="5"></textarea>
             </div>
         </div>
         <div class="row">
             <!-- <div class="col-md-3 pull-left">
-                <button class="btn -cta inactive-tab" (click)="close()">Cancel</button>
-            </div> -->
+                 <button class="btn -cta inactive-tab" (click)="close()">Cancel</button>
+             </div> -->
             <div class="col-md-3 pull-right">
                 <button class="btn -cta active-tab" type="submit">Submit</button>
             </div>

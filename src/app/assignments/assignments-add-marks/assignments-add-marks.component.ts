@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ServicesService } from '../../services.service';
 import { AcademicsService } from '../../_services/academics.service';
 import { AssignmentsService } from '../../_services/assignments.service';
@@ -14,16 +15,19 @@ import { User } from '../../_models/user';
   styleUrls: ['./assignments-add-marks.component.css']
 })
 export class AssignmentsAddMarksComponent implements OnInit {
-  config: any;
-  collection = { count: '', students: [] };
 
-  constructor(private teacherservice: TeacherService, private service: ServicesService, private academicservice: AcademicsService, private assignmentservice: AssignmentsService, private fb: FormBuilder, public dialog: MatDialog) {
-    this.config = {
-      itemsPerPage: 5,
-      currentPage: 1,
-      totalItems: this.collection.count
-    };
-  }
+  constructor(private teacherservice: TeacherService, private service: ServicesService, private route: ActivatedRoute, private academicservice: AcademicsService, private assignmentservice: AssignmentsService, private fb: FormBuilder, public dialog: MatDialog) {}
+
+  pageNo: number = 1;
+  page_start: number = 0;
+  page_counter = Array;
+  pages: number = 10;
+
+  section_id = this.route.snapshot.paramMap.get('sec_id');
+  subject_id = this.route.snapshot.paramMap.get('sub_id');
+  lession_id = this.route.snapshot.paramMap.get('les_id');
+  assignment_id = this.route.snapshot.paramMap.get('ass_id');
+  data_type = this.route.snapshot.paramMap.get('data_type');
 
   user: User;
   employee_id;
@@ -37,133 +41,62 @@ export class AssignmentsAddMarksComponent implements OnInit {
     selected_assignment: [''],
   });
 
-  classes = [];
-  class_sections = [];
   students = [];
   students_marks = [];
-  subjects = [];
-  chapters = [];
-  assignments = [];
   assignment_marks = [];
-  i;
-  alert_message: string;
+  i; alert_message: string;
+  
+  pageChange(x) {
+    this.pageNo = x;
+    this.page_start = (x - 1) * 10;
+  } 
 
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('currentUser'));
-    if (this.user.role === 'admin') {
-      this.getClasses();
-    } else if (this.user.role === 'teacher') {
-      this.employee_id = this.user.employee_id;
-      this.getTeacherClasses();
+    if(this.data_type === 'add') {
+      this.getStudents();
+    } else if(this.data_type === 'view') {
+      this.assMarks();
     }
-  }
-
-  pageChanged(event) {
-    this.config.currentPage = event;
-  }
-
-  getClasses() {
-    this.service.getClasses()
-      .subscribe(
-        res => { this.classes = res.school_classes, console.log(res) }
-      )
-  }
-
-  getTeacherClasses() {
-    this.teacherservice.getTeacherClasses(this.employee_id)
-      .subscribe(
-        res => { this.classes = res.school_classes, console.log(res) }
-      )
-  }
-
-  getSections() {
-    this.service.getSections(this.assMarksForm.value.selected_class)
-      .subscribe(
-        res => { this.class_sections = res.class_sections, console.log(res) }
-      )
-  }
-
-  getTeacherSections() {
-    this.teacherservice.getTeacherSections(this.employee_id, this.assMarksForm.value.selected_class)
-      .subscribe(
-        res => { this.class_sections = res.class_sections, console.log(res) }
-      )
+    this.pages = Math.ceil(this.students.length / 10);
+    console.log(this.data_type)
   }
 
   getStudents() {
-    this.service.getStudents(this.assMarksForm.value.selected_section)
+    this.service.getStudents(this.section_id)
       .subscribe(
-        res => { this.students = res.students, console.log(this.students) }
-      )
-  }
-
-  getSubjects() {
-    this.service.getSubjects(this.assMarksForm.value.selected_section)
-      .subscribe(
-        res => { this.subjects = res.subjects, console.log(res) }
-      )
-  }
-
-  getTeacherSubjects() {
-    this.teacherservice.getTeacherSubjects(this.employee_id, this.assMarksForm.value.selected_section)
-      .subscribe(
-        res => { this.subjects = res.subjects, console.log(res) }
-      )
-  }
-
-  getChapters() {
-    this.academicservice.getChapters(this.assMarksForm.value.selected_subject)
-      .subscribe(
-        res => { this.chapters = res.chapters, console.log(res) }
-      )
-  }
-
-  getAssignments() {
-    this.assignmentservice.getAssignments(this.assMarksForm.value.selected_chapter)
-      .subscribe(
-        res => { this.assignments = res.assignments, console.log(res) }
+        res => { this.students = res.students.filter(std => std.status === 1), 
+          this.pages = Math.ceil(this.students.length / 10),
+          console.log(this.students) 
+        }
       )
   }
 
   assMarks() {
-    if (this.assignments.length == 0) {
-      this.alert_message = "No Assignments Found";
-      this.openAlert(this.alert_message)
-    } else if (this.assMarksForm.value.selected_assignment == undefined || this.assMarksForm.value.selected_assignment == '') {
+    if (this.assignment_id == undefined || this.assignment_id == '') {
       this.alert_message = "Please Select Assignment";
       this.openAlert(this.alert_message)
     } else {
       this.assignment_marks = [];
-      this.assignmentservice.getAssignment_marks(this.assMarksForm.value.selected_section, this.assMarksForm.value.selected_subject, this.assMarksForm.value.selected_chapter, this.assMarksForm.value.selected_assignment)
+      this.assignmentservice.getAssignment_marks(this.assignment_id)
         .subscribe(
-          res => { this.assignment_marks = res.assignment_marks, console.log(res), this.getStudent_marks(); }
+          res => { this.students = res.assignment_marks, 
+            this.pages = Math.ceil(this.students.length / 10),
+            console.log(res) 
+          }
         )
     }
   }
 
-  getStudent_marks() {
-    if (this.assignment_marks.length > 0) {
-      this.marks_add = false;
-      this.students = this.assignment_marks;
-      this.config.currentPage = 1;
-    } else {
-      this.marks_add = true;
-      this.getStudents();
-      this.config.currentPage = 1;
-    }
-    console.log(this.students)
-  }
-
   addAssignment_marks() {
-    if (this.assMarksForm.value.selected_assignment == undefined || this.assMarksForm.value.selected_assignment == '') {
+    if (this.assignment_id == undefined || this.assignment_id == '') {
       this.alert_message = "Please Select Assignment";
       this.openAlert(this.alert_message)
     } else {
-      this.assignmentservice.addAssignment_marks(this.students, this.assMarksForm.value.selected_section, this.assMarksForm.value.selected_subject, this.assMarksForm.value.selected_chapter, this.assMarksForm.value.selected_assignment)
+      this.assignmentservice.addAssignment_marks(this.students, this.students[0].max_marks, this.section_id, this.subject_id, this.lession_id, this.assignment_id)
         .subscribe(
           res => {
             if (res == true) {
-              this.assMarks();
               this.alert_message = "Marks Added Successfully";
               this.openAlert(this.alert_message)
             } else {
@@ -180,7 +113,7 @@ export class AssignmentsAddMarksComponent implements OnInit {
       .subscribe(
         res => {
           if (res == true) {
-            this.assMarks();
+            // this.assMarks();
             this.alert_message = 'Student Marks Edited Successfully';
             this.openAlert(this.alert_message)
           } else {

@@ -1,63 +1,69 @@
-<form role="form" [formGroup]="classForm" (ngSubmit)="editClass()" *ngIf="dialog_type == 'class'">
-    <div class="row">
-        <div class="col-md-12">
-            <h4 id="heading">Edit Class</h4>
-        </div>
+<div id="main-content1" class="new-message-wrapper" *ngIf="dialog_type === 'class'">
+    <div class="header-wrapper">
+        <p *ngIf="submit_type === 'add'">Add Class</p>
+        <p *ngIf="submit_type === 'edit'">Edit Class</p>
+        <button class="btn-close" (click)="close()"></button>
     </div>
-    <div class="row">
-        <div class="col-md-10">
-            <div class="form-group">
-                <label class="pull-left">Class Name</label>
-                <input class="form-control" value="{{classes.name}}" formControlName="name" placeholder="Enter..."
-                    type="text">
-            </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <button type="submit" class="button button1 hvr-pop transition pull-right">Submit</button>
-        <div (click)="close_class()" class="button button1 hvr-pop transition pull-left">Close</div>
-    </div>
-</form>
+    <form class="form-inline" role="form" [formGroup]="classForm" (ngSubmit)="submitClass()">
+        <div class="row-wrapper">
 
-<form role="form" [formGroup]="sectionForm" (ngSubmit)="editSection()" *ngIf="dialog_type == 'section'">
-    <div class="row">
-        <div class="col-md-12">
-            <h4 id="heading">Edit Section</h4>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-10">
-            <div class="form-group">
-                <label class="pull-left">Section Name</label>
-                <input class="form-control" value="{{sections.name}}" formControlName="name" placeholder="Enter..."
-                    type="text">
+            <div class="col-full-3">
+                Class Name :
+            </div>
+            <div class="col-full-6">
+                <input type="text" class="inpbox" value="{{class.name}}" formControlName="name">
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-3 pull-right">
+                <button class="btn -cta active-tab" type="submit">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div id="main-content1" class="new-message-wrapper" *ngIf="dialog_type === 'section'">
+    <div class="header-wrapper">
+        <p *ngIf="submit_type === 'add'">Add Section</p>
+        <p *ngIf="submit_type === 'edit'">Edit Section</p>
+        <button class="btn-close" (click)="close()"></button>
     </div>
-    <div class="row">
-        <div class="col-md-10">
-            <div class="form-group">
-                <label class="pull-left">Class Teacher</label>
-                <select class="form-control" formControlName="teacher_name" [value]="sections.employee_id">
+    <form class="form-inline" role="form" [formGroup]="sectionForm" (ngSubmit)="submitSection()">
+        <div class="row-wrapper">
+            <div class="col-full-3">
+                Section Name :
+            </div>
+            <div class="col-full-6">
+                <input type="text" class="inpbox" value="{{section.name}}" formControlName="name">
+            </div>
+        </div>
+        <div class="row-wrapper">
+            <div class="col-full-3">
+                Class Teacher :
+            </div>
+            <div class="col-full-6">
+                <select formControlName="teacher_name" [value]="section.employee_id">
                     <option>select...</option>
                     <option *ngFor="let tch of teachers" value="{{tch.employee_id}}">{{tch.first_name}}</option>
                 </select>
+
+                <!-- <div class="dropdown">
+                    <button class="dropbtn" (click)="showTeacherList = true" (clickOutside)="showTeacherList = false">
+                        {{!selected_teacher.first_name ? '--Select--' : selected_teacher.first_name}}
+                    </button>
+                    <div class="dropdown-content" [hidden]="!showTeacherList">
+                        <a (click)="selected_teacher = '';">--Select--</a>
+                        <a *ngFor="let tch of teachers;"
+                            (click)="selected_teacher = tch.employee_id; getSent_to('employees');">{{tch.first_name}}
+                            {{tch.last_name}}</a>
+                    </div>
+                </div> -->
             </div>
         </div>
-    </div>
-    <!-- <div class="row">
-        <div class="col-md-10">
-            <div class="form-group">
-                <label class="pull-left">Pattern</label>
-                <select class="form-control" formControlName="pattern">
-                  <option>select...</option>
-                  <option *ngFor="let pt of patterns" value="{{pt.class_id}}">{{pt.name}}</option>
-                </select>
-              </div>
+        <div class="row">
+            <div class="col-md-3 pull-right">
+                <button class="btn -cta active-tab" type="submit">Submit</button>
+            </div>
         </div>
-    </div> -->
-    <div class="form-group">
-        <button type="submit" class="button button1 hvr-pop transition pull-right">Submit</button>
-        <div (click)="close_section()" class="button button1 hvr-pop transition pull-left">Close</div>
-    </div>
-</form>
+    </form>
+</div>

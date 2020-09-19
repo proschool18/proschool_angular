@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { StoreService } from '../../_services/store.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { AlertComponent } from '../../_alert/alert/alert.component';
-import { EditpaymentsComponent } from '../editpayments/editpayments.component';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -13,30 +13,27 @@ import { FormControl } from '@angular/forms';
 })
 export class AddpaymentsComponent implements OnInit {
 
-  constructor(private service: StoreService, private fb: FormBuilder, public dialog: MatDialog) {}
-
+  selected_payments: any = {};
   payment_date = new FormControl(new Date);
-  showVendorsList: boolean = false;
-  showMaterialsList: boolean = false;
+  alert_message;
 
-  ngOnInit() {
-    this.getVendors();
-    this.getMaterials();
-    this.getPayments();
+  constructor(
+    private service: StoreService,
+    private fb: FormBuilder,
+    public dialog: MatDialog,
+    private dialogRef: MatDialogRef<AddpaymentsComponent>,
+    @Inject(MAT_DIALOG_DATA) data) {
+
+    this.selected_payments = data.selected_payment[0];
   }
 
-  vendors = [];
-  materials = [];
-  vendor = {vendor_id: '', vendor_name: ''};
-  material = {material_id: '', material: ''};
-  all_payments = [];
-  payments = [];
-  filtered_payments = []; i; j;
-  total_payment = 0;
-  balance_payment = 0;
-  selected_payment;
-  dialog_type: string;
-  alert_message: string;
+  ngOnInit() {
+    console.log(this.selected_payments)
+  }
+
+  close() {
+    this.dialogRef.close();
+  }
 
   paymentForm: FormGroup = this.fb.group({
     vendor: ['', Validators.required],
@@ -48,152 +45,28 @@ export class AddpaymentsComponent implements OnInit {
     payment_date: ['', Validators.required],
   });
 
-  getPayments() {
-    this.service.getPayments()
-      .subscribe(
-        res => { this.payments = res.payments[0].payments, this.all_payments = res.payments, console.log(res) }
-      )
-  }
-
-  getVendors() {
-    this.service.getVendors()
-      .subscribe(
-        res => { this.vendors = res.vendor, this.paymentForm.value.vendor = this.vendors[0].vendor_id, console.log(res) }
-      )
-  }
-
-  getMaterials() {
-    this.service.getMaterials()
-      .subscribe(
-        res => { this.materials = res.material, this.paymentForm.value.material = this.materials[0].material_id, console.log(res) }
-      )
-  }
-
-  getVendorPayments() {
-    this.filtered_payments = this.all_payments.filter(res => res.vendor_id === this.vendor.vendor_id)
-    this.payments = [];
-    this.total_payment = 0;
-    this.balance_payment = 0;
-    for(this.i = 0; this.i < this.filtered_payments.length; this.i++) {
-      this.total_payment += this.filtered_payments[this.i].payment_toPay;
-      this.balance_payment += this.filtered_payments[this.i].payment_balance;
-      for(this.j = 0; this.j < this.filtered_payments[this.i].payments.length; this.j++) {
-        this.payments.push({
-          payment: this.filtered_payments[this.i].payments[this.j].payment,
-          payment_date: this.filtered_payments[this.i].payments[this.j].payment_date,
-        })
-        console.log(this.payments)
-      }      
-    }
-  }
-
-  get_payments() {
-    this.filtered_payments = this.all_payments.filter(res => res.vendor_id === this.vendor.vendor_id && res.material_id === this.material.material)
-    this.payments = [];
-    this.total_payment = 0;
-    this.balance_payment = 0;
-    for(this.i = 0; this.i < this.filtered_payments.length; this.i++) {
-      this.total_payment += this.filtered_payments[this.i].payment_toPay;
-      this.balance_payment += this.filtered_payments[this.i].payment_balance;
-      for(this.j = 0; this.j < this.filtered_payments[this.i].payments.length; this.j++) {
-        this.payments.push({
-          payment: this.filtered_payments[this.i].payments[this.j].payment,
-          payment_date: this.filtered_payments[this.i].payments[this.j].payment_date,
-        })
-        console.log(this.payments)
-      }      
-    }
-    this.paymentForm.patchValue({
-      payment_toPay: this.total_payment,
-      balance_payment: this.balance_payment,
-    })
-  }
-
   addPayments() {
-    if(this.total_payment > 0) {
-      this.paymentForm.value.payment_id = this.filtered_payments[0].payment_id;
-      this.paymentForm.value.payment_toPay = this.filtered_payments[0].payment_toPay;
-      this.paymentForm.value.balance_payment = this.filtered_payments[0].payment_balance;
-      // this.collection.payments.push({
-      //   payment: this.paymentForm.value.payment,
-      //   payment_date: this.paymentForm.value.payment_date,
-      // })
-      this.balance_payment -= this.paymentForm.value.payment;
-      // this.filtered_payments[0].payments.push({
-      //   payment: this.paymentForm.value.payment,
-      //   payment_date: this.paymentForm.value.payment_date,
-      // })
-      this.service.addPayments(this.paymentForm.value)
-      .subscribe(
-        res => { 
-          if(res == true) {
-            this.getPayments();
-            this.get_payments();
-            // this.collection.payments.push(this.paymentForm.value)
-            this.alert_message = "Payment Added Successfully";
-            this.openAlert(this.alert_message)
-          } else if(res == null) {
-            this.alert_message = "Added Payment is More than the Balance Payment";
-            this.openAlert(this.alert_message)
-          } else {
-            this.alert_message = "Payment Not Added";
-            this.openAlert(this.alert_message)
-          }
-          this.paymentForm.reset();
+    this.paymentForm.value.payment_id = this.selected_payments.payment_id;
+    this.paymentForm.value.payment_toPay = this.selected_payments.payment_toPay;
+    this.paymentForm.value.balance_payment = this.selected_payments.payment_balance;
+    this.paymentForm.value.vendor = this.selected_payments.vendor_id;
+    this.paymentForm.value.material = this.selected_payments.material_id;
+    this.service.addPayments(this.paymentForm.value)
+    .subscribe(
+      res => { 
+        if(res == true) {
+          this.alert_message = "Payment Added Successfully";
+          this.openAlert(this.alert_message)
+        } else if(res == null) {
+          this.alert_message = "Added Payment is More than the Balance Payment";
+          this.openAlert(this.alert_message)
+        } else {
+          this.alert_message = "Payment Not Added";
+          this.openAlert(this.alert_message)
         }
-      )
-    }    
-  }
-
-  deletePayment(i) {
-    console.log(this.filtered_payments)
-    this.service.deletePayments(this.filtered_payments[0], this.payments[i].payment)
-      .subscribe(
-        res => { 
-          if(res == true) {
-            // this.collection.payments = this.collection.payments.filter(res => res.payment !== this.collection.payments[i].payment);
-            // this.balance_payment += this.collection.payments[i].payment;
-            this.getPayments();
-            this.get_payments();
-            this.alert_message = "Payment Deleted Successfully";
-            this.openAlert(this.alert_message)
-          } else {
-            this.alert_message = "Payment Not Deleted";
-            this.openAlert(this.alert_message)
-          }
-        }
-      )
-  }
-
-  editPayment(i) {
-    this.selected_payment = this.payments[i];
-    console.log(this.selected_payment)
-    this.dialog_type = 'payment';
-    this.openDialog(this.dialog_type)
-  }
-
-  openDialog(dialog_type): void {
-
-    const dialogConfig = new MatDialogConfig();
-
-    dialogConfig.autoFocus = true;
-    dialogConfig.width = '60%';
-
-    dialogConfig.data = {
-      selected_payment: this.selected_payment,
-      dialog_type: dialog_type,
-    };
-
-    const dialogRef = this.dialog.open(EditpaymentsComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(
-      data => {
-        this.payments.filter( res => res.payment_id == data.payment_id)[0].payment = data.payment,
-        this.payments.filter( res => res.payment_id == data.payment_id)[0].payment_date = data.payment_date,
-        console.log("Dialog output:", data)
+        this.paymentForm.reset();
       }
-    );
-
+    )
   }
 
   openAlert(alert_message) {

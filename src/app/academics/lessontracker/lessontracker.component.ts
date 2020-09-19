@@ -10,16 +10,8 @@ import { User } from '../../_models/user';
   styleUrls: ['./lessontracker.component.css']
 })
 export class LessontrackerComponent implements OnInit {
-  config: any;
-  collection = { count: '', chapters: [] };
 
-  constructor(private service: ServicesService, public dialog: MatDialog) {
-    this.config = {
-      itemsPerPage: 5,
-      currentPage: 1,
-      totalItems: this.collection.count
-    };
-   }
+  constructor(private service: ServicesService, public dialog: MatDialog) {}
 
   user: User;
 
@@ -32,12 +24,8 @@ export class LessontrackerComponent implements OnInit {
     }
   }
 
-  pageChanged(event){
-    this.config.currentPage = event;
-  }
-
   subjects = [];
-  //chapters = [];
+  chapters = [];
 
   selected_class:string;
   selected_section:string;
@@ -74,7 +62,7 @@ export class LessontrackerComponent implements OnInit {
     } else {
       this.service.getChapters(this.selected_subject)
       .subscribe(
-        res => { this.collection.chapters = res.chapters, console.log(res) }
+        res => { this.chapters = res.chapters, console.log(res) }
       )
     }
   }

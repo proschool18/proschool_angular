@@ -89,6 +89,7 @@ export class EditstoreComponent implements OnInit {
     previous_quantity: '',
   });
   dialog_type: string;
+  submit_type: string;
 
   constructor(
     private service: StoreService,
@@ -103,6 +104,7 @@ export class EditstoreComponent implements OnInit {
     this.materialsIn = data.selected_materialIn;
     this.materialsOut = data.selected_materialOut;
     this.dialog_type = data.dialog_type;
+    this.submit_type = data.submit_type;
   }
 
   ngOnInit() {
@@ -152,19 +154,6 @@ export class EditstoreComponent implements OnInit {
         previous_quantity: this.materialsOut.no_of_units,
       });
     }
-
-    // this.materialOutForm.value.material_out_id = this.materialsOut.material_out_id;
-    // this.materialOutForm.value.material = this.materialsOut.material;
-    // this.materialOutForm.value.received_date = this.materialsOut.received_date;
-    // this.materialOutForm.value.no_of_units = this.materialsOut.no_of_units;
-
-    // this.vendorForm.value.vendor_id = this.vendors.vendor_id;
-    // this.vendorForm.value.vendor_name = this.vendors.vendor_name;
-    // this.vendorForm.value.material = this.vendors.material;
-    // this.vendorForm.value.contact_no = this.vendors.contact_no;
-    // this.vendorForm.value.email = this.vendors.email;
-    // this.vendorForm.value.address = this.vendors.address;
-    // this.vendorForm.value.location = this.vendors.location;
   }
 
   vendorslist;
@@ -207,83 +196,155 @@ export class EditstoreComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  editMaterial() {
-    this.materialForm.value.material_id = this.materials.material_id;
-    this.dialogRef.close(this.materialForm.value);
-    console.log(this.materials)
-    this.service.editMaterials(this.materialForm.value, this.materials.material_id)
-    .subscribe(
-      res => { 
-        if(res == true) {
-          this.alert_message = "Material Edited Successfully";
-          this.openAlert(this.alert_message)
-        } else {
-          this.alert_message = "Material Not Edited";
-          this.openAlert(this.alert_message)
+  submitMaterial() {
+    if(this.submit_type === 'add') {      
+      this.service.addMaterials(this.materialForm.value)
+      .subscribe(
+        res => { 
+          if(res == true) {
+            this.alert_message = "Material Added Successfully";
+            this.openAlert(this.alert_message);
+            this.dialogRef.close(this.materialForm.value);
+          } else {
+            this.alert_message = "Material Not Added";
+            this.openAlert(this.alert_message);
+            this.close();
+          }
         }
-      }
-    )
+      )
+    } else if(this.submit_type === 'edit') {
+      this.materialForm.value.material_id = this.materials.material_id;
+      this.service.editMaterials(this.materialForm.value, this.materials.material_id)
+      .subscribe(
+        res => { 
+          if(res == true) {
+            this.alert_message = "Material Edited Successfully";
+            this.openAlert(this.alert_message);
+            this.dialogRef.close(this.materialForm.value);
+          } else {
+            this.alert_message = "Material Not Edited";
+            this.openAlert(this.alert_message);
+            this.close();
+          }
+        }
+      )
+    }
   }
 
-  editVendor() {
-    this.vendorForm.value.vendor_id = this.vendors.vendor_id;
-    this.dialogRef.close(this.vendorForm.value);
-    this.service.editVendor(this.vendorForm.value, this.vendors.vendor_id)
-    .subscribe(
-      res => { 
-        if(res == true) {
-          this.alert_message = "Vendor Edited Successfully";
-          this.openAlert(this.alert_message)
-        } else {
-          this.alert_message = "Vendor Not Edited";
-          this.openAlert(this.alert_message)
+  submitVendor() {
+    if(this.submit_type === 'add') {
+      this.service.addVendor(this.vendorForm.value)
+      .subscribe(
+        res => { 
+          if(res == true) {
+            this.alert_message = "Vendor Added Successfully";
+            this.openAlert(this.alert_message);
+            this.dialogRef.close(this.vendorForm.value);
+          } else {
+            this.alert_message = "Vendor Not Added";
+            this.openAlert(this.alert_message);
+            this.close();
+          }
         }
-      }
-    )
+      ) 
+    } else if(this.submit_type === 'edit') {
+      this.vendorForm.value.vendor_id = this.vendors.vendor_id;
+      this.service.editVendor(this.vendorForm.value, this.vendors.vendor_id)
+      .subscribe(
+        res => { 
+          if(res == true) {
+            this.alert_message = "Vendor Edited Successfully";
+            this.openAlert(this.alert_message);
+            this.dialogRef.close(this.vendorForm.value);
+          } else {
+            this.alert_message = "Vendor Not Edited";
+            this.openAlert(this.alert_message);
+            this.close();
+          }
+        }
+      )
+    }
   }
   
-  editMaterialIn() {
-    this.materialInForm.value.material_in_id = this.materialsIn.material_in_id;
-    this.materialInForm.value.previous_quantity = this.materialsIn.no_of_units;
-    this.materialInForm.value.payment_paid = this.materialsIn.payment_paid;
-    this.dialogRef.close(this.materialInForm.value);
-    this.service.editMaterialsIn(this.materialInForm.value, this.materialsIn.material_in_id)
+  submitMaterialIn() {
+    if(this.submit_type === 'add') {
+      this.service.addMaterialsIn(this.materialInForm.value)
       .subscribe(
         res => { 
           if(res == true) {
-            this.alert_message = "Material-In Edited Successfully";
-            this.openAlert(this.alert_message)
-          } else if(res == null) {
-            this.alert_message = "Edited Quantity is less than the Quantity Out";
-            this.openAlert(this.alert_message)
+            this.alert_message = "Material-In Added Successfully";
+            this.openAlert(this.alert_message);
+            this.dialogRef.close(this.materialInForm.value);
           } else {
-            this.alert_message = "Material-In Not Edited";
-            this.openAlert(this.alert_message)
+            this.alert_message = "Material-In Not Added";
+            this.openAlert(this.alert_message);
+            this.close();
           }
         }
       )
+    } else if(this.submit_type === 'edit') {
+      this.service.editMaterialsIn(this.materialInForm.value, this.materialsIn.material_in_id)
+        .subscribe(
+          res => { 
+            if(res == true) {
+              this.alert_message = "Material-In Edited Successfully";
+              this.openAlert(this.alert_message)
+              this.dialogRef.close(this.materialInForm.value);
+            } else if(res == null) {
+              this.alert_message = "Edited Quantity is less than the Quantity Out";
+              this.openAlert(this.alert_message);
+              this.close();
+            } else {
+              this.alert_message = "Material-In Not Edited";
+              this.openAlert(this.alert_message);
+              this.close();
+            }
+          }
+        )
+    }
   }
 
-  editMaterialOut() {
-    this.materialOutForm.value.material_out_id = this.materialsOut.material_out_id;
-    this.materialOutForm.value.previous_quantity = this.materialsOut.no_of_units;
-    this.dialogRef.close(this.materialOutForm.value);
-    this.service.editMaterialsOut(this.materialOutForm.value, this.materialsOut.material_out_id)
+  submitMaterialOut() {
+    if(this.submit_type === 'add') {
+      this.service.addMaterialsOut(this.materialOutForm.value)
       .subscribe(
         res => { 
           if(res == true) {
-            console.log(this.materialOutForm.value)
-            this.alert_message = "Material-Out Edited Successfully";
-            this.openAlert(this.alert_message)
+            this.alert_message = "Material-Out Added Successfully";
+            this.openAlert(this.alert_message);
+            this.dialogRef.close(this.materialOutForm.value);
           } else if(res == null) {
-            this.alert_message = "Edited Quantity is More than the Quantity Available";
-            this.openAlert(this.alert_message)
+            this.alert_message = "Added Quantity is More than the Quantity Available";
+            this.openAlert(this.alert_message);
+            this.close();
           } else {
-            this.alert_message = "Material-Out Not Edited";
-            this.openAlert(this.alert_message)
+            this.alert_message = "Material-Out Not Added";
+            this.openAlert(this.alert_message);
+            this.close();
           }
         }
       )
+    } else if(this.submit_type === 'edit') {
+      this.service.editMaterialsOut(this.materialOutForm.value, this.materialsOut.material_out_id)
+        .subscribe(
+          res => { 
+            if(res == true) {
+              console.log(this.materialOutForm.value)
+              this.alert_message = "Material-Out Edited Successfully";
+              this.openAlert(this.alert_message);
+              this.dialogRef.close(this.materialOutForm.value);
+            } else if(res == null) {
+              this.alert_message = "Edited Quantity is More than the Quantity Available";
+              this.openAlert(this.alert_message);
+              this.close();
+            } else {
+              this.alert_message = "Material-Out Not Edited";
+              this.openAlert(this.alert_message);
+              this.close();
+            }
+          }
+        )
+    }
   }
 
   openAlert(alert_message) {

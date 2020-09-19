@@ -4,13 +4,16 @@
     <div class="_select-or-search">
       <div class="_select-group">
         <app-class (classEvent)="receiveClass($event)" (sectionEvent)="receiveSection($event)"></app-class>
-        <div class="form-group searchForm dropdown" *ngIf="user.role === 'admin'">
+        <div class="dropdown">
+          <input type="date" [(ngModel)]="date" (change)="getDate()">
+        </div>
+        <!-- <div class="dropdown" *ngIf="user.role === 'admin'">
           <mat-form-field>
-            <input matInput [matDatepicker]="picker" [formControl]="date">
+            <input matInput [matDatepicker]="picker" [formControl]="date" (change)="getDate()">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
-        </div>
+        </div> -->
       </div>
     </div>
     <button (click)="addAttendance()" class="btn -cta">Submit</button>

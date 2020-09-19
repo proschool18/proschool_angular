@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SearchModuleModule } from '../search-module/search-module.module';
 import { TeacherSearchModule } from '../teacher-search/teacher-search.module';
 import { MatDialogModule } from '@angular/material/dialog';
-import { NgxPaginationModule } from 'ngx-pagination';
+import { PipesModule } from '../_pipes/_pipes.module';
 import { NgWhiteboardModule } from 'ng-whiteboard';
 
 import { AcademicsRoutingModule } from './academics-routing.module';
@@ -34,9 +34,10 @@ import { VirtualboardComponent } from './virtualboard/virtualboard.component';
     ReactiveFormsModule,
     SearchModuleModule,
     TeacherSearchModule,
-    NgxPaginationModule,
+    PipesModule,
     MatDialogModule,
-    NgWhiteboardModule
+    NgWhiteboardModule,
+    
   ],
   entryComponents: [AddeditsubjectsComponent, EdittopicComponent, AddchapterComponent]
 })

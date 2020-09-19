@@ -1,5 +1,6 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { VirtualboardService } from '../../_services/virtualboard.service';
+import { User } from '../../_models/user';
 
 @Component({
   selector: 'app-virtualboard',
@@ -9,6 +10,8 @@ import { VirtualboardService } from '../../_services/virtualboard.service';
 export class VirtualboardComponent implements OnInit {
 
   constructor(private service: VirtualboardService) { }
+
+  user: User;
 
   @ViewChild('whiteboard', { static: true })
   canvas: ElementRef<HTMLCanvasElement>;  
@@ -28,12 +31,20 @@ export class VirtualboardComponent implements OnInit {
   public height = window.innerHeight;
 
   ngOnInit() {
+    this.user = JSON.parse(localStorage.getItem('currentUser'));
+    if (this.user.role === 'teacher') {
+      this.startClass();
+    }
     this.getDrawing();
     console.log(this.width)
     this.context = this.canvas.nativeElement.getContext('2d');
     this.canvas.nativeElement.setAttribute('width', this.width.toString())
     this.canvas.nativeElement.setAttribute('height', this.height.toString())
     console.log(this.canvas.nativeElement.width)
+  }
+
+  startClass() {
+    this.service.startClass()
   }
 
   drawLine(x0, y0, x1, y1, color, emit){

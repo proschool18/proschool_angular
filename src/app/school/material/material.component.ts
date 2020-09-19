@@ -12,16 +12,26 @@ import { EditstoreComponent } from '../editstore/editstore.component';
 })
 export class MaterialComponent implements OnInit {
 
-
   constructor(private service: StoreService, private fb: FormBuilder, public dialog: MatDialog) {}
+  
+  pageNo: number = 1;
+  page_start: number = 0;
+  page_counter = Array;
+  pages: number = 10;
 
   ngOnInit() {
     this.getMaterials();
   }
 
+  pageChange(x) {
+    this.pageNo = x;
+    this.page_start = (x - 1) * 10;
+  } 
+
   materials = [];
   selected_material;
   dialog_type: string;
+  submit_type: string;
   alert_message: string;
   data;
 
@@ -34,24 +44,18 @@ export class MaterialComponent implements OnInit {
   getMaterials() {
     this.service.getMaterials()
       .subscribe(
-        res => { this.materials = res.material, console.log(res) }
+        res => { this.materials = res.material, 
+          this.pages = Math.ceil(this.materials.length / 10),
+          console.log(res) 
+        }
       )
   }
 
   addMaterials() {
-    this.service.addMaterials(this.materialForm.value)
-    .subscribe(
-      res => { 
-        if(res == true) {
-          this.materials.push(this.materialForm.value)
-          this.alert_message = "Material Added Successfully";
-          this.openAlert(this.alert_message)
-        } else {
-          this.alert_message = "Material Not Added";
-          this.openAlert(this.alert_message)
-        }
-      }
-    )
+    this.selected_material = '';
+    this.dialog_type = 'material';
+    this.submit_type = 'add';
+    this.openDialog(this.dialog_type, this.submit_type)
   }
 
   deleteMaterial(material_id) {
@@ -73,10 +77,11 @@ export class MaterialComponent implements OnInit {
   editMaterial(i) {
     this.selected_material = this.materials[i];
     this.dialog_type = 'material';
-    this.openDialog(this.dialog_type)
+    this.submit_type = 'edit';
+    this.openDialog(this.dialog_type, this.submit_type)
   }
 
-  openDialog(dialog_type): void {
+  openDialog(dialog_type, submit_type): void {
 
     const dialogConfig = new MatDialogConfig();
 
@@ -86,6 +91,7 @@ export class MaterialComponent implements OnInit {
     dialogConfig.data = {
       selected_material: this.selected_material,
       dialog_type: dialog_type,
+      submit_type: submit_type,
     };
 
     const dialogRef = this.dialog.open(EditstoreComponent, dialogConfig);
@@ -93,9 +99,7 @@ export class MaterialComponent implements OnInit {
     dialogRef.afterClosed().subscribe(
       data => {
         if(data) {
-          this.materials.filter( res => res.material_id == data.material_id)[0].material = data.material,
-          this.materials.filter( res => res.material_id == data.material_id)[0].category = data.category,
-          console.log("Dialog output:", data)
+          this.getMaterials();
         }
       }
     );

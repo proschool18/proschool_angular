@@ -11,16 +11,8 @@ import { User } from '../../_models/user';
   styleUrls: ['./timings.component.css']
 })
 export class TimingsComponent implements OnInit {
-  config: any;
-  collection = { count: '', timings: [] };
 
-  constructor(private service: TimingsService, private fb: FormBuilder, public dialog: MatDialog) { 
-    this.config = {
-      itemsPerPage: 5,
-      currentPage: 1,
-      totalItems: this.collection.count
-    };
-   }
+  constructor(private service: TimingsService, private fb: FormBuilder, public dialog: MatDialog) {}
   
   timings = [];
 
@@ -31,10 +23,6 @@ export class TimingsComponent implements OnInit {
     // this.getTimings();
     this.user = JSON.parse(localStorage.getItem('currentUser'));
     console.log(this.user.role)
-  }
-
-  pageChanged(event){
-    this.config.currentPage = event;
   }
 
   receiveClass($event) {
@@ -63,7 +51,7 @@ export class TimingsComponent implements OnInit {
   getTimings() {
     this.service.getTimings()
       .subscribe(
-        res => { this.collection.timings = res.session_timings, this.timings = res.session_timings, console.log(res) }
+        res => { this.timings = res.session_timings, this.timings = res.session_timings, console.log(res) }
       )
   }
 
@@ -71,7 +59,7 @@ export class TimingsComponent implements OnInit {
     console.log(section)
     this.service.getTimingsBySection(section)
       .subscribe(
-        res => { this.collection.timings = res.session_timings, console.log(res) }
+        res => { this.timings = res.session_timings, console.log(res) }
       )
   }
 
@@ -102,7 +90,7 @@ export class TimingsComponent implements OnInit {
       .subscribe(
         res => { 
           if(res == true) {
-            this.collection.timings = this.collection.timings.filter(res => res.session_id !== session_id)
+            this.timings = this.timings.filter(res => res.session_id !== session_id)
             this.alert_message = "Timing Deleted Successfully";
             this.openAlert(this.alert_message)
           } else {

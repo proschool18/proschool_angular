@@ -14,6 +14,7 @@ export class AttendanceComponent implements OnInit {
   constructor(private service: ServicesService, private route: ActivatedRoute, public dialog: MatDialog) { }
 
   ngOnInit() {
+    this.month = this.months[new Date().getMonth()]
   }
 
   employee_id = this.route.snapshot.paramMap.get('id');
